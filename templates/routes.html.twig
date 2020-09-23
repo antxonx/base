@@ -1,0 +1,47 @@
+<div class="d-none">
+    {# user #}
+    <input type="hidden" id="user-index-route" value="{{ path('user_index') }}">
+    <input type="hidden" id="user-list-route" value="{{ path('user_list') }}">
+    <input type="hidden" id="user-form-route" value="{{ path('user_form') }}">
+    <input type="hidden" id="user-key-route" value="{{ path('user_key') }}">
+    <input type="hidden" id="user-key-update-api" value="{{ path('user_key_update', {'id': '0'}) }}">
+    <input type="hidden" id="user-reactivate-api" value="{{ path('user_reactivate', {'id': '0'}) }}">
+    <input type="hidden" id="user-add-api" value="{{ path('user_add') }}">
+    <input type="hidden" id="user-edit-api" value="{{ path('user_edit', {'id': '0'}) }}">
+    <input type="hidden" id="user-update-api" value="{{ path('user_update', {'id': '0'}) }}">
+    <input type="hidden" id="user-delete-api" value="{{ path('user_delete', {'id': '0'}) }}">
+    <input type="hidden" id="user-profile-route" value="{{ path('user_profile') }}">
+    {# . #}
+    {# client #}
+    <!-- Cliente -->
+    <input type="hidden" id="client-index-route" value="{{ path('client_index') }}">
+    <input type="hidden" id="client-list-route" value="{{ path('client_list') }}">
+    <input type="hidden" id="client-form-route" value="{{ path('client_form') }}">
+    <input type="hidden" id="client-show-route" value="{{ path('client_show', {'id' : '0'}) }}">
+    <input type="hidden" id="client-add-api" value="{{ path('client_add') }}">
+    <input type="hidden" id="client-delete-api" value="{{ path('client_delete', {'id' : '0'}) }}">
+    <!-- . -->
+    <!-- Extras -->
+    <input type="hidden" id="client-extra-add-api", value="{{ path('client_extra_add', {'id' : '0'}) }}">
+    <input type="hidden" id="client-extra-delete-api", value="{{ path('client_extra_delete', {'id' : '0'}) }}">
+    <input type="hidden" id="client-contact-extra-add-api", value="{{ path('client_contact_extra_add', {'id' : '0'}) }}">
+    <input type="hidden" id="client-contact-extra-delete-api", value="{{ path('client_contact_extra_delete', {'id' : '0'}) }}">
+    <!-- . -->
+    <!-- Dirección -->
+    <input type="hidden" id="client-address-form-route" value="{{ path('client_address_form', {'id' : '0'}) }}">
+    <input type="hidden" id="client-address-add-api" value="{{ path('client_address_add') }}">
+    <!-- . -->
+    <!-- Contactos -->
+    <input type="hidden" id="client-contact-form-route" value="{{ path('client_contact_form') }}">
+    <input type="hidden" id="client-contact-show-route" value="{{ path('client_contact_show', {'id' : '0'}) }}">
+    <input type="hidden" id="client-contact-add-api", value="{{ path('client_contact_add', {'id' : '0'}) }}">
+    <input type="hidden" id="client-contact-delete-api" value="{{ path('client_contact_delete', {'id' : '0'}) }}">
+    <input type="hidden" id="client-contact-update-api" value="{{ path('client_contact_update', {'id' : '0'}) }}">
+    <!-- . -->
+    {# . #}
+    {# Logger #}
+    <input type="hidden" id="logger-index-route" value="{{ path('logger_index') }}">
+    <input type="hidden" id="logger-info-list-route" value="{{ path('logger_info_list') }}">
+    <input type="hidden" id="logger-error-list-route" value="{{ path('logger_error_list') }}">
+    {# . #}
+</div>

@@ -1,0 +1,54 @@
+{% if client.contacts|length < 1 %}
+<div class="alert alert-info round">
+    Este cliente no tiene contactos. <br>
+</div>
+{% else %}
+
+<table class="table w-99 mb-0 table-hover border">
+    <tbody>
+        {% for contact in client.contacts %}
+            {% include "table/tr.html.twig" with {
+                tr : {
+                    values : {
+                        name : {
+                            value : contact.name,
+                            attr : {
+                                class : 'font-weight-normal cursor-pointer contact-show text-center'
+                            }
+                        },
+                        role : {
+                            value : contact.role,
+                            attr : {
+                                class : 'cursor-pointer contact-show text-center'
+                            }
+                        },
+                        phone : {
+                            value : '<a href="tel:' ~ contact.getContactExtras(2)[0].value ~ '">' ~ contact.getContactExtras(2)[0].value ~ '</a>',
+                            attr : {
+                                class : 'text-center'
+                            }
+                        },
+                        email : {
+                            value : '<a href="mailto:' ~ contact.getContactExtras(1)[0].value ~ '">' ~ contact.getContactExtras(1)[0].value ~ '</a>',
+                            attr : {
+                                class : 'text-center'
+                            }
+                        }, 
+                        trash : {
+                            value : '<button class="btn btn-sm btn-danger trash-contact w-100 contact-delete" style="display: none;"><i class="fas fa-trash-alt"></i></button>',
+                            attr : {
+                                style : 'width: 50px;'
+                            }
+                        }
+                    },
+                    attr : {
+                        class : 'contact-row',
+                        contactid : contact.id,
+                        contactname : contact.name,
+                    }
+                }
+            } %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}

@@ -1,0 +1,60 @@
+{% set tr = {} %}
+{% for client in clients %}
+{# suspneder o reactivar #}
+{% set trashSusp %}
+{% if client.suspended %}
+<button class="btn btn-sm btn-light w-100 client-reactivate"><i class="fas fa-redo-alt"></i></button>
+{% else %}
+<button class="btn btn-sm btn-light w-100 client-delete"><i class="fas fa-trash-alt"></i></button>
+{% endif %}
+{% endset %}
+{# . #}
+{% set tr = {
+    values : {
+      id : {
+          value : client.id,
+          attr : {
+              class : 'client-show cursor-pointer',
+          }
+      },
+      name : {
+          value : client.name,
+          attr : {
+              class : 'client-show cursor-pointer',
+          }
+      },
+      phone : {
+          value : client.getClientExtras(2)[0].value,
+          attr : {
+              class : 'client-show cursor-pointer'
+          }
+      },
+      email : {
+          value : client.getClientExtras(1)[0].value,
+          attr : {
+              class : 'client-show cursor-pointer'
+          }
+      },
+      trash : {
+          value : trashSusp,
+          attr : {
+              class : 'text-center'
+          }
+      }
+    },
+    attr : {
+        class : 'client-row table-bordered',
+        id: client.id
+    }
+} %}
+{% include "table/tr.html.twig" with {
+          tr : tr
+      } %}
+{% endfor %}
+{% if tr.values is defined %}
+{% include "paginatorTable.html.twig" with {
+    items: clients,
+    cols : tr.values|length
+} %}
+{% endif %}
+

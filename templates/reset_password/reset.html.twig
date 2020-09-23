@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restablecer contraseña{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card mx-auto w-50-c mt-5">
+        <div class="card-body">
+            <h1>Restablece tu contraseña</h1>
+            <hr>
+            {{ form_start(resetForm) }}
+                {{ form_row(resetForm.plainPassword) }}
+                <button class="btn btn-primary mt-2">Restablecer</button>
+            {{ form_end(resetForm) }}
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

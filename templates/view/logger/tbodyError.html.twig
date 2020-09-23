@@ -1,0 +1,107 @@
+{% set tr = {} %}
+{% for entity in entities %}
+{# tipo de petición #}
+{% set badge %}
+<span class="badge badge-role w-100
+{% if entity.method == "GET" %}
+table-success
+{% elseif entity.method == "POST" %}
+table-primary
+{% elseif entity.method == "PUT" %}
+table-warning
+{% elseif entity.method == "PATCH" %}
+table-warning
+{% elseif entity.method == "DELETE" %}
+table-danger
+{% else %}
+d-none
+{% endif %}
+badge-pill">{{ entity.method }}</span>
+{% endset %}
+{# . #}
+{% if entity.file|split('\\')|length == 1 %}
+{% set fileSplit = entity.file|split('/') %}
+{% else %}
+{% set fileSplit = entity.file|split('\\') %}
+{% endif %}
+{# Error completo #}
+{% set errorFull %}
+{% include "view/logger/full/error.html.twig" %}
+{% endset %}
+{# . #}
+{# verificar si es de sistema #}
+{% set rowClass %}
+{% if entity.system %}
+    {% if entity.level == "WARNING" or entity.level == "API" %}
+    table-warning
+    {% else %}
+    table-danger
+    {% endif %}
+{% endif %}
+{% endset %}
+{# . #}
+{# formato de nivel #}
+{% set level %}
+{% if entity.level != null %}
+{% if entity.level == "WARNING" or entity.level == "API" %}
+<button class="btn btn-warning btn-sm w-100 no-hover"> {{ entity.level }}</button>
+{% else %}
+<button class="btn btn-danger btn-sm w-100 no-hover"> {{ entity.level }}</button>
+{% endif %}
+    
+{% endif %}
+{% endset %}
+{# . #}
+{% set tr = {
+    values : {
+      id : {
+          value : entity.id,
+      },
+      creation : {
+          value : entity.createdAt|format_datetime("medium", "short", locale="es")
+      },
+      route : {
+          value : entity.route,
+      },
+      method : {
+          value : badge,
+          attr : {
+              class : 'smallest-cell text-center'
+          }
+      },
+      message : {
+          value : entity.message|u.truncate(70, "...", true),
+      }
+    },
+    attr : {
+        class : 'errorlog-row cursor-pointer table-bordered ' ~ rowClass|trim,
+        id: entity.id, 
+        href: '#error-' ~ entity.id,
+        'data-toggle': 'collapse',
+        'aria-expanded': 'false',
+        'aria-controls': '#error-' ~ entity.id
+    }
+} %}
+{% include "table/tr.html.twig" with {
+    tr : tr
+} %}
+{% include "table/tr.html.twig" with {
+    tr : {
+        values : {
+            info : {
+                value : errorFull,
+                attr : {
+                    colspan : 8,
+                    class : "p-0 table-paginator"
+                }
+            }
+        }, 
+    }
+} %}
+{% endfor %}
+{% if tr.values is defined %}
+{% include "paginatorTable.html.twig" with {
+    items: entities,
+    cols : tr.values|length
+} %}
+{% endif %}

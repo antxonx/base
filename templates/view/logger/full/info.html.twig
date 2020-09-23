@@ -1,0 +1,47 @@
+{% set badgeFull %}
+<span class="badge badge-role
+        {% if entity.method == "GET" %}
+        badge-success
+        {% elseif entity.method == "POST" %}
+        badge-primary
+        {% elseif entity.method == "PUT" %}
+        badge-warning
+        {% elseif entity.method == "PATCH" %}
+        badge-warning
+        {% elseif entity.method == "DELETE" %}
+        badge-danger
+        {% else %}
+        d-none
+        {% endif %}
+        badge-pill">{{ entity.method }}</span>
+{% endset %}
+<div class="container font-weight-normal collapse" id="info-{{ entity.id }}">
+    <div class="card m-4">
+        <div class="card-header">
+            <div class="row">
+                <div class="col text-left">
+                    <b>{{ entity.id }}</b>
+                </div>
+                <div class="col text-center">
+                    <em>{{ entity.createdAt|format_datetime("long", "short", locale="es") }}</em>
+                </div>
+                <div class="col text-right">
+                    {{ badgeFull }}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-light">
+                <h5><span class="badge badge-info">{{ entity.level }}</span></h5>
+                <span>
+                    <b>IP: </b> {{ entity.clientip }}
+                </span> <br>
+                <span>
+                    <b>Ruta: </b> {{ entity.route }}
+                </span> <br>
+                <hr>
+                {{ entity.message }}
+            </div>
+        </div>
+    </div>
+</div>

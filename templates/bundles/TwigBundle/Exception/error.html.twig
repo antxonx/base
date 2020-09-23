@@ -1,0 +1,15 @@
+{# templates/bundles/TwigBundle/Exception/error.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="w-50-c mx-auto mt-5">
+        <div class="card border-0 text-center">
+            <div class="card-body">
+                <h4>{{ status_code }}</h4>
+            <hr>
+            {{ status_text }} <br>
+            <em>{{ exception.getMessage() }}</em>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<form id="{{ id }}">
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        id: 'name',
+        label: 'Nombre',
+        placeholder: '',
+        required : true,
+        error : 'Ingrese un nombre para el cliente'
+    } %}
+    {% include "form/phone.html.twig" with {
+        type: 'tel',
+        id: 'phone',
+        label: 'Teléfono',
+        placeholder: '',
+        required: true,
+        error: 'Ingrese un teléfono válido'
+    } %}
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        ttype : 'email',
+        id: 'email',
+        label: 'Correo',
+        placeholder: 'email@mail.com',
+        required : true,
+        error : 'Ingrese un correo válido'
+    } %}
+    {% if contact %}
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        id: 'role',
+        label: 'Parentesco/Referencia',
+        placeholder: '',
+        required : true,
+        error : 'Ingrese el parentesco o referencia para el contacto'
+    } %}
+    {% endif %}
+    <div id="submit-btn" class="w-100 text-left">
+        <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
+    </div>
+</form>

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block body %}
+<div class="w-99 mx-auto">
+    <div class="m-3 row">
+        <div class="col-md-2">
+            <h2>Usuarios</h2>
+        </div>
+        <button class="btn btn-primary col-md-2 m-1" id="user-add">Agregar usuario</button>
+        <div class="col-md-3 m-1 search-input">
+            <label class="sr-only" for="searchUserInput">Usuario...</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Buscar</div>
+                </div>
+                <input type="text" class="form-control" id="searchUserInput" placeholder="">
+            </div>
+        </div>
+        <div class="col-md-2 m-1">
+            <button checkedb="0" id="suspendedFilter" class="btn btn-outline-success no-hover w-100">Suspendidos</button>
+        </div>
+    </div>
+    {% include "view/user/table.html.twig" %}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('user') }}
+{% endblock %}

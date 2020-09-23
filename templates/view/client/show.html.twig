@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card round main-2">
+            <div class="card-body">
+                <h5 class="text-center">Datos generales</h5>
+                <hr class="divide-2">
+               {% include "view/client/parts/client.html.twig" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card round main-2">
+            <div class="card-body">
+                <h5 class="text-center">Dirección</h5>
+                <hr class="divide-2">
+               {% include "view/client/parts/address.html.twig" %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <div class="card round main-2">
+            <div class="card-body">
+                <div class="mb-2">
+                    <h5 class="text-center">Contactos</h5> 
+                    <hr class="divide-2">
+                    <button class="btn btn-primary round" id="contact-add"><i class="fa fa-plus"></i></button>
+                </div>
+                {% include "view/client/parts/contacts.html.twig" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% include "view/footer/datetimes.html.twig" with {
+        created : {
+            name : client.createdBy.name,
+            time : client.createdAt
+        },
+        updated : {
+            name : client.updatedBy.name,
+            time : client.updatedAt
+        }
+    } %}

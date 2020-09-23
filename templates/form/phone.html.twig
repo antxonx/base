@@ -1,0 +1,22 @@
+<div class="form-group">
+    {% if label is defined %}
+    <label for="{{ id }}" id="{{ id }}Label">
+        {{ label }}{% if required %}*{% endif %}
+    </label>
+    {% endif %}
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <select id="phoneType" class="form-control input-group-text cursor-pointer">
+                <option value="1">Trabajo</option>
+                <option value="2">Móvil</option>
+                <option value="3">Casa</option>
+            </select>
+        </div>
+        <input type="tel" t-type="text"
+            name="{% if name is defined %}{{ name }}{% else %}{{ id }}{% endif %}"
+            class="form-control {% if required %}required{% endif %}{% if class is defined %} {{ class }}{% endif %}"
+            id="{{ id }}" aria-describedby="{{ id }}Help" placeholder="{{ placeholder }}"
+            {% if error is defined %}error-msg="" {% endif %}
+            {% if value is defined %}value="{{ value }}" {% endif %}>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<form id="clientAddressForm">
+    <div class="row">
+        <div class="col-md-6">
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'street',
+                label: 'Calle',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese una calle'
+            } %}
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'extnum',
+                label: 'Número exterior',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese un número'
+            } %}
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'intnum',
+                label: 'Número interior',
+                placeholder: '',
+                required : false
+            } %}
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'city',
+                label: 'Ciudad',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese una ciudad'
+            } %}
+        </div>
+        <div class="col-md-6">
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'postal',
+                label: 'C.P.',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese un código postal',
+            } %}
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'state',
+                label: 'Estado',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese un estado',
+                value: 'Jalisco'
+            } %}
+            {% include 'form/input.html.twig' with {
+                type : 'text',
+                id: 'country',
+                label: 'País',
+                placeholder: '',
+                required : true,
+                error : 'Ingrese un país',
+                value : 'México'
+            } %}
+        
+            <div id="submit-btn" class="w-100 text-left mt-lg-5 text-right">
+                <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
+            </div>
+        </div>
+    </div>
+   
+   
+</form>

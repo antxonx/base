@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restablecer contraseña{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card mx-auto w-50-c mt-5">
+        <div class="card-body">
+        {% for flashError in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+        <h1>Restablecer contraseña</h1>
+        <hr>
+
+        {{ form_start(requestForm) }}
+            <div class="form-group">
+                <label for="reset_password_request_form_mail">Correo*</label>
+                {{ form_widget(requestForm.mail) }}
+            </div>
+            <button class="btn btn-primary">Enviar correo de recuperación</button>
+        {{ form_end(requestForm) }}
+        <small><a href="{{ path('app_login') }}">Iniciar sesión</a></small>
+        </div>
+    </div>
+</div>
+{% endblock %}

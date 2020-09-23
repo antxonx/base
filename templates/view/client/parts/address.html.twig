@@ -1,0 +1,54 @@
+{% set address = client.getClientAddress %}
+{% if address == null %}
+    <div class="alert alert-info round">
+        Este cliente no tiene una dirección asignada aún. <br>
+        <button class="btn btn-success round" id="address-add">Agregar dirección</button>
+    </div>
+    <div id="client-edit-control" class="mt-2">
+        <button id="client-edit-active" class="btn btn-warning round" active="0">Editar</button>
+    </div>
+{% else %}
+<div class="d-flex justify-content-between">
+    <p class="editable-container w-50">
+        <b>Calle</b> <br>
+        <a class="editable-field" href="#" data-name="addressStreet" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa la cale">{{  address.street }}</a>
+    </p>
+        <div id="client-edit-control" class="w-50 mt-2">
+            <button id="client-edit-active" class="btn btn-warning round" active="0">Editar</button>
+        </div>
+</div>
+    
+    <div class="d-flex justify-content-between">
+        <p class="editable-container w-50">
+            <b>Número exterior</b> <br>
+            <a class="editable-field" href="#" data-name="addressExtNum" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa el número">{{  address.extNum }}</a>
+        </p>
+        <p class="editable-container w-50">
+            <b>Número interior</b> <br>
+            <a class="editable-field" href="#" data-name="addressIntNum" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa el número">{{  address.intNum }}</a>
+        </p>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <p class="editable-container w-50">
+            <b>Ciudad</b> <br>
+            <a class="editable-field" href="#" data-name="addressCity" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa la ciudad">{{  address.city }}</a>
+        </p>
+        <p class="editable-container w-50">
+            <b>Código postal</b> <br>
+            <a class="editable-field" href="#" data-name="addressPostal" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa el código postal">{{  address.postal }}</a>
+        </p>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <p class="editable-container w-50">
+            <b>Estado</b> <br>
+            <a class="editable-field" href="#" data-name="addressState" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa el estado">{{  address.state }}</a>
+        </p>
+        <p class="editable-container w-50">
+            <b>País</b> <br>
+            <a class="editable-field" href="#" data-name="addressCountry" data-type="text" data-pk="{{ address.id }}" data-url="{{ path('client_address_update', {'id' : address.id }) }}" data-title="Ingresa el país">{{  address.country }}</a>
+        </p>
+    </div>
+   
+{% endif %}

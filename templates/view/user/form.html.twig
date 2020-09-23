@@ -1,0 +1,42 @@
+<form id="userForm">
+    <div class="fomr-group">
+        <label for="username">Usuario*</label>
+        <input type="text" t-type="text" id="username" class="form-control required" error-msg="Ingrese un nombre de usuario de más de 5 letras"  onkeypress="return event.charCode != 32">
+    </div>
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        id: 'name',
+        label: 'Nombre',
+        placeholder: '',
+        required : true,
+        error : 'Ingrese un nombre de más de 5 letras'
+    } %}
+    {% include 'form/input.html.twig' with {
+        type : 'password',
+        id: 'password',
+        label: 'Contraseña',
+        placeholder: '********',
+        required : true,
+        error : 'Ingrese una contraseña de más de 5 caracteres'
+    } %}
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        ttype : 'email',
+        id: 'email',
+        label: 'Correo',
+        placeholder: 'emai@mail.com',
+        required : true,
+        error : 'Ingrese un correo válido'
+    } %}
+    <div class="form-group">
+        <label for="roleSelector">Selecciona un puesto</label>
+        <select id="roleSelector" class="form-control">
+            <option value hidden selected></option>
+            <option value="ROLE_ADMIN">admin</option>
+            <option value="ROLE_TEST">test</option>
+        </select>
+    </div>
+    <div id="submit-btn" class="w-100 text-left">
+        <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
+    </div>
+</form>

@@ -1,0 +1,22 @@
+{% set paginator %}
+{% include "paginator.html.twig" with {
+    items : items
+} %}
+{% endset %}
+
+{% include "table/tr.html.twig" with {
+    tr : {
+        values : {
+            paginator : {
+                value : paginator,
+                attr : {
+                    colspan: cols,
+                    class: 'font-weight-normal p-5'
+                }
+            }, 
+        },
+        attr : {
+            class: 'table-paginator'
+        }
+    }
+} %}

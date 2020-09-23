@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    {% include "view/home/dashboard.html.twig" %}
+{% else %}
+    <script>
+        window.location.href = "{{ path('app_login') }}";
+    </script>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('dashboard') }}
+{% endblock %}

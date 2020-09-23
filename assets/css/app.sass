@@ -1,0 +1,98 @@
+@import 'bootstrap'    
+@import './loader'
+@import './spinner'
+@import './toast'
+@import './alert'
+@import './media'
+@import './dropdown'
+@import './editable'
+
+$success-color : #28a745
+$info-color : #17a2b8
+
+.w-50-c
+    width: 50%
+
+.w-99
+    width: 99%
+
+.cursor-pointer
+    cursor: pointer !important
+
+.cursor-normal
+    cursor: context-menu !important
+
+.modal-dialog
+    max-width: none !important
+
+.btn-outline-success
+    &.no-hover
+        &:hover
+            background-color: #fff
+            color: $success-color
+            border-color: $success-color
+            text-decoration: none
+
+
+.btn-info
+    &.no-hover
+        &:hover
+            background-color: $info-color
+            text-decoration: none
+
+.board
+    overflow-x: auto
+    height: 350px !important
+
+.table-paginator
+    background-color: white !important
+    &:hover
+        background-color: white !important
+
+.plus-btn
+    width: 21px
+    height: 21px
+    padding: 0px
+    font-family: 'Font Awesome 5 Free'
+    font-weight: 900
+    font-style: normal
+    background-color: #dc3545
+    &:hover, &:active, &:focus
+        background-color: #dc3545
+    &.collapsed
+        background-color: #007bff
+        &:hover, &:active, &:focus
+            background-color: #007bff
+        &::before
+            content: "\f067"
+    &::before
+        content: "\f068"
+
+.trash-btn
+    width: 28px
+    height: 22px
+    padding: 0px
+
+.smallest-cell
+    width: 1%
+    white-space: nowrap
+
+.round
+    border-radius: 1.2rem
+
+b, h5
+    color: #191734 !important
+
+.divide
+    border-top: 2px solid #395ba6
+
+.divide-2
+    border-top: 2px solid #191734
+
+.card, .modal-content
+    &.main
+        border: 2px solid #5f5f5f !important
+
+.card, .modal-content
+    &.main-2
+        border: 1px solid #5f5f5fb5 !important

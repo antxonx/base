@@ -1,0 +1,8 @@
+<thead>
+    <tr {% if tr.attr is defined %}{% for attr, val in tr.attr %} {{ attr }}="{{ val }}" {% endfor %} {% endif %}>
+        {% for td in tr.values %}
+        <th {% if td.attr is defined %} {% for attr, value in td.attr %} {{ attr }}="{{ value }}" {% endfor %} {% endif %}>
+            {{ td.value|raw }}</th>
+        {% endfor %}
+    </tr>
+</thead>

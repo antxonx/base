@@ -1,0 +1,29 @@
+$alert-background: #fafafadc
+$alert-btn: #fafafa4f
+$alert-btn-hover: #fafafab4
+$black: #000000
+    
+.alert-dialog 
+    .alert
+        background-color: $alert-background !important
+        color: $black !important
+        border: none !important
+        border-radius: 30px !important
+        box-shadow: 20px 20px 30px rgb(100, 100, 100)
+
+.alert-content
+    button
+        border-radius: 30px !important
+        background-color: $alert-btn !important
+        &:hover
+            background-color: $alert-btn-hover !important
+
+.fade-scale 
+    transform: scale(0)
+    opacity: 0
+    -webkit-transition: all .25s linear
+    -o-transition: all .25s linear
+    transition: all .25s linear
+    &.show 
+        opacity: 1
+        transform: scale(1)

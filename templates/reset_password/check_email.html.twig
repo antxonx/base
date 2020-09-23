@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Correo enviado{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card mx-auto mt-5">
+        <div class="card-body">
+            <p>
+                Se ha enviado un enlace de recuperación al correo para restablecer tu contraseña.
+                <br>
+                El enlace expira en {{ tokenLifetime|date('g') }} hora(s).
+            </p>
+            <p>
+                Si no has recibido el correo, por favor revisa la carpeta de <em>spam</em> o <a href="{{ path('app_forgot_password_request') }}">inténtalo de nuevo</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

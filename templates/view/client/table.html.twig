@@ -1,0 +1,43 @@
+<table class="table table-sm table-striped w-100 table-hover">
+    {% set sort %}
+    <span class="float-right sort-icon"><i class="fas fa-sort"></i></span>
+    {% endset %}
+    {% include "table/thead.html.twig" with {
+        tr : {
+            values : {
+                id : {
+                    value : 'Id' ~ sort,
+                    attr : {
+                        class: 'cursor-pointer sort-column',
+                        column: 'id',
+                        style: 'width: 120px !important;'
+                    }
+                },
+                name : {
+                    value : 'Nombre' ~ sort,
+                    attr : {
+                        class: 'cursor-pointer sort-column',
+                        column: 'name'
+                    }
+                },
+                phone : {
+                    value : 'Teléfono',
+                },
+                email : {
+                    value : 'Correo'
+                },
+                delete : {
+                    value : '<i class="fas fa-trash-alt"></i>',
+                    attr : {
+                        class : 'text-center',
+                        width : '50px'
+                    }
+                },
+            },
+            attr : {
+                class: 'table-bordered'
+            }
+        }
+    } %}
+    <tbody id="clientsView"></tbody>
+</table>

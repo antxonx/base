@@ -1,0 +1,49 @@
+<div class="card round card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <p class="editable-container">
+                <b>Usuario</b> <br>
+                <a class="editable-field" href="#" data-name="username" data-type="text" data-pk="{{ user.id }}" data-url="{{ path('user_update', {'id' : user.id }) }}" data-title="Ingresa el usuario">{{ user.username }}</a>
+            </p>
+            <p class="editable-container">
+                <b>Nombre</b> <br>
+                <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ user.id }}" data-url="{{ path('user_update', {'id' : user.id }) }}" data-title="Ingresa el nombre">{{ user.name }}</a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p class="editable-container">
+                <b>Correo</b> <br>
+                <a class="editable-field" href="#" data-name="email" data-type="text" data-pk="{{ user.id }}" data-url="{{ path('user_update', {'id' : user.id }) }}" data-title="Ingresa el correo">{{ user.mail }}</a>
+            </p>
+            {% if "ROLE_GOD" in user.roles %}
+            {% else %}
+            <p class="editable-container">
+                {% set roles = "" %}
+                {% for userrole in user.roles %}
+                {% set roles = roles ~ userrole  ~ ',' %}
+                {% endfor %}
+                <b>Puesto</b> <br>
+                {% set rolesToSelect = [
+                    {
+                        value: 'ROLE_ADMIN',
+                        text: 'admin'
+                    },
+                    {
+                        value: 'ROLE_TEST',
+                        text: 'test'
+                    }
+                ] %}
+                <a class="editable-field" href="#" data-name="roles" data-type="checklist" data-pk="{{ user.id }}" data-url="{{ path('user_update', {'id' : user.id }) }}" data-title="Ingresa los roles" data-source="{{ rolesToSelect|json_encode() }}" data-value="{{ roles }}">
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="user-edit-control" class="mt-2">
+                <button id="user-edit-active" class="btn round btn-warning float-right" active="0">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>

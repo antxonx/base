@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clientes{% endblock %}
+
+{% block body %}
+<div class="w-99 mx-auto">
+    <div class="m-3 row">
+        <div class="col-md-2">
+            <h2>Clientes</h2>
+        </div>
+        <button class="btn btn-primary col-md-2 m-1" id="client-add">Agregar cliente</button>
+        <div class="col-md-3 m-1 search-input">
+            <label class="sr-only" for="searchClientInput">Cliente...</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Buscar</div>
+                </div>
+                <input type="text" class="form-control" id="searchClientInput" placeholder="">
+            </div>
+        </div>
+    </div>
+   {% include "view/client/table.html.twig" %}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('client') }}
+{% endblock %}

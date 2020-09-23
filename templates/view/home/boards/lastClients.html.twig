@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-body board">
+        <h5 class="d-inline">Últimos clientes agregados</h5>
+        <a class="btn btn-info float-right" href="{{ path('client_index') }}">Ver todos</a>
+        <hr>
+        <div class="list-group list-group-flush">
+        {% for client in clients %}
+        {% set dateClass %}
+        {% if date(client.createdAt) >= date("-5days", "America/Mexico_city") %}
+        badge-success
+        {% else %}
+        badge-secondary
+        {% endif %}
+        {% endset %}
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center client-list" id="{{ client.id }}">
+                {{ client.name }}
+                <span class="badge {{ dateClass }}">{{ client.createdAt|format_datetime("medium", "none", locale="es") }}</span>
+            </a>
+        {% endfor %}
+        </div>
+    </div>
+</div>

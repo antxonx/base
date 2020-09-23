@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-12 text-center">
+        <small class="font-italic text-muted">
+            Creado por <b>{{ created.name }}</b> el <b>{{ created.time|format_datetime("long", "none", locale="es") }}</b> a las <b>{{ created.time|format_datetime("none", "short", locale="es") }}</b>
+        </small> <br>
+            {% if date(created.time) != date(updated.time) %}
+                <small class="font-italic text-muted">
+                    Actualizado por <b>{{ updated.name }}</b> el <b>{{ updated.time|format_datetime("long", "none", locale="es") }}</b> a las <b>{{ updated.time|format_datetime("none", "short", locale="es") }}</b>
+                </small>
+            {% endif %}
+    </div>
+</div>
