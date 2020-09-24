@@ -1,4 +1,4 @@
-import DeleteElement from "./DeleteElement";
+import { deleteElement } from "./DeleteElement";
 import { htmlToElement } from "./Required";
 
 const SORT_UP = htmlToElement('<span class="float-right sort-icon"><i class="fas fa-sort-up"></i></span>');
@@ -43,7 +43,7 @@ export default (element: HTMLElement): SortColumn => {
         SORT_COLUM.order = "DESC";
     }
     element.setAttribute(SORT_ACT_ATTR, newValue.toString());
-    DeleteElement(element.getElementsByClassName(SORT_ICON_ATTR)[ 0 ] as HTMLElement);
+    deleteElement(element.getElementsByClassName(SORT_ICON_ATTR)[ 0 ] as HTMLElement);
     element.appendChild<HTMLElement>(newIcon);
     SORT_COLUM.column = element.getAttribute(SORT_COL_ATTR)!;
     return SORT_COLUM;
@@ -55,7 +55,7 @@ export default (element: HTMLElement): SortColumn => {
  */
 const restartIcons = () => {
     [ ...document.getElementsByClassName(SORT_COL_CLASS) ].forEach(el => {
-        DeleteElement(el.getElementsByClassName(SORT_ICON_ATTR)[ 0 ] as HTMLElement);
+        deleteElement(el.getElementsByClassName(SORT_ICON_ATTR)[ 0 ] as HTMLElement);
     });
     [ ...document.getElementsByClassName(SORT_COL_CLASS) ].forEach(el => {
         el.appendChild<HTMLElement>(htmlToElement(SORT_NORMAL));

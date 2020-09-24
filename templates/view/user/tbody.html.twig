@@ -10,6 +10,9 @@
 {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
     {% set extra = {
         value : '<a class="w-100 btn btn-sm btn-info" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+        attr : {
+            class : 'action-btn'
+          }
     } %}
 {% endif %}
 {# . #}
@@ -68,16 +71,22 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
               }
           },
           key : {
-              value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>'
+              value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+              attr : {
+                class : 'action-btn'
+              }
           }, 
           trash : {
                 value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
               attr : {
-                  class : 'text-center'
+                  class : 'text-center action-btn'
               }
           }, 
           extra : {
-              value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>'
+              value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
+              attr : {
+                class : 'action-btn'
+              }
           }
         },
         attr : {
@@ -123,12 +132,15 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
           }
       },
       key : {
-          value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>'
+          value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+          attr : {
+            class : 'action-btn'
+          }
       }, 
       trash : {
           value : trashSusp,
           attr : {
-              class : 'text-center'
+              class : 'text-center action-btn'
           }
       }, 
       extra : extra
