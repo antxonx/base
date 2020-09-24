@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Modal from "@scripts/plugins/Modal";
 import AlertModal from "@scripts/plugins/AlertModal";
+import Alert from '@scripts/plugins/Alert';
 import Axios from "axios";
 import { ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
@@ -8,6 +9,7 @@ import { openAddressModal } from './addAddress';
 import { evaluateInputs, hideElement, showElement } from '@scripts/plugins/Required';
 import { openContactModal } from './contact/addContact';
 import { showContact } from './contact/show';
+import { deleteElement } from '@scripts/plugins/DeleteElement';
 
 let MODAL: Modal;
 let ID: number;
@@ -205,10 +207,21 @@ const addExtraEmail = (e: Event) => {
  *
  * @param {Event} e
  */
-const deletePhone = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container")!;
-    const ALERT = (new AlertModal("Sí", "No", 1, accept, +ELEMENT.getAttribute("phone-id")!));
-    ALERT.updateBody(`¿Seguro que desea eliminar el número ${ELEMENT.getAttribute("phone-phone")!}?`).show();
+const deletePhone = async (e: Event) => {
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
+    const ID = +ELEMENT.getAttribute("phone-id")!;
+    const ALERT = new Alert(true);
+    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el número ${ID}?`).show();
+    if (res) {
+        deleteElement(ELEMENT);
+        Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
+            .then(res => {
+                Toast.success(res.data);
+            })
+            .catch(err => {
+                console.error(err.response.data);
+            });
+    }
 };
 
 /**
@@ -216,10 +229,21 @@ const deletePhone = (e: Event) => {
  *
  * @param {Event} e
  */
-const deleteEmail = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container")!;
-    const ALERT = (new AlertModal("Sí", "No", 1, accept, +ELEMENT.getAttribute("email-id")!));
-    ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ELEMENT.getAttribute("email-email")!}?`).show();
+const deleteEmail = async (e: Event) => {
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
+    const ID = +ELEMENT.getAttribute("email-id")!;
+    const ALERT = new Alert(true);
+    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ID}?`).show();
+    if (res) {
+        deleteElement(ELEMENT);
+        Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
+            .then(res => {
+                Toast.success(res.data);
+            })
+            .catch(err => {
+                console.error(err.response.data);
+            });
+    }
 };
 
 /**
