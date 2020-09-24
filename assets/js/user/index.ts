@@ -98,10 +98,11 @@ const deleteAction = (e: Event) => {
  * @param {Event} e
  */
 const reactivateAction = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row")!;
-    reactiveUser(+ELEMENT.getAttribute("id")!, () => {
-        deleteElement(ELEMENT as HTMLElement);
-    });
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+    reactiveUser(ELEMENT, () => {}, loadEvs);
+    // reactiveUser(+ELEMENT.getAttribute("id")!, () => {
+    //     deleteElement(ELEMENT as HTMLElement);
+    // });
 };
 
 /**
