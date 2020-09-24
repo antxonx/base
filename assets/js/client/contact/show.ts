@@ -1,9 +1,10 @@
 import Modal from "@scripts/plugins/Modal";
 import Axios from "axios";
-import AlertModal from '@scripts/plugins/AlertModal';
+import Alert from '@scripts/plugins/Alert';
 import { ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import { evaluateInputs, hideElement, showElement } from "@scripts/plugins/Required";
+import { deleteElement, disableRow } from "@scripts/plugins/DeleteElement";
 
 let MODAL: Modal;
 let ID: number;
@@ -158,10 +159,22 @@ const addExtraEmail = (e: Event) => {
  *
  * @param {Event} e
  */
-const deletePhone = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container")!;
-    const ALERT = (new AlertModal("Sí", "No", 1, accept, +ELEMENT.getAttribute("phone-id")!));
-    ALERT.updateBody(`¿Seguro que desea eliminar el número ${ELEMENT.getAttribute("phone-phone")!}?`).show();
+const deletePhone = async (e: Event) => {
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
+    const ID = +ELEMENT.getAttribute("phone-id")!;
+    const ALERT = new Alert(true);
+    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el número ${ID}?`).show();
+    if (res) {
+        disableRow(ELEMENT);
+        Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", ID.toString()))
+            .then(res => {
+                deleteElement(ELEMENT);
+                Toast.success(res.data);
+            })
+            .catch(err => {
+                console.error(err.response.data);
+            });
+    }
 };
 
 /**
@@ -169,30 +182,21 @@ const deletePhone = (e: Event) => {
  *
  * @param {Event} e
  */
-const deleteEmail = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container")!;
-    const ALERT = (new AlertModal("Sí", "No", 1, accept, +ELEMENT.getAttribute("email-id")!));
-    ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ELEMENT.getAttribute("email-email")!}?`).show();
-};
-
-/**
- * Aceptar eliminar el dato extra
- *
- * @param {number} type
- * @param {number} id
- * @returns {Promise<boolean>}
- */
-const accept = async (type: number, id: number): Promise<boolean> => {
-    let result = false;
-    if (type == 1) { //Eliminar dato extra
-        await Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", id.toString()))
+const deleteEmail = async (e: Event) => {
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
+    const ID = +ELEMENT.getAttribute("email-id")!;
+    const NAME = ELEMENT.getAttribute("email-email")!
+    const ALERT = new Alert(true);
+    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${NAME}?`).show();
+    if (res) {
+        disableRow(ELEMENT);
+        Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", ID.toString()))
             .then(res => {
-                result = true;
-                loadView();
+                deleteElement(ELEMENT);
+                Toast.success(res.data);
             })
             .catch(err => {
                 console.error(err.response.data);
             });
     }
-    return result;
 };

@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import Modal from "@scripts/plugins/Modal";
-import AlertModal from "@scripts/plugins/AlertModal";
 import Alert from '@scripts/plugins/Alert';
 import Axios from "axios";
 import { ROUTES, SPINNER_LOADER } from "@scripts/app";
@@ -9,7 +8,7 @@ import { openAddressModal } from './addAddress';
 import { evaluateInputs, hideElement, showElement } from '@scripts/plugins/Required';
 import { openContactModal } from './contact/addContact';
 import { showContact } from './contact/show';
-import { deleteElement } from '@scripts/plugins/DeleteElement';
+import { deleteElement, disableRow } from '@scripts/plugins/DeleteElement';
 
 let MODAL: Modal;
 let ID: number;
@@ -214,9 +213,10 @@ const deletePhone = async (e: Event) => {
     const ALERT = new Alert(true);
     const res = await ALERT.updateBody(`¿Seguro que desea eliminar el número ${ID}?`).show();
     if (res) {
-        deleteElement(ELEMENT);
+        disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
             .then(res => {
+                deleteElement(ELEMENT);
                 Toast.success(res.data);
             })
             .catch(err => {
@@ -236,9 +236,10 @@ const deleteEmail = async (e: Event) => {
     const ALERT = new Alert(true);
     const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ID}?`).show();
     if (res) {
-        deleteElement(ELEMENT);
+        disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
             .then(res => {
+                deleteElement(ELEMENT);
                 Toast.success(res.data);
             })
             .catch(err => {
