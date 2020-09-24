@@ -5,7 +5,7 @@ import Toast from '@scripts/plugins/AlertToast';
 import * as Search from '@scripts/plugins/Search';
 import { openAddModal } from './add';
 import { deleteClient } from './delete';
-import DeleteElement from '@scripts/plugins/DeleteElement';
+import { deleteElement } from '@scripts/plugins/DeleteElement';
 import { showClient } from './show';
 import getSort, { SortColumn } from '@scripts/plugins/SortColumn';
 
@@ -61,11 +61,8 @@ const searchField = (data: string) => {
  * @param {Event} e
  */
 const deleteAction = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
-    const ID = +ELEMENT.getAttribute("id")!;
-    deleteClient(ID, () => {
-        DeleteElement(ELEMENT as HTMLElement);
-    });
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
+    deleteClient(ELEMENT, () => { }, loadEvs);
 };
 
 /**

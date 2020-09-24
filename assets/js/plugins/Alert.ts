@@ -63,21 +63,7 @@ export default class Modal {
      * @memberof Modal
      */
     private modal: HTMLElement;
-    /**
-     * Acción a realizar una vez aceptada
-     *
-     * @private
-     * @memberof Modal
-     */
-    private onAccept: (type: number, id?: number) => Promise<boolean>;
-    /**
-     * Tipo de solicitud
-     *
-     * @private
-     * @type {number}
-     * @memberof Modal
-     */
-    private type: number;
+
     /**
      * Texto para aceptar
      *
@@ -85,7 +71,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private ok: string;
+    private ok: string = '<i class="fa fa-check fa-2x text-success"></i>';
     /**
      *texte para cancelar
      *
@@ -93,25 +79,42 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private cancel: string;
+    private cancel: string = '<i class="fa fa-times fa-2x text-danger"></i>';
+
     /**
-     * Contenido para pasar al aceptar
-     *
-     * @private
-     * @type {*}
-     * @memberof Modal
-     */
-    private id: any;
-    /**
-     * Decidir si responder con la alerta o cerrar
+     * Saber si llevará botón para cancelar
      *
      * @private
      * @type {boolean}
      * @memberof Modal
      */
-    private endStatus: boolean;
+    private hasCancel: boolean;
 
-    private ondismiss: () => void;
+    /**
+     * Ondimiss action
+     *
+     * @private
+     * @memberof Modal
+     */
+    private ondismiss: (status: boolean) => void;
+
+    /**
+     * Estado de la petición
+     *
+     * @private
+     * @type {boolean}
+     * @memberof Modal
+     */
+    private status: boolean;
+
+    /**
+     * Consición de espera del usuario
+     *
+     * @private
+     * @type {boolean}
+     * @memberof Modal
+     */
+    private next : boolean;
 
     /**
      *Estrutura principal del modal
@@ -132,28 +135,22 @@ export default class Modal {
     </div>
     `;
     /**
-     * Crear una instancia de AlertModal
-     * @param {string} ok
-     * @param {string} [cancel=""]
-     * @param {number} [type=0]
-     * @param {boolean} [onAccept=async (type : number, id? : any) => true]
-     * @param {*} [id]
+     * Crear una instancia de Alert
+     * @param {boolean} [hasCacnel=false]
      * @param {boolean} [endStatus=true]
+     * @param {(status : boolean) => void} [ondismiss=() => { }]
      * @memberof Modal
      */
-    public constructor (ok: string, cancel: string = "", type = 0, onAccept = async (type: number, id?: any) => true, id?: any, endStatus = true, ondismiss: () => void = () => { }) {
+    public constructor (hasCacnel: boolean = false, ondismiss: (status : boolean) => void = () => { }) {
         this.modalId = this.randomId();
-        this.onAccept = onAccept;
-        this.type = type;
-        this.ok = ok;
-        this.endStatus = endStatus;
-        this.cancel = cancel;
+        this.hasCancel = hasCacnel;
         this.modalViewIdLabel = this.randomId();
         this.modalDialogId = this.randomId();
         this.modalBodyId = this.randomId();
         this.modalFooter = this.randomId();
-        this.id = id;
         this.ondismiss = ondismiss;
+        this.status = false;
+        this.next = false;
         this.modal = this.htmlToElement("<div></div>");
         this.createModal();
     }
@@ -215,48 +212,39 @@ export default class Modal {
     /**
      * Mostrar la alerta
      *
+     * @param {boolean} [dismiss=true]
+     * @returns {Promise<boolean>}
      * @memberof Modal
      */
-    public show(dismiss = true) {
+    public async show(dismiss: boolean = true) : Promise<boolean> {
         this.setSize();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
+            this.next = true;
             this.deleteModal();
-            this.ondismiss();
+            this.ondismiss(this.status);
             //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
             if (document.getElementsByClassName("modal").length > 0) {
                 $('body').addClass('modal-open');
             }
             //.
         });
-        document.getElementById("acceptAlert")!.addEventListener("click", async () => {
-            let res: boolean;
-            document.getElementById(this.modalFooter)!.innerHTML = '<div class="w-100 d-flex justify-content-center"><div class="spinner"></div></div>';
-            if (this.id) {
-                res = await this.onAccept(this.type, this.id);
-            } else {
-                res = await this.onAccept(this.type);
-            }
-            if (this.endStatus) {
-                if (res) {
-                    this.updateBody(`
-                    <div class="text-center text-success">
-                        ¡Listo!
-                    </div>
-                    `);
-                } else {
-                    this.updateBody(`
-                    <div class="text-center text-danger">
-                        ¡Ocurrió un error!
-                    </div>
-                    `);
-                }
-                this.cancel = "";
-                this.build(dismiss);
-            } else {
-                this.hide();
-            }
+        document.getElementById("acceptAlert")!.addEventListener("click", () => {
+            this.next = true;
+            this.status = true;
         });
+        await this.waitForInput();
+        return this.status;
+    }
+
+    /**
+     * Esperar input de usuario
+     *
+     * @memberof Modal
+     */
+    public async waitForInput() {
+        while (this.next === false) await this.timeout(50);
+        this.next = false;
     }
 
     /**
@@ -295,22 +283,12 @@ export default class Modal {
      * @param {boolean} [dismiss=false]
      * @memberof Modal
      */
-    private build(dismiss: boolean = false) {
-        let acDis, acId, acceptMsg;
-        if (dismiss) {
-            acDis = 'data-dismiss="modal"';
-            acId = 'acceptNoTrigger';
-            acceptMsg = 'Aceptar';
-        } else {
-            acDis = '';
-            acId = "acceptAlert";
-            acceptMsg = this.ok;
-        }
-        if (this.cancel != "") {
+    private build() {
+        if (this.hasCancel) {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="d-flex justify-content-around w-100 alert-content">
-                <button type="button" id="acceptAlert" class="btn btn-lg w-100 font-weight-bold">${this.ok}</button>
+                <button type="button" id="acceptAlert" class="btn btn-lg w-100 font-weight-bold" data-dismiss="modal">${this.ok}</button>
                 <button type="button" class="btn btn-lg w-100 text-danger font-weight-bold" data-dismiss="modal">${this.cancel}</button>
                 </div>
                  `;
@@ -318,11 +296,14 @@ export default class Modal {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="w-100 alert-content">
-                <button type="button" id="${acId}" class="btn btn-lg w-100 font-weight-bold" ${acDis}>${acceptMsg}</button>
+                <button type="button" id="acceptAlert" class="btn btn-lg w-100 font-weight-bold" data-dismiss="modal">${this.ok}</button>
                 </div>
                 `;
         }
     }
+
+    // this is an async timeout util
+    private timeout = async (ms : number) => new Promise(res => setTimeout(res, ms));
 
     /**
      * Generar un ID aleatorio

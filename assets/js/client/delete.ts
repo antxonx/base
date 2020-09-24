@@ -1,39 +1,33 @@
-import AlertModal from '@scripts/plugins/AlertModal';
+import Alert from '@scripts/plugins/Alert';
 import Axios from 'axios';
 import Toast from '@scripts/plugins/AlertToast';
 import { ROUTES } from '@scripts/app';
-let CALLBACK: () => void = () => { };
+import { deleteElement, disableRow, restoreRow } from '@scripts/plugins/DeleteElement';
 
 /**
- * Eliminar cliente
+ * Eliminar usuario
  *
- * @param {number} id
- * @param {() => void} [callback=CALLBACK]
+ * @param {HTMLElement} element
+ * @param {() => void} [onSuccess=() => { }]
+ * @param {() => void} [onError=() => { }]
  */
-export const deleteClient = (id: number, callback: () => void = CALLBACK) => {
-    CALLBACK = callback;
-    const ALERT = new AlertModal("sí", "No", 1, accept, id);
-    ALERT.updateBody(`¿Seguro que desea eliminar al cliente <b>${id}</b>?`).show();
-};
-
-/**
- * Aceptar alerta
- *
- * @param {number} _
- * @param {number} id
- * @returns {Promise<boolean>}
- */
-const accept = async (_: number, id: number): Promise<boolean> => {
-    let result = false;
-    await Axios.delete(ROUTES.client.api.delete.replace("0", id.toString()))
-        .then(res => {
-            result = true;
-            Toast.success(res.data);
-            CALLBACK();
-        })
-        .catch(err => {
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        });
-    return result;
+export const deleteClient = async (element: HTMLElement, onSuccess: () => void = () => { }, onError: () => void = () => { }) => {
+    const ID = +element.getAttribute("id")!;
+    const ALERT = new Alert(true);
+    let res = await ALERT.updateBody(`¿Seguro que quiere eliminar al cliente <b>${ID}</b>?`).show();
+    if (res) {
+        const BTNS_BEF = disableRow(element);
+        Axios.delete(ROUTES.client.api.delete.replace("0", ID.toString()))
+            .then(res => {
+                Toast.success(res.data);
+                deleteElement(element);
+                onSuccess();
+            })
+            .catch(err => {
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+                restoreRow(element, BTNS_BEF);
+                onError();
+            });
+    }
 };

@@ -9,7 +9,7 @@ import Toast from '@scripts/plugins/AlertToast';
 import { openKeyModal } from '@scripts/user/key';
 import { initButtonCheck, unMarkActive } from '@scripts/plugins/ButtonCheck';
 import { reactiveUser } from './reactive';
-import DeleteElement from '@scripts/plugins/DeleteElement';
+import { deleteElement } from '@scripts/plugins/DeleteElement';
 import getSort, { SortColumn } from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("usersView")!;
@@ -88,10 +88,8 @@ const addUserAction = () => {
  * @param {Event} e
  */
 const deleteAction = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row")!;
-    deleteUser(+ELEMENT.getAttribute("id")!, () => {
-        DeleteElement(ELEMENT as HTMLElement);
-    });
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+    deleteUser(ELEMENT, () => {}, loadEvs);
 };
 
 /**
@@ -100,10 +98,11 @@ const deleteAction = (e: Event) => {
  * @param {Event} e
  */
 const reactivateAction = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row")!;
-    reactiveUser(+ELEMENT.getAttribute("id")!, () => {
-        DeleteElement(ELEMENT as HTMLElement);
-    });
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+    reactiveUser(ELEMENT, () => {}, loadEvs);
+    // reactiveUser(+ELEMENT.getAttribute("id")!, () => {
+    //     deleteElement(ELEMENT as HTMLElement);
+    // });
 };
 
 /**
