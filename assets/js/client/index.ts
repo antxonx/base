@@ -61,11 +61,8 @@ const searchField = (data: string) => {
  * @param {Event} e
  */
 const deleteAction = (e: Event) => {
-    const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
-    const ID = +ELEMENT.getAttribute("id")!;
-    deleteClient(ID, () => {
-        deleteElement(ELEMENT as HTMLElement);
-    });
+    const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
+    deleteClient(ELEMENT, () => {}, loadEvs);
 };
 
 /**
