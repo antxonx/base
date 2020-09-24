@@ -62,7 +62,7 @@ const searchField = (data: string) => {
  */
 const deleteAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
-    deleteClient(ELEMENT, () => {}, loadEvs);
+    deleteClient(ELEMENT, () => { }, loadEvs);
 };
 
 /**

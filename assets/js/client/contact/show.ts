@@ -185,7 +185,7 @@ const deletePhone = async (e: Event) => {
 const deleteEmail = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("email-id")!;
-    const NAME = ELEMENT.getAttribute("email-email")!
+    const NAME = ELEMENT.getAttribute("email-email")!;
     const ALERT = new Alert(true);
     const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${NAME}?`).show();
     if (res) {

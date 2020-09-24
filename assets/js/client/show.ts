@@ -36,7 +36,7 @@ const showClientLocal = () => {
  *
  */
 const loadClient = (loading = true) => {
-    if(loading)
+    if (loading)
         MODAL.loadingBody();
     Axios.get(ROUTES.client.view.show.replace('0', ID.toString()))
         .then(res => {
@@ -259,7 +259,7 @@ const deleteContactAction = async (e: Event) => {
     const ID = +ELEMENT.getAttribute("contactid")!;
     const ALERT = new Alert(true);
     const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ID}?`).show();
-    if(res) {
+    if (res) {
         MODAL.loadingBody();
         await Axios.delete(ROUTES.client.api.contactDelete.replace("0", ID.toString()))
             .then(res => {
