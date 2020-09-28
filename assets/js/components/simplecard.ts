@@ -1,25 +1,75 @@
-import { htmlToElement } from "@scripts/plugins/Required";
+import htmlToElement from "@components/HtmlToElement";
+
+/* -------------------------------------------------------------------------- */
+/*                              Estrucutras base                              */
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------ contenedor de la tarjeta ------------------------ */
 
 const _BASE = `<div class="card card-body board"></div>`;
 
+/* ------------------------------------ . ----------------------------------- */
+
+/* ------------------------ contenedor para el cuerpo ----------------------- */
+
 const _CONTENT = `<div>#content#</div>`;
+
+/* ------------------------------------ . ----------------------------------- */
+
+/* ------------------------ Contenedor para el título ----------------------- */
 
 const _TITLE = `<div>#title#<hr></div>`;
 
+/* ------------------------------------ . ----------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                      .                                     */
+/* -------------------------------------------------------------------------- */
+
 (function () {
     [ ...document.getElementsByTagName("simple-card") ].forEach(el => {
-        const CONTENT = el.getElementsByTagName("simple-card-content")[0]?.innerHTML;
-        const TITLE = el.getElementsByTagName("simple-card-title")[0]?.innerHTML;
+
+        /* -------------------- Tomamos los parámetros definidos -------------------- */
+
+        const CONTENT = el.getElementsByTagName("simple-card-content")[ 0 ]?.innerHTML;
+        const TITLE = el.getElementsByTagName("simple-card-title")[ 0 ]?.innerHTML;
         const CLASS = el.getAttribute("class");
+
+        /* ------------------------------------ . ----------------------------------- */
+
+        /* --------------------- Creamos la base del componente --------------------- */
+
         let template = htmlToElement(_BASE);
 
-        if(TITLE && TITLE != ""){
+        /* ------------------------------------ . ----------------------------------- */
+
+        /* ---------------------- Si tiene título se lo ponemos --------------------- */
+
+        if (TITLE && TITLE != "") {
             template.appendChild(htmlToElement(_TITLE.replace("#title#", TITLE)));
         }
-        if(CLASS && CLASS != ""){
+
+        /* ------------------------------------ . ----------------------------------- */
+
+        /* -------------------- Si tiene clases se las agregamos -------------------- */
+
+        if (CLASS && CLASS != "") {
             template.classList.add(CLASS);
         }
+
+        /* ------------------------------------ . ----------------------------------- */
+
+        /* ------------------------- Agregamos el contenido ------------------------- */
+
         template.appendChild(htmlToElement(_CONTENT.replace("#content#", CONTENT)));
+
+        /* ------------------------------------ . ----------------------------------- */
+
+        /* ----------------- remplazamos la etiqueta por el elemento ---------------- */
+
         el.parentElement!.replaceChild(template, el);
+
+        /* ------------------------------------ . ----------------------------------- */
+
     });
 })();
