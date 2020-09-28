@@ -82,6 +82,8 @@ Encore
 let config = Encore.getWebpackConfig();
 config.resolve.alias["@scripts"] = path.resolve(__dirname, 'assets/js');
 config.resolve.alias["@styles"] = path.resolve(__dirname, 'assets/css');
+config.resolve.alias["@plugins"] = path.resolve(__dirname, 'assets/js/plugins');
+config.resolve.alias["@components"] = path.resolve(__dirname, 'assets/js/components');
 module.exports = config;
 
 // module.exports = Encore.getWebpackConfig();

@@ -6,60 +6,66 @@
     </div>
     {% endif %}
     <div class="col">
-        <div class="card">
-            <div class="card-body board">
+        <simple-card>
+            <simple-card-title>
                 Hola
-                <hr>
-                <div class="bg-info" style="height: 200px;">
-                    x
-                </div>
-            </div>
-        </div>
+            </simple-card-title>
+            <simple-card-content>
+                2
+            </simple-card-content>
+        </simple-comp>
     </div>
     <div class="col">
-        <div class="card">
-            <div class="card-body board">
-                Hola
-                <hr>
-                <div class="bg-secondary" style="height: 200px;">
-                    x
-                </div>
-            </div>
-        </div>
+        <simple-card>
+            <simple-card-content>
+                2
+            </simple-card-content>
+        </simple-comp>
     </div>
     {# . #}
 </div>
 <div class="row w-99 mt-lg-5 mx-auto">
     <div class="col">
-        <div class="card">
-            <div class="card-body board">
-                Hola
-                <hr>
-                <div class="bg-warning" style="height: 200px;">
-                    x
-                </div>
-            </div>
-        </div>
+        <simple-card>
+            <simple-card-title>
+                Título
+            </simple-card-title>
+            <simple-card-content>
+                3
+            </simple-card-content>
+        </simple-card>
     </div>
     <div class="col">
-        <div class="card">
-            <div class="card-body board">
-                Hola
-                <hr>
-                <div class="bg-success" style="height: 200px;">
-                    x
-                </div>
-            </div>
-        </div>
+        <simple-card>
+            <simple-card-content>
+                4
+            </simple-card-content>
+        </simple-card>
     </div>
 </div>
 {% if is_granted("ROLE_GOD") %}
     <div class="row w-99 mt-lg-5 mx-auto">
         <div class="col">
-            {% include "view/home/boards/infoLog.html.twig" %}
+            <simple-card>
+                <simple-card-title>
+                    <h5 class="d-inline">Últimos registros info</h5>
+                    <a class="btn btn-info float-right" href="{{ path('logger_index') }}">Ver</a>
+                </simple-card-title>
+                <simple-card-content>
+                    {% include "view/home/boards/infoLog.html.twig" %}
+                </simple-card-content>
+            </simple-card>
         </div>
         <div class="col">
-            {% include "view/home/boards/errorLog.html.twig" %}
+            <simple-card>
+                <simple-card-title>
+                    <h5 class="d-inline">Últimos registros info</h5>
+                    <a class="btn btn-info float-right" href="{{ path('logger_index') }}">Ver</a>
+                </simple-card-title>
+                <simple-card-content>
+                    {% include "view/home/boards/errorLog.html.twig" %}
+                </simple-card-content>
+            </simple-card>
         </div>
     </div>
 {% endif %}
