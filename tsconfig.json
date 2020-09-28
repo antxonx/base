@@ -11,7 +11,9 @@
         "baseUrl": ".",
         "paths": {
             "@scripts/*": ["assets/js/*"],
-            "@styles/*": ["assets/css/*"]
+            "@styles/*": ["assets/css/*"],
+            "@components/*": ["assets/js/components/*"],
+            "@plugins/*": ["assets/js/plugins/*"]
         }
     },
 }
