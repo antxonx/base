@@ -66,7 +66,7 @@ const validate = (e: Event) => {
             console.log("Sí");
         } else {
             INPUTS.forEach(el => clearValidState(el));
-            insertAlertAfter(BTN, "Las contraseñas con coinciden");
+            insertAlertAfter(BTN, "Las contraseñas no coinciden");
         }
     }
 };

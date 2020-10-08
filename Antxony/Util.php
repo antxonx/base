@@ -5,6 +5,7 @@
 
 namespace Antxony;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Alejandro Antonio <dantonyofcarim@gmail.com>
  */
 class Util {
-    
+
     /**
      * Cantidad de elementos por página
      * @var int
@@ -47,22 +48,22 @@ class Util {
     {
             $this->logger->error($message, [
                 'user_log' => true
-            ]);   
+            ]);
     }
 
     /**
      * Escribir un registro de error a partir de una excepción
      *
-     * @param \Exception $e Excepción
+     * @param Exception $e Excepción
      * @return void
      */
-    public function errorException(\Exception $e) : void
+    public function errorException(Exception $e) : void
     {
         $this->logger->error($e->getMessage(), [
             'user_log' => true,
             'file' => $e->getFile(),
             'line' => $e->getLine()
-        ]);   
+        ]);
     }
 
     /**
@@ -81,18 +82,21 @@ class Util {
     /**
      * Devolver una respuesta de error y escribir un registro a partir de la excepción
      *
-     * @param \Exception $e Excepción
+     * @param Exception $e Excepción
      * @return Response
      */
-    public function errorResponse(\Exception $e) : Response
+    public function errorResponse(Exception $e) : Response
     {
         $this->logger->error($e->getMessage(), [
             'user_log' => true,
             'file' => $e->getFile(),
             'line' => $e->getLine()
-        ]);   
+        ]);
         if ((bool)$_ENV["APP_DEBUG"]) {
-            return new Response($e->getFile() . ":" .  $e->getLine() . " " . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new Response(
+                $e->getFile() . ":" .  $e->getLine() . " " . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
         } else {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
