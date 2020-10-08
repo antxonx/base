@@ -1,26 +1,25 @@
 .dropdown-toggle
     &::after
         transition: transform 0.15s linear !important
- 
+
 .show
-    &.dropdown 
+    &.dropdown
         .dropdown-toggle
-            &::after 
+            &::after
                 transform: translateY(3px) !important
 
-.dropdown-menu 
+.dropdown-menu
     margin-top: 0px !important
-    transform: translateX(-30px) !important
+    transform: translateX(-90px) !important
 
 @media screen and (max-width: 900px) and (min-width: 300px)
 
     .show
-        &.dropdown 
+        &.dropdown
             .dropdown-toggle
-                &::after 
+                &::after
                     transform: translateY(3px)
 
     .dropdown-menu
         margin-top: 0px !important
         transform: translateX(0px) !important
-    
