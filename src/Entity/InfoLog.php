@@ -6,7 +6,11 @@
 namespace App\Entity;
 
 use App\Repository\InfoLogRepository;
+use DateTime;
+use DateTimeInterface;
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * @ORM\Entity(repositoryClass=InfoLogRepository::class)
@@ -69,9 +73,9 @@ class InfoLog
     /**
      * Undocumented function
      *
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -79,10 +83,10 @@ class InfoLog
     /**
      * Undocumented function
      *
-     * @param \DateTimeInterface $createdAt
+     * @param DateTimeInterface $createdAt
      * @return self
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -161,10 +165,11 @@ class InfoLog
     /**
      *
      * @ORM\PrePersist
+     * @throws Exception
      */
     public function created()
     {
-        $this->createdAt = new \DateTime("now", new \DateTimeZone("America/Mexico_City"));
+        $this->createdAt = new DateTime("now", new DateTimeZone("America/Mexico_City"));
     }
 
     /**

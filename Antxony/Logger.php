@@ -27,14 +27,14 @@ class Logger extends AbstractProcessingHandler
 
     /**
      * Registro hecho por el sistema
-     * 
-     * @var bool 
+     *
+     * @var bool
      */
     public const LOG_SYSTEM = true;
 
     /**
      * Registro hecho por el usuario
-     * 
+     *
      * @var bool
      */
     public const LOG_USER = false;
@@ -82,7 +82,7 @@ class Logger extends AbstractProcessingHandler
         }
 
         /* ------------------------------------ . ----------------------------------- */
-       
+
         if (
             $record['level'] == MonologLogger::NOTICE ||
             $record['level'] ==  MonologLogger::INFO
@@ -98,7 +98,8 @@ class Logger extends AbstractProcessingHandler
                 !(isset($record['context']['user_log']) &&
                 $record['context']['user_log'])
             ) {
-                //Pero los de tipo INFO Solamente los guardamos si son de usuario (Para evitar demasiados registros inecesarios)
+                //Pero los de tipo INFO Solamente los guardamos si son de usuario
+                //(Para evitar demasiados registros inecesarios)
                 return;
             }
 

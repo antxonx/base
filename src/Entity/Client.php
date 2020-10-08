@@ -2,13 +2,18 @@
 /**
  * Client entity
  */
+
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use DateTime;
+use DateTimeInterface;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -142,9 +147,9 @@ class Client
     /**
      * Undocumented function
      *
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -152,10 +157,10 @@ class Client
     /**
      * Undocumented function
      *
-     * @param \DateTimeInterface $createdAt
+     * @param DateTimeInterface $createdAt
      * @return self
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -165,9 +170,9 @@ class Client
     /**
      * Undocumented function
      *
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -175,10 +180,10 @@ class Client
     /**
      * Undocumented function
      *
-     * @param \DateTimeInterface $updatedAt
+     * @param DateTimeInterface $updatedAt
      * @return self
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -236,12 +241,13 @@ class Client
      *
      * @param User $user
      * @return self
+     * @throws Exception
      */
-    public function created(User $user) : self
+    public function created(User $user): self
     {
-        $this->createdAt = new \DateTime("now", new \DateTimeZone("America/Mexico_city"));
+        $this->createdAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
         $this->createdBy = $user;
-        $this->updatedAt = new \DateTime("now", new \DateTimeZone("America/Mexico_city"));
+        $this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
         $this->updatedBy = $user;
         return $this;
     }
@@ -251,10 +257,11 @@ class Client
      *
      * @param User $user
      * @return self
+     * @throws Exception
      */
-    public function updated(User $user) : self
+    public function updated(User $user): self
     {
-        $this->updatedAt = new \DateTime("now", new \DateTimeZone("America/Mexico_city"));
+        $this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
         $this->updatedBy = $user;
         return $this;
     }
@@ -283,6 +290,7 @@ class Client
     }
 
     /**
+     * @param int $type
      * @return Collection|ClientExtra[]
      */
     public function getClientExtras(int $type): Collection

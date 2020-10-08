@@ -22,12 +22,12 @@ class User implements UserInterface
     /**
      * @var string
      */
-    const FK_USERNAME ="UQ_USERNAME";
+    const FK_USERNAME = "UQ_USERNAME";
 
     /**
      * @var string
      */
-    const FK_MAIL ="UQ_MAIL";
+    const FK_MAIL = "UQ_MAIL";
 
     /**
      * @ORM\Id()
@@ -84,7 +84,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -101,9 +101,9 @@ class User implements UserInterface
     }
 
     /**
+     * @return array
      * @see UserInterface
      *
-     * @return array
      */
     public function getRoles(): array
     {
@@ -128,13 +128,13 @@ class User implements UserInterface
     }
 
     /**
+     * @return string
      * @see UserInterface
      *
-     * @return string
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     /**
@@ -151,9 +151,9 @@ class User implements UserInterface
     }
 
     /**
+     * @return void
      * @see UserInterface
      *
-     * @return void
      */
     public function getSalt()
     {
@@ -161,9 +161,9 @@ class User implements UserInterface
     }
 
     /**
+     * @return void
      * @see UserInterface
      *
-     * @return void
      */
     public function eraseCredentials()
     {
@@ -246,7 +246,7 @@ class User implements UserInterface
      * @param string $role
      * @return boolean
      */
-    public function hasRole(string $role) : bool
+    public function hasRole(string $role): bool
     {
         return in_array($role, $this->roles);
     }
