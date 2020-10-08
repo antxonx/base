@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Antxony\Util;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Throwable;
 
 /**
  * Usuarios
@@ -26,16 +26,16 @@ use Throwable;
 class UserController extends AbstractController
 {
     /**
-    * Repositorio de usuarios
-    *
-    * @var UserRepository
-    */
+     * Repositorio de usuarios
+     *
+     * @var UserRepository
+     */
     protected $rep;
 
     /**
      * Usuario actual
      *
-     * @var \App\Entity\User
+     * @var User
      */
     protected $actualUser;
 
@@ -61,7 +61,7 @@ class UserController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param Util $util
      */
-    public function __construct(UserRepository $rep, Security $security, UserPasswordEncoderInterface  $passwordEncoder, Util $util)
+    public function __construct(UserRepository $rep, Security $security, UserPasswordEncoderInterface $passwordEncoder, Util $util)
     {
         $this->actualUser = $security->getUser();
         $this->util = $util;
@@ -76,7 +76,7 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
         return $this->render('view/user/index.html.twig', [
             'controller_name' => 'UserController',
@@ -91,21 +91,21 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function indexA(Request $request) : Response
+    public function indexA(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
             $result = $this->rep->getBy($params);
-            $showed = ((isset($params->page))?$params->page*$this->util::PAGE_COUNT:$this->util::PAGE_COUNT);
+            $showed = ((isset($params->page)) ? $params->page * $this->util::PAGE_COUNT : $this->util::PAGE_COUNT);
             $users = $result['paginator'];
             $maxPages = ceil($users->count() / $this->util::PAGE_COUNT);
             return $this->render("view/user/tbody.html.twig", [
                 'users' => $users,
-                'maxPages'=>$maxPages,
-                'thisPage' => ((isset($params->page))?$params->page:1),
-                'showed' => (($showed > $users->count())?$users->count():$showed),
+                'maxPages' => $maxPages,
+                'thisPage' => ((isset($params->page)) ? $params->page : 1),
+                'showed' => (($showed > $users->count()) ? $users->count() : $showed),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -117,11 +117,11 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function form() : Response
+    public function form(): Response
     {
         try {
             return $this->render("view/user/form.html.twig");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -133,11 +133,11 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function key() : Response 
+    public function key(): Response
     {
         try {
             return $this->render("view/user/key.html.twig");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -151,7 +151,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function keyUpdate(int $id, Request $request) : Response 
+    public function keyUpdate(int $id, Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -160,7 +160,7 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info("Se ha acutalizado la contraseña del usuario {$user->getId()}");
             return new Response("Se ha actualizado la contraseña");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -173,7 +173,7 @@ class UserController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function reactivate(int $id) : Response
+    public function reactivate(int $id): Response
     {
         try {
             $user = $this->rep->find($id);
@@ -181,7 +181,7 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info("Se ha reactivado al usuario {$id}");
             return new Response("Usuario reactivado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -189,16 +189,16 @@ class UserController extends AbstractController
     /**
      * Mostrar perfil de usuario
      * @Route("/profile", name="user_profile", methods={"GET"})
-     * 
+     *
      * @return Response
      */
-    public function profile() : Response 
+    public function profile(): Response
     {
         try {
             return $this->render("view/user/profile.html.twig", [
                 // 'user' => $user
             ]);
-        } catch (\Exception $e){
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -211,17 +211,17 @@ class UserController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function edit(int $id) : Response
+    public function edit(int $id): Response
     {
         try {
             $user = $this->rep->find($id);
             if ($user == null) {
-                throw new \Exception("No se ha encontrado el usuario");
+                throw new Exception("No se ha encontrado el usuario");
             }
-           return $this->render("view/user/edit.html.twig", [
-               'user' => $user
-           ]);
-        } catch (\Exception $e) {
+            return $this->render("view/user/edit.html.twig", [
+                'user' => $user
+            ]);
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -234,7 +234,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function add(Request $request) : Response
+    public function add(Request $request): Response
     {
         $content = json_decode($request->getContent());
         try {
@@ -253,18 +253,18 @@ class UserController extends AbstractController
             $this->rep->add($user);
             $this->util->info("Se ha agregado al usuario {$user->getId()}");
             return new Response("Usuario agregado");
-        } catch (UniqueConstraintViolationException $e) {
-            
-            if($this->util->containsString($e->getMessage(), User::FK_USERNAME)){
+        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
+
+            if ($this->util->containsString($e->getMessage(), User::FK_USERNAME)) {
                 $message = "El usuario <b>{$content->username}</b> ya existe.";
-            } elseif($this->util->containsString($e->getMessage(), User::FK_MAIL)) {
+            } elseif ($this->util->containsString($e->getMessage(), User::FK_MAIL)) {
                 $message = "El correo <b>{$content->email}</b> ya está en uso.";
             } else {
                 $message = $e->getMessage();
             }
             $this->util->errorException($e);
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -278,12 +278,11 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function update(int $id, Request $request) : Response
+    public function update(int $id, Request $request): Response
     {
+        $content = json_decode(json_encode($request->getContent()));
         try {
             parse_str($request->getContent(), $content);
-            $content = json_decode(json_encode($content));
-            $message = "Se ha actualizado";
 
             $user = $this->rep->find($id);
             $message = "Se ha actualizado";
@@ -295,7 +294,7 @@ class UserController extends AbstractController
                 $user->setMail($content->value);
                 $message .= " el correo";
             }
-            
+
             if ($content->name == "name") {
                 $user->setName($content->value);
                 $message .= " el nombre";
@@ -307,42 +306,42 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info($message . " del usuario {$user->getId()}");
             return new response($message);
-        } catch (UniqueConstraintViolationException $e) {
-            if($this->util->containsString($e->getMessage(), User::FK_USERNAME)){
+        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
+            if ($this->util->containsString($e->getMessage(), User::FK_USERNAME)) {
                 $message = "El usuario <b>{$content->value}</b> ya existe.";
-            } elseif($this->util->containsString($e->getMessage(), User::FK_MAIL)) {
+            } elseif ($this->util->containsString($e->getMessage(), User::FK_MAIL)) {
                 $message = "El correo <b>{$content->value}</b> ya está en uso.";
             } else {
                 $message = $e->getMessage();
             }
             $this->util->errorException($e);
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * Eliminar a un usuario
-    * @Route("/{id}", name="user_delete", methods={"DELETE"})
-    * @IsGranted("ROLE_ADMIN")
-    *
-    * @param integer $id
-    * @return Response
-    */
-    public function delete(int $id) : Response
+     * Eliminar a un usuario
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param integer $id
+     * @return Response
+     */
+    public function delete(int $id): Response
     {
         try {
             $user = $this->rep->find($id);
-            if($user->hasRole("ROLE_GOD")){
-                throw new \Exception("No se puede eliminar a Dios");
+            if ($user->hasRole("ROLE_GOD")) {
+                throw new Exception("No se puede eliminar a Dios");
             } else {
                 $user->setSuspended(true);
             }
             $this->rep->update();
             $this->util->info("Se ha suspendido al usuario {$id}");
             return new Response("Usuario suspendido");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }

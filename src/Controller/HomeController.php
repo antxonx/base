@@ -9,6 +9,7 @@ use App\Entity\Client;
 use Antxony\Util;
 use App\Entity\InfoLog;
 use App\Entity\ErrorLog;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +64,7 @@ class HomeController extends AbstractController
                 'infoLogs' => $infoLogs,
                 'errorLogs' => $errorLogs
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }

@@ -5,6 +5,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ErrorLogRepository;
@@ -39,7 +41,7 @@ class LoggerController extends AbstractController
     /**
      * Usuario actual
      *
-     * @var \App\Entity\User
+     * @var User
      */
     protected $actualUser;
 
@@ -49,7 +51,7 @@ class LoggerController extends AbstractController
      * @var Util
      */
     protected $util;
-    
+
 
     /**
      * Constructor
@@ -80,7 +82,7 @@ class LoggerController extends AbstractController
             return $this->render('view/logger/index.html.twig', [
                 'controller_name' => 'LoggerController',
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -107,7 +109,7 @@ class LoggerController extends AbstractController
                 'thisPage' => ((isset($params->page))?$params->page:1),
                 'showed' => (($showed > $entities->count())?$entities->count():$showed),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -134,7 +136,7 @@ class LoggerController extends AbstractController
                 'thisPage' => ((isset($params->page))?$params->page:1),
                 'showed' => (($showed > $entities->count())?$entities->count():$showed),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
