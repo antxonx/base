@@ -2,10 +2,13 @@
 /**
  * ContractExtra Repository
  */
+
 namespace App\Repository;
 
 use App\Entity\ContactExtra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -31,6 +34,8 @@ class ContactExtraRepository extends ServiceEntityRepository
      *
      * @param ContactExtra $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(ContactExtra $entity)
     {
@@ -42,6 +47,8 @@ class ContactExtraRepository extends ServiceEntityRepository
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -53,6 +60,8 @@ class ContactExtraRepository extends ServiceEntityRepository
      *
      * @param ContactExtra $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(ContactExtra $entity)
     {

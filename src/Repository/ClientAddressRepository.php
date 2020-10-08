@@ -2,10 +2,13 @@
 /**
  *  ClientAddress Repository
  */
+
 namespace App\Repository;
 
 use App\Entity\ClientAddress;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,11 +29,13 @@ class ClientAddressRepository extends ServiceEntityRepository
         parent::__construct($registry, ClientAddress::class);
     }
 
-     /**
+    /**
      * Agregar entidad
      *
      * @param ClientAddress $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(ClientAddress $entity)
     {
@@ -42,6 +47,8 @@ class ClientAddressRepository extends ServiceEntityRepository
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -53,6 +60,8 @@ class ClientAddressRepository extends ServiceEntityRepository
      *
      * @param ClientAddress $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(ClientAddress $entity)
     {
