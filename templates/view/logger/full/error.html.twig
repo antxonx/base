@@ -1,12 +1,12 @@
 {% set fullClass %}
     {% if entity.level == "WARNING" or entity.level == "API" %}
-    badge-warning
+        badge-warning
     {% else %}
-    badge-danger
+        badge-danger
     {% endif %}
 {% endset %}
 {% set badgeFull %}
-<span class="badge badge-role
+    <span class="badge badge-role
         {% if entity.method == "GET" %}
         badge-success
         {% elseif entity.method == "POST" %}
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="card-body">
-           
+
             <div class="alert alert-light" role="alert">
                 <h5><span class="badge {{ fullClass|trim }}">{{ entity.level }}</span></h5>
                 <span>

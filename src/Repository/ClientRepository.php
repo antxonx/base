@@ -2,11 +2,15 @@
 /**
  * Client repository
  */
+
 namespace App\Repository;
 
 use App\Entity\Client;
 use App\Entity\ClientExtra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Antxony\Util;
@@ -35,11 +39,12 @@ class ClientRepository extends ServiceEntityRepository
      * conseguir por filtrado
      *
      * @param mixed $params
-     * @return void
+     * @return array
+     * @throws QueryException
      */
-    public function getBy($params)
+    public function getBy($params): array
     {
-        $page = ((isset($params->page))?$params->page:1);
+        $page = ((isset($params->page)) ? $params->page : 1);
         // Create our query
         $query = $this->createQueryBuilder('p');
         $query->orderBy("p." . $params->ordercol, $params->orderorder)
@@ -60,17 +65,19 @@ class ClientRepository extends ServiceEntityRepository
 
         $paginator = new Paginator($query);
         $paginator->getQuery()
-        ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
-        ->setMaxResults(Util::PAGE_COUNT); // Limit
+            ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
+            ->setMaxResults(Util::PAGE_COUNT); // Limit
 
         return array('paginator' => $paginator, 'query' => $query);
     }
-    
+
     /**
      * Agregar entidad
      *
      * @param Client $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(Client $entity)
     {
@@ -82,6 +89,8 @@ class ClientRepository extends ServiceEntityRepository
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -93,6 +102,8 @@ class ClientRepository extends ServiceEntityRepository
      *
      * @param Client $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Client $entity)
     {

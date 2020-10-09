@@ -12,12 +12,14 @@ use App\Entity\ClientAddress;
 use App\Entity\ClientExtra;
 use App\Entity\Contact;
 use App\Entity\ContactExtra;
+use App\Entity\User;
 use App\Repository\ClientRepository;
 use App\Repository\ClientExtraRepository;
 use Antxony\Util;
 use App\Repository\ClientAddressRepository;
 use App\Repository\ContactExtraRepository;
 use App\Repository\ContactRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -70,7 +72,7 @@ class ClientController extends AbstractController
     /**
      * Usuario actual
      *
-     * @var \App\Entity\User
+     * @var User
      */
     protected $actualUser;
 
@@ -80,7 +82,7 @@ class ClientController extends AbstractController
      * @var Util
      */
     protected $util;
-    
+
     /**
      * Constructor
      *
@@ -93,12 +95,12 @@ class ClientController extends AbstractController
      * @param Security $security
      */
     public function __construct(
-        ClientRepository $cRep, 
-        ClientExtraRepository $ceRep, 
-        ClientAddressRepository $caRep, 
+        ClientRepository $cRep,
+        ClientExtraRepository $ceRep,
+        ClientAddressRepository $caRep,
         ContactRepository $coRep,
         ContactExtraRepository $coeRep,
-        Util $util, 
+        Util $util,
         Security $security)
     {
         $this->util = $util;
@@ -144,7 +146,7 @@ class ClientController extends AbstractController
                 'thisPage' => ((isset($params->page))?$params->page:1),
                 'showed' => (($showed > $clients->count())?$clients->count():$showed),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -163,7 +165,7 @@ class ClientController extends AbstractController
                 'id' => 'clientForm',
                 'contact' => false
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -186,7 +188,7 @@ class ClientController extends AbstractController
             return $this->render("view/client/addressForm.html.twig", [
                 'clientId' => $id
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -218,7 +220,7 @@ class ClientController extends AbstractController
             $this->cRep->update();
             $this->util->info("Se ha agregado la dirección al cliente {$content->id}");
             return new Response("Se ha agregado la dirección al cliente");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -272,7 +274,7 @@ class ClientController extends AbstractController
             $this->cRep->update();
             $this->util->info($message . " de la dirección {$id}");
             return new Response($message);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -310,7 +312,7 @@ class ClientController extends AbstractController
             $this->cRep->update();
             $this->util->info("Se ha agregado un nuevo ${type} al cliente {$id}");
             return new Response("Se ha agregado un nuevo ${type} al cliente");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -331,7 +333,7 @@ class ClientController extends AbstractController
             $extra->getClient()->updated($this->actualUser);
             $this->util->info("Se ha eliminado el dato extra {$id} del cliente {$extra->getClient()->getId()}");
             return new Response("Se ha eliminado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -349,17 +351,16 @@ class ClientController extends AbstractController
      * @Route("/contact/form", name="client_contact_form", methods={"GET"})
      * @IsGranted("ROLE_TEST")
      *
-     * @param Request $request
      * @return Response
      */
-    public function addContactForm(Request $request) : Response
+    public function addContactForm() : Response
     {
         try {
             return $this->render("view/client/form.html.twig", [
                 'id' => 'clientContactForm',
                 'contact' => true
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -410,7 +411,7 @@ class ClientController extends AbstractController
             $this->cRep->update();
             $this->util->info("Se ha agregado al contacto {$contact->getId()} para el cliente {$id}");
             return new Response("Contacto agregado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -422,7 +423,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function showContact(int $id) : Response 
+    public function showContact(int $id) : Response
     {
         try {
             $contact = $this->coRep->find($id);
@@ -434,7 +435,7 @@ class ClientController extends AbstractController
                 'LEVEL_MOBILE' => Level::MOBILE,
                 'LEVEL_HOME' => Level::HOME,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -447,7 +448,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function updateContact(int $id, Request $request) : Response 
+    public function updateContact(int $id, Request $request) : Response
     {
         try {
             parse_str($request->getContent(), $content);
@@ -482,7 +483,7 @@ class ClientController extends AbstractController
             $this->coeRep->update();
             $this->util->info($message . " del contacto {$id} del cliente {$contact->getClient()->getId()}");
             return new response($message);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -505,7 +506,7 @@ class ClientController extends AbstractController
             $this->coRep->update();
             $this->util->info("Se ha suspendid el contacto {$id}");
             return new Response("Contacto eliminado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -541,7 +542,7 @@ class ClientController extends AbstractController
             $this->coRep->update();
             $this->util->info("Se ha agregado un nuevo ${type} al contacto {$id}");
             return new Response("Se ha agregado un nuevo ${type} al contacto");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -563,7 +564,7 @@ class ClientController extends AbstractController
             $this->coRep->update();
             $this->util->info("Se ha eliminado el dato extra {$id} del contacto {$extra->getContact()->getId()}");
             return new Response("Se ha eliminado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -615,7 +616,7 @@ class ClientController extends AbstractController
             $this->ceRep->add($clientExtra2);
             $this->util->info("Se ha agregado al cliente {$client->getId()}");
             return new Response("Cliente agregado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -637,7 +638,7 @@ class ClientController extends AbstractController
             $this->cRep->update();
             $this->util->info("Se ha suspendido el cliente {$id}");
             return new Response("Cliente eliminado");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -662,7 +663,7 @@ class ClientController extends AbstractController
                 'LEVEL_MOBILE' => Level::MOBILE,
                 'LEVEL_HOME' => Level::HOME,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -707,8 +708,8 @@ class ClientController extends AbstractController
             $this->ceRep->update();
             $this->util->info($message . " del cliente {$id}");
             return new response($message);
-        } catch (\Exception $e) {
-            return $this->util->errorException($e);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
         }
     }
 }

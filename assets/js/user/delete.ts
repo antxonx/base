@@ -1,8 +1,8 @@
 import Alert from '@scripts/plugins/Alert';
 import Axios from 'axios';
 import Toast from '@scripts/plugins/AlertToast';
-import { ROUTES } from '@scripts/app';
-import { deleteElement, disableRow, restoreRow } from '@scripts/plugins/DeleteElement';
+import {ROUTES} from '@scripts/app';
+import {deleteElement, disableRow, restoreRow} from '@scripts/plugins/DeleteElement';
 
 /**
  * Eliminar usuario
@@ -11,7 +11,9 @@ import { deleteElement, disableRow, restoreRow } from '@scripts/plugins/DeleteEl
  * @param {() => void} [onSuccess=() => { }]
  * @param {() => void} [onError=() => { }]
  */
-export const deleteUser = async (element: HTMLElement, onSuccess: () => void = () => { }, onError: () => void = () => { }) => {
+export const deleteUser = async (element: HTMLElement, onSuccess: () => void = () => {
+}, onError: () => void = () => {
+}) => {
     const ID = +element.getAttribute("id")!;
     const ALERT = new Alert(true);
     let res = await ALERT.updateBody(`¿Seguro que quiere suspender al usuario <b>${ID}</b>?`).show();

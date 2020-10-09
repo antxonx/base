@@ -3,34 +3,36 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-{% if app.user %}
-<script>
-    window.location.href = "{{ path('home_index') }}"
-</script>
-{% else %}
-<div class="container">
-    <div class="card mx-auto w-50-c mt-5">
-        <div class="card-body">
-            <form method="post">
-                {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
-                <h1 class="h3 mb-3 font-weight-normal">Inicia sesión</h1>
-                <label for="inputUsername">Nombre de usuario</label>
-                <input type="text" onkeypress="return event.charCode != 32" value="{{ last_username }}" name="username"
-                    id="inputUsername" class="form-control" required autofocus>
-                <label for="inputPassword">Contraseña</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" required>
+    {% if app.user %}
+        <script>
+            window.location.href = "{{ path('home_index') }}"
+        </script>
+    {% else %}
+        <div class="container">
+            <div class="card mx-auto w-50-c mt-5">
+                <div class="card-body">
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <h1 class="h3 mb-3 font-weight-normal">Inicia sesión</h1>
+                        <label for="inputUsername">Nombre de usuario</label>
+                        <input type="text" onkeypress="return event.charCode !== 32" value="{{ last_username }}"
+                               name="username"
+                               id="inputUsername" class="form-control" required autofocus>
+                        <label for="inputPassword">Contraseña</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <button class="btn btn-lg btn-primary mt-2" type="submit">
-                    Iniciar sesión
-                </button> <br>
-            </form>
-            <small><a href="{{ path('app_forgot_password_request') }}">Olvidé mi contraseña</a></small>
+                        <button class="btn btn-lg btn-primary mt-2" type="submit">
+                            Iniciar sesión
+                        </button>
+                        <br>
+                    </form>
+                    <small><a href="{{ path('app_forgot_password_request') }}">Olvidé mi contraseña</a></small>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-{% endif %}
+    {% endif %}
 {% endblock %}

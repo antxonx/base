@@ -1,48 +1,60 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ path("home_index") }}">Sistema</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <ul class="navbar-nav">
-        {% if is_granted("IS_IMPERSONATOR") %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path("home_index", {'_switch_user': '_exit'}) }}">Desimpersonar</a>
-        </li>
-        {% endif %}
-
-        {% if is_granted('ROLE_ADMIN') %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="adminMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sistema
-          </a>
-          <div class="dropdown-menu" aria-labelledby="adminMenu">
-            <a class="dropdown-item" href="{{ path("user_index") }}">Usuarios</a>
-            {% if is_granted("ROLE_GOD") %}
-            <a class="dropdown-item" href="{{ path("logger_index") }}">Registro</a>
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            {% if is_granted("IS_IMPERSONATOR") %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("home_index", {'_switch_user': '_exit'}) }}">Desimpersonar</a>
+                </li>
             {% endif %}
-          </div>
-        </li>
-        {% endif %}
-        {% if is_granted("ROLE_TEST") %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path("client_index") }}">Clientes</a>
-        </li>
-        {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('user_profile')}}">Perfil</a>
-        </li>
-        <li class="nav-item">
-          {% if app.user %}
-          <a class="nav-link" href="{{ path('app_logout') }}">Salir</a>
-          {% else %}
-          <a class="nav-link" href="{{ path('app_login') }}">Ingresar</a>
-          {% endif %}
-        </li>
-  
-      </ul>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminMenu" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Sistema
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="adminMenu">
+                        <a class="dropdown-item" href="{{ path("user_index") }}">Usuarios</a>
+                        {% if is_granted("ROLE_GOD") %}
+                            <a class="dropdown-item" href="{{ path("logger_index") }}">Registro</a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_TEST") %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("client_index") }}">Clientes</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('user_profile') }}">Perfil</a>
+            </li>
+
+            {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileMenu" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="profileMenu">
+                        <a class="dropdown-item" href="{{ path('user_profile') }}">Perfil</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Salir</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Ingresar</a>
+                </li>
+            {% endif %}
+
+
+        </ul>
     </div>
-  </nav>
+</nav>

@@ -1,23 +1,23 @@
 {% set tr = {} %}
 {% for user in users %}
-{# impersonator #}
-{% set extra = {
-    value : '',
-    attr : {
-        class: 'd-none'
-    }
-} %}
-{% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+    {# impersonator #}
     {% set extra = {
-        value : '<a class="w-100 btn btn-sm btn-info" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+        value : '',
         attr : {
-            class : 'action-btn'
-          }
+            class: 'd-none'
+        }
     } %}
-{% endif %}
-{# . #}
-{% set role %}
-<div class="badge badge-role 
+    {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+        {% set extra = {
+            value : '<a class="w-100 btn btn-sm btn-info" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+            attr : {
+                class : 'action-btn'
+            }
+        } %}
+    {% endif %}
+    {# . #}
+    {% set role %}
+        <div class="badge badge-role
 {% if user.roles[0] == "ROLE_ADMIN" %}
 badge-primary
 {% elseif user.roles[0] == "ROLE_TEST" %}
@@ -26,138 +26,138 @@ badge-secondary
 d-none
 {% endif %}
 badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
-{% endset %}
-{# suspneder o reactivar #}
-{% set trashSusp %}
-{% if user.suspended %}
-    <button class="btn btn-sm btn-light w-100 user-reactivate"><i class="fas fa-redo-alt"></i></button>
-{% else %}
-    <button class="btn btn-sm btn-light w-100 user-delete"><i class="fas fa-trash-alt"></i></button>
-{% endif %}
-{% endset %}
-{# . #}
-{% if "ROLE_GOD" in user.roles %}
-    {% if is_granted("ROLE_GOD") %}
-    {% set tr = {
-        values : {
-          id : {
-              value : user.id,
-              attr : {
-                  class : 'user-edit cursor-pointer'
-              }
-          },
-          username : {
-              value : user.username,
-              attr : {
-                  class : 'user-edit cursor-pointer'
-              }
-          },
-          name : {
-              value : user.name,
-              attr : {
-                  class : 'user-edit cursor-pointer'
-              }
-          },
-          role : {
-              value : role,
-              attr : {
-                  class : 'user-edit cursor-pointer'
-              }
-          },
-          email : {
-              value : user.mail,
-              attr : {
-                  class : 'user-edit cursor-pointer'
-              }
-          },
-          key : {
-              value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
-              attr : {
-                class : 'action-btn'
-              }
-          }, 
-          trash : {
-                value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
-              attr : {
-                  class : 'text-center action-btn'
-              }
-          }, 
-          extra : {
-              value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
-              attr : {
-                class : 'action-btn'
-              }
-          }
-        },
-        attr : {
-            class : 'user-row table-primary table-bordered',
-            id: user.id
-        }
-    } %}
-    {% include "table/tr.html.twig" with {
-        tr : tr
-    } %}
-    {% endif %}     
-{% else %}
-{% set tr = {
-    values : {
-      id : {
-          value : user.id,
-          attr : {
-              class : 'user-edit cursor-pointer'
-          }
-      },
-      username : {
-          value : user.username,
-          attr : {
-              class : 'user-edit cursor-pointer'
-          }
-      },
-      name : {
-          value : user.name,
-          attr : {
-              class : 'user-edit cursor-pointer'
-          }
-      },
-      role : {
-          value : role,
-          attr : {
-              class : 'user-edit cursor-pointer'
-          }
-      },
-      email : {
-          value : user.mail,
-          attr : {
-              class : 'user-edit cursor-pointer'
-          }
-      },
-      key : {
-          value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
-          attr : {
-            class : 'action-btn'
-          }
-      }, 
-      trash : {
-          value : trashSusp,
-          attr : {
-              class : 'text-center action-btn'
-          }
-      }, 
-      extra : extra
-    },
-    attr : {
-        class : 'user-row table-bordered',
-        id: user.id
-    }
-} %}
-{% include "table/tr.html.twig" with {
-    tr : tr
-} %}
-{% endif %}
+    {% endset %}
+    {# suspneder o reactivar #}
+    {% set trashSusp %}
+        {% if user.suspended %}
+            <button class="btn btn-sm btn-light w-100 user-reactivate"><i class="fas fa-redo-alt"></i></button>
+        {% else %}
+            <button class="btn btn-sm btn-light w-100 user-delete"><i class="fas fa-trash-alt"></i></button>
+        {% endif %}
+    {% endset %}
+    {# . #}
+    {% if "ROLE_GOD" in user.roles %}
+        {% if is_granted("ROLE_GOD") %}
+            {% set tr = {
+                values : {
+                    id : {
+                        value : user.id,
+                        attr : {
+                            class : 'user-edit cursor-pointer'
+                        }
+                    },
+                    username : {
+                        value : user.username,
+                        attr : {
+                            class : 'user-edit cursor-pointer'
+                        }
+                    },
+                    name : {
+                        value : user.name,
+                        attr : {
+                            class : 'user-edit cursor-pointer'
+                        }
+                    },
+                    role : {
+                        value : role,
+                        attr : {
+                            class : 'user-edit cursor-pointer'
+                        }
+                    },
+                    email : {
+                        value : user.mail,
+                        attr : {
+                            class : 'user-edit cursor-pointer'
+                        }
+                    },
+                    key : {
+                        value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+                        attr : {
+                            class : 'action-btn'
+                        }
+                    },
+                    trash : {
+                        value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
+                        attr : {
+                            class : 'text-center action-btn'
+                        }
+                    },
+                    extra : {
+                        value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
+                        attr : {
+                            class : 'action-btn'
+                        }
+                    }
+                },
+                attr : {
+                    class : 'user-row table-primary table-bordered',
+                    id: user.id
+                }
+            } %}
+            {% include "table/tr.html.twig" with {
+                tr : tr
+            } %}
+        {% endif %}
+    {% else %}
+        {% set tr = {
+            values : {
+                id : {
+                    value : user.id,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                username : {
+                    value : user.username,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                name : {
+                    value : user.name,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                role : {
+                    value : role,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                email : {
+                    value : user.mail,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                key : {
+                    value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+                    attr : {
+                        class : 'action-btn'
+                    }
+                },
+                trash : {
+                    value : trashSusp,
+                    attr : {
+                        class : 'text-center action-btn'
+                    }
+                },
+                extra : extra
+            },
+            attr : {
+                class : 'user-row table-bordered',
+                id: user.id
+            }
+        } %}
+        {% include "table/tr.html.twig" with {
+            tr : tr
+        } %}
+    {% endif %}
 {% endfor %}
 {% if tr.values is defined %}
-{% include "paginatorTable.html.twig" with {
-    items: users,
-    cols : tr.values|length
-} %}
+    {% include "paginatorTable.html.twig" with {
+        items: users,
+        cols : tr.values|length
+    } %}
 {% endif %}

@@ -7,6 +7,7 @@ namespace App\Repository;
 
 use App\Entity\ErrorLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Antxony\Util;
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\Criteria;
 
 /**
  * ErrorLogRepository class
- * 
+ *
  * @method ErrorLog|null find($id, $lockMode = null, $lockVersion = null)
  * @method ErrorLog|null findOneBy(array $criteria, array $orderBy = null)
  * @method ErrorLog[]    findAll()
@@ -36,7 +37,8 @@ class ErrorLogRepository extends ServiceEntityRepository
      * conseguir por filtrado
      *
      * @param mixed $params
-     * @return void
+     * @return array
+     * @throws QueryException
      */
     public function getBy($params)
     {

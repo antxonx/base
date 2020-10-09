@@ -1,7 +1,7 @@
 /**
-* clase para elementos válidos
-* @const `string`
-*/
+ * clase para elementos válidos
+ * @const `string`
+ */
 const VALID_INPUT = 'is-valid';
 /**
  * clase para elementos inválidos
@@ -19,9 +19,9 @@ const ERROR_INPUT = "error-input";
  */
 const TEXT_TYPE = "text";
 /**
-* Tipo de input `password`
-* @const `string`
-*/
+ * Tipo de input `password`
+ * @const `string`
+ */
 const PASSWORD_TYPE = "password";
 /**
  * Tipo de input `email`
@@ -34,18 +34,18 @@ const EMAIL_TYPE = "email";
  */
 const NUMBER_TYPE = "number";
 /**
-* expresión regular para tipos de dato de `email`
-* @const `regExp`
-*/
-const EMAIL_EXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+ * expresión regular para tipos de dato de `email`
+ * @const `regExp`
+ */
+const EMAIL_EXP = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 /**
  *Evalúa un sólo input según su tipo `text`, `password` o `email`.
-*
-* @param {HTMLInputElement} element
-* @param {number} [size=0]
-* @returns {boolean}
-*/
+ *
+ * @param {HTMLInputElement} element
+ * @param {number} [size=0]
+ * @returns {boolean}
+ */
 const evaluateInput = (element: HTMLInputElement, size: number = 0): boolean => {
     //Toma el tipo de input desde el atributo `t-type`
     const TYPE = element.getAttribute("t-type");
@@ -71,11 +71,7 @@ const evaluateInput = (element: HTMLInputElement, size: number = 0): boolean => 
         //.
     } else if (TYPE == NUMBER_TYPE) {
         if (INPUT.length > 0 && !isNaN(+INPUT)) {
-            if (+element.getAttribute("min")! > +INPUT) {
-                result = false;
-            } else {
-                result = true;
-            }
+            result = +element.getAttribute("min")! <= +INPUT;
         }
     } else {
         //Si no coincide arrojamos un error
@@ -88,11 +84,12 @@ const evaluateInput = (element: HTMLInputElement, size: number = 0): boolean => 
 
 /**
  *Evalua varios inputs y determina si son válidos o no.
-*
-* @param {HTMLInputElement[]} elements
-* @param {number} size
-* @return {boolean}
-*/
+ *
+ * @param {HTMLInputElement[]} elements
+ * @param {number} size
+ * @param submitBtn
+ * @return {boolean}
+ */
 export const evaluateInputs = (elements: HTMLInputElement[], size: number = 0, submitBtn = true): boolean => {
     let result = true;
     clearErrorMsg();
@@ -157,17 +154,16 @@ export const setValidInput = (element: HTMLElement) => {
 
 /**
  *Borramos mensajes de error para los inputs
-*
-*/
+ *
+ */
 export const clearErrorMsg = () => {
-    [ ...document.getElementsByClassName(ERROR_INPUT) ].forEach(n => n.remove());
+    [...document.getElementsByClassName(ERROR_INPUT)].forEach(n => n.remove());
 };
 
 /**
  * Cambiar estado de input, válido o inválido
  *
  * @param {HTMLInputElement} element
- * @param {boolean} isValid
  */
 export const clearValidState = (element: HTMLInputElement) => {
     element.classList.remove(VALID_INPUT);
@@ -209,7 +205,7 @@ export const showElementByQuery = (query: string) => {
  * @param {string} text
  */
 export const copyTextToClipboard = (text: string): Boolean => {
-    let result = false;
+    let result: boolean;
     const textArea = document.createElement("textarea");
 
     // Place in top-left corner of screen regardless of scroll position.
@@ -242,7 +238,7 @@ export const copyTextToClipboard = (text: string): Boolean => {
 
     try {
         const successful = document.execCommand('copy');
-        result = (successful ? true : false);
+        result = (successful);
 
     } catch (err) {
         result = false;
@@ -253,11 +249,11 @@ export const copyTextToClipboard = (text: string): Boolean => {
 };
 
 /**
- * @param {string} HTML representing a single element
  * @return {HTMLElement}
+ * @param html
  */
 export const htmlToElement = (html: string): HTMLElement => {
-    var template = document.createElement('template');
+    const template = document.createElement('template');
     html = html.trim();
     template.innerHTML = html;
     return template.content.firstChild as HTMLElement;

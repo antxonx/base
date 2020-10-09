@@ -1,16 +1,15 @@
 import Axios from 'axios';
 import * as Paginator from '@scripts/plugins/Paginator';
-import { ROUTES, BIG_LOADER, BIG_LOADER_TABLE } from '@scripts/app';
-import { openModal } from '@scripts/user/add';
-import { deleteUser } from '@scripts/user/delete';
-import { editUser } from '@scripts/user/edit';
+import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
+import {openModal} from '@scripts/user/add';
+import {deleteUser} from '@scripts/user/delete';
+import {editUser} from '@scripts/user/edit';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
-import { openKeyModal } from '@scripts/user/key';
-import { initButtonCheck, unMarkActive } from '@scripts/plugins/ButtonCheck';
-import { reactiveUser } from './reactive';
-import { deleteElement } from '@scripts/plugins/DeleteElement';
-import getSort, { SortColumn } from '@scripts/plugins/SortColumn';
+import {openKeyModal} from '@scripts/user/key';
+import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
+import {reactiveUser} from './reactive';
+import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("usersView")!;
 
@@ -67,9 +66,8 @@ const searchField = (data: string) => {
  * Filtrar por usuarios suspendidos
  *
  * @param {boolean} status
- * @param {string} id
  */
-const suspendedFilter = (status: boolean, id?: string) => {
+const suspendedFilter = (status: boolean) => {
     SUSPENDED = +status;
     changePage(1);
 };
@@ -89,7 +87,9 @@ const addUserAction = () => {
  */
 const deleteAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-    deleteUser(ELEMENT, () => {}, loadEvs);
+    // noinspection JSIgnoredPromiseFromCall
+    deleteUser(ELEMENT, () => {
+    }, loadEvs);
 };
 
 /**
@@ -99,7 +99,9 @@ const deleteAction = (e: Event) => {
  */
 const reactivateAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-    reactiveUser(ELEMENT, () => {}, loadEvs);
+    // noinspection JSIgnoredPromiseFromCall
+    reactiveUser(ELEMENT, () => {
+    }, loadEvs);
     // reactiveUser(+ELEMENT.getAttribute("id")!, () => {
     //     deleteElement(ELEMENT as HTMLElement);
     // });
@@ -141,19 +143,19 @@ const sortAction = (e: Event) => {
 const loadEvs = (first: boolean = false) => {
     document.getElementById("user-add")!.addEventListener("click", addUserAction);
     if (!first) {
-        [ ...document.getElementsByClassName("user-delete") ].forEach(
+        [...document.getElementsByClassName("user-delete")].forEach(
             element => element.addEventListener("click", deleteAction)
         );
-        [ ...document.getElementsByClassName("user-password") ].forEach(
+        [...document.getElementsByClassName("user-password")].forEach(
             element => element.addEventListener("click", changePassAction)
         );
-        [ ...document.getElementsByClassName("user-edit") ].forEach(
+        [...document.getElementsByClassName("user-edit")].forEach(
             element => element.addEventListener("click", editAction)
         );
-        [ ...document.getElementsByClassName("user-reactivate") ].forEach(
+        [...document.getElementsByClassName("user-reactivate")].forEach(
             element => element.addEventListener("click", reactivateAction)
         );
-        [ ...document.getElementsByClassName("sort-column") ].forEach(element => element.addEventListener("click", sortAction));
+        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", sortAction));
     }
 };
 

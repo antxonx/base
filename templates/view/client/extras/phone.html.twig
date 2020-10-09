@@ -1,22 +1,24 @@
 <div>
-    <button class="btn btn-sm btn-primary plus-btn collapsed round" style="display: none;" id="phone-extra-btn" active="0" data-toggle="collapse"
-        href="#phone-extra-container" role="button" aria-expanded="false"
-        aria-controls="phone-extra-container"></button>
+    <button class="btn btn-sm btn-primary plus-btn collapsed round" style="display: none;" id="phone-extra-btn"
+            active="0" data-toggle="collapse"
+            href="#phone-extra-container" role="button" aria-expanded="false"
+            aria-controls="phone-extra-container"></button>
     <div class="collapse" id="phone-extra-container">
         <div class="alert alert-info mt-1 round">
             <form id="{{ id }}">
                 {% include "form/phone.html.twig" with {
-                type: 'tel',
-                id: 'phone',
-                label: 'Teléfono*',
-                placeholder: '',
-                required: false,
-                error: 'Ingrese un teléfono válido',
-                class: 'extra-phone-input'
-            } %}
+                    type: 'tel',
+                    id: 'phone',
+                    label: 'Teléfono*',
+                    placeholder: '',
+                    required: false,
+                    error: 'Ingrese un teléfono válido',
+                    class: 'extra-phone-input'
+                } %}
                 <div id="submit-phone-extra-btn" class="w-100 text-left">
                     <button type="submit" class="btn btn-large btn-success"
-                        id="submit-phone-extra-real-btn">Agregar</button>
+                            id="submit-phone-extra-real-btn">Agregar
+                    </button>
                 </div>
             </form>
         </div>

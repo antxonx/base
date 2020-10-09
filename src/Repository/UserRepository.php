@@ -7,6 +7,10 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -14,10 +18,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Antxony\Util;
 use Doctrine\Common\Collections\Criteria;
+use function get_class;
 
 /**
  * UserRepository class
- * 
+ *
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
@@ -41,11 +46,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * @param UserInterface $user
      * @param string $newEncodedPassword
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
         $user->setPassword($newEncodedPassword);
@@ -57,12 +64,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * conseguir por filtrado
      *
      * @param mixed $params
-     * @return void
+     * @return array
+     * @throws QueryException
      */
     public function getBy($params)
     {
-        $page = ((isset($params->page))?$params->page:1);
-        $suspended = ((isset($params->suspended))?$params->suspended:0);
+        $page = ((isset($params->page)) ? $params->page : 1);
+        $suspended = ((isset($params->suspended)) ? $params->suspended : 0);
         // Create our query
         $query = $this->createQueryBuilder('p')
             ->orderBy("p." . $params->ordercol, $params->orderorder)
@@ -77,16 +85,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $paginator = new Paginator($query);
         $paginator->getQuery()
-        ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
-        ->setMaxResults(Util::PAGE_COUNT); // Limit
+            ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
+            ->setMaxResults(Util::PAGE_COUNT); // Limit
 
         return array('paginator' => $paginator, 'query' => $query);
     }
+
     /**
      * Agregar entidad
      *
      * @param User $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(User $entity)
     {
@@ -98,6 +109,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -109,6 +122,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *
      * @param User $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(User $entity)
     {

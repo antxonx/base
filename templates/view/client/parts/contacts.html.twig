@@ -1,11 +1,11 @@
 {% if client.contacts|length < 1 %}
-<div class="alert alert-info round">
-    Este cliente no tiene contactos. <br>
-</div>
+    <div class="alert alert-info round">
+        Este cliente no tiene contactos. <br>
+    </div>
 {% else %}
 
-<table class="table w-99 mb-0 table-hover border">
-    <tbody>
+    <table class="table w-99 mb-0 table-hover border">
+        <tbody>
         {% for contact in client.contacts %}
             {% include "table/tr.html.twig" with {
                 tr : {
@@ -33,7 +33,7 @@
                             attr : {
                                 class : 'text-center'
                             }
-                        }, 
+                        },
                         trash : {
                             value : '<button class="btn btn-sm btn-danger trash-contact w-100 contact-delete" style="display: none;"><i class="fas fa-trash-alt"></i></button>',
                             attr : {
@@ -49,6 +49,6 @@
                 }
             } %}
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 {% endif %}

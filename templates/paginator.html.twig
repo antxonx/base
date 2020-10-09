@@ -1,56 +1,59 @@
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-      <li class="page-item {% if thisPage == 1 %}disabled{% endif %}">
-        <a class="page-link paginator" page-index="1" href="#" aria-label="Primero">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Primero</span>
-        </a>
-      </li>
-      <li class="page-item {% if thisPage == 1 %}disabled{% endif %}"><a class="page-link paginator"
-          page-index="{{ thisPage - 1 }}" href="#">Anterior</a></li>
-      {% if thisPage > 3 %}
-      <li class="page-item disabled">
-        <a class="page-link paginator" page-index="1" href="#" aria-label="...">
-          <span aria-hidden="true">...</span>
-          <span class="sr-only">...</span>
-        </a>
-      </li>
-      {% endif %}
-      {% if (thisPage - 3) <= 1 %}
-      {% set startPaginator = 1 %}
-      {% else %}
-      {% set startPaginator = (thisPage - 3) %}
-      {% endif %}
-      {% if (thisPage + 3) >= maxPages %}
-      {% set endPaginator = maxPages %}
-      {% else %}
-      {% set endPaginator = thisPage + 3 %}
-      {% endif %}
-  
-      {% for i in (thisPage - 2).. (thisPage + 2) %}
-      {% if i > 0 and i < maxPages + 1 %}
-      <li class="page-item {% if thisPage == i %}disabled{% endif %}"><a class="page-link paginator" page-index="{{ i }}"
-          href="#">{{ i }}</a></li>
-      {% endif %}
-      {% endfor %}
-      {% if thisPage < (maxPages - 2) %}
-      <li class="page-item disabled">
-        <a class="page-link paginator" page-index="{{ maxPages }}" href="#" aria-label="...">
-          <span aria-hidden="true">...</span>
-          <span class="sr-only">...</span>
-        </a>
-      </li>
-      {% endif %}
-      <li class="page-item {% if thisPage == maxPages %}disabled{% endif %}"><a class="page-link paginator"
-          page-index="{{ thisPage + 1 }}" href="#">siguiente</a></li>
-      <li class="page-item {% if thisPage == maxPages %}disabled{% endif %}">
-        <a class="page-link paginator" page-index="{{ maxPages }}" href="#" aria-label="Último">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Último</span>
-        </a>
-      </li>
+        <li class="page-item {% if thisPage == 1 %}disabled{% endif %}">
+            <a class="page-link paginator" page-index="1" href="#" aria-label="Primero">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Primero</span>
+            </a>
+        </li>
+        <li class="page-item {% if thisPage == 1 %}disabled{% endif %}"><a class="page-link paginator"
+                                                                           page-index="{{ thisPage - 1 }}" href="#">Anterior</a>
+        </li>
+        {% if thisPage > 3 %}
+            <li class="page-item disabled">
+                <a class="page-link paginator" page-index="1" href="#" aria-label="...">
+                    <span aria-hidden="true">...</span>
+                    <span class="sr-only">...</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if (thisPage - 3) <= 1 %}
+            {% set startPaginator = 1 %}
+        {% else %}
+            {% set startPaginator = (thisPage - 3) %}
+        {% endif %}
+        {% if (thisPage + 3) >= maxPages %}
+            {% set endPaginator = maxPages %}
+        {% else %}
+            {% set endPaginator = thisPage + 3 %}
+        {% endif %}
+
+        {% for i in (thisPage - 2).. (thisPage + 2) %}
+            {% if i > 0 and i < maxPages + 1 %}
+                <li class="page-item {% if thisPage == i %}disabled{% endif %}"><a class="page-link paginator"
+                                                                                   page-index="{{ i }}"
+                                                                                   href="#">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if thisPage < (maxPages - 2) %}
+            <li class="page-item disabled">
+                <a class="page-link paginator" page-index="{{ maxPages }}" href="#" aria-label="...">
+                    <span aria-hidden="true">...</span>
+                    <span class="sr-only">...</span>
+                </a>
+            </li>
+        {% endif %}
+        <li class="page-item {% if thisPage == maxPages %}disabled{% endif %}"><a class="page-link paginator"
+                                                                                  page-index="{{ thisPage + 1 }}"
+                                                                                  href="#">siguiente</a></li>
+        <li class="page-item {% if thisPage == maxPages %}disabled{% endif %}">
+            <a class="page-link paginator" page-index="{{ maxPages }}" href="#" aria-label="Último">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Último</span>
+            </a>
+        </li>
     </ul>
-  </nav>
-  {% if items is defined %}
-  <div class=" w-100 text-center">{{ showed }} de {{ items.count }}</div>
-  {% endif %}
+</nav>
+{% if items is defined %}
+    <div class=" w-100 text-center">{{ showed }} de {{ items.count }}</div>
+{% endif %}

@@ -1,13 +1,12 @@
 import Axios from 'axios';
 import * as Paginator from '@scripts/plugins/Paginator';
-import { ROUTES, BIG_LOADER_TABLE } from '@scripts/app';
+import {ROUTES, BIG_LOADER_TABLE} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import * as Search from '@scripts/plugins/Search';
-import { openAddModal } from './add';
-import { deleteClient } from './delete';
-import { deleteElement } from '@scripts/plugins/DeleteElement';
-import { showClient } from './show';
-import getSort, { SortColumn } from '@scripts/plugins/SortColumn';
+import {openAddModal} from './add';
+import {deleteClient} from './delete';
+import {showClient} from './show';
+import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("clientsView") as HTMLElement;
 
@@ -62,7 +61,8 @@ const searchField = (data: string) => {
  */
 const deleteAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
-    deleteClient(ELEMENT, () => { }, loadEvs);
+    deleteClient(ELEMENT, () => {
+    }, loadEvs);
 };
 
 /**
@@ -97,9 +97,9 @@ const loadEvs = (first = false) => {
     if (first) {
         document.getElementById("client-add")?.addEventListener("click", addAction);
     }
-    [ ...document.getElementsByClassName("client-delete") ].forEach(element => element.addEventListener("click", deleteAction));
-    [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", showAction));
-    [ ...document.getElementsByClassName("sort-column") ].forEach(element => element.addEventListener("click", sortAction));
+    [...document.getElementsByClassName("client-delete")].forEach(element => element.addEventListener("click", deleteAction));
+    [...document.getElementsByClassName("client-show")].forEach(element => element.addEventListener("click", showAction));
+    [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", sortAction));
 };
 
 loadEvs(true);

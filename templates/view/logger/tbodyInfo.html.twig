@@ -1,8 +1,8 @@
 {% set tr = {} %}
 {% for entity in entities %}
-{# tipo de petición #}
-{% set badge %}
-<span class="badge badge-role w-100
+    {# tipo de petición #}
+    {% set badge %}
+        <span class="badge badge-role w-100
         {% if entity.method == "GET" %}
         table-success
         {% elseif entity.method == "POST" %}
@@ -17,77 +17,77 @@
         d-none
         {% endif %}
         badge-pill">{{ entity.method }}</span>
-{% endset %}
-{# . #}
-{# Info completa #}
-{% set infoFull %}
-{% include "view/logger/full/info.html.twig" %}
-{% endset %}
-{# . #}
-{# verificar si es de sistema #}
-{% set rowClass %}
-{% if entity.system %}
-    table-info
-{% endif %}
-{% endset %}
-{# . #}
-{# formato de nivel #}
-{% set level %}
-{% if entity.level != null %}
-    <button class="btn btn-info btn-sm w-100 no-hover"> {{ entity.level }}</button>
-{% endif %}
-{% endset %}
-{# . #}
-{% set tr = {
-    values : {
-      id : {
-          value : entity.id,
-      },
-      creation : {
-          value : entity.createdAt|format_datetime("medium", "short", locale="es")
-      },
-      route : {
-          value : entity.route,
-      },
-      method : {
-          value : badge,
-          attr : {
-            class : 'smallest-cell text-center'
-        }
-      },
-      message : {
-          value : entity.message|u.truncate(80, "...", true),
-      }
-    },
-    attr : {
-        class : 'infolog-row cursor-pointer table-bordered ' ~ rowClass|trim,
-        id: entity.id, 
-        href: '#info-' ~ entity.id,
-        'data-toggle': 'collapse',
-        'aria-expanded': 'false',
-        'aria-controls': '#info-' ~ entity.id
-    }
-} %}
-{% include "table/tr.html.twig" with {
-            tr : tr
-        } %}
-{% include "table/tr.html.twig" with {
-            tr : {
-                values : {
-                    info : {
-                        value : infoFull,
-                        attr : {
-                            colspan : 8,
-                            class : "p-0 table-paginator"
-                        }
-                    }
-                }, 
+    {% endset %}
+    {# . #}
+    {# Info completa #}
+    {% set infoFull %}
+        {% include "view/logger/full/info.html.twig" %}
+    {% endset %}
+    {# . #}
+    {# verificar si es de sistema #}
+    {% set rowClass %}
+        {% if entity.system %}
+            table-info
+        {% endif %}
+    {% endset %}
+    {# . #}
+    {# formato de nivel #}
+    {% set level %}
+        {% if entity.level != null %}
+            <button class="btn btn-info btn-sm w-100 no-hover"> {{ entity.level }}</button>
+        {% endif %}
+    {% endset %}
+    {# . #}
+    {% set tr = {
+        values : {
+            id : {
+                value : entity.id,
+            },
+            creation : {
+                value : entity.createdAt|format_datetime("medium", "short", locale="es")
+            },
+            route : {
+                value : entity.route,
+            },
+            method : {
+                value : badge,
+                attr : {
+                    class : 'smallest-cell text-center'
+                }
+            },
+            message : {
+                value : entity.message|u.truncate(80, "...", true),
             }
-        } %}
+        },
+        attr : {
+            class : 'infolog-row cursor-pointer table-bordered ' ~ rowClass|trim,
+            id: entity.id,
+            href: '#info-' ~ entity.id,
+            'data-toggle': 'collapse',
+            'aria-expanded': 'false',
+            'aria-controls': '#info-' ~ entity.id
+        }
+    } %}
+    {% include "table/tr.html.twig" with {
+        tr : tr
+    } %}
+    {% include "table/tr.html.twig" with {
+        tr : {
+            values : {
+                info : {
+                    value : infoFull,
+                    attr : {
+                        colspan : 8,
+                        class : "p-0 table-paginator"
+                    }
+                }
+            },
+        }
+    } %}
 {% endfor %}
 {% if tr.values is defined %}
-{% include "paginatorTable.html.twig" with {
-    items: entities,
-    cols : tr.values|length
-} %}
+    {% include "paginatorTable.html.twig" with {
+        items: entities,
+        cols : tr.values|length
+    } %}
 {% endif %}

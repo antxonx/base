@@ -20,4 +20,4 @@ monolog:
         Antxony:
             type: service
             channels:  ["!event", "!doctrine", "!console"]
-            id: Antxony.logger
+            id: antxony.logger

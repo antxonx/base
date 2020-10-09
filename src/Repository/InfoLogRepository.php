@@ -7,6 +7,7 @@ namespace App\Repository;
 
 use App\Entity\InfoLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Antxony\Util;
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\Criteria;
 
 /**
  * InfoLogRepository class
- * 
+ *
  * @method InfoLog|null find($id, $lockMode = null, $lockVersion = null)
  * @method InfoLog|null findOneBy(array $criteria, array $orderBy = null)
  * @method InfoLog[]    findAll()
@@ -36,11 +37,12 @@ class InfoLogRepository extends ServiceEntityRepository
      * conseguir por filtrado
      *
      * @param mixed $params
-     * @return void
+     * @return array
+     * @throws QueryException
      */
     public function getBy($params)
     {
-        $page = ((isset($params->page))?$params->page:1);
+        $page = ((isset($params->page)) ? $params->page : 1);
         // Create our query
         $query = $this->createQueryBuilder('p')
             ->orderBy("p." . $params->ordercol, $params->orderorder);
@@ -52,7 +54,7 @@ class InfoLogRepository extends ServiceEntityRepository
             $searchCriteria->orWhere(Criteria::expr()->contains("p.message", $params->search));
             $query->addCriteria($searchCriteria);
         }
-        if(isset($params->method) && $params->method != "") {
+        if (isset($params->method) && $params->method != "") {
             $methodCriteria = new Criteria();
             $methodCriteria->where(Criteria::expr()->eq("p.method", strtoupper($params->method)));
             $query->addCriteria($methodCriteria);
@@ -61,8 +63,8 @@ class InfoLogRepository extends ServiceEntityRepository
 
         $paginator = new Paginator($query);
         $paginator->getQuery()
-        ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
-        ->setMaxResults(Util::PAGE_COUNT); // Limit
+            ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
+            ->setMaxResults(Util::PAGE_COUNT); // Limit
 
         return array('paginator' => $paginator, 'query' => $query);
     }

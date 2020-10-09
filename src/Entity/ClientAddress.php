@@ -2,6 +2,7 @@
 /**
  * ClientAddress entity
  */
+
 namespace App\Entity;
 
 use App\Repository\ClientAddressRepository;

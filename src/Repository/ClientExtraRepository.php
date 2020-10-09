@@ -2,10 +2,13 @@
 /**
  * ClientExtra repository
  */
+
 namespace App\Repository;
 
 use App\Entity\ClientExtra;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -31,6 +34,8 @@ class ClientExtraRepository extends ServiceEntityRepository
      *
      * @param ClientExtra $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(ClientExtra $entity)
     {
@@ -42,6 +47,8 @@ class ClientExtraRepository extends ServiceEntityRepository
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -53,6 +60,8 @@ class ClientExtraRepository extends ServiceEntityRepository
      *
      * @param ClientExtra $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(ClientExtra $entity)
     {

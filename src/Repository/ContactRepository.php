@@ -2,10 +2,13 @@
 /**
  * Contact repository
  */
+
 namespace App\Repository;
 
 use App\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -31,6 +34,8 @@ class ContactRepository extends ServiceEntityRepository
      *
      * @param Contact $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function add(Contact $entity)
     {
@@ -42,6 +47,8 @@ class ContactRepository extends ServiceEntityRepository
      * Actualizar entidad
      *
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function update()
     {
@@ -53,6 +60,8 @@ class ContactRepository extends ServiceEntityRepository
      *
      * @param Contact $entity
      * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Contact $entity)
     {

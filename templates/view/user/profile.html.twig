@@ -3,34 +3,34 @@
 {% block title %}Perfil{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <b>Usuario:</b> <br>
-                    {{ app.user.username }}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <b>Usuario:</b> <br>
+                        {{ app.user.username }}
+                    </div>
+                    <div class="col">
+                        <b>Nombre:</b> <br>
+                        {{ app.user.name }}
+                    </div>
                 </div>
-                <div class="col">
-                    <b>Nombre:</b> <br>
-                    {{ app.user.name }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <b>Correo:</b> <br>
-                    {{ app.user.mail }}
-                </div>
-                <div class="col">
-                    <b>roles:</b> <br>
-                    {% for role in app.user.roles %}
-                    {% if role != "ROLE_USER" %}
-                        <span class="badge badge-info">{{ role|slice(5, role|length) }}</span>
-                    {% endif %}
-                    {% endfor %}
+                <div class="row">
+                    <div class="col">
+                        <b>Correo:</b> <br>
+                        {{ app.user.mail }}
+                    </div>
+                    <div class="col">
+                        <b>roles:</b> <br>
+                        {% for role in app.user.roles %}
+                            {% if role != "ROLE_USER" %}
+                                <span class="badge badge-info">{{ role|slice(5, role|length) }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -3,25 +3,25 @@ $toast-success: #9ccc65a1
 $toast-danger: #ff4444a1
 
 .toast
-    &.toast-res
-        min-width: 500px
-        padding: 0rem 0rem
-    
+  &.toast-res
+    min-width: 500px
+    padding: 0 0
+
 #toastCont
-    z-index: 2000
-    position: fixed
-    top: 50px
-    right: 2px
+  z-index: 2000
+  position: fixed
+  top: 50px
+  right: 2px
 
 .toast-success
-    background-color: $toast-success !important
-    color: $toast-text !important
+  background-color: $toast-success !important
+  color: $toast-text !important
 
 .toast-error
-    background-color: $toast-danger !important
-    color: $toast-text !important
+  background-color: $toast-danger !important
+  color: $toast-text !important
 
 @media screen and (max-width: 900px) and (min-width: 300px)
-    .toast
-        &.toast-res
-            min-width: 300px
+  .toast
+    &.toast-res
+      min-width: 300px

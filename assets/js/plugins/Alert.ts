@@ -22,7 +22,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalId: string;
+    private readonly modalId: string;
     /**
      *idLael del modal
      *
@@ -30,7 +30,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalViewIdLabel: string;
+    private readonly modalViewIdLabel: string;
     /**
      *id del dialog del modal
      *
@@ -38,7 +38,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalDialogId: string;
+    private readonly modalDialogId: string;
     /**
      *Id del body del modal
      *
@@ -46,7 +46,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalBodyId: string;
+    private readonly modalBodyId: string;
     /**
      * Id del footer del modal
      *
@@ -54,7 +54,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalFooter: string;
+    private readonly modalFooter: string;
     /**
      * Elemento del modal
      *
@@ -88,7 +88,7 @@ export default class Modal {
      * @type {boolean}
      * @memberof Modal
      */
-    private hasCancel: boolean;
+    private readonly hasCancel: boolean;
 
     /**
      * Ondimiss action
@@ -96,7 +96,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private ondismiss: (status: boolean) => void;
+    private readonly ondismiss: (status: boolean) => void;
 
     /**
      * Estado de la petición
@@ -114,7 +114,7 @@ export default class Modal {
      * @type {boolean}
      * @memberof Modal
      */
-    private next : boolean;
+    private next: boolean;
 
     /**
      *Estrutura principal del modal
@@ -134,14 +134,15 @@ export default class Modal {
         </div>
     </div>
     `;
+
     /**
      * Crear una instancia de Alert
      * @param {boolean} [hasCacnel=false]
-     * @param {boolean} [endStatus=true]
      * @param {(status : boolean) => void} [ondismiss=() => { }]
      * @memberof Modal
      */
-    public constructor (hasCacnel: boolean = false, ondismiss: (status : boolean) => void = () => { }) {
+    public constructor(hasCacnel: boolean = false, ondismiss: (status: boolean) => void = () => {
+    }) {
         this.modalId = this.randomId();
         this.hasCancel = hasCacnel;
         this.modalViewIdLabel = this.randomId();
@@ -151,7 +152,7 @@ export default class Modal {
         this.ondismiss = ondismiss;
         this.status = false;
         this.next = false;
-        this.modal = this.htmlToElement("<div></div>");
+        this.modal = Modal.htmlToElement("<div></div>");
         this.createModal();
     }
 
@@ -167,20 +168,20 @@ export default class Modal {
         newTemplate = newTemplate.replace("modalDialogId", this.modalDialogId);
         newTemplate = newTemplate.replace("modalBodyId", this.modalBodyId);
         newTemplate = newTemplate.replace("modalFooter", this.modalFooter);
-        this.modal = this.htmlToElement(newTemplate);
+        this.modal = Modal.htmlToElement(newTemplate);
         document.body.appendChild(this.modal);
         this.build();
     }
 
     /**
-    * Convertir un string a un elemento de HTML
-    *
-    * @private
-    * @param {string} html
-    * @returns {HTMLElement}
-    * @memberof Modal
-    */
-    private htmlToElement(html: string): HTMLElement {
+     * Convertir un string a un elemento de HTML
+     *
+     * @private
+     * @param {string} html
+     * @returns {HTMLElement}
+     * @memberof Modal
+     */
+    private static htmlToElement(html: string): HTMLElement {
         const template = document.createElement('template');
         html = html.trim();
         template.innerHTML = html;
@@ -216,7 +217,7 @@ export default class Modal {
      * @returns {Promise<boolean>}
      * @memberof Modal
      */
-    public async show(dismiss: boolean = true) : Promise<boolean> {
+    public async show(dismiss: boolean = true): Promise<boolean> {
         this.setSize();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
@@ -243,7 +244,7 @@ export default class Modal {
      * @memberof Modal
      */
     public async waitForInput() {
-        while (this.next === false) await this.timeout(50);
+        while (!this.next) await this.timeout(50);
         this.next = false;
     }
 
@@ -280,7 +281,6 @@ export default class Modal {
      * Construir el footer del modal
      *
      * @private
-     * @param {boolean} [dismiss=false]
      * @memberof Modal
      */
     private build() {
@@ -303,7 +303,7 @@ export default class Modal {
     }
 
     // this is an async timeout util
-    private timeout = async (ms : number) => new Promise(res => setTimeout(res, ms));
+    private timeout = async (ms: number) => new Promise(res => setTimeout(res, ms));
 
     /**
      * Generar un ID aleatorio

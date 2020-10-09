@@ -15,7 +15,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private title: string;
+    private readonly title: string;
     /**
      *Tamaño del modal
      *
@@ -23,7 +23,7 @@ export default class Modal {
      * @type {number}
      * @memberof Modal
      */
-    private size: number;
+    private readonly size: number;
     /**
      *Id del modal
      *
@@ -31,7 +31,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalId: string;
+    private readonly modalId: string;
     /**
      *Id del label del modal
      *
@@ -39,7 +39,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalViewIdLabel: string;
+    private readonly modalViewIdLabel: string;
     /**
      *id del dialog del modal
      *
@@ -47,7 +47,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalDialogId: string;
+    private readonly modalDialogId: string;
     /**
      *id del título del modal
      *
@@ -55,7 +55,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalTitleId: string;
+    private readonly modalTitleId: string;
     /**
      *is del body del modal
      *
@@ -63,7 +63,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private modalBodyId: string;
+    private readonly modalBodyId: string;
     /**
      *Elemento modal
      *
@@ -86,7 +86,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private onHide: () => void;
+    private readonly onHide: () => void;
 
     /**
      * Estruxtura principal del modal
@@ -121,16 +121,17 @@ export default class Modal {
      * @param {() => void} [onHide=() => {}]
      * @memberof Modal
      */
-    public constructor (title: string, size: number, onHide: () => void = () => { }) {
+    public constructor(title: string, size: number, onHide: () => void = () => {
+    }) {
         this.title = title;
         this.size = size;
         this.onHide = onHide;
-        this.modalId = this.randomId();
-        this.modalViewIdLabel = this.randomId();
-        this.modalDialogId = this.randomId();
-        this.modalTitleId = this.randomId();
-        this.modalBodyId = this.randomId();
-        this.modal = this.htmlToElement("<div></div>");
+        this.modalId = Modal.randomId();
+        this.modalViewIdLabel = Modal.randomId();
+        this.modalDialogId = Modal.randomId();
+        this.modalTitleId = Modal.randomId();
+        this.modalBodyId = Modal.randomId();
+        this.modal = Modal.htmlToElement("<div></div>");
         this.createModal();
     }
 
@@ -146,19 +147,19 @@ export default class Modal {
         newTemplate = newTemplate.replace("modalDialogId", this.modalDialogId);
         newTemplate = newTemplate.replace("modalTitleId", this.modalTitleId);
         newTemplate = newTemplate.replace("modalBodyId", this.modalBodyId);
-        this.modal = this.htmlToElement(newTemplate);
+        this.modal = Modal.htmlToElement(newTemplate);
         document.body.appendChild(this.modal);
     }
 
     /**
-    * Convertir un string a un elemento de HTML
-    *
-    * @private
-    * @param {string} html
-    * @returns {HTMLElement}
-    * @memberof Modal
-    */
-    private htmlToElement(html: string): HTMLElement {
+     * Convertir un string a un elemento de HTML
+     *
+     * @private
+     * @param {string} html
+     * @returns {HTMLElement}
+     * @memberof Modal
+     */
+    private static htmlToElement(html: string): HTMLElement {
         const template = document.createElement('template');
         html = html.trim();
         template.innerHTML = html;
@@ -265,9 +266,10 @@ export default class Modal {
      * @returns {string}
      * @memberof Modal
      */
-    private randomId(): string {
+    private static randomId(): string {
         return "_" + Math.floor(Math.random() * 1000000) + 1;
     }
+
     /**
      *Conseguir el id del modal
      *

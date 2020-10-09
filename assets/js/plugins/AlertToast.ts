@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'bootstrap';
+
 /**
  *Clase para alertas de informe temporales
  *
@@ -67,11 +68,12 @@ export default class Toast {
         newTemplate = newTemplate.replace("changClass", "success");
         const NEW_TOAST = Toast.htmlToElement(newTemplate);
         document.getElementById("toastCont")!.appendChild(NEW_TOAST);
-        $(`#_${ID}`).toast({
+        const _T = $(`#_${ID}`);
+        _T.toast({
             delay: Toast.DELAY_TIME
         });
-        $(`#_${ID}`).toast('show');
-        $(`#_${ID}`).on('hidden.bs.toast', () => {
+        _T.toast('show');
+        _T.on('hidden.bs.toast', () => {
             $(`#_${ID}`).remove();
         });
     };
@@ -96,11 +98,12 @@ export default class Toast {
         newTemplate = newTemplate.replace("changClass", "error");
         const NEW_TOAST = Toast.htmlToElement(newTemplate);
         document.getElementById("toastCont")!.appendChild(NEW_TOAST);
-        $(`#_${ID}`).toast({
+        const _T = $(`#_${ID}`);
+        _T.toast({
             delay: Toast.DELAY_TIME
         });
-        $(`#_${ID}`).toast('show');
-        $(`#_${ID}`).on('hidden.bs.toast', () => {
+        _T.toast('show');
+        _T.on('hidden.bs.toast', () => {
             $(`#_${ID}`).remove();
         });
     };
@@ -114,7 +117,7 @@ export default class Toast {
      * @returns {HTMLElement}
      */
     private static htmlToElement = (html: string): HTMLElement => {
-        var template = document.createElement('template');
+        const template = document.createElement('template');
         html = html.trim();
         template.innerHTML = html;
         return template.content.firstChild as HTMLElement;

@@ -25,14 +25,14 @@
         error : 'Ingrese un correo válido'
     } %}
     {% if contact %}
-    {% include 'form/input.html.twig' with {
-        type : 'text',
-        id: 'role',
-        label: 'Parentesco/Referencia',
-        placeholder: '',
-        required : true,
-        error : 'Ingrese el parentesco o referencia para el contacto'
-    } %}
+        {% include 'form/input.html.twig' with {
+            type : 'text',
+            id: 'role',
+            label: 'Parentesco/Referencia',
+            placeholder: '',
+            required : true,
+            error : 'Ingrese el parentesco o referencia para el contacto'
+        } %}
     {% endif %}
     <div id="submit-btn" class="w-100 text-left">
         <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
