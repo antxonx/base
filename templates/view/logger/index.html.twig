@@ -3,41 +3,41 @@
 {% block title %}Registros{% endblock %}
 
 {% block body %}
-<div class="w-99 mx-auto">
-    <div class="m-3 row">
-        <div class="col-md-2">
-            <h2>Registros</h2>
-        </div>
-        <div class="col-md-2 m-1 btn-group" role="group" aria-label="log type">
-            <button type="button" id="infoLogSwitch" class="btn btn-outline-success no-hover">Info</button>
-            <button type="button" id="errorLogSwitch" class="btn btn-outline-success no-hover">Error</button>
-        </div>
-        <div class="col-md-3 m-1 search-input">
-            <label class="sr-only" for="searchLogInput">Registro...</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Buscar</div>
+    <div class="w-99 mx-auto">
+        <div class="m-3 row">
+            <div class="col-md-2">
+                <h2>Registros</h2>
+            </div>
+            <div class="col-md-2 m-1 btn-group" role="group" aria-label="log type">
+                <button type="button" id="infoLogSwitch" class="btn btn-outline-success no-hover">Info</button>
+                <button type="button" id="errorLogSwitch" class="btn btn-outline-success no-hover">Error</button>
+            </div>
+            <div class="col-md-3 m-1 search-input">
+                <label class="sr-only" for="searchLogInput">Registro...</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Buscar</div>
+                    </div>
+                    <input type="text" class="form-control" id="searchLogInput" placeholder="">
                 </div>
-                <input type="text" class="form-control" id="searchLogInput" placeholder="">
+            </div>
+            <div class="col-md-3 m-1">
+                <select id="methodSelect" class="form-control">
+                    <option value="" selected>TODOS</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
             </div>
         </div>
-        <div class="col-md-3 m-1">
-            <select id="methodSelect" class="form-control">
-                <option value="" selected>TODOS</option>
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="PATCH">PATCH</option>
-                <option value="DELETE">DELETE</option>
-            </select>
-        </div>
+        {% include "view/logger/table.html.twig" %}
     </div>
-    {% include "view/logger/table.html.twig" %}
-</div>
-<div class="text-center">
-    <small class="text-muted"><em>*Si tienen color son registros de sistema, no de usuario.</em></small>
-</div>
+    <div class="text-center">
+        <small class="text-muted"><em>*Si tienen color son registros de sistema, no de usuario.</em></small>
+    </div>
 {% endblock %}
 {% block javascripts %}
-{{ encore_entry_script_tags('logger') }}
+    {{ encore_entry_script_tags('logger') }}
 {% endblock %}

@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Sistema">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta property="og:image" content="{{ asset('build/logo.jpg') }}" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        {{ encore_entry_link_tags('app') }}
-        <link rel="shortcut icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
-        <link rel="icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
-    </head>
-    <body>
-        {% if app.user and app.user.suspended %}
-        <script>
-            window.location.href = "{{ path('app_logout') }}";
-        </script>
-        {% else %}
-        {% include "navbar.html.twig" %}
-        <div id="toastCont">
-        </div>
-        {% block body %}{% endblock %}
-        {% include "routes.html.twig" %}
-        {% block javascripts %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sistema">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta property="og:image" content="{{ asset('build/logo.jpg') }}"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {{ encore_entry_link_tags('app') }}
+    <link rel="shortcut icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+{% if app.user and app.user.suspended %}
+    <script>
+        window.location.href = "{{ path('app_logout') }}";
+    </script>
+{% else %}
+    {% include "navbar.html.twig" %}
+    <div id="toastCont">
+    </div>
+    {% block body %}{% endblock %}
+    {% include "routes.html.twig" %}
+    {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-        {% endif %}
-        <div style="height: 200px !important;">
+    {% endblock %}
+{% endif %}
+<div style="height: 200px !important;">
 
-        </div>
-    </body>
+</div>
+</body>
 </html>

@@ -1,26 +1,26 @@
 <table class="table table-sm table-striped w-100 table-hover">
     {% set sort %}
-    <span class="float-right sort-icon"><i class="fas fa-sort"></i></span>
+        <span class="float-right sort-icon"><i class="fas fa-sort"></i></span>
     {% endset %}
-{# impersonator #}
-{% set extra = {
-    value : '',
-    attr : {
-        class: 'd-none'
-    }
-} %}
-{% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+    {# impersonator #}
     {% set extra = {
-        value : '<i class="fas fa-user-tie"></i>',
+        value : '',
         attr : {
-            class : 'text-center',
-            style : 'width: 50px !important;'
+            class: 'd-none'
         }
     } %}
-{% endif %}
-{# . #}
+    {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+        {% set extra = {
+            value : '<i class="fas fa-user-tie"></i>',
+            attr : {
+                class : 'text-center',
+                style : 'width: 50px !important;'
+            }
+        } %}
+    {% endif %}
+    {# . #}
     {% include "table/thead.html.twig" with {
-        tr : { 
+        tr : {
             values : {
                 id : {
                     value : 'Id' ~ sort,
@@ -63,7 +63,7 @@
                         class : 'text-center',
                         width : '50px'
                     }
-                }, 
+                },
                 extra : extra
             },
             attr : {

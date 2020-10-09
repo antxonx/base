@@ -38,16 +38,16 @@
             </li>
 
             {% if app.user %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="profileMenu" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  {{ app.user.username }}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="profileMenu">
-                  <a class="dropdown-item" href="{{ path('user_profile') }}">Perfil</a>
-                  <a class="dropdown-item" href="{{ path('app_logout') }}">Salir</a>
-                </div>
-              </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileMenu" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="profileMenu">
+                        <a class="dropdown-item" href="{{ path('user_profile') }}">Perfil</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Salir</a>
+                    </div>
+                </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Ingresar</a>

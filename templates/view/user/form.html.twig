@@ -1,7 +1,8 @@
 <form id="userForm">
     <div class="fomr-group">
         <label for="username">Usuario*</label>
-        <input type="text" t-type="text" id="username" class="form-control required" error-msg="Ingrese un nombre de usuario de más de 5 letras"  onkeypress="return event.charCode != 32">
+        <input type="text" t-type="text" id="username" class="form-control required"
+               error-msg="Ingrese un nombre de usuario de más de 5 letras" onkeypress="return event.charCode !== 32">
     </div>
     {% include 'form/input.html.twig' with {
         type : 'text',
