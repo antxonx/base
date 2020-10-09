@@ -1,8 +1,8 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import { ROUTES, SPINNER_LOADER } from '@scripts/app';
+import {ROUTES, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
-import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
+import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
 let MODAL: Modal;
 let ID: number;
@@ -13,7 +13,8 @@ let ID: number;
  * @param {number} id
  * @param {() => void} [callback=CALLBACK]
  */
-export const openAddressModal = (id: number, callback: () => void = () => { }) => {
+export const openAddressModal = (id: number, callback: () => void = () => {
+}) => {
     ID = id;
     MODAL = (new Modal("Agregar dirección", 70, callback)).show();
     loadForm();
@@ -43,7 +44,7 @@ const loadForm = () => {
 const validate = (e: Event) => {
     e.preventDefault();
     if (evaluateInputs(
-        [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
+        [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>],
         1
     )) {
         const BTN = document.getElementById("submit-btn") as HTMLButtonElement;

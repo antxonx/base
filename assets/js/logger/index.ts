@@ -2,9 +2,9 @@ import Axios from 'axios';
 import * as Paginator from '@scripts/plugins/Paginator';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
-import { ROUTES, BIG_LOADER, BIG_LOADER_TABLE } from '@scripts/app';
-import { initButtonCheck, unMarkActive } from '@scripts/plugins/ButtonCheck';
-import getSort, { SortColumn } from '@scripts/plugins/SortColumn';
+import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
+import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
+import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("logsView") as HTMLElement;
 let SEARCH_INPUT = "";
@@ -111,7 +111,7 @@ const sortAction = (e: Event) => {
  */
 const loadEvs = () => {
     document.getElementById("methodSelect")!.addEventListener("input", changeMethod);
-    [ ...document.getElementsByClassName("sort-column") ].forEach(element => element.addEventListener("click", sortAction));
+    [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", sortAction));
 };
 
 mainView();

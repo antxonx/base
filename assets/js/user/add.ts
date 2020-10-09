@@ -1,19 +1,21 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import { SPINNER_LOADER } from '@scripts/app';
-import { evaluateInputs, clearErrorMsg, insertAlertAfter } from '@scripts/plugins/Required';
-import { ROUTES } from '@scripts/app';
+import {SPINNER_LOADER} from '@scripts/app';
+import {evaluateInputs, clearErrorMsg, insertAlertAfter} from '@scripts/plugins/Required';
+import {ROUTES} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 
 let MODAL: Modal;
-let CALLBACK: () => void = () => { };
+let CALLBACK: () => void = () => {
+};
 
 /**
  * Abrir modal
  *
  * @param {() => void} [callback=() => {}]
  */
-export const openModal = (callback: () => void = () => { }) => {
+export const openModal = (callback: () => void = () => {
+}) => {
     CALLBACK = callback;
     MODAL = new Modal("Nuevo usuario", 60);
     MODAL.show();
@@ -37,7 +39,7 @@ const validate = (e: Event) => {
     e.preventDefault();
     clearErrorMsg();
     if (evaluateInputs(
-        [ ...(document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>) ],
+        [...(document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>)],
         5
     )) {
         const ROLE = (document.getElementById("roleSelector") as HTMLInputElement).value;
@@ -50,9 +52,9 @@ const validate = (e: Event) => {
                 password: (document.getElementById("password") as HTMLInputElement).value,
                 email: (document.getElementById("email") as HTMLInputElement).value,
                 name: (document.getElementById("name") as HTMLInputElement).value,
-                roles: [ ROLE ],
+                roles: [ROLE],
             })
-                .then(res => {
+                .then(() => {
                     CALLBACK();
                     MODAL.hide();
                 })

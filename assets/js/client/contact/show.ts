@@ -1,10 +1,10 @@
 import Modal from "@scripts/plugins/Modal";
 import Axios from "axios";
 import Alert from '@scripts/plugins/Alert';
-import { ROUTES, SPINNER_LOADER } from "@scripts/app";
+import {ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
-import { evaluateInputs, hideElement, showElement } from "@scripts/plugins/Required";
-import { deleteElement, disableRow } from "@scripts/plugins/DeleteElement";
+import {evaluateInputs, hideElement, showElement} from "@scripts/plugins/Required";
+import {deleteElement, disableRow} from "@scripts/plugins/DeleteElement";
 
 let MODAL: Modal;
 let ID: number;
@@ -15,7 +15,8 @@ let ID: number;
  * @param {number} id
  * @param {() => void} [callback=() => {}]
  */
-export const showContact = (id: number, callback: () => void = () => { }) => {
+export const showContact = (id: number, callback: () => void = () => {
+}) => {
     ID = id;
     MODAL = (new Modal("Contacto", 50, callback)).show();
     loadView();
@@ -38,8 +39,8 @@ const loadView = () => {
             //Datos extra
             document.getElementById("contact-phone-extra-form")!.addEventListener("submit", addExtraPhone);
             document.getElementById("contact-email-extra-form")!.addEventListener("submit", addExtraEmail);
-            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', deletePhone));
-            [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', deleteEmail));
+            [...document.getElementsByClassName("trash-phone")].forEach(el => el.addEventListener('click', deletePhone));
+            [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', deleteEmail));
             //.
         })
         .catch(err => {
@@ -79,10 +80,10 @@ const toggleEdit = (e: Event) => {
         BTN.classList.remove("btn-danger");
         BTN.classList.add("btn-warning");
         BTN.innerHTML = "Editar";
-        [ ...document.getElementsByClassName("trash-email") ].forEach(el => hideElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("trash-phone") ].forEach(el => hideElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("trash-contact") ].forEach(el => hideElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("plus-btn") ].forEach(el => hideElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-email")].forEach(el => hideElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-phone")].forEach(el => hideElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-contact")].forEach(el => hideElement(el as HTMLElement));
+        [...document.getElementsByClassName("plus-btn")].forEach(el => hideElement(el as HTMLElement));
         $('#email-extra-container').collapse('hide');
         $('#phone-extra-container').collapse('hide');
     } else {
@@ -90,10 +91,10 @@ const toggleEdit = (e: Event) => {
         BTN.classList.remove("btn-warning");
         BTN.classList.add("btn-danger");
         BTN.innerHTML = "Cancelar";
-        [ ...document.getElementsByClassName("trash-email") ].forEach(el => showElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("trash-phone") ].forEach(el => showElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("trash-contact") ].forEach(el => showElement(el as HTMLElement));
-        [ ...document.getElementsByClassName("plus-btn") ].forEach(el => showElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-email")].forEach(el => showElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-phone")].forEach(el => showElement(el as HTMLElement));
+        [...document.getElementsByClassName("trash-contact")].forEach(el => showElement(el as HTMLElement));
+        [...document.getElementsByClassName("plus-btn")].forEach(el => showElement(el as HTMLElement));
     }
     $('.editable-field').editable('toggleDisabled');
 };
@@ -105,7 +106,7 @@ const toggleEdit = (e: Event) => {
  */
 const addExtraPhone = (e: Event) => {
     e.preventDefault();
-    if (evaluateInputs([ document.getElementById("phone") as HTMLInputElement ], 1, false)) {
+    if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
         const BTN = document.getElementById("submit-phone-extra-btn")!;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
@@ -133,7 +134,7 @@ const addExtraPhone = (e: Event) => {
  */
 const addExtraEmail = (e: Event) => {
     e.preventDefault();
-    if (evaluateInputs([ document.getElementById("email") as HTMLInputElement ], 1, false)) {
+    if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
         const BTN = document.getElementById("submit-email-extra-btn")!;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;

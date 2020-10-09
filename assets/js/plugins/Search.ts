@@ -1,4 +1,5 @@
 import $ from 'jquery';
+
 /**
  *Inicializa el búscador y llama a un callback cuando el input se actualice
  *

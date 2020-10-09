@@ -1,10 +1,10 @@
 import Modal from '@scripts/plugins/Modal';
-import { ROUTES, SPINNER_LOADER } from '@scripts/app';
+import {ROUTES} from '@scripts/app';
 import Axios from 'axios';
 import Toast from '@scripts/plugins/AlertToast';
-import { clearErrorMsg, evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 
-let CALLBACK: () => void = () => { };
+let CALLBACK: () => void = () => {
+};
 let ID: number;
 let MODAL: Modal;
 

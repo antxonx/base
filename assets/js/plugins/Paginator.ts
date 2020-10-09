@@ -1,4 +1,5 @@
-let CALLBACK: (page: number) => void = () => { };
+let CALLBACK: (page: number) => void = () => {
+};
 
 /**
  *Cambiar de página
@@ -17,5 +18,5 @@ const changePage = (e: Event) => {
  */
 export const initialize = (callback: (page: number) => void = CALLBACK) => {
     CALLBACK = callback;
-    [ ...document.getElementsByClassName("paginator") ].forEach(element => element.addEventListener("click", changePage));
+    [...document.getElementsByClassName("paginator")].forEach(element => element.addEventListener("click", changePage));
 };

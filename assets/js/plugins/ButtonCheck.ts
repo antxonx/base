@@ -36,7 +36,8 @@ export const unMarkActive = (button: HTMLElement) => {
  * @param {HTMLElement} button
  * @param {*} [onChange=(state : boolean) => {}]
  */
-export const initButtonCheck = (button: HTMLElement, onChange = (state: boolean, id?: string) => { }) => {
+export const initButtonCheck = (button: HTMLElement, onChange = (state: boolean, id?: string) => {
+}) => {
     ONCHANGE = onChange;
     button.addEventListener("click", toggleState);
 };

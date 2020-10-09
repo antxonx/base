@@ -8,7 +8,7 @@ import '@styles/app.sass';
 /* ------------------ Configuración para bootstrap-editable ----------------- */
 
 //@ts-ignore
-$.fn.editable.defaults.ajaxOptions = { type: "PATCH" };
+$.fn.editable.defaults.ajaxOptions = {type: "PATCH"};
 // @ts-ignore
 $.fn.editable.defaults.mode = 'inline';
 // @ts-ignore
