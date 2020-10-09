@@ -280,9 +280,9 @@ class UserController extends AbstractController
      */
     public function update(int $id, Request $request): Response
     {
-        $content = json_decode(json_encode($request->getContent()));
+        parse_str($request->getContent(), $content);
+        $content = json_decode(json_encode($content));
         try {
-            parse_str($request->getContent(), $content);
 
             $user = $this->rep->find($id);
             $message = "Se ha actualizado";
