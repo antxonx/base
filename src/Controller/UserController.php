@@ -272,7 +272,7 @@ class UserController extends AbstractController
     /**
      * Actualizar proveedor
      * @Route("/{id}", name="user_update", methods={"PUT", "PATCH"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param integer $id
      * @param Request $request
