@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Clase para generar registros con errores o información en base de datos
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class Logger extends AbstractProcessingHandler
 {

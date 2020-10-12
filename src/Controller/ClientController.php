@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * ClientController class
  * @Route("/client")
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ClientController extends AbstractController
 {

@@ -7,7 +7,7 @@ namespace Antxony\Def\Contact;
 
 /**
  * Level class
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class Level {
     /**

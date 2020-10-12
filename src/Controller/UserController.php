@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use Antxony\Def\Editable\Editable;
 use App\Entity\User;
 use Antxony\Util;
 use Exception;
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * Usuarios
  * @Route("/user")
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class UserController extends AbstractController
 {
@@ -270,7 +271,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Actualizar proveedor
+     * Actualizar usuario con x-editable
      * @Route("/{id}", name="user_update", methods={"PUT", "PATCH"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
@@ -281,7 +282,8 @@ class UserController extends AbstractController
     public function update(Request $request, int $id = 0): Response
     {
         parse_str($request->getContent(), $content);
-        $content = json_decode(json_encode($content));
+        //$content = json_decode(json_encode($content));
+        $content = new Editable($content);
         try {
             $user = $this->actualUser;
             if($id > 0 ) {

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * HomeController class
  * @Route("/")
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class HomeController extends AbstractController
 {
