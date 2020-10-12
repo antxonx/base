@@ -278,13 +278,19 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function update(int $id, Request $request): Response
+    public function update(Request $request, int $id = 0): Response
     {
         parse_str($request->getContent(), $content);
         $content = json_decode(json_encode($content));
         try {
-
-            $user = $this->rep->find($id);
+            $user = $this->actualUser;
+            if($id > 0 ) {
+                if($this->actualUser->hasRole("ROLE_ADMIN")){
+                    $user = $this->rep->find($id);
+                } else {
+                    throw new Exception("Permiso denegado");
+                }
+            }
             $message = "Se ha actualizado";
             if ($content->name == "username") {
                 $user->setUsername($content->value);
@@ -294,12 +300,14 @@ class UserController extends AbstractController
                 $user->setMail($content->value);
                 $message .= " el correo";
             }
-
             if ($content->name == "name") {
                 $user->setName($content->value);
                 $message .= " el nombre";
             }
             if ($content->name == "roles") {
+                if (!$this->actualUser->hasRole("ROLE_ADMIN")){
+                    throw new Exception("Permiso denegado");
+                }
                 $user->setRoles($content->value);
                 $message .= " el rol";
             }

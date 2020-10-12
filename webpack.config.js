@@ -34,6 +34,7 @@ Encore
     .addEntry('client', './assets/js/client/index.ts')
     .addEntry('logger', './assets/js/logger/index.ts')
     .addEntry('dashboard', './assets/js/dashboard/index.ts')
+    .addEntry('profile', './assets/js/profile/index.ts')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
