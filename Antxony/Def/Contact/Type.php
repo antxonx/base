@@ -7,6 +7,7 @@ namespace Antxony\Def\Contact;
 
 /**
  * Type class
+ * @package Antxony\Def\Contact
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class Type {
