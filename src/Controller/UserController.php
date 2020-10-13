@@ -285,8 +285,8 @@ class UserController extends AbstractController
         $content = new Editable($content);
         try {
             $user = $this->actualUser;
-            if($id > 0 ) {
-                if($this->actualUser->hasRole("ROLE_ADMIN")){
+            if ($id > 0) {
+                if ($this->actualUser->hasRole("ROLE_ADMIN")) {
                     $user = $this->rep->find($id);
                 } else {
                     throw new Exception("Permiso denegado");
@@ -306,7 +306,7 @@ class UserController extends AbstractController
                 $message .= " el nombre";
             }
             if ($content->name == "roles") {
-                if (!$this->actualUser->hasRole("ROLE_ADMIN")){
+                if (!$this->actualUser->hasRole("ROLE_ADMIN")) {
                     throw new Exception("Permiso denegado");
                 }
                 $user->setRoles($content->value);

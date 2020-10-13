@@ -45,7 +45,7 @@ class HomeController extends AbstractController
      *
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
         try {
             $clients = $this->getDoctrine()->getRepository(Client::class)->findBy([

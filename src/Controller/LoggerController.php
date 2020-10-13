@@ -25,17 +25,17 @@ use Symfony\Component\Security\Core\Security;
 class LoggerController extends AbstractController
 {
     /**
-    * Repositorio de usuarios
-    *
-    * @var ErrorLogRepository
-    */
+     * Repositorio de usuarios
+     *
+     * @var ErrorLogRepository
+     */
     protected $eRep;
 
     /**
-    * Repositorio de usuarios
-    *
-    * @var InfoLogRepository
-    */
+     * Repositorio de usuarios
+     *
+     * @var InfoLogRepository
+     */
     protected $iRep;
 
     /**
@@ -76,9 +76,9 @@ class LoggerController extends AbstractController
      *
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
-        try{
+        try {
             return $this->render('view/logger/index.html.twig', [
                 'controller_name' => 'LoggerController',
             ]);
@@ -95,19 +95,19 @@ class LoggerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function indexInfo(Request $request) : Response
+    public function indexInfo(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
             $result = $this->iRep->getBy($params);
-            $showed = ((isset($params->page))?$params->page*Util::PAGE_COUNT:Util::PAGE_COUNT);
+            $showed = ((isset($params->page)) ? $params->page * Util::PAGE_COUNT : Util::PAGE_COUNT);
             $entities = $result['paginator'];
             $maxPages = ceil($entities->count() / Util::PAGE_COUNT);
             return $this->render("view/logger/tbodyInfo.html.twig", [
                 'entities' => $entities,
-                'maxPages'=>$maxPages,
-                'thisPage' => ((isset($params->page))?$params->page:1),
-                'showed' => (($showed > $entities->count())?$entities->count():$showed),
+                'maxPages' => $maxPages,
+                'thisPage' => ((isset($params->page)) ? $params->page : 1),
+                'showed' => (($showed > $entities->count()) ? $entities->count() : $showed),
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -122,19 +122,19 @@ class LoggerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function indexError(Request $request) : Response
+    public function indexError(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
             $result = $this->eRep->getBy($params);
-            $showed = ((isset($params->page))?$params->page*Util::PAGE_COUNT:Util::PAGE_COUNT);
+            $showed = ((isset($params->page)) ? $params->page * Util::PAGE_COUNT : Util::PAGE_COUNT);
             $entities = $result['paginator'];
             $maxPages = ceil($entities->count() / Util::PAGE_COUNT);
             return $this->render("view/logger/tbodyError.html.twig", [
                 'entities' => $entities,
-                'maxPages'=>$maxPages,
-                'thisPage' => ((isset($params->page))?$params->page:1),
-                'showed' => (($showed > $entities->count())?$entities->count():$showed),
+                'maxPages' => $maxPages,
+                'thisPage' => ((isset($params->page)) ? $params->page : 1),
+                'showed' => (($showed > $entities->count()) ? $entities->count() : $showed),
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

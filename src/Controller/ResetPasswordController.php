@@ -206,11 +206,11 @@ class ResetPasswordController extends AbstractController
         $mail->CharSet = "UTF-8";
         $mail->isHTML(true);
         $mail->Subject = 'Petición para restablecer contraseña';
-        $mail->Body    = $htmlMessage;
+        $mail->Body = $htmlMessage;
         $mail->AltBody = "";
 
         $mail->send();
-        
+
         //
         //Mailer de symfony por defecto
         //
