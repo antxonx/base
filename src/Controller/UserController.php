@@ -282,7 +282,6 @@ class UserController extends AbstractController
     public function update(Request $request, int $id = 0): Response
     {
         parse_str($request->getContent(), $content);
-        //$content = json_decode(json_encode($content));
         $content = new Editable($content);
         try {
             $user = $this->actualUser;
