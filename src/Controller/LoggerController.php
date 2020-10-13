@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Security;
 /**
  * LoggerController class
  * @Route("/logger")
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class LoggerController extends AbstractController
 {

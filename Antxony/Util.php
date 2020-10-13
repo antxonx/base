@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Util class
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @package Antxony
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class Util {
 

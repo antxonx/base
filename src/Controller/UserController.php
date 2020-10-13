@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use Antxony\Def\Editable\Editable;
 use App\Entity\User;
 use Antxony\Util;
 use Exception;
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * Usuarios
  * @Route("/user")
- * @author Alejandro Antonio <dantonyofcarim@gmail.com>
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class UserController extends AbstractController
 {
@@ -270,21 +271,27 @@ class UserController extends AbstractController
     }
 
     /**
-     * Actualizar proveedor
+     * Actualizar usuario con x-editable
      * @Route("/{id}", name="user_update", methods={"PUT", "PATCH"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param integer $id
      * @param Request $request
      * @return Response
      */
-    public function update(int $id, Request $request): Response
+    public function update(Request $request, int $id = 0): Response
     {
         parse_str($request->getContent(), $content);
-        $content = json_decode(json_encode($content));
+        $content = new Editable($content);
         try {
-
-            $user = $this->rep->find($id);
+            $user = $this->actualUser;
+            if($id > 0 ) {
+                if($this->actualUser->hasRole("ROLE_ADMIN")){
+                    $user = $this->rep->find($id);
+                } else {
+                    throw new Exception("Permiso denegado");
+                }
+            }
             $message = "Se ha actualizado";
             if ($content->name == "username") {
                 $user->setUsername($content->value);
@@ -294,12 +301,14 @@ class UserController extends AbstractController
                 $user->setMail($content->value);
                 $message .= " el correo";
             }
-
             if ($content->name == "name") {
                 $user->setName($content->value);
                 $message .= " el nombre";
             }
             if ($content->name == "roles") {
+                if (!$this->actualUser->hasRole("ROLE_ADMIN")){
+                    throw new Exception("Permiso denegado");
+                }
                 $user->setRoles($content->value);
                 $message .= " el rol";
             }
