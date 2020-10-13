@@ -13,6 +13,12 @@ namespace Antxony\Def\Editable;
 class Editable
 {
     /**
+     * Primary key
+     * @var int
+     */
+    public $pk;
+
+    /**
      * Nombre del campo
      * @var string
      */
@@ -32,5 +38,6 @@ class Editable
     {
         $this->name = (string)$content['name'];
         $this->value = $content['value'];
+        $this->pk = (int)$content['pk'];
     }
 }

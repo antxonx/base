@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use Antxony\Def\Contact\Level;
 use Antxony\Def\Contact\Type;
+use Antxony\Def\Editable\Editable;
 use App\Entity\Client;
 use App\Entity\ClientAddress;
 use App\Entity\ClientExtra;
@@ -238,35 +239,35 @@ class ClientController extends AbstractController
     {
         try {
             parse_str($request->getContent(), $content);
-            $content = json_decode(json_encode($content));
+            $editable = new Editable($content);
             $message = "Se ha actualizado";
             $address = $this->caRep->find($id);
-            if ($content->name == "addressStreet") {
-                $address->setStreet($content->value);
+            if ($editable->name == "addressStreet") {
+                $address->setStreet($editable->value);
                 $message .= " la calle";
             }
-            if ($content->name == "addressExtNum") {
-                $address->setExtNum($content->value);
+            if ($editable->name == "addressExtNum") {
+                $address->setExtNum($editable->value);
                 $message .= " el número exterior";
             }
-            if ($content->name == "addressIntNum") {
-                $address->setIntNum($content->value);
+            if ($editable->name == "addressIntNum") {
+                $address->setIntNum($editable->value);
                 $message .= " el número interior";
             }
-            if ($content->name == "addressCity") {
-                $address->setCity($content->value);
+            if ($editable->name == "addressCity") {
+                $address->setCity($editable->value);
                 $message .= " la ciudad";
             }
-            if ($content->name == "addressState") {
-                $address->setState($content->value);
+            if ($editable->name == "addressState") {
+                $address->setState($editable->value);
                 $message .= " el estado";
             }
-            if ($content->name == "addressPostal") {
-                $address->setPostal($content->value);
+            if ($editable->name == "addressPostal") {
+                $address->setPostal($editable->value);
                 $message .= " el código postal";
             }
-            if ($content->name == "addressCountry") {
-                $address->setCountry($content->value);
+            if ($editable->name == "addressCountry") {
+                $address->setCountry($editable->value);
                 $message .= " el país";
             }
             $address->getClient()->updated($this->actualUser);
@@ -441,7 +442,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Actualizar contacto
+     * Actualizar contacto con x-editable
      * @Route("/conatct/{id}", name="client_contact_update", methods={"PUT", "PATCH"})
      *
      * @param integer $id
@@ -452,30 +453,30 @@ class ClientController extends AbstractController
     {
         try {
             parse_str($request->getContent(), $content);
-            $content = json_decode(json_encode($content));
+            $editable = new Editable($content);
             $contact = $this->coRep->find($id);
             $message = "se ha actualizado";
-            if ($content->name == "contactName") {
-                $contact->setName($content->value);
+            if ($editable->name == "contactName") {
+                $contact->setName($editable->value);
                 $message .= " el nombre";
             }
-            if ($content->name == "contactRole") {
-                $contact->setRole($content->value);
+            if ($editable->name == "contactRole") {
+                $contact->setRole($editable->value);
                 $message .= " el parentesco/referencia";
             }
-            if ($content->name == "contactEmail") {
-                $contactExtra = $this->coeRep->find($content->pk);
-                $contactExtra->setValue($content->value);
+            if ($editable->name == "contactEmail") {
+                $contactExtra = $this->coeRep->find($editable->pk);
+                $contactExtra->setValue($editable->value);
                 $message .= " el correo";
             }
-            if ($content->name == "contactPhone") {
-                $contactExtra = $this->coeRep->find($content->pk);
-                $contactExtra->setValue($content->value);
+            if ($editable->name == "contactPhone") {
+                $contactExtra = $this->coeRep->find($editable->pk);
+                $contactExtra->setValue($editable->value);
                 $message .= " el teléfono";
             }
-            if ($content->name == "contactPhoneLevel") {
-                $contactExtra = $this->coeRep->find($content->pk);
-                $contactExtra->setLevel($content->value);
+            if ($editable->name == "contactPhoneLevel") {
+                $contactExtra = $this->coeRep->find($editable->pk);
+                $contactExtra->setLevel($editable->value);
                 $message .= " el teléfono";
             }
             $contact->updated($this->actualUser);
@@ -681,26 +682,26 @@ class ClientController extends AbstractController
     {
         try {
             parse_str($request->getContent(), $content);
-            $content = json_decode(json_encode($content));
+            $editable = new Editable($content);
             $client = $this->cRep->find($id);
             $message = "se ha actualizado";
-            if ($content->name == "clientName") {
-                $client->setName($content->value);
+            if ($editable->name == "clientName") {
+                $client->setName($editable->value);
                 $message .= " el nombre";
             }
-            if ($content->name == "clientEmail") {
-                $clientExtra = $this->ceRep->find($content->pk);
-                $clientExtra->setValue($content->value);
+            if ($editable->name == "clientEmail") {
+                $clientExtra = $this->ceRep->find($editable->pk);
+                $clientExtra->setValue($editable->value);
                 $message .= " el correo";
             }
-            if ($content->name == "clientPhone") {
-                $clientExtra = $this->ceRep->find($content->pk);
-                $clientExtra->setValue($content->value);
+            if ($editable->name == "clientPhone") {
+                $clientExtra = $this->ceRep->find($editable->pk);
+                $clientExtra->setValue($editable->value);
                 $message .= " el teléfono";
             }
-            if ($content->name == "clientPhoneLevel") {
-                $clientExtra = $this->ceRep->find($content->pk);
-                $clientExtra->setLevel($content->value);
+            if ($editable->name == "clientPhoneLevel") {
+                $clientExtra = $this->ceRep->find($editable->pk);
+                $clientExtra->setLevel($editable->value);
                 $message .= " el teléfono";
             }
             $client->updated($this->actualUser);
