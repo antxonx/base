@@ -28,6 +28,7 @@ export const ROUTES = {
             form: (document.getElementById("user-form-route") as HTMLInputElement).value,
             key: (document.getElementById("user-key-route") as HTMLInputElement).value,
             edit: (document.getElementById("user-edit-api") as HTMLInputElement).value,
+            passform: (document.getElementById("user-profile-pass-form-route") as HTMLInputElement).value,
         },
         api: {
             add: (document.getElementById("user-add-api") as HTMLInputElement).value,
@@ -35,6 +36,7 @@ export const ROUTES = {
             keyUpdate: (document.getElementById("user-key-update-api") as HTMLInputElement).value,
             delete: (document.getElementById("user-delete-api") as HTMLInputElement).value,
             reactivate: (document.getElementById("user-reactivate-api") as HTMLInputElement).value,
+            passchange: (document.getElementById("user-profile-pass-api") as HTMLInputElement).value,
         }
     },
     client: {

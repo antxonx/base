@@ -9,6 +9,7 @@ use Antxony\Def\Editable\Editable;
 use App\Entity\User;
 use Antxony\Util;
 use Exception;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -188,6 +189,50 @@ class UserController extends AbstractController
     }
 
     /**
+     * Cargar formulario de cambio de contraseña
+     * @Route("/profile/pass", name="user_profile_pass_form", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function passform(): Response
+    {
+        try {
+            return $this->render('view/user/passform.html.twig');
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Cambiar contraseña del usuario
+     * @Route("/profile/pass", name="user_profile_pass_change", methods={"PUT"})
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function passchange(Request $request): Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            if (!$this->passwordEncoder->isPasswordValid($this->actualUser, $content->old)) {
+                throw new Exception("La contraseña actual es incorrecta");
+            }
+            if ($content->new != $content->conf) {
+                throw new Exception("Las contraseñas no coinciden");
+            }
+            $this->rep->upgradePassword($this->actualUser,  $this->passwordEncoder->encodePassword(
+                $this->actualUser,
+                $content->new
+            ));
+            return new Response("Contraseña actualizada");
+        } catch (ORMException $e) {
+            return $this->util->errorResponse($e);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
      * Mostrar perfil de usuario
      * @Route("/profile", name="user_profile", methods={"GET"})
      *
@@ -285,8 +330,8 @@ class UserController extends AbstractController
         $content = new Editable($content);
         try {
             $user = $this->actualUser;
-            if($id > 0 ) {
-                if($this->actualUser->hasRole("ROLE_ADMIN")){
+            if ($id > 0) {
+                if ($this->actualUser->hasRole("ROLE_ADMIN")) {
                     $user = $this->rep->find($id);
                 } else {
                     throw new Exception("Permiso denegado");
@@ -306,7 +351,7 @@ class UserController extends AbstractController
                 $message .= " el nombre";
             }
             if ($content->name == "roles") {
-                if (!$this->actualUser->hasRole("ROLE_ADMIN")){
+                if (!$this->actualUser->hasRole("ROLE_ADMIN")) {
                     throw new Exception("Permiso denegado");
                 }
                 $user->setRoles($content->value);

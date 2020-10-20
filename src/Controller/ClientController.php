@@ -36,38 +36,38 @@ use Symfony\Component\Routing\Annotation\Route;
 class ClientController extends AbstractController
 {
     /**
-    * Repositorio de usuarios
-    *
-    * @var ClientRepository
-    */
+     * Repositorio de usuarios
+     *
+     * @var ClientRepository
+     */
     protected $cRep;
 
     /**
-    * Repositorio de extras para usuarios
-    *
-    * @var ClientExtraRepository
-    */
+     * Repositorio de extras para usuarios
+     *
+     * @var ClientExtraRepository
+     */
     protected $ceRep;
 
     /**
-    * Repositorio de contactos
-    *
-    * @var ContactRepository
-    */
+     * Repositorio de contactos
+     *
+     * @var ContactRepository
+     */
     protected $coRep;
 
     /**
-    * RRepositorio de extras para contactos
-    *
-    * @var ContactExtraRepository
-    */
+     * RRepositorio de extras para contactos
+     *
+     * @var ContactExtraRepository
+     */
     protected $coeRep;
 
     /**
-    * Repositorio de direcciones
-    *
-    * @var ClientAddressRepository
-    */
+     * Repositorio de direcciones
+     *
+     * @var ClientAddressRepository
+     */
     protected $caRep;
 
     /**
@@ -114,11 +114,11 @@ class ClientController extends AbstractController
     }
 
     /**
-    * Inicio
-    * @Route("", name="client_index", methods={"GET"})
-    * @IsGranted("ROLE_TEST")
-    */
-    public function index() : Response
+     * Inicio
+     * @Route("", name="client_index", methods={"GET"})
+     * @IsGranted("ROLE_TEST")
+     */
+    public function index(): Response
     {
         return $this->render('view/client/index.html.twig', [
             'controller_name' => 'ClientController',
@@ -133,19 +133,19 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function indexA(Request $request) : Response
+    public function indexA(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
             $result = $this->cRep->getBy($params);
-            $showed = ((isset($params->page))?$params->page*$this->util::PAGE_COUNT:$this->util::PAGE_COUNT);
+            $showed = ((isset($params->page)) ? $params->page * $this->util::PAGE_COUNT : $this->util::PAGE_COUNT);
             $clients = $result['paginator'];
             $maxPages = ceil($clients->count() / $this->util::PAGE_COUNT);
             return $this->render("view/client/tbody.html.twig", [
                 'clients' => $clients,
-                'maxPages'=>$maxPages,
-                'thisPage' => ((isset($params->page))?$params->page:1),
-                'showed' => (($showed > $clients->count())?$clients->count():$showed),
+                'maxPages' => $maxPages,
+                'thisPage' => ((isset($params->page)) ? $params->page : 1),
+                'showed' => (($showed > $clients->count()) ? $clients->count() : $showed),
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -159,7 +159,7 @@ class ClientController extends AbstractController
      *
      * @return Response
      */
-    public function form() : Response
+    public function form(): Response
     {
         try {
             return $this->render("view/client/form.html.twig", [
@@ -183,7 +183,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function addressForm(int $id) : Response
+    public function addressForm(int $id): Response
     {
         try {
             return $this->render("view/client/addressForm.html.twig", [
@@ -202,7 +202,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addAddress(Request $request) : Response
+    public function addAddress(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -235,7 +235,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function updateAddress(int $id, Request $request) : Response
+    public function updateAddress(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
@@ -297,11 +297,11 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addExtra(int $id, Request $request) : Response
+    public function addExtra(int $id, Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
-            $type = (($content->type == Type::EMAIL)?'correo':'teléfono');
+            $type = (($content->type == Type::EMAIL) ? 'correo' : 'teléfono');
             $client = $this->cRep->find($id);
             $extra = (new ClientExtra)
                 ->setClient($client)
@@ -326,7 +326,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function deleteExtra(int $id) : Response
+    public function deleteExtra(int $id): Response
     {
         try {
             $extra = $this->ceRep->find($id);
@@ -354,7 +354,7 @@ class ClientController extends AbstractController
      *
      * @return Response
      */
-    public function addContactForm() : Response
+    public function addContactForm(): Response
     {
         try {
             return $this->render("view/client/form.html.twig", [
@@ -375,7 +375,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addContact(int $id, Request $request) : Response
+    public function addContact(int $id, Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -424,7 +424,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function showContact(int $id) : Response
+    public function showContact(int $id): Response
     {
         try {
             $contact = $this->coRep->find($id);
@@ -449,7 +449,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function updateContact(int $id, Request $request) : Response
+    public function updateContact(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
@@ -497,7 +497,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function deleteContact(int $id) : Response
+    public function deleteContact(int $id): Response
     {
         try {
             $contact = ($this->coRep->find($id))
@@ -505,7 +505,7 @@ class ClientController extends AbstractController
                 ->updated($this->actualUser);
             $this->cRep->find($contact->getClient())->updated($this->actualUser);
             $this->coRep->update();
-            $this->util->info("Se ha suspendid el contacto {$id}");
+            $this->util->info("Se ha suspendido el contacto {$id}");
             return new Response("Contacto eliminado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -528,11 +528,11 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addContactExtra(int $id, Request $request) : Response
+    public function addContactExtra(int $id, Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
-            $type = (($content->type == 1)?'correo':'teléfono');
+            $type = (($content->type == 1) ? 'correo' : 'teléfono');
             $extra = (new ContactExtra)
                 ->setContact($this->coRep->find($id))
                 ->setType($content->type)
@@ -556,7 +556,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function deleteContactExtra(int $id) : Response
+    public function deleteContactExtra(int $id): Response
     {
         try {
             $extra = $this->coeRep->find($id);
@@ -582,7 +582,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function add(Request $request) : Response
+    public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -630,7 +630,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function delete(int $id) : Response
+    public function delete(int $id): Response
     {
         try {
             ($this->cRep->find($id))
@@ -652,7 +652,7 @@ class ClientController extends AbstractController
      * @param integer $id
      * @return Response
      */
-    public function show(int $id) : Response
+    public function show(int $id): Response
     {
         try {
             $client = $this->cRep->find($id);
@@ -678,7 +678,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function update(int $id, Request $request) : Response
+    public function update(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
