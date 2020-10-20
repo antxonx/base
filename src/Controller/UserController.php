@@ -220,7 +220,10 @@ class UserController extends AbstractController
             if ($content->new != $content->conf) {
                 throw new Exception("Las contraseñas no coinciden");
             }
-            $this->rep->upgradePassword($this->actualUser, $content->new);
+            $this->rep->upgradePassword($this->actualUser,  $this->passwordEncoder->encodePassword(
+                $this->actualUser,
+                $content->new
+            ));
             return new Response("Contraseña actualizada");
         } catch (ORMException $e) {
             return $this->util->errorResponse($e);
