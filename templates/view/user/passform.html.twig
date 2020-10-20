@@ -1,0 +1,29 @@
+<form id="passForm">
+    {% include 'form/input.html.twig' with {
+        type : 'password',
+        id: 'old-password',
+        label: 'Contraseña actual',
+        placeholder: '********',
+        required : true,
+        error : 'Ingrese su contraseña actual'
+    } %}
+    {% include 'form/input.html.twig' with {
+        type : 'password',
+        id: 'password',
+        label: 'Contraseña nueva',
+        placeholder: '********',
+        required : true,
+        error : 'Ingrese una contraseña de más de 5 caracteres'
+    } %}
+    {% include 'form/input.html.twig' with {
+        type : 'password',
+        id: 'conf-password',
+        label: 'Confirmar contraseña nueva',
+        placeholder: '********',
+        required : true,
+        error : 'Ingrese una contraseña de más de 5 caracteres'
+    } %}
+    <div id="submit-btn" class="w-100 text-left">
+        <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Actualizar</button>
+    </div>
+</form>

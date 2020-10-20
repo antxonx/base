@@ -4,36 +4,37 @@
 
 {% block body %}
     <div class="container mt-5">
-        <div class="card">
+        <div class="card round">
             <div class="card-body">
                 <div class="row">
                     <div class="col">
                         <b>Usuario:</b> <br>
-                        <a class="editable-field" href="#" data-name="username" data-type="text" data-pk="{{ app.user.id }}"
+                        <a class="editable-field" href="#" data-name="username" data-type="text"
+                           data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el usuario">{{ app.user.username }}</a>
-                    </div>
-                    <div class="col">
-                        <b>Nombre:</b> <br>
-                        <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}"
-                           data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el nombre">{{ app.user.name }}</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
+                           data-title="Ingresa el usuario">{{ app.user.username }}</a> <br>
                         <b>Correo:</b> <br>
-                        <a class="editable-field" href="#" data-name="email" data-type="text" data-pk="{{ app.user.id }}"
+                        <a class="editable-field" href="#" data-name="email" data-type="text"
+                           data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
                            data-title="Ingresa el correo">{{ app.user.mail }}</a>
                     </div>
-                    <div class="col">
+                    <div class="col border-left">
+                        <b>Nombre:</b> <br>
+                        <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}"
+                           data-url="{{ path('user_update') }}"
+                           data-title="Ingresa el nombre">{{ app.user.name }}</a> <br>
                         <b>roles:</b> <br>
                         {% for role in app.user.roles %}
                             {% if role != "ROLE_USER" %}
                                 <span class="badge badge-info">{{ role|slice(5, role|length) }}</span>
                             {% endif %}
                         {% endfor %}
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <button class="btn btn-danger round" id="change-user-password">Cambiar contraseña</button>
                     </div>
                 </div>
             </div>

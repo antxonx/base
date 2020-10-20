@@ -9,6 +9,7 @@ use Antxony\Def\Editable\Editable;
 use App\Entity\User;
 use Antxony\Util;
 use Exception;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -182,6 +183,47 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info("Se ha reactivado al usuario {$id}");
             return new Response("Usuario reactivado");
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Cargar formulario de cambio de contraseña
+     * @Route("/profile/pass", name="user_profile_pass_form", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function passform(): Response
+    {
+        try {
+            return $this->render('view/user/passform.html.twig');
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Cambiar contraseña del usuario
+     * @Route("/profile/pass", name="user_profile_pass_change", methods={"PUT"})
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function passchange(Request $request): Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            if (!$this->passwordEncoder->isPasswordValid($this->actualUser, $content->old)) {
+                throw new Exception("La contraseña actual es incorrecta");
+            }
+            if ($content->new != $content->conf) {
+                throw new Exception("Las contraseñas no coinciden");
+            }
+            $this->rep->upgradePassword($this->actualUser, $content->new);
+            return new Response("Contraseña actualizada");
+        } catch (ORMException $e) {
+            return $this->util->errorResponse($e);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
