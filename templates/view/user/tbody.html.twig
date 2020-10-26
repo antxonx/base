@@ -43,7 +43,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                     id : {
                         value : user.id,
                         attr : {
-                            class : 'user-edit cursor-pointer'
+                            class : 'user-edit cursor-pointer text-right'
                         }
                     },
                     username : {
@@ -61,7 +61,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                     role : {
                         value : role,
                         attr : {
-                            class : 'user-edit cursor-pointer'
+                            class : 'user-edit cursor-pointer text-center'
                         }
                     },
                     email : {
@@ -90,7 +90,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                     }
                 },
                 attr : {
-                    class : 'user-row table-primary table-bordered',
+                    class : 'user-row table-info table-bordered',
                     id: user.id
                 }
             } %}
@@ -102,9 +102,9 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
         {% set tr = {
             values : {
                 id : {
-                    value : user.id,
+                    value : user.id ,
                     attr : {
-                        class : 'user-edit cursor-pointer'
+                        class : 'user-edit cursor-pointer text-right'
                     }
                 },
                 username : {
@@ -122,7 +122,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                 role : {
                     value : role,
                     attr : {
-                        class : 'user-edit cursor-pointer'
+                        class : 'user-edit cursor-pointer text-center'
                     }
                 },
                 email : {

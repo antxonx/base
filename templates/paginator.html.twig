@@ -1,7 +1,7 @@
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         <li class="page-item {% if thisPage == 1 %}disabled{% endif %}">
-            <a class="page-link paginator" page-index="1" href="#" aria-label="Primero">
+            <a class="page-link paginator" style="border-top-left-radius: 1.25rem; border-bottom-left-radius: 1.25rem;" page-index="1" href="#" aria-label="Primero">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Primero</span>
             </a>
@@ -47,7 +47,7 @@
                                                                                   page-index="{{ thisPage + 1 }}"
                                                                                   href="#">siguiente</a></li>
         <li class="page-item {% if thisPage == maxPages %}disabled{% endif %}">
-            <a class="page-link paginator" page-index="{{ maxPages }}" href="#" aria-label="Último">
+            <a class="page-link paginator" style="border-top-right-radius: 1.25rem; border-bottom-right-radius: 1.25rem;" page-index="{{ maxPages }}" href="#" aria-label="Último">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Último</span>
             </a>
@@ -55,5 +55,5 @@
     </ul>
 </nav>
 {% if items is defined %}
-    <div class=" w-100 text-center">{{ showed }} de {{ items.count }}</div>
+    <div class=" w-100 text-center text-muted"><small><em>{{ showed }} de {{ items.count }}</em></small></div>
 {% endif %}
