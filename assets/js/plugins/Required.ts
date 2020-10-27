@@ -180,6 +180,7 @@ export const insertAlertAfter = (element: HTMLElement, text: string) => {
     ALERT.classList.add("mb-0");
     ALERT.classList.add(ERROR_INPUT);
     ALERT.classList.add("w-100");
+    ALERT.classList.add("round");
     //.
     //Agregamos el mensaje de error justo debajo del botón
     element.parentNode!.insertBefore(ALERT, element.nextSibling);
