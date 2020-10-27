@@ -5,7 +5,7 @@
                 type : 'text',
                 id: 'street',
                 label: 'Calle',
-                placeholder: '',
+                placeholder: 'Calle',
                 required : true,
                 error : 'Ingrese una calle'
             } %}
@@ -13,7 +13,7 @@
                 type : 'text',
                 id: 'extnum',
                 label: 'Número exterior',
-                placeholder: '',
+                placeholder: 'Número exterior',
                 required : true,
                 error : 'Ingrese un número'
             } %}
@@ -21,14 +21,14 @@
                 type : 'text',
                 id: 'intnum',
                 label: 'Número interior',
-                placeholder: '',
+                placeholder: 'Número interior',
                 required : false
             } %}
             {% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'city',
                 label: 'Ciudad',
-                placeholder: '',
+                placeholder: 'Ciudad',
                 required : true,
                 error : 'Ingrese una ciudad'
             } %}
@@ -38,7 +38,7 @@
                 type : 'text',
                 id: 'postal',
                 label: 'C.P.',
-                placeholder: '',
+                placeholder: 'C.P.',
                 required : true,
                 error : 'Ingrese un código postal',
             } %}
@@ -46,7 +46,7 @@
                 type : 'text',
                 id: 'state',
                 label: 'Estado',
-                placeholder: '',
+                placeholder: 'Estado',
                 required : true,
                 error : 'Ingrese un estado',
                 value: 'Jalisco'
@@ -55,14 +55,14 @@
                 type : 'text',
                 id: 'country',
                 label: 'País',
-                placeholder: '',
+                placeholder: 'País',
                 required : true,
                 error : 'Ingrese un país',
                 value : 'México'
             } %}
 
-            <div id="submit-btn" class="w-100 text-left mt-lg-5 text-right">
-                <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
+            <div id="submit-btn" class="w-100 text-left text-right">
+                <button type="submit" class="btn btn-large btn-success round" id="submit-real-btn">Agregar</button>
             </div>
         </div>
     </div>

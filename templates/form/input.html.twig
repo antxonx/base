@@ -1,9 +1,11 @@
 <div class="form-group">
+    {#
     {% if label is defined %}
         <label for="{{ id }}" id="{{ id }}Label">
             {{ label }}{% if required %}*{% endif %}
         </label>
     {% endif %}
+    #}
     <input type="{{ type }}" t-type="{% if ttype is defined %}{{ ttype }}{% else %}{{ type }}{% endif %}"
            name="{% if name is defined %}{{ name }}{% else %}{{ id }}{% endif %}"
            class="form-control {% if required %}required{% endif %}{% if class is defined %} {{ class }}{% endif %}"

@@ -1,9 +1,11 @@
 <div class="form-group">
+    {#
     {% if label is defined %}
         <label for="{{ id }}" id="{{ id }}Label">
             {{ label }}{% if required %}*{% endif %}
         </label>
     {% endif %}
+    #}
     <div class="input-group">
         <div class="input-group-prepend">
             <select id="phoneType" class="form-control input-group-text cursor-pointer">

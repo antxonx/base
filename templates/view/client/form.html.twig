@@ -3,7 +3,7 @@
         type : 'text',
         id: 'name',
         label: 'Nombre',
-        placeholder: '',
+        placeholder: 'Nombre',
         required : true,
         error : 'Ingrese un nombre para el cliente'
     } %}
@@ -11,7 +11,7 @@
         type: 'tel',
         id: 'phone',
         label: 'Teléfono',
-        placeholder: '',
+        placeholder: 'Teléfono',
         required: true,
         error: 'Ingrese un teléfono válido'
     } %}
@@ -20,7 +20,7 @@
         ttype : 'email',
         id: 'email',
         label: 'Correo',
-        placeholder: 'email@mail.com',
+        placeholder: 'correo@correo.com',
         required : true,
         error : 'Ingrese un correo válido'
     } %}
@@ -29,12 +29,12 @@
             type : 'text',
             id: 'role',
             label: 'Parentesco/Referencia',
-            placeholder: '',
+            placeholder: 'Parentesco/Referencia',
             required : true,
             error : 'Ingrese el parentesco o referencia para el contacto'
         } %}
     {% endif %}
     <div id="submit-btn" class="w-100 text-left">
-        <button type="submit" class="btn btn-large btn-success" id="submit-real-btn">Agregar</button>
+        <button type="submit" class="btn btn-large btn-success round w-100" id="submit-real-btn">Agregar</button>
     </div>
 </form>
