@@ -15,5 +15,5 @@
             "@components/*": ["assets/js/components/*"],
             "@plugins/*": ["assets/js/plugins/*"]
         }
-    },
+    }
 }

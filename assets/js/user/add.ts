@@ -17,7 +17,7 @@ let CALLBACK: () => void = () => {
 export const openModal = (callback: () => void = () => {
 }) => {
     CALLBACK = callback;
-    MODAL = new Modal("Nuevo usuario", 60);
+    MODAL = new Modal("Nuevo usuario", 30);
     MODAL.show();
     Axios.get(ROUTES.user.view.form)
         .then(res => {

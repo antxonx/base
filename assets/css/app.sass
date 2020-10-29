@@ -6,9 +6,14 @@
 @import './media'
 @import './dropdown'
 @import './editable'
+@import './paginator'
+@import './scroll'
 
 $success-color: #28a745
 $info-color: #17a2b8
+
+body
+  overflow-y: scroll
 
 .w-50-c
   width: 50%
@@ -102,6 +107,8 @@ b, h5
 .card, .modal-content
   &.main-2
     border: 1px solid #5f5f5fb5 !important
+.form-control
+  border-radius: 1.25rem
 
 .btn-antxony
   color: #ffffff
@@ -126,3 +133,12 @@ b, h5
     border-bottom: none
   td
     border-bottom: none
+
+.fade2
+  transform: scale(0.9)
+  opacity: 0
+  transition: transform .2s linear, opacity .2s linear
+  display: block !important
+  &.show
+    opacity: 1
+    transform: scale(1)

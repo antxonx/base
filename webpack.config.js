@@ -1,4 +1,7 @@
-var Encore = require('@symfony/webpack-encore');
+/**
+ * @type {Encore}
+ */
+const Encore = require('@symfony/webpack-encore');
 const ENV = require('dotenv').config({path: '.env'});
 const path =require('path');
 
@@ -80,7 +83,10 @@ Encore
     //.addEntry('admin', './assets/js/admin.js')
 ;
 
-let config = Encore.getWebpackConfig();
+/*
+ * Direccioamiento con nombres de rutas personalizados
+ */
+const config = Encore.getWebpackConfig();
 config.resolve.alias["@scripts"] = path.resolve(__dirname, 'assets/js');
 config.resolve.alias["@styles"] = path.resolve(__dirname, 'assets/css');
 config.resolve.alias["@plugins"] = path.resolve(__dirname, 'assets/js/plugins');

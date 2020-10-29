@@ -71,7 +71,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private ok: string = '<i class="fa fa-check fa-2x text-success"></i>';
+    private ok: string = '<i class="fa fa-check-circle fa-2x text-success"></i>';
     /**
      *texte para cancelar
      *
@@ -79,7 +79,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private cancel: string = '<i class="fa fa-times fa-2x text-danger"></i>';
+    private cancel: string = '<i class="fa fa-times-circle fa-2x text-danger"></i>';
 
     /**
      * Saber si llevará botón para cancelar
@@ -126,8 +126,8 @@ export default class Modal {
     <div class="modal fade-scale" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
             <div class="modal-content alert">
-                <div class="modal-body h3" id="modalBodyId">
-                </div>
+                <h5 class="modal-body h3" id="modalBodyId">
+                </h5>
                 <div class="modal-footer border-0 text-center" id="modalFooter">
                 </div>
             </div>

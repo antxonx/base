@@ -79,7 +79,7 @@ const toggleEdit = (e: Event) => {
         BTN.setAttribute("active", "0");
         BTN.classList.remove("btn-danger");
         BTN.classList.add("btn-warning");
-        BTN.innerHTML = "Editar";
+        BTN.innerHTML = "Editar Contacto";
         [...document.getElementsByClassName("trash-email")].forEach(el => hideElement(el as HTMLElement));
         [...document.getElementsByClassName("trash-phone")].forEach(el => hideElement(el as HTMLElement));
         [...document.getElementsByClassName("trash-contact")].forEach(el => hideElement(el as HTMLElement));
