@@ -1,17 +1,21 @@
 $toast-text: #505050
-$toast-success: #9ccc65a1
-$toast-danger: #ff4444a1
+$toast-success: #9ccc65f0
+$toast-danger: #ff4444f0
 
 .toast
+  max-width: 100% !important
   &.toast-res
     min-width: 500px
-    padding: 0 0
+    padding: 0 5px
+    border-radius: 2rem
+    white-space: normal
 
 #toastCont
   z-index: 2000
   position: fixed
   top: 50px
   right: 2px
+  max-width: 53vw
 
 .toast-success
   background-color: $toast-success !important
