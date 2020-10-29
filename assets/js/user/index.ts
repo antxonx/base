@@ -10,6 +10,8 @@ import {openKeyModal} from '@scripts/user/key';
 import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
 import {reactiveUser} from './reactive';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
+import {hideElement, showElement} from "@plugins/Required";
+import $ from "jquery";
 
 const MAIN_VIEW = document.getElementById("usersView")!;
 

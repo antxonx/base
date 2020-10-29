@@ -4,8 +4,10 @@
 
 {% block body %}
     <div class="container mt-5">
-        <div class="card round">
+        <div class="card round main-2">
             <div class="card-body">
+                <h5 class="text-center">Mi perfil</h5>
+                <hr class="divide-2">
                 <div class="row">
                     <div class="col">
                         <b>Usuario:</b> <br>
@@ -17,7 +19,8 @@
                         <a class="editable-field" href="#" data-name="email" data-type="text"
                            data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el correo">{{ app.user.mail }}</a>
+                           data-title="Ingresa el correo">{{ app.user.mail }}</a> <br>
+
                     </div>
                     <div class="col border-left">
                         <b>Nombre:</b> <br>
@@ -27,14 +30,17 @@
                         <b>roles:</b> <br>
                         {% for role in app.user.roles %}
                             {% if role != "ROLE_USER" %}
-                                <span class="badge badge-info">{{ role|slice(5, role|length) }}</span>
+                                <span class="badge badge-info badge-pill">{{ role|slice(5, role|length) }}</span>
                             {% endif %}
-                        {% endfor %}
+                        {% endfor %} <br>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row">
                     <div class="col">
-                        <button class="btn btn-danger round" id="change-user-password">Cambiar contraseña</button>
+                        <button class="btn btn-danger round mt-2" id="change-user-password">Cambiar contraseña</button>
+                    </div>
+                    <div class="col text-right">
+                        <button class="btn btn-warning round mt-2" id="profile-edit">Editar</button>
                     </div>
                 </div>
             </div>
