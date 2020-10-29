@@ -28,10 +28,14 @@ const onError = (err: any) => {
 const loadEvs = () => {
     $('.editable-field').editable({
         success: onSuccess,
-        error: onError
+        error: onError,
+        disabled: true
     });
     document.getElementById('change-user-password')!.addEventListener('click', () => {
         passModal();
+    });
+    document.getElementById('profile-edit')!.addEventListener('click', () => {
+        $('.editable-field').editable('toggleDisabled');
     });
 };
 
