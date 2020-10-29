@@ -95,8 +95,8 @@ export default class Modal {
      * @memberof Modal
      */
     private structure = `
-    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
-        <div class="modal-dialog round" id="modalDialogId" role="document">
+    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
+        <div class="modal-dialog  round" id="modalDialogId" role="document">
             <div class="modal-content round main">
                 <div class="modal-body">
                     <h5 class="modal-title text-center" id="modalViewIdLabel">
@@ -217,13 +217,16 @@ export default class Modal {
         this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
-            this.deleteModal();
-            //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
-            if (document.getElementsByClassName("modal").length > 0) {
-                $('body').addClass('modal-open');
-            }
-            //.
-            this.onHide();
+            setTimeout( () => {
+                this.modal.setAttribute("style", "display: none !important;")
+                this.deleteModal();
+                //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
+                if (document.getElementsByClassName("modal").length > 0) {
+                    $('body').addClass('modal-open');
+                }
+                //.
+                this.onHide();
+            }, 200);
         });
         return this;
     }

@@ -6,6 +6,7 @@
 @import './media'
 @import './dropdown'
 @import './editable'
+@import './paginator'
 
 $success-color: #28a745
 $info-color: #17a2b8
@@ -128,3 +129,12 @@ b, h5
     border-bottom: none
   td
     border-bottom: none
+
+.fade2
+  transform: scale(0.9)
+  opacity: 0
+  transition: transform .2s linear, opacity .2s linear
+  display: block !important
+  &.show
+    opacity: 1
+    transform: scale(1)
