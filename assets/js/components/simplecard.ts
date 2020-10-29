@@ -6,7 +6,7 @@ import htmlToElement from "@components/HtmlToElement";
 
 /* ------------------------ contenedor de la tarjeta ------------------------ */
 
-const _BASE = `<div class="card card-body board"></div>`;
+const _BASE = `<div class="card card-body board main-2"></div>`;
 
 /* ------------------------------------ . ----------------------------------- */
 
@@ -18,7 +18,7 @@ const _CONTENT = `<div>#content#</div>`;
 
 /* ------------------------ Contenedor para el título ----------------------- */
 
-const _TITLE = `<div>#title#<hr></div>`;
+const _TITLE = `<div class="text-center">#title#<hr class="divide-2"></div>`;
 
 /* ------------------------------------ . ----------------------------------- */
 
