@@ -24,7 +24,8 @@
 {% endset %}
 <div class="container font-weight-normal collapse" id="error-{{ entity.id }}">
     <div class="card m-4 round">
-        <div class="card-header">
+        <div class="card-body">
+
             <div class="row">
                 <div class="col text-left">
                     <b>{{ entity.id }}</b>
@@ -36,23 +37,37 @@
                     {{ badgeFull }}
                 </div>
             </div>
-        </div>
-        <div class="card-body">
+
+            <hr class="divide-2">
 
             <div class="alert alert-light" role="alert">
-                <h5><span class="badge {{ fullClass|trim }}">{{ entity.level }}</span></h5>
-                <span>
-                    <b>IP: </b> {{ entity.clientip }}
-                </span> <br>
-                <span>
-                    <b>Ruta: </b> {{ entity.route }}
-                </span> <br>
-                <span>
-                    <b>Archivo: </b> {{ entity.file }}
-                </span> <br>
-                <span>
-                    <b>Linea: </b> {{ entity.line }}
-                </span> <br>
+                <h5 class="text-center"><span class="badge {{ fullClass|trim }} badge-pill log-type">{{ entity.level }}</span></h5>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <span>
+                            <b>IP: </b> {{ entity.clientip }}
+                        </span> <br>
+                    </div>
+                    <div class="col-md-6 border-left">
+                        <span>
+                            <b>Ruta: </b> {{ entity.route }}
+                        </span> <br>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <span>
+                            <b>Archivo: </b> {{ entity.file }}
+                        </span> <br>
+                    </div>
+                    <div class="col-md-6 border-left">
+                        <span>
+                            <b>Linea: </b> {{ entity.line }}
+                        </span> <br>
+                    </div>
+                </div>
                 <hr>
                 {{ entity.message }}
             </div>

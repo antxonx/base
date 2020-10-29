@@ -1,47 +1,15 @@
 <div class="row w-99 mt-lg-5 mx-auto">
     {# boards de ejemplo #}
-    {% if is_granted("ROLE_ADMIN") %}
         <div class="col">
             {% include "view/home/boards/lastClients.html.twig" %}
         </div>
-    {% endif %}
     <div class="col">
-        <simple-card>
-            <simple-card-title>
-                Hola
-            </simple-card-title>
-            <simple-card-content>
-                2
-            </simple-card-content>
-        </simple-card>
+
     </div>
     <div class="col">
-        <simple-card>
-            <simple-card-content>
-                2
-            </simple-card-content>
-        </simple-card>
+
     </div>
     {# . #}
-</div>
-<div class="row w-99 mt-lg-5 mx-auto">
-    <div class="col">
-        <simple-card>
-            <simple-card-title>
-                Título
-            </simple-card-title>
-            <simple-card-content>
-                3
-            </simple-card-content>
-        </simple-card>
-    </div>
-    <div class="col">
-        <simple-card>
-            <simple-card-content>
-                4
-            </simple-card-content>
-        </simple-card>
-    </div>
 </div>
 {% if is_granted("ROLE_GOD") %}
     <div class="row w-99 mt-lg-5 mx-auto">
@@ -49,7 +17,7 @@
             <simple-card>
                 <simple-card-title>
                     <h5 class="d-inline">Últimos registros info</h5>
-                    <a class="btn btn-info float-right" href="{{ path('logger_index') }}">Ver</a>
+                    <a target="_blank" class="btn btn-light float-right round" href="{{ path('logger_index') }}"><i class="fas fa-external-link-alt"></i></a>
                 </simple-card-title>
                 <simple-card-content>
                     {% include "view/home/boards/infoLog.html.twig" %}
@@ -60,7 +28,7 @@
             <simple-card>
                 <simple-card-title>
                     <h5 class="d-inline">Últimos registros info</h5>
-                    <a class="btn btn-info float-right" href="{{ path('logger_index') }}">Ver</a>
+                    <a target="_blank" class="btn btn-light float-right round" href="{{ path('logger_index') }}"><i class="fas fa-external-link-alt"></i></a>
                 </simple-card-title>
                 <simple-card-content>
                     {% include "view/home/boards/errorLog.html.twig" %}
