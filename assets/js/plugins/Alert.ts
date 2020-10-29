@@ -14,7 +14,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private size = 40;
+    private size = 60;
     /**
      *Id del modal
      *
@@ -123,10 +123,10 @@ export default class Modal {
      * @memberof Modal
      */
     private structure = `
-    <div class="modal fade-scale" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
+    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
             <div class="modal-content alert">
-                <h5 class="modal-body h3" id="modalBodyId">
+                <h5 class="modal-body h3 text-center" id="modalBodyId">
                 </h5>
                 <div class="modal-footer border-0 text-center" id="modalFooter">
                 </div>
@@ -221,14 +221,16 @@ export default class Modal {
         this.setSize();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
-            this.next = true;
-            this.deleteModal();
-            this.ondismiss(this.status);
-            //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
-            if (document.getElementsByClassName("modal").length > 0) {
-                $('body').addClass('modal-open');
-            }
-            //.
+            setTimeout( () => {
+                this.next = true;
+                this.deleteModal();
+                this.ondismiss(this.status);
+                //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
+                if (document.getElementsByClassName("modal").length > 0) {
+                    $('body').addClass('modal-open');
+                }
+                //.
+            }, 200);
         });
         document.getElementById("acceptAlert")!.addEventListener("click", () => {
             this.next = true;
