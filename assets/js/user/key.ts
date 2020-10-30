@@ -24,7 +24,7 @@ let ID: number;
 export const openKeyModal = (id: number, callback: () => void = CALLBACK) => {
     CALLBACK = callback;
     ID = id;
-    MODAL = (new Modal("Cambiar contraseña a usuario " + ID, 60)).show();
+    MODAL = (new Modal("Cambiar contraseña a usuario " + ID, 30)).show();
     loadForm();
 };
 

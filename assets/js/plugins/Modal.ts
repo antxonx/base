@@ -100,13 +100,18 @@ export default class Modal {
             <div class="modal-content round main">
                 <div class="modal-body">
                     <h5 class="modal-title text-center" id="modalViewIdLabel">
-                    <label id="modalTitleId">Vista</label>
-                    <button type="button" id="closeModal" class="close float-right" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <label id="modalTitleId">Vista</label>
+                        <button type="button" id="closeModal" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </h5>
                     <hr class="divide">
                     <div id="modalBodyId">
+                    </div>
+                    <div class="mt-2 text-right">
+                        <button type="button" id="closeModal" class="btn btn-danger round w-100 text-center font-weight-bold hide-on-desktop" data-dismiss="modal" aria-label="Close">
+                            Cerrar
+                        </button>
                     </div>
                 </div>
             </div>
