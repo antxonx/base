@@ -33,7 +33,8 @@ class ResetPasswordRequestFormType extends AbstractType
                     ]),
                 ],
                 'attr' => [
-                    'class' => "form-control"
+                    'class' => 'form-control round',
+                    'placeholder' => 'correo@correo.com'
                 ]
             ])
         ;
