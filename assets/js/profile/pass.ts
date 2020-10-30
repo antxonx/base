@@ -18,7 +18,7 @@ const PASS = {
  */
 export const passModal = (onHide: () => void = () => {
 }) => {
-    MODAL = (new Modal('Cambiar contraseña', 60, onHide)).show();
+    MODAL = (new Modal('Cambiar contraseña', 30, onHide)).show();
     loadForm();
 };
 

@@ -9,7 +9,7 @@
                 <h5 class="text-center">Mi perfil</h5>
                 <hr class="divide-2">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6">
                         <b>Usuario:</b> <br>
                         <a class="editable-field" href="#" data-name="username" data-type="text"
                            data-pk="{{ app.user.id }}"
@@ -22,7 +22,7 @@
                            data-title="Ingresa el correo">{{ app.user.mail }}</a> <br>
 
                     </div>
-                    <div class="col border-left">
+                    <div class="col-md-6 border-left">
                         <b>Nombre:</b> <br>
                         <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
@@ -36,11 +36,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <button class="btn btn-danger round mt-2" id="change-user-password">Cambiar contraseña</button>
-                    </div>
-                    <div class="col text-right">
-                        <button class="btn btn-warning round mt-2" id="profile-edit">Editar</button>
+                    <div class="col-md-6">
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <button class="btn btn-danger round mt-2 w-100" id="change-user-password">Cambiar contraseña</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-warning round mt-2 w-100" id="profile-edit" active="0">Editar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
