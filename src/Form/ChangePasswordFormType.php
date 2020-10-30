@@ -42,15 +42,17 @@ class ChangePasswordFormType extends AbstractType
                             'max' => 4096,
                         ]),
                     ],
-                    'label' => 'Nueva contraseña*',
+                    'label' => ' ',
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control round',
+                        'placeholder' => 'Nueva contraseña'
                     ]
                 ],
                 'second_options' => [
-                    'label' => 'Confirmar contraseña*',
+                    'label' => ' ',
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control round',
+                        'placeholder' => 'Confirmar contraseña'
                     ]
                 ],
                 'invalid_message' => 'Las contraseñas deben coincidir',

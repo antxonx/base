@@ -12,6 +12,19 @@
     <link rel="icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
 </head>
 <body>
+{# Ver si es teléfono o no #}
+{% set agent = app.request.headers.get('User-Agent')|split(';') %}
+{% set isMobile = false %}
+{% if agent[1] is defined %}
+    {% if "Android" in agent[1] or "iPhone" in agent[1] %}
+        {% set isMobile = true %}
+    {% else %}
+        {% set isMobile = false %}
+    {% endif %}
+{% else %}
+    {% set isMobile = false %}
+{% endif %}
+{# . #}
 {% if app.user and app.user.suspended %}
     <script>
         window.location.href = "{{ path('app_logout') }}";
