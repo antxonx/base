@@ -4,9 +4,10 @@
     </div>
 {% else %}
 
-    <table class="table w-99 mb-0 table-hover border">
+    <table class="table w-99 mb-0">
         <tbody>
         {% for contact in client.contacts %}
+
             {% include "table/tr.html.twig" with {
                 tr : {
                     values : {
@@ -37,12 +38,13 @@
                         trash : {
                             value : '<button class="btn btn-sm btn-danger trash-contact w-100 contact-delete" style="display: none;"><i class="fas fa-trash-alt"></i></button>',
                             attr : {
-                                style : 'width: 50px;'
+                                style : 'width: 50px;',
+                                class : 'p-1'
                             }
                         }
                     },
                     attr : {
-                        class : 'contact-row',
+                        class : 'contact-row row-hover',
                         contactid : contact.id,
                         contactname : contact.name,
                     }
