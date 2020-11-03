@@ -73,14 +73,3 @@
         id : 'contact-email-extra-form'
     } %}
 </div>
-
-{% include "view/footer/datetimes.html.twig" with {
-    created : {
-        name : contact.createdBy.name,
-        time : contact.createdAt
-    },
-    updated : {
-        name : contact.updatedBy.name,
-        time : contact.updatedAt
-    }
-} %}
