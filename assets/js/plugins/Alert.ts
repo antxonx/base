@@ -14,7 +14,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private size = 60;
+    private size = 40;
     /**
      *Id del modal
      *
@@ -71,7 +71,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private ok: string = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+    private ok: string = '<i class="far fa-check-circle fa-2x text-success"></i>';
     /**
      *texte para cancelar
      *
@@ -79,7 +79,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private cancel: string = '<i class="fa fa-times-circle fa-2x text-danger"></i>';
+    private cancel: string = '<i class="far fa-times-circle fa-2x text-danger"></i>';
 
     /**
      * Saber si llevará botón para cancelar
@@ -122,7 +122,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private structure = `
+    /*private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
             <div class="modal-content alert">
@@ -130,6 +130,23 @@ export default class Modal {
                 </h5>
                 <div class="modal-footer border-0 text-center" id="modalFooter">
                 </div>
+            </div>
+        </div>
+    </div>
+    `;*/
+
+    private structure = `
+    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
+            <div class="modal-content p-2 alert-ask">
+                
+                <div class="h4 text-center mx-auto text-dark font-weight-bold" id="modalBodyId">
+                    
+                </div>
+                <div class="toast-body" id="modalFooter">
+                
+                </div>
+                
             </div>
         </div>
     </div>
@@ -289,16 +306,21 @@ export default class Modal {
         if (this.hasCancel) {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
-                <div class="d-flex justify-content-around w-100 alert-content">
-                <button type="button" id="acceptAlert" class="btn btn-lg w-100 font-weight-bold" data-dismiss="modal">${this.ok}</button>
-                <button type="button" class="btn btn-lg w-100 text-danger font-weight-bold" data-dismiss="modal">${this.cancel}</button>
+                <div class="d-flex justify-content-between w-100">
+                <span class="space"></span>
+                <button type="button" id="acceptAlert" class="btn btn-lg text-success w-100" data-dismiss="modal">${this.ok}</button>
+                <span class="space"></span>
+                <button type="button" class="btn btn-lg text-danger w-100" data-dismiss="modal">${this.cancel}</button>
+                <span class="space"></span>
                 </div>
                  `;
         } else {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="w-100 alert-content">
-                <button type="button" id="acceptAlert" class="btn btn-lg w-100 font-weight-bold" data-dismiss="modal">${this.ok}</button>
+                <span class="space"></span>
+                <button type="button" id="acceptAlert" class="btn btn-lg w-100" data-dismiss="modal">${this.ok}</button>
+                <span class="space"></span>
                 </div>
                 `;
         }

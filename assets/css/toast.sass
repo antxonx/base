@@ -1,9 +1,10 @@
 $toast-text: #505050
-$toast-success: #9ccc65f0
-$toast-danger: #ff4444f0
+$toast-success: #9ccc6585
+$toast-danger: #ff444485
 
 .toast
   max-width: 100% !important
+  border-radius: 0.75rem
 
   &.toast-res
     min-width: 500px
@@ -18,13 +19,19 @@ $toast-danger: #ff4444f0
   right: 2px
   max-width: 53vw
 
-.toast-success
-  background-color: $toast-success !important
-  color: $toast-text !important
+.toast
+  &-success
+    background-color: $toast-success !important
+    color: $toast-text !important
 
-.toast-error
-  background-color: $toast-danger !important
-  color: $toast-text !important
+  &-error
+    background-color: $toast-danger !important
+    color: $toast-text !important
+
+  .toast-header
+    border-top-left-radius: 0.75rem
+    border-top-right-radius: 0.75rem
+    background-color: #0000001a
 
 @media screen and (max-width: 900px) and (min-width: 300px)
   #toastCont

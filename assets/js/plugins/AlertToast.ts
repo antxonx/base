@@ -15,7 +15,7 @@ export default class Toast {
      * @static
      * @memberof Toast
      */
-    static DELAY_TIME = 2500;
+    static DELAY_TIME = 1500;
 
     /**
      * Icono de éxito
@@ -24,7 +24,7 @@ export default class Toast {
      * @memberof Toast
      */
 
-    static successIcon = '<i class="fas fa-2x fa-check-circle text-white"></i>';
+    static successIcon = '<i class="fas fa-check-circle text-dark"></i>';
 
     /**
      * Icono de error
@@ -32,7 +32,7 @@ export default class Toast {
      * @static
      * @memberof Toast
      */
-    static errorIcon = '<i class="fas fa-2x fa-times-circle text-white"></i>';
+    static errorIcon = '<i class="fas fa-times-circle text-dark"></i>';
 
     /**
      *Estructura principal del toast
@@ -41,33 +41,19 @@ export default class Toast {
      * @memberof Toast
      */
     static TOAST_TEMPLATE = `
-        <div id="changeMe" class="toast toast-res alert alert-dismissible toast-changClass" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-body row">
-            <div class="col-md-2 d-none">toastIconChange</div><div class="col-md-10 row">
-            <div class="col-sm-1">toastIcon</div>
-            <div class="col-sm-11">toastBodyChange</div>
-            </div>
-            </div>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-    `;
-    /**
-     *Ícono de success
-     *
-     * @static
-     * @memberof Toast
-     */
-    static SUCCESS_CHECK = '<i class="fas fa-check-circle fa-2x"></i>';
-    /**
-     *Ícono de error
-     *
-     * @static
-     * @memberof Toast
-     */
-    static ERROR_CHECK = '<i class="fas fa-times-circle fa-2x"></i>';
+     <div class="toast toast-changClass" id="changeMe" style="min-width: 300px;" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="mr-auto text-dark">toastIcon toastTitle</strong>
 
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            <div><b>toastBodyChange</b></div>
+        </div>
+    </div>
+    `
 
     /**
      *Muestra una alerta de éxito
@@ -78,21 +64,17 @@ export default class Toast {
      */
     public static success = (text: string) => {
         const ID = Math.floor(Math.random() * 10000000);
-        const TOAST_BODY = `
-            <label class="h5">
-            &nbsp;${text}
-            </label>
-        `;
         let newTemplate = Toast.TOAST_TEMPLATE.replace("changeMe", `_${ID}`);
-        newTemplate = newTemplate.replace("toastIconChange", Toast.SUCCESS_CHECK);
-        newTemplate = newTemplate.replace("toastBodyChange", TOAST_BODY);
+        newTemplate = newTemplate.replace("toastTitle", "Bien");
+        newTemplate = newTemplate.replace("toastBodyChange", text);
         newTemplate = newTemplate.replace("changClass", "success");
         newTemplate = newTemplate.replace("toastIcon", Toast.successIcon);
         const NEW_TOAST = Toast.htmlToElement(newTemplate);
         document.getElementById("toastCont")!.appendChild(NEW_TOAST);
         const _T = $(`#_${ID}`);
         _T.toast({
-            delay: Toast.DELAY_TIME
+            delay: Toast.DELAY_TIME,
+            autohide: true,
         });
         _T.toast('show');
         _T.on('hidden.bs.toast', () => {
@@ -109,21 +91,17 @@ export default class Toast {
      */
     public static error = (text: string) => {
         const ID = Math.floor(Math.random() * 10000000);
-        const TOAST_BODY = `
-            <label class="h5">
-            &nbsp;${text}
-            </label>
-        `;
         let newTemplate = Toast.TOAST_TEMPLATE.replace("changeMe", `_${ID}`);
-        newTemplate = newTemplate.replace("toastIconChange", Toast.ERROR_CHECK);
-        newTemplate = newTemplate.replace("toastBodyChange", TOAST_BODY);
+        newTemplate = newTemplate.replace("toastTitle", "Error");
+        newTemplate = newTemplate.replace("toastBodyChange", text);
         newTemplate = newTemplate.replace("changClass", "error");
         newTemplate = newTemplate.replace("toastIcon", Toast.errorIcon);
         const NEW_TOAST = Toast.htmlToElement(newTemplate);
         document.getElementById("toastCont")!.appendChild(NEW_TOAST);
         const _T = $(`#_${ID}`);
         _T.toast({
-            delay: Toast.DELAY_TIME
+            delay: Toast.DELAY_TIME * 3,
+            autohide: true,
         });
         _T.toast('show');
         _T.on('hidden.bs.toast', () => {
