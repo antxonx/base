@@ -71,7 +71,8 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private ok: string = '<i class="far fa-check-circle fa-2x text-success"></i>';
+    private ok: string = '<i class="fa fa-check fa-2x text-success"></i>';
+    //private ok: string = '<i class="material-icons-outlined s-2">check_circle</i>'
     /**
      *texte para cancelar
      *
@@ -79,7 +80,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private cancel: string = '<i class="far fa-times-circle fa-2x text-danger"></i>';
+    private cancel: string = '<i class="fa fa-times fa-2x text-danger"></i>';
 
     /**
      * Saber si llevará botón para cancelar
@@ -122,19 +123,6 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    /*private structure = `
-    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
-            <div class="modal-content alert">
-                <h5 class="modal-body h3 text-center" id="modalBodyId">
-                </h5>
-                <div class="modal-footer border-0 text-center" id="modalFooter">
-                </div>
-            </div>
-        </div>
-    </div>
-    `;*/
-
     private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
@@ -238,7 +226,7 @@ export default class Modal {
         this.setSize();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
-            setTimeout( () => {
+            setTimeout(() => {
                 this.next = true;
                 this.deleteModal();
                 this.ondismiss(this.status);
@@ -308,18 +296,22 @@ export default class Modal {
                 `
                 <div class="d-flex justify-content-between w-100">
                 <span class="space"></span>
-                <button type="button" id="acceptAlert" class="btn btn-lg text-success w-100" data-dismiss="modal">${this.ok}</button>
+                <button type="button" class="btn btn-lg w-100" data-dismiss="modal">${this.cancel}</button>
                 <span class="space"></span>
-                <button type="button" class="btn btn-lg text-danger w-100" data-dismiss="modal">${this.cancel}</button>
+                <button type="button" id="acceptAlert" class="btn btn-lg w-100" data-dismiss="modal">${this.ok}</button>
                 <span class="space"></span>
                 </div>
                  `;
         } else {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
-                <div class="w-100 alert-content">
+                <div class="d-flex justify-content-between w-100">
+                <span class="space"></span>
+                <span class="space"></span>
                 <span class="space"></span>
                 <button type="button" id="acceptAlert" class="btn btn-lg w-100" data-dismiss="modal">${this.ok}</button>
+                <span class="space"></span>
+                <span class="space"></span>
                 <span class="space"></span>
                 </div>
                 `;
