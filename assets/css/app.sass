@@ -12,9 +12,6 @@
 $success-color: #28a745
 $info-color: #17a2b8
 
-body
-  overflow-y: scroll
-
 .material-icons-outlined, .material-icons
   vertical-align: middle !important
   &.s-2
@@ -174,3 +171,12 @@ b, h5
 
 .text-left-mb-center
   text-align: left
+
+.full-cont
+  .card
+    box-shadow: 5px 5px 10px #888888
+    transition: 1s box-shadow
+  &.show
+    .card
+      box-shadow: 5px 5px 30px #888888
+      transition: .5s box-shadow

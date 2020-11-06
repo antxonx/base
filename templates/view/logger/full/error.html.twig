@@ -22,7 +22,7 @@
         {% endif %}
         badge-pill">{{ entity.method }}</span>
 {% endset %}
-<div class="container font-weight-normal collapse" id="error-{{ entity.id }}">
+<div class="container full-cont font-weight-normal collapse" id="error-{{ entity.id }}">
     <div class="card m-4 round">
         <div class="card-body">
 
@@ -44,12 +44,12 @@
                 <h5 class="text-center"><span class="badge {{ fullClass|trim }} badge-pill log-type">{{ entity.level }}</span></h5>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <span>
                             <b>IP: </b> {{ entity.clientip }}
                         </span> <br>
                     </div>
-                    <div class="col-md-6 border-left">
+                    <div class="col-md-4 border-left">
                         <span>
                             <b>Ruta: </b> {{ entity.route }}
                         </span> <br>
@@ -57,12 +57,12 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <span>
                             <b>Archivo: </b> {{ entity.file }}
                         </span> <br>
                     </div>
-                    <div class="col-md-6 border-left">
+                    <div class="col-md-4 border-left">
                         <span>
                             <b>Linea: </b> {{ entity.line }}
                         </span> <br>
