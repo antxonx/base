@@ -8,6 +8,7 @@
 @import './editable'
 @import './paginator'
 @import './scroll'
+@import './logger'
 
 $success-color: #28a745
 $info-color: #17a2b8
@@ -172,14 +173,6 @@ b, h5
 .text-left-mb-center
   text-align: left
 
-.full-cont
-  .card
-    box-shadow: 5px 5px 10px #888888
-    transition: 1s box-shadow
-  &.show
-    .card
-      box-shadow: 5px 5px 30px #888888
-      transition: .5s box-shadow
 .card-2
   position: relative
   display: flex
@@ -189,3 +182,12 @@ b, h5
   background-color: #fff
   background-clip: border-box
   border-radius: 0.25rem
+
+.full-container
+  height: 100%
+  width: 100%
+  float: left
+  border: 1px solid rgba(0, 0, 0, 0.12)
+  border-top: 0
+  border-bottom-left-radius: 1.25rem
+  border-bottom-right-radius: 1.25rem
