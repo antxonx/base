@@ -19,7 +19,7 @@ const INFO_ID = "infoLogSwitch";
 const ERROR_ID = "errorLogSwitch";
 const defaultView = `
 <td colspan="6" class="table-paginator">
-    <div class="alert alert-info w-50-c mx-auto mt-lg-5">
+    <div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">
         Debe selecionar un tipo de regsitro
     </div>
 </td>

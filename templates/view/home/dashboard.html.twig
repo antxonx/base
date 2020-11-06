@@ -5,29 +5,3 @@
         </div>
     {# . #}
 </div>
-{% if is_granted("ROLE_GOD") %}
-    <div class="row w-99 mx-auto">
-        <div class="col-md-6 mt-5">
-            <simple-card>
-                <simple-card-title>
-                    <h5 class="d-inline">Últimos registros info</h5>
-                    <a target="_blank" class="btn btn-light float-right round" href="{{ path('logger_index') }}"><i class="fas fa-external-link-alt"></i></a>
-                </simple-card-title>
-                <simple-card-content>
-                    {% include "view/home/boards/infoLog.html.twig" %}
-                </simple-card-content>
-            </simple-card>
-        </div>
-        <div class="col-md-6 mt-5">
-            <simple-card>
-                <simple-card-title>
-                    <h5 class="d-inline">Últimos registros info</h5>
-                    <a target="_blank" class="btn btn-light float-right round" href="{{ path('logger_index') }}"><i class="fas fa-external-link-alt"></i></a>
-                </simple-card-title>
-                <simple-card-content>
-                    {% include "view/home/boards/errorLog.html.twig" %}
-                </simple-card-content>
-            </simple-card>
-        </div>
-    </div>
-{% endif %}
