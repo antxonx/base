@@ -71,8 +71,8 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private ok: string = '<i class="fa fa-check fa-2x text-success"></i>';
-    //private ok: string = '<i class="material-icons-outlined s-2">check_circle</i>'
+    private ok: string = 'Aceptar';
+
     /**
      *texte para cancelar
      *
@@ -80,7 +80,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private cancel: string = '<i class="fa fa-times fa-2x text-danger"></i>';
+    private cancel: string = 'Cancelar';
 
     /**
      * Saber si llevará botón para cancelar
@@ -125,16 +125,14 @@ export default class Modal {
      */
     private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered alert-dialog" id="modalDialogId" role="document">
-            <div class="modal-content p-2 alert-ask">
-                
+        <div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document">
+            <div class="modal-content p-4 round">
                 <div class="h4 text-center mx-auto text-dark font-weight-bold" id="modalBodyId">
                     
                 </div>
                 <div class="toast-body" id="modalFooter">
-                
+                        
                 </div>
-                
             </div>
         </div>
     </div>
@@ -295,24 +293,18 @@ export default class Modal {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="d-flex justify-content-between w-100">
-                <span class="space"></span>
-                <button type="button" class="btn btn-lg w-100" data-dismiss="modal">${this.cancel}</button>
-                <span class="space"></span>
-                <button type="button" id="acceptAlert" class="btn btn-lg w-100" data-dismiss="modal">${this.ok}</button>
-                <span class="space"></span>
+                <span>&nbsp;</span>
+                <button type="button" class="btn btn-lg btn-danger round" data-dismiss="modal">${this.cancel}</button>
+                <span>&nbsp;</span>
+                <button type="button" id="acceptAlert" class="btn btn-lg btn-antxony round" data-dismiss="modal">${this.ok}</button>
+                <span>&nbsp;</span>
                 </div>
                  `;
         } else {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
-                <div class="d-flex justify-content-between w-100">
-                <span class="space"></span>
-                <span class="space"></span>
-                <span class="space"></span>
-                <button type="button" id="acceptAlert" class="btn btn-lg w-100" data-dismiss="modal">${this.ok}</button>
-                <span class="space"></span>
-                <span class="space"></span>
-                <span class="space"></span>
+                <div class="text-center">
+                <button type="button" id="acceptAlert" class="btn btn-lg btn-antxony round" data-dismiss="modal">${this.ok}</button>
                 </div>
                 `;
         }
