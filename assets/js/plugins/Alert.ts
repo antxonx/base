@@ -1,6 +1,19 @@
 import $ from 'jquery';
 import 'bootstrap';
 
+export interface AlertOptions {
+    hasCancel?: boolean;
+    onDismiss?: (status: boolean) => void;
+    type?: ('info' | 'warning' | 'danger' | 'success');
+    typeText?: string
+}
+
+const DEFAULT_ALERT_OPTIONS : AlertOptions = {
+    hasCancel: true,
+    onDismiss: () => {},
+    typeText: '',
+}
+
 /**
  *Clase para crear alertas con respeustas
  *
@@ -48,6 +61,14 @@ export default class Modal {
      */
     private readonly modalBodyId: string;
     /**
+     *Id del header del modal
+     *
+     * @private
+     * @type {string}
+     * @memberof Modal
+     */
+    private readonly modalHeaderId: string;
+    /**
      * Id del footer del modal
      *
      * @private
@@ -82,22 +103,15 @@ export default class Modal {
      */
     private cancel: string = 'Cancelar';
 
-    /**
-     * Saber si llevará botón para cancelar
-     *
-     * @private
-     * @type {boolean}
-     * @memberof Modal
-     */
-    private readonly hasCancel: boolean;
 
     /**
-     * Ondimiss action
+     * Opciones
      *
      * @private
-     * @memberof Modal
+     * @type {AlertOptions}
+     * @memberOf Modal
      */
-    private readonly ondismiss: (status: boolean) => void;
+    private options : AlertOptions;
 
     /**
      * Estado de la petición
@@ -117,6 +131,12 @@ export default class Modal {
      */
     private next: boolean;
 
+    private readonly INFO_ALERT = `<i class="fas fa-info-circle fa-2x"></i> <span class="h5 font-weight-bold">#text#</span>`;
+    private readonly WARNING_ALERT = `<i class="fas fa-exclamation-triangle fa-2x"></i> <span class="h5 font-weight-bold">#text#</span>`;
+    private readonly DANGER_ALERT = `<i class="fas fa-exclamation-triangle fa-2x"></i> <span class="h5 font-weight-bold">#text#</span>`;
+    private readonly SUCCESS_ALERT = `<i class="fas fa-check-circle fa-2x"></i> <span class="h5 font-weight-bold">#text#</span>`;
+    private readonly NO_ICON_ALERT = `<i class=""></i> <span class="h5 font-weight-bold">#text#</span>`;
+
     /**
      *Estrutura principal del modal
      *
@@ -126,9 +146,9 @@ export default class Modal {
     private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document">
-            <div class="modal-content p-0">
-                <div class="modal-header text-info">
-                <i class="fas fa-info-circle fa-2x"></i> Info
+            <div class="modal-content p-0 round">
+                <div class="modal-header" id="modalHeaderId">
+                
                 </div>
                 <div class="h4 text-center mx-auto text-dark font-weight-bold mt-5 mb-5" id="modalBodyId">
                     
@@ -143,19 +163,17 @@ export default class Modal {
 
     /**
      * Crear una instancia de Alert
-     * @param {boolean} [hasCacnel=false]
-     * @param {(status : boolean) => void} [ondismiss=() => { }]
      * @memberof Modal
+     * @param options
      */
-    public constructor(hasCacnel: boolean = false, ondismiss: (status: boolean) => void = () => {
-    }) {
+    public constructor(options: AlertOptions = DEFAULT_ALERT_OPTIONS) {
         this.modalId = this.randomId();
-        this.hasCancel = hasCacnel;
+        this.options = {...DEFAULT_ALERT_OPTIONS, ...options};
         this.modalViewIdLabel = this.randomId();
         this.modalDialogId = this.randomId();
         this.modalBodyId = this.randomId();
+        this.modalHeaderId = this.randomId();
         this.modalFooter = this.randomId();
-        this.ondismiss = ondismiss;
         this.status = false;
         this.next = false;
         this.modal = Modal.htmlToElement("<div></div>");
@@ -173,6 +191,7 @@ export default class Modal {
         newTemplate = newTemplate.replace("modalViewIdLabel", this.modalViewIdLabel);
         newTemplate = newTemplate.replace("modalDialogId", this.modalDialogId);
         newTemplate = newTemplate.replace("modalBodyId", this.modalBodyId);
+        newTemplate = newTemplate.replace("modalHeaderId", this.modalHeaderId);
         newTemplate = newTemplate.replace("modalFooter", this.modalFooter);
         this.modal = Modal.htmlToElement(newTemplate);
         document.body.appendChild(this.modal);
@@ -230,7 +249,7 @@ export default class Modal {
             setTimeout(() => {
                 this.next = true;
                 this.deleteModal();
-                this.ondismiss(this.status);
+                this.options.onDismiss!(this.status);
                 //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
                 if (document.getElementsByClassName("modal").length > 0) {
                     $('body').addClass('modal-open');
@@ -292,21 +311,63 @@ export default class Modal {
      * @memberof Modal
      */
     private build() {
-        if (this.hasCancel) {
+        let icon : string;
+        switch (this.options.type) {
+            case 'info':
+                icon = this.INFO_ALERT;
+                break;
+            case 'warning':
+                icon = this.WARNING_ALERT;
+                break;
+            case 'danger':
+                icon = this.DANGER_ALERT;
+                break;
+            case 'success':
+                icon = this.SUCCESS_ALERT;
+                break;
+            default:
+                icon = this.NO_ICON_ALERT;
+                break;
+        }
+        document.getElementById(this.modalHeaderId)!.innerHTML = icon.replace('#text#', this.options.typeText!);
+        document.getElementById(this.modalHeaderId)!.classList.add(`text-${this.options.type}`);
+
+        if (this.options.hasCancel) {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="d-flex justify-content-between w-100">
-                <button type="button" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.cancel}</button>
-                <button type="button" id="acceptAlert" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.ok}</button>
+                <button type="button" class="btn btn-lg btn-light p-3 no-round w-100" 
+                data-dismiss="modal" 
+                style="
+                border-bottom-left-radius: 1.25rem !important;
+                ">
+                <b>${this.cancel}</b></button>
+                <button type="button" id="acceptAlert" 
+                class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal" 
+                style="
+                border-bottom-right-radius: 1.25rem !important;
+                "><b>${this.ok}</b></button>
                 </div>
-                 `;
+                 `.trim();
         } else {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="text-center">
-                <button type="button" id="acceptAlert" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.ok}</button>
+                <button 
+                type="button" 
+                id="acceptAlert" 
+                class="btn btn-lg btn-light p-3 no-round w-100" 
+                data-dismiss="modal" 
+                style="
+                border-bottom-right-radius: 1.25rem !important; 
+                border-bottom-left-radius: 1.25rem !important
+                ">
+                <b>
+                 ${this.ok}
+                </b>
+                </button>
                 </div>
-                `;
+                `.trim();
         }
     }
 

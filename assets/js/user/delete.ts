@@ -15,8 +15,11 @@ export const deleteUser = async (element: HTMLElement, onSuccess: () => void = (
 }, onError: () => void = () => {
 }) => {
     const ID = +element.getAttribute("id")!;
-    const ALERT = new Alert(true);
-    let res = await ALERT.updateBody(`¿Seguro que quiere suspender al usuario <b>${ID}</b>?`).show();
+    const ALERT = new Alert({
+        type: 'danger',
+        typeText: 'Alerta'
+    });
+    let res = await ALERT.updateBody(`¿Suspender al usuario <b>${ID}</b>?`).show();
     if (res) {
         const BTNS_BEF = disableRow(element);
         Axios.delete(ROUTES.user.api.delete.replace("0", ID.toString()))

@@ -15,8 +15,11 @@ export const reactiveUser = async (element: HTMLElement, onSuccess: () => void =
 }, onError: () => void = () => {
 }) => {
     const ID = +element.getAttribute("id")!;
-    const ALERT = new Alert(true);
-    let res = await ALERT.updateBody(`¿Seguro que desea reactiar al usuario <b>${ID}</b>?`).show();
+    const ALERT = new Alert({
+        type: 'danger',
+        typeText: 'Alerta'
+    });
+    let res = await ALERT.updateBody(`¿Reactiar al usuario <b>${ID}</b>?`).show();
     if (res) {
         const BTNS_BEF = disableRow(element);
         Axios.patch(ROUTES.user.api.reactivate.replace("0", ID.toString()))
