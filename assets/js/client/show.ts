@@ -269,7 +269,7 @@ const deleteContactAction = async (e: Event) => {
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el correo ${ID}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el contacto ${NAME}?`).show();
     if (res) {
         MODAL.loadingBody();
         await Axios.delete(ROUTES.client.api.contactDelete.replace("0", ID.toString()))
