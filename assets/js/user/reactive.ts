@@ -15,7 +15,7 @@ export const reactiveUser = async (element: HTMLElement, onSuccess: () => void =
 }, onError: () => void = () => {
 }) => {
     const ID = +element.getAttribute("id")!;
-    const NAME = +element.getAttribute("name")!;
+    const NAME = element.getAttribute("name")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'

@@ -212,7 +212,7 @@ const addExtraEmail = (e: Event) => {
 const deletePhone = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("phone-id")!;
-    const PHONE = +ELEMENT.getAttribute("phone-phone")!;
+    const PHONE = ELEMENT.getAttribute("phone-phone")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'
@@ -239,7 +239,7 @@ const deletePhone = async (e: Event) => {
 const deleteEmail = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("email-id")!;
-    const EMAIL = +ELEMENT.getAttribute("email-email")!;
+    const EMAIL = ELEMENT.getAttribute("email-email")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'
