@@ -212,11 +212,12 @@ const addExtraEmail = (e: Event) => {
 const deletePhone = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("phone-id")!;
+    const PHONE = +ELEMENT.getAttribute("phone-phone")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el número ${ID}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el número ${PHONE}?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
@@ -238,11 +239,12 @@ const deletePhone = async (e: Event) => {
 const deleteEmail = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("email-id")!;
+    const EMAIL = +ELEMENT.getAttribute("email-email")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el correo ${ID}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el correo ${EMAIL}?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))

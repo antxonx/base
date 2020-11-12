@@ -163,11 +163,12 @@ const addExtraEmail = (e: Event) => {
 const deletePhone = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("phone-id")!;
+    const PHONE = +ELEMENT.getAttribute("phone-phone")!;
     const ALERT = new Alert({
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el número ${ID}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el número ${PHONE}?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", ID.toString()))
