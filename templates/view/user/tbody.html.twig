@@ -92,7 +92,9 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                 },
                 attr : {
                     class : 'user-row table-info table-bordered',
-                    id: user.id
+                    id: user.id,
+                    name: user.name,
+                    username: user.username
                 }
             } %}
             {% include "table/tr.html.twig" with {
@@ -148,7 +150,9 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
             },
             attr : {
                 class : 'user-row table-bordered',
-                id: user.id
+                id: user.id,
+                name: user.name,
+                username: user.username
             }
         } %}
         {% include "table/tr.html.twig" with {
