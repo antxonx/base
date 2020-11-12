@@ -126,11 +126,14 @@ export default class Modal {
     private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document">
-            <div class="modal-content p-4 round">
-                <div class="h4 text-center mx-auto text-dark font-weight-bold" id="modalBodyId">
+            <div class="modal-content p-0">
+                <div class="modal-header text-info">
+                <i class="fas fa-info-circle fa-2x"></i> Info
+                </div>
+                <div class="h4 text-center mx-auto text-dark font-weight-bold mt-5 mb-5" id="modalBodyId">
                     
                 </div>
-                <div class="toast-body" id="modalFooter">
+                <div class="toast-body p-0" id="modalFooter">
                         
                 </div>
             </div>
@@ -293,18 +296,15 @@ export default class Modal {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="d-flex justify-content-between w-100">
-                <span>&nbsp;</span>
-                <button type="button" class="btn btn-lg btn-danger round" data-dismiss="modal">${this.cancel}</button>
-                <span>&nbsp;</span>
-                <button type="button" id="acceptAlert" class="btn btn-lg btn-antxony round" data-dismiss="modal">${this.ok}</button>
-                <span>&nbsp;</span>
+                <button type="button" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.cancel}</button>
+                <button type="button" id="acceptAlert" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.ok}</button>
                 </div>
                  `;
         } else {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="text-center">
-                <button type="button" id="acceptAlert" class="btn btn-lg btn-antxony round" data-dismiss="modal">${this.ok}</button>
+                <button type="button" id="acceptAlert" class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal">${this.ok}</button>
                 </div>
                 `;
         }
