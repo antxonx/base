@@ -1,6 +1,6 @@
 <table class="table table-sm table-striped w-100 table-hover">
     {% set sort %}
-        <span class="float-right sort-icon"><i class="fas fa-sort"></i></span>
+        <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
     {% endset %}
     {# impersonator #}
     {% set extra = {
@@ -19,13 +19,19 @@
         } %}
     {% endif %}
     {# . #}
+    {# Sort column solo en desktop #}
+    {% set sortClass = 'cursor-pointer sort-column' %}
+    {% if isMobile %}
+        {% set sortClass = '' %}
+    {% endif %}
+    {# . #}
     {% include "table/thead.html.twig" with {
         tr : {
             values : {
                 id : {
                     value : 'Id' ~ sort,
                     attr : {
-                        class: 'cursor-pointer sort-column',
+                        class: sortClass,
                         column: 'id',
                         style: 'width: 120px !important;'
                     }
@@ -33,14 +39,14 @@
                 username : {
                     value : 'Usuario' ~ sort,
                     attr : {
-                        class: 'cursor-pointer sort-column',
+                        class: sortClass,
                         column: 'username',
                     }
                 },
                 name : {
                     value : 'Nombre' ~ sort,
                     attr : {
-                        class: 'cursor-pointer sort-column',
+                        class: sortClass,
                         column: 'name',
                     }
                 },

@@ -9,7 +9,7 @@
     } %}
     {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
         {% set extra = {
-            value : '<a class="w-100 btn btn-sm btn-info" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+            value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
             attr : {
                 class : 'action-btn'
             }
@@ -17,7 +17,7 @@
     {% endif %}
     {# . #}
     {% set role %}
-        <div class="badge badge-role
+        <div class="badge badge-role w-100
 {% if user.roles[0] == "ROLE_ADMIN" %}
 badge-primary
 {% elseif user.roles[0] == "ROLE_TEST" %}
@@ -30,12 +30,13 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
     {# suspneder o reactivar #}
     {% set trashSusp %}
         {% if user.suspended %}
-            <button class="btn btn-sm btn-light w-100 user-reactivate"><i class="fas fa-redo-alt"></i></button>
+            <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate"><i class="fas fa-redo-alt"></i></button>
         {% else %}
-            <button class="btn btn-sm btn-light w-100 user-delete"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i class="fas fa-trash-alt"></i></button>
         {% endif %}
     {% endset %}
     {# . #}
+    {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
     {% if "ROLE_GOD" in user.roles %}
         {% if is_granted("ROLE_GOD") %}
             {% set tr = {
@@ -55,7 +56,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                     name : {
                         value : user.name,
                         attr : {
-                            class : 'user-edit cursor-pointer'
+                            class : 'user-edit cursor-pointer text-nowrap'
                         }
                     },
                     role : {
@@ -71,19 +72,19 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                         }
                     },
                     key : {
-                        value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+                        value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key"></i></button>',
                         attr : {
                             class : 'action-btn'
                         }
                     },
                     trash : {
-                        value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
+                        value : divine,
                         attr : {
                             class : 'text-center action-btn'
                         }
                     },
                     extra : {
-                        value : '<button class="w-100 btn btn-sm btn-light cursor-normal"><i class="fas fa-cross"></i></button>',
+                        value : divine,
                         attr : {
                             class : 'action-btn'
                         }
@@ -116,7 +117,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                 name : {
                     value : user.name,
                     attr : {
-                        class : 'user-edit cursor-pointer'
+                        class : 'user-edit cursor-pointer text-nowrap'
                     }
                 },
                 role : {
@@ -132,7 +133,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                     }
                 },
                 key : {
-                    value : '<button class="btn btn-sm btn-danger w-100 user-password"><i class="fas fa-key"></i></button>',
+                    value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key"></i></button>',
                     attr : {
                         class : 'action-btn'
                     }
