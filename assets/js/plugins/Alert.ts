@@ -146,7 +146,7 @@ export default class Modal {
     private structure = `
     <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document">
-            <div class="modal-content p-0 round">
+            <div class="modal-content p-0 round shadow-lg">
                 <div class="modal-header" id="modalHeaderId">
                 
                 </div>
