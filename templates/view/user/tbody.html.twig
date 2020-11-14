@@ -1,33 +1,46 @@
 {% set tr = {} %}
 {% for user in users %}
-    {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
-    {# impersonator #}
-    {% set extra = {
-        value : '',
-        attr : {
-            class: 'd-none'
-        }
-    } %}
-    {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
-        {% if user.suspended %}
-            {% set extra = {
-                value : divine,
-                attr : {
-                    class : 'action-btn'
-                }
-            } %}
+    {% set allowed = true %}
+    {# Validar si se puede muestrar a GOD #}
+    {% if "ROLE_GOD" in user.roles %}
+        {% if is_granted("ROLE_GOD") %}
+            {% set allowed = true %}
         {% else %}
-            {% set extra = {
-                value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
-                attr : {
-                    class : 'action-btn'
-                }
-            } %}
+            {% set allowed = false %}
         {% endif %}
+    {% else %}
+        {% set allowed = true %}
     {% endif %}
     {# . #}
-    {% set role %}
-        <div class="badge badge-role w-100
+    {% if allowed %}
+        {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
+        {# impersonator #}
+        {% set extra = {
+            value : '',
+            attr : {
+                class: 'd-none'
+            }
+        } %}
+        {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+            {% if user.suspended %}
+                {% set extra = {
+                    value : divine,
+                    attr : {
+                        class : 'action-btn'
+                    }
+                } %}
+            {% else %}
+                {% set extra = {
+                    value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+                    attr : {
+                        class : 'action-btn'
+                    }
+                } %}
+            {% endif %}
+        {% endif %}
+        {# . #}
+        {% set role %}
+            <div class="badge badge-role w-100
     {% if user.roles[0] == "ROLE_ADMIN" %}
     badge-primary
     {% elseif user.roles[0] == "ROLE_TEST" %}
@@ -36,96 +49,98 @@
     d-none
     {% endif %}
     badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
-    {% endset %}
-    {# suspneder o reactivar #}
-    {% set trashSusp %}
-        {% if user.suspended %}
-            <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate"><i class="fas fa-redo-alt"></i>
-            </button>
-        {% else %}
-            <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i class="fas fa-trash-alt"></i>
-            </button>
-        {% endif %}
-    {% endset %}
-    {# . #}
+        {% endset %}
+        {# suspneder o reactivar #}
+        {% set trashSusp %}
+            {% if user.suspended %}
+                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate"><i
+                            class="fas fa-redo-alt"></i>
+                </button>
+            {% else %}
+                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i class="fas fa-trash-alt"></i>
+                </button>
+            {% endif %}
+        {% endset %}
+        {# . #}
 
-    {# Columnas especiales-> #}
-    {% set rowClass = "user-row table-bordered" %}
-    {% if "ROLE_GOD" in user.roles %}
-        {% set trashCol =  {
-            value : divine,
-            attr : {
-                class : 'text-center action-btn'
-            },
-        } %}
-        {% set extraCol = {
-            value : divine,
-            attr : {
-                class : 'action-btn'
-            },
-        } %}
-        {% set rowClass = rowClass ~ " table-primary" %}
-    {% else %}
-        {% set trashCol =  {
-            value : trashSusp,
-            attr : {
-                class : 'text-center action-btn'
-            },
-        } %}
-        {% set extraCol = extra %}
-    {% endif %}
-    {# <-Columnas especiales #}
-    {% set tr = {
-        values : {
-            id : {
-                value : user.id ,
+        {# Columnas especiales-> #}
+        {% set rowClass = "user-row table-bordered" %}
+        {% if "ROLE_GOD" in user.roles %}
+            {% set trashCol =  {
+                value : divine,
                 attr : {
-                    class : 'user-edit cursor-pointer text-right'
-                }
-            },
-            username : {
-                value : '<em>' ~ user.username ~ '</em>',
-                attr : {
-                    class : 'user-edit cursor-pointer text-right'
-                }
-            },
-            name : {
-                value : user.name,
-                attr : {
-                    class : 'user-edit cursor-pointer text-nowrap'
-                }
-            },
-            role : {
-                value : role,
-                attr : {
-                    class : 'user-edit cursor-pointer text-center'
-                }
-            },
-            email : {
-                value : user.mail,
-                attr : {
-                    class : 'user-edit cursor-pointer'
-                }
-            },
-            key : {
-                value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key"></i></button>',
+                    class : 'text-center action-btn'
+                },
+            } %}
+            {% set extraCol = {
+                value : divine,
                 attr : {
                     class : 'action-btn'
-                }
+                },
+            } %}
+            {% set rowClass = rowClass ~ " table-primary" %}
+        {% else %}
+            {% set trashCol =  {
+                value : trashSusp,
+                attr : {
+                    class : 'text-center action-btn'
+                },
+            } %}
+            {% set extraCol = extra %}
+        {% endif %}
+        {# <-Columnas especiales #}
+        {% set tr = {
+            values : {
+                id : {
+                    value : user.id ,
+                    attr : {
+                        class : 'user-edit cursor-pointer text-right'
+                    }
+                },
+                username : {
+                    value : '<em>' ~ user.username ~ '</em>',
+                    attr : {
+                        class : 'user-edit cursor-pointer text-right'
+                    }
+                },
+                name : {
+                    value : user.name,
+                    attr : {
+                        class : 'user-edit cursor-pointer text-nowrap'
+                    }
+                },
+                role : {
+                    value : role,
+                    attr : {
+                        class : 'user-edit cursor-pointer text-center'
+                    }
+                },
+                email : {
+                    value : user.mail,
+                    attr : {
+                        class : 'user-edit cursor-pointer'
+                    }
+                },
+                key : {
+                    value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key"></i></button>',
+                    attr : {
+                        class : 'action-btn'
+                    }
+                },
+                trash : trashCol,
+                extra : extraCol
             },
-            trash : trashCol,
-            extra : extraCol
-        },
-        attr : {
-            class : rowClass,
-            id: user.id,
-            name: user.name,
-            username: user.username
-        }
-    } %}
-    {% include "table/tr.html.twig" with {
-        tr : tr
-    } %}
+            attr : {
+                class : rowClass,
+                id: user.id,
+                name: user.name,
+                username: user.username
+            }
+        } %}
+        {% include "table/tr.html.twig" with {
+            tr : tr
+        } %}
+    {% endif %}
 {% endfor %}
 {% if tr.values is defined %}
     {% include "paginatorTable.html.twig" with {
