@@ -141,6 +141,13 @@ b, h5
   td
     border-bottom: none
 
+.table-primary
+  th
+    border-bottom: none
+
+  td
+    border-bottom: none
+
 .fade2
   transform: scale(0.9)
   opacity: 0
@@ -199,18 +206,18 @@ b, h5
   tbody
     tr
       &:nth-child(odd)
-        background-color: #E6E6FA
+        background-color: #e6e6fa57
         th, td
-          border-left-color: #DCD0FF
-          border-right-color: #DCD0FF
+          border-left-color: #e6e6fa
+          border-right-color: #e6e6fa
 
 .table-hover2
   tbody
     tr
-      transition: background-color 300ms linear
+      transition: background-color 300ms ease-in
       &:hover
-        background-color: #DCD0FF
-        transition: background-color 300ms linear
+        background-color: #e6e6fa
+        transition: background-color 300ms ease-out
         td, th
-          border-left-color: #E0B0FF
-          border-right-color: #E0B0FF
+          border-left-color: #DCD0FF
+          border-right-color: #DCD0FF

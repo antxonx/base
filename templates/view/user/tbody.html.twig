@@ -18,14 +18,14 @@
     {# . #}
     {% set role %}
         <div class="badge badge-role w-100
-{% if user.roles[0] == "ROLE_ADMIN" %}
-badge-primary
-{% elseif user.roles[0] == "ROLE_TEST" %}
-badge-secondary
-{% else %}
-d-none
-{% endif %}
-badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
+    {% if user.roles[0] == "ROLE_ADMIN" %}
+    badge-primary
+    {% elseif user.roles[0] == "ROLE_TEST" %}
+    badge-secondary
+    {% else %}
+    d-none
+    {% endif %}
+    badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
     {% endset %}
     {# suspneder o reactivar #}
     {% set trashSusp %}
@@ -55,7 +55,7 @@ badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
                 class : 'action-btn'
             },
         } %}
-        {% set rowClass = rowClass ~ " table-info" %}
+        {% set rowClass = rowClass ~ " table-primary" %}
     {% else %}
         {% set trashCol =  {
             value : trashSusp,
