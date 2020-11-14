@@ -191,3 +191,26 @@ b, h5
   border-top: 0
   border-bottom-left-radius: 1.25rem
   border-bottom-right-radius: 1.25rem
+
+.no-round
+  border-radius: 0 !important
+
+.table-striped2
+  tbody
+    tr
+      &:nth-child(odd)
+        background-color: #E6E6FA
+        th, td
+          border-left-color: #DCD0FF
+          border-right-color: #DCD0FF
+
+.table-hover2
+  tbody
+    tr
+      transition: background-color 300ms linear
+      &:hover
+        background-color: #DCD0FF
+        transition: background-color 300ms linear
+        td, th
+          border-left-color: #E0B0FF
+          border-right-color: #E0B0FF
