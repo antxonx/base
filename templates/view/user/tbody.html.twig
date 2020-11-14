@@ -1,5 +1,6 @@
 {% set tr = {} %}
 {% for user in users %}
+    {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
     {# impersonator #}
     {% set extra = {
         value : '',
@@ -8,12 +9,21 @@
         }
     } %}
     {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
-        {% set extra = {
-            value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
-            attr : {
-                class : 'action-btn'
-            }
-        } %}
+        {% if user.suspended %}
+            {% set extra = {
+                value : divine,
+                attr : {
+                    class : 'action-btn'
+                }
+            } %}
+        {% else %}
+            {% set extra = {
+                value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+                attr : {
+                    class : 'action-btn'
+                }
+            } %}
+        {% endif %}
     {% endif %}
     {# . #}
     {% set role %}
@@ -38,7 +48,6 @@
         {% endif %}
     {% endset %}
     {# . #}
-    {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
 
     {# Columnas especiales-> #}
     {% set rowClass = "user-row table-bordered" %}
