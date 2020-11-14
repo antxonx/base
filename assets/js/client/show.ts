@@ -212,8 +212,12 @@ const addExtraEmail = (e: Event) => {
 const deletePhone = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("phone-id")!;
-    const ALERT = new Alert(true);
-    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el número ${ID}?`).show();
+    const PHONE = ELEMENT.getAttribute("phone-phone")!;
+    const ALERT = new Alert({
+        type: 'danger',
+        typeText: 'Alerta'
+    });
+    const res = await ALERT.updateBody(`¿Eliminar el número ${PHONE}?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
@@ -235,8 +239,12 @@ const deletePhone = async (e: Event) => {
 const deleteEmail = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
     const ID = +ELEMENT.getAttribute("email-id")!;
-    const ALERT = new Alert(true);
-    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ID}?`).show();
+    const EMAIL = ELEMENT.getAttribute("email-email")!;
+    const ALERT = new Alert({
+        type: 'danger',
+        typeText: 'Alerta'
+    });
+    const res = await ALERT.updateBody(`¿Eliminar el correo ${EMAIL}?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
@@ -259,8 +267,11 @@ const deleteContactAction = async (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".contact-row") as HTMLElement;
     const NAME = ELEMENT.getAttribute("contactname")!;
     const ID = +ELEMENT.getAttribute("contactid")!;
-    const ALERT = new Alert(true);
-    const res = await ALERT.updateBody(`¿Seguro que desea eliminar el correo ${ID}?`).show();
+    const ALERT = new Alert({
+        type: 'danger',
+        typeText: 'Alerta'
+    });
+    const res = await ALERT.updateBody(`¿Eliminar el contacto ${NAME}?`).show();
     if (res) {
         MODAL.loadingBody();
         await Axios.delete(ROUTES.client.api.contactDelete.replace("0", ID.toString()))
