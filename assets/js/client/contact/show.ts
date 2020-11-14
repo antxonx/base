@@ -168,7 +168,7 @@ const deletePhone = async (e: Event) => {
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el número ${PHONE}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el número <b>${PHONE}</b>?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", ID.toString()))
@@ -195,7 +195,7 @@ const deleteEmail = async (e: Event) => {
         type: 'danger',
         typeText: 'Alerta'
     });
-    const res = await ALERT.updateBody(`¿Eliminar el correo ${NAME}?`).show();
+    const res = await ALERT.updateBody(`¿Eliminar el correo <b>${NAME}</b>?`).show();
     if (res) {
         disableRow(ELEMENT);
         Axios.delete(ROUTES.client.api.extraContactDelete.replace("0", ID.toString()))
