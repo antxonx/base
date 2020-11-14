@@ -42,9 +42,10 @@ const validate = (e: Event) => {
         [...(document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>)],
         5
     )) {
-        const ROLE = (document.getElementById("roleSelector") as HTMLInputElement).value;
+        //const ROLE = (document.getElementById("roleSelector") as HTMLInputElement).value;
+        const ROLE = document.querySelectorAll('.check-roles:checked');
         const BTN = document.getElementById("submit-btn")!;
-        if (ROLE != "") {
+        if (ROLE.length > 0) {
             const BTN_BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
             Axios.post(ROUTES.user.api.add, {
@@ -52,7 +53,7 @@ const validate = (e: Event) => {
                 password: (document.getElementById("password") as HTMLInputElement).value,
                 email: (document.getElementById("email") as HTMLInputElement).value,
                 name: (document.getElementById("name") as HTMLInputElement).value,
-                roles: [ROLE],
+                roles: [...ROLE.values()].map((el) => (el as HTMLInputElement).value),
             })
                 .then(() => {
                     CALLBACK();
