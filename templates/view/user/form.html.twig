@@ -30,15 +30,20 @@
         required : true,
         error : 'Ingrese un correo válido'
     } %}
-    <div class="form-group">
-        {# <label for="roleSelector">Selecciona un puesto</label> #}
-        <select id="roleSelector" class="form-control">
-            <option value hidden selected>Puesto</option>
-            <option value="ROLE_ADMIN">admin</option>
-            <option value="ROLE_TEST">test</option>
-        </select>
-    </div>
-    <div id="submit-btn" class="w-100 text-left">
+    <b class="text-muted font-italic">Puesto:</b> <br>
+<div class="row">
+        {% set roles = [
+            {nombre: 'admin', real: 'ROLE_ADMIN'},
+            {nombre: 'test', real: 'ROLE_TEST'},
+        ] %}
+        {% for role in roles %}
+        <div class="col-md-5 ml-3 checkbox-lg">
+                <input type="checkbox" class="custom-control-input check-roles" value="{{ role.real }}" id="roleCheckBox{{ loop.index }}">
+                <label for="roleCheckBox{{ loop.index }}" class="custom-control-label">{{ role.nombre }}</label>
+        </div>
+        {% endfor %}
+</div>
+    <div id="submit-btn" class="w-100 text-left mt-2">
         <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
     </div>
 </form>
