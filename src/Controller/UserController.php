@@ -160,7 +160,7 @@ class UserController extends AbstractController
             $user = $this->rep->find($id);
             $user->setPassword($this->passwordEncoder->encodePassword($user, $content->password));
             $this->rep->update();
-            $this->util->info("Se ha acutalizado la contraseña del usuario {$user->getId()}");
+            $this->util->info("Se ha acutalizado la contraseña del usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Se ha actualizado la contraseña");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -181,7 +181,7 @@ class UserController extends AbstractController
             $user = $this->rep->find($id);
             $user->setSuspended(false);
             $this->rep->update();
-            $this->util->info("Se ha reactivado al usuario {$id}");
+            $this->util->info("Se ha reactivado al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Usuario reactivado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -224,6 +224,7 @@ class UserController extends AbstractController
                 $this->actualUser,
                 $content->new
             ));
+            $this->util->info("Se ha actualizado la contraseña del usuario <b>{$this->actualUser->getId()}</b>(<em>{$this->actualUser->getUsername()}</em>)");
             return new Response("Contraseña actualizada");
         } catch (ORMException $e) {
             return $this->util->errorResponse($e);
@@ -297,7 +298,7 @@ class UserController extends AbstractController
                 ->setRoles($content->roles)
                 ->setSuspended(false);
             $this->rep->add($user);
-            $this->util->info("Se ha agregado al usuario {$user->getId()}");
+            $this->util->info("Se ha agregado al usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Usuario agregado");
         } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
 
@@ -358,7 +359,7 @@ class UserController extends AbstractController
                 $message .= " el rol";
             }
             $this->rep->update();
-            $this->util->info($message . " del usuario {$user->getId()}");
+            $this->util->info($message . " del usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new response($message);
         } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
             if ($this->util->containsString($e->getMessage(), User::FK_USERNAME)) {
@@ -399,7 +400,7 @@ class UserController extends AbstractController
                     );
             }
             $this->rep->update();
-            $this->util->info("Se ha suspendido al usuario {$id}");
+            $this->util->info("Se ha suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Usuario suspendido");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -427,7 +428,7 @@ class UserController extends AbstractController
                     )
                 );
             $this->rep->update();
-            $this->util->info("Se ha <b>re</b>-suspendido al usuario {$id}");
+            $this->util->info("Se ha <b>re</b>-suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("ok");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

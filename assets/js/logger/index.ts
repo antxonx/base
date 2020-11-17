@@ -32,7 +32,8 @@ const defaultView = `
 const changePage = (page: number) => {
     if (ROUTE != undefined || ROUTE != null) {
         MAIN_VIEW.innerHTML = BIG_LOADER_TABLE.replace("0", "6");
-        Axios.get(`${ROUTE}?search=${SEARCH_INPUT}&page=${page}&method=${METHOD}&ordercol=${ORDER_BY.column}&orderorder=${ORDER_BY.order}`)
+        const USER = (document.getElementById("registerUser") as HTMLInputElement).value;
+        Axios.get(`${ROUTE}?search=${SEARCH_INPUT}&page=${page}&method=${METHOD}&ordercol=${ORDER_BY.column}&orderorder=${ORDER_BY.order}&user=${USER}`)
             .then(res => {
                 MAIN_VIEW.innerHTML = res.data;
                 loadEvs();
