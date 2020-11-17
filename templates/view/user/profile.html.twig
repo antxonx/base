@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Perfil{% endblock %}
+{% block contTitle %}Mi perfil{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
         <div class="card round main-2">
             <div class="card-body">
-                <h5 class="text-center">Mi perfil</h5>
-                <hr class="divide-2">
                 <div class="row">
                     <div class="col-md-6">
                         <b>Usuario:</b> <br>
@@ -38,10 +37,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="row mt-2">
-                            <div class="col-md-6">
+                            <div class="col-md-6 pl-0">
                                 <button class="btn btn-danger round mt-2 w-100" id="change-user-password">Cambiar contraseña</button>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 pr-0">
                                 <button class="btn btn-warning round mt-2 w-100" id="profile-edit" active="0">Editar</button>
                             </div>
                         </div>

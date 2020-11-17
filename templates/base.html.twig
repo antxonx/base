@@ -32,6 +32,9 @@
     </script>
 {% else %}
     {% include "navbar.html.twig" %}
+    <div class="position-absolute mx-auto pt-3 w-100" style="top: 0; width: available;">
+        <h5 class="text-center">{% block contTitle %}{% endblock %}</h5>
+    </div>
     <div id="toastCont">
     </div>
     {% block body %}{% endblock %}
