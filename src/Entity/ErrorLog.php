@@ -71,6 +71,11 @@ class ErrorLog
     private $system;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="errorLogs")
+     */
+    private $user;
+
+    /**
      * Undocumented function
      *
      * @return integer|null
@@ -293,6 +298,18 @@ class ErrorLog
     public function setSystem(?bool $system): self
     {
         $this->system = $system;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

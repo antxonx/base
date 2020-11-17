@@ -218,6 +218,7 @@ class Logger extends AbstractProcessingHandler
                 ->setMethod($this->router->getContext()->getMethod())
                 ->setLevel($record['level_name'])
                 ->setSystem($system)
+                ->setUser($this->security->getUser())
                 ->setMessage($record['message']);
 
             /* ---------------------- Insertar en la base de datos ---------------------- */
