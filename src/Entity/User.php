@@ -6,6 +6,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -66,6 +68,22 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity=InfoLog::class, mappedBy="user")
+     */
+    private $infoLogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ErrorLog::class, mappedBy="user")
+     */
+    private $errorLogs;
+
+    public function __construct()
+    {
+        $this->infoLogs = new ArrayCollection();
+        $this->errorLogs = new ArrayCollection();
+    }
 
     /**
      * Undocumented function
@@ -249,5 +267,65 @@ class User implements UserInterface
     public function hasRole(string $role): bool
     {
         return in_array($role, $this->roles);
+    }
+
+    /**
+     * @return Collection|InfoLog[]
+     */
+    public function getInfoLogs(): Collection
+    {
+        return $this->infoLogs;
+    }
+
+    public function addInfoLog(InfoLog $infoLog): self
+    {
+        if (!$this->infoLogs->contains($infoLog)) {
+            $this->infoLogs[] = $infoLog;
+            $infoLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfoLog(InfoLog $infoLog): self
+    {
+        if ($this->infoLogs->removeElement($infoLog)) {
+            // set the owning side to null (unless already changed)
+            if ($infoLog->getUser() === $this) {
+                $infoLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ErrorLog[]
+     */
+    public function getErrorLogs(): Collection
+    {
+        return $this->errorLogs;
+    }
+
+    public function addErrorLog(ErrorLog $errorLog): self
+    {
+        if (!$this->errorLogs->contains($errorLog)) {
+            $this->errorLogs[] = $errorLog;
+            $errorLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeErrorLog(ErrorLog $errorLog): self
+    {
+        if ($this->errorLogs->removeElement($errorLog)) {
+            // set the owning side to null (unless already changed)
+            if ($errorLog->getUser() === $this) {
+                $errorLog->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

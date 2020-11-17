@@ -36,15 +36,20 @@
                 </h5>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <span>
                             <b>IP: </b> {{ entity.clientip }}
                         </span>
                     </div>
-                    <div class="col-md-6 border-left">
+                    <div class="col-md-4 border-left">
+                        <span>
+                        <b>Usuario: </b> <em>{% if entity.user %}{{ entity.user.name }}{% else %}Desconocido{% endif %}</em>
+                        </span>
+                    </div>
+                    <div class="col-md-4 border-left">
                         <span>
                         <b>Ruta: </b> {{ entity.route }}
-                    </span>
+                        </span>
                     </div>
                 </div>
                 <hr>
