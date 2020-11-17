@@ -46,6 +46,11 @@ class InfoLogRepository extends ServiceEntityRepository
         // Create our query
         $query = $this->createQueryBuilder('p')
             ->orderBy("p." . $params->ordercol, $params->orderorder);
+        if(isset($params->user) && $params->user > 0){
+            $userCriteria = new Criteria();
+            $userCriteria->where(Criteria::expr()->eq("p.user", $params->user));
+            $query->addCriteria($userCriteria);
+        }
         if (isset($params->search) && $params->search != "") {
             $searchRoute = str_replace("_", "/", $params->search);
             $searchCriteria = new Criteria();
