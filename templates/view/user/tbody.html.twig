@@ -13,7 +13,7 @@
     {% endif %}
     {# . #}
     {% if allowed %}
-        {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
+        {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross mobile-2-desktop-1"></i></button>' %}
         {# Developer-> #}
         {% set extra = {
             value : '',
@@ -31,7 +31,7 @@
                 } %}
             {% else %}
                 {% set extra = {
-                    value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie"></i></a>',
+                    value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie mobile-2-desktop-1"></i></a>',
                     attr : {
                         class : 'action-btn'
                     }
@@ -46,7 +46,7 @@
         } %}
         {% if is_granted("ROLE_GOD") %}
             {% set logger = {
-                value: '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-book"></i></a>',
+                value: '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-book mobile-2-desktop-1"></i></a>',
                 attr : {
                     class: 'text-center action-btn'
                 }
@@ -68,10 +68,10 @@
         {% set trashSusp %}
             {% if user.suspended %}
                 <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate"><i
-                            class="fas fa-redo-alt"></i>
+                            class="fas fa-redo-alt mobile-2-desktop-1"></i>
                 </button>
             {% else %}
-                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i class="fas fa-trash-alt"></i>
+                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i class="fas fa-trash-alt mobile-2-desktop-1"></i>
                 </button>
             {% endif %}
         {% endset %}
@@ -136,7 +136,7 @@
                     }
                 },
                 key : {
-                    value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key"></i></button>',
+                    value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
                     attr : {
                         class : 'action-btn'
                     }

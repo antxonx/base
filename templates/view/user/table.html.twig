@@ -17,7 +17,7 @@
     } %}
     {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
         {% set extra = {
-            value : '<i class="fas fa-user-tie"></i>',
+            value : '<i class="fas fa-user-tie mobile-2-desktop-1"></i>',
             attr : {
                 class : 'text-center',
                 style : 'width: 50px !important;'
@@ -26,7 +26,7 @@
     {% endif %}
     {% if is_granted("ROLE_GOD") %}
         {% set logger = {
-            value : '<i class="fas fa-book"></i>',
+            value : '<i class="fas fa-book mobile-2-desktop-1"></i>',
             attr : {
                 class: 'text-center',
                 style: 'width: 50px !important;'
@@ -75,14 +75,14 @@
                     value : 'Email',
                 },
                 key : {
-                    value : '<i class="fas fa-key"></i>',
+                    value : '<i class="fas fa-key mobile-2-desktop-1"></i>',
                     attr : {
                         class : 'text-center',
                         width : '50px'
                     }
                 },
                 delete : {
-                    value : '<i class="fas fa-trash-alt"></i>',
+                    value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
                     attr : {
                         class : 'text-center',
                         width : '50px'
