@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Registros{% endblock %}
-{% block contTitle %}Registros{% endblock %}
+{% block contTitle %}Registros{% if userEntity != null %}({{ userEntity.username }}){% endif %}{% endblock %}
 
 {% block body %}
     <div class="w-99 mx-auto">
