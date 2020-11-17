@@ -4,6 +4,9 @@
 
 {% block body %}
     {% if app.user %}
+        <div class="container card card-body round main-2">
+            Bienvenido, {{ app.user.name }}
+        </div>
         {% include "view/home/dashboard.html.twig" %}
     {% else %}
         <script>
