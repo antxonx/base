@@ -14,7 +14,7 @@
     {# . #}
     {% if allowed %}
         {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross"></i></button>' %}
-        {# impersonator #}
+        {# Developer-> #}
         {% set extra = {
             value : '',
             attr : {
@@ -38,7 +38,21 @@
                 } %}
             {% endif %}
         {% endif %}
-        {# . #}
+        {% set logger = {
+            value: '',
+            attr : {
+                class: 'd-none'
+            }
+        } %}
+        {% if is_granted("ROLE_GOD") %}
+            {% set logger = {
+                value: '<a target="_blank" class="w-100 btn btn-sm btn-outline-warning border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-bible"></i></a>',
+                attr : {
+                    class: 'text-center action-btn'
+                }
+            } %}
+        {% endif %}
+        {# <-Developer #}
         {% set role %}
             <div class="badge badge-role w-100
     {% if user.roles[0] == "ROLE_ADMIN" %}
@@ -128,7 +142,8 @@
                     }
                 },
                 trash : trashCol,
-                extra : extraCol
+                extra : extraCol,
+                logger : logger
             },
             attr : {
                 class : rowClass,

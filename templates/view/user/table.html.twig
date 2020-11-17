@@ -2,8 +2,14 @@
     {% set sort %}
         <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
     {% endset %}
-    {# impersonator #}
+    {# Developer-> #}
     {% set extra = {
+        value : '',
+        attr : {
+            class: 'd-none'
+        }
+    } %}
+    {% set logger = {
         value : '',
         attr : {
             class: 'd-none'
@@ -18,7 +24,16 @@
             }
         } %}
     {% endif %}
-    {# . #}
+    {% if is_granted("ROLE_GOD") %}
+        {% set logger = {
+            value : '<i class="fas fa-bible"></i>',
+            attr : {
+                class: 'text-center',
+                style: 'width: 50px !important;'
+            }
+        } %}
+    {% endif %}
+    {# <-Developer #}
     {# Sort column solo en desktop #}
     {% set sortClass = 'cursor-pointer sort-column' %}
     {% if isMobile %}
@@ -73,7 +88,8 @@
                         width : '50px'
                     }
                 },
-                extra : extra
+                extra : extra,
+                logger: logger
             },
             attr : {
                 class: 'table-bordered'
