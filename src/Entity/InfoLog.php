@@ -61,6 +61,11 @@ class InfoLog
     private $system;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="infoLogs")
+     */
+    private $user;
+
+    /**
      * Undocumented function
      *
      * @return integer|null
@@ -237,6 +242,18 @@ class InfoLog
     public function setSystem(?bool $system): self
     {
         $this->system = $system;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger as MonologLogger;
 use Symfony\Component\Routing\RouterInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Clase para generar registros con errores o información en base de datos
@@ -25,6 +27,13 @@ class Logger extends AbstractProcessingHandler
      * @var bool
      */
     private $initialized;
+
+    /**
+     * Usuario actual
+     *
+     * @var Security
+     */
+    protected $security;
 
     /**
      * Registro hecho por el sistema
@@ -59,10 +68,12 @@ class Logger extends AbstractProcessingHandler
      *
      * @param EntityManagerInterface $em
      * @param RouterInterface $router
+     * @param Security $security
      */
-    public function __construct(EntityManagerInterface $em, RouterInterface $router)
+    public function __construct(EntityManagerInterface $em, RouterInterface $router, Security $security)
     {
         parent::__construct();
+        $this->security = $security;
         $this->em = $em;
         $this->router = $router;
     }
@@ -133,6 +144,7 @@ class Logger extends AbstractProcessingHandler
              ->setClientip($_SERVER['REMOTE_ADDR'])
              ->setLevel($record['level_name'])
              ->setSystem($system)
+             ->setUser($this->security->getUser())
              ->setMessage($record['message']);
 
             /* ---------------------- Insertar en la base de datos ---------------------- */
