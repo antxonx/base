@@ -5,12 +5,12 @@
 
 {% block body %}
     <div class="w-99 mx-auto">
-        <div class="m-3 row">
-            <div class="col-md-2 m-1 btn-group" role="group" aria-label="log type">
+        <div class="m-2 row">
+            <div class="col-md-3 btn-group" role="group" aria-label="log type">
                 <button type="button" id="infoLogSwitch" class="btn btn-outline-success no-hover round">Info</button>
                 <button type="button" id="errorLogSwitch" class="btn btn-outline-success no-hover round">Error</button>
             </div>
-            <div class="col-md-3 m-1 search-input">
+            <div class="col-md-6 search-input">
                 <label class="sr-only" for="searchLogInput">Registro...</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -19,7 +19,7 @@
                     <input type="text" class="form-control round" id="searchLogInput" placeholder="">
                 </div>
             </div>
-            <div class="col-md-3 m-1">
+            <div class="col-md-3">
                 <select id="methodSelect" class="form-control round">
                     <option value="" selected>TODOS</option>
                     <option value="GET">GET</option>
