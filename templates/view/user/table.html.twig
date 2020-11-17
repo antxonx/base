@@ -1,4 +1,4 @@
-<table class="table table-sm table-striped2 w-100 table-hover2">
+<table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2">
     {% set sort %}
         <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
     {% endset %}
@@ -19,7 +19,7 @@
         {% set extra = {
             value : '<i class="fas fa-user-tie mobile-2-desktop-1"></i>',
             attr : {
-                class : 'text-center',
+                class : 'text-center border-right-0 border-left-0',
                 style : 'width: 50px !important;'
             }
         } %}
@@ -28,7 +28,7 @@
         {% set logger = {
             value : '<i class="fas fa-book mobile-2-desktop-1"></i>',
             attr : {
-                class: 'text-center',
+                class: 'text-center border-right-0 border-left-0',
                 style: 'width: 50px !important;'
             }
         } %}
@@ -77,23 +77,20 @@
                 key : {
                     value : '<i class="fas fa-key mobile-2-desktop-1"></i>',
                     attr : {
-                        class : 'text-center',
+                        class : 'text-center border-right-0 border-left-0',
                         width : '50px'
                     }
                 },
                 delete : {
                     value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
                     attr : {
-                        class : 'text-center',
+                        class : 'text-center border-right-0 border-left-0',
                         width : '50px'
                     }
                 },
                 extra : extra,
                 logger: logger
             },
-            attr : {
-                class: 'table-bordered'
-            }
         }
     } %}
     <tbody id="usersView"></tbody>

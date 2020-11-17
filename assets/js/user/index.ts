@@ -28,7 +28,7 @@ let ORDER_BY: SortColumn = {
  * @param {number} page
  */
 const changePage = (page: number) => {
-    MAIN_VIEW.innerHTML = BIG_LOADER_TABLE.replace("0", "7");
+    MAIN_VIEW.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
     Axios.get(`${ROUTES.user.view.list}?search=${SEARCH_INPUT}&page=${page}&suspended=${SUSPENDED}&ordercol=${ORDER_BY.column}&orderorder=${ORDER_BY.order}`)
         .then(res => {
             MAIN_VIEW.innerHTML = res.data;
