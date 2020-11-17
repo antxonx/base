@@ -109,7 +109,7 @@ export default class Modal {
                     <div id="modalBodyId">
                     </div>
                     <div class="mt-2 text-right">
-                        <button type="button" id="closeModal" class="btn btn-danger round w-100 text-center font-weight-bold hide-on-desktop" data-dismiss="modal" aria-label="Close">
+                        <button type="button" id="closeModal" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">
                             Cerrar
                         </button>
                     </div>
