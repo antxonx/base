@@ -29,6 +29,8 @@ class Util {
      */
     private $logger;
 
+    public const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     /**
      * constructor
      *
@@ -113,5 +115,20 @@ class Util {
     public function containsString(string $haystack, string $needle) : bool
     {
         return (strpos($haystack, $needle) !== false);
+    }
+
+    /**
+     * @param int $size
+     * @param string $identifier
+     * @return string
+     */
+    public function generateRandomString(int $size, string $identifier = "")
+    {
+        $charsetSize = strlen(self::CHARSET);
+        $result = "";
+        for($i = 0; $i < $size; $i++){
+            $result .= self::CHARSET[rand(0, $charsetSize - 1)];
+        }
+        return ($result . $identifier);
     }
 }

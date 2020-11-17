@@ -376,7 +376,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Eliminar a un usuario
+     * Eliminar/Suspender a un usuario
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      *
@@ -390,11 +390,45 @@ class UserController extends AbstractController
             if ($user->hasRole("ROLE_GOD")) {
                 throw new Exception("No se puede eliminar a Dios");
             } else {
-                $user->setSuspended(true);
+                $user->setSuspended(true)
+                    ->setPassword(
+                        $this->passwordEncoder->encodePassword(
+                            $user,
+                            $this->util->generateRandomString(10)
+                        )
+                    );
             }
             $this->rep->update();
             $this->util->info("Se ha suspendido al usuario {$id}");
             return new Response("Usuario suspendido");
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Cambiar contraseña de usuario suspendido
+     * @Route("/reSuspend/{id}", name="user_resuspend", methods={"POST"})
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function changeSuspendedPassword(int $id)
+    {
+        try {
+            $user = $this->rep->find($id);
+            if(!$user->getSuspended()){
+                throw new Exception("Este usuario no ha sido suspendido.");
+            }
+            $user->setPassword(
+                    $this->passwordEncoder->encodePassword(
+                        $user,
+                        $this->util->generateRandomString(10)
+                    )
+                );
+            $this->rep->update();
+            $this->util->info("Se ha <b>re</b>-suspendido al usuario {$id}");
+            return new Response("ok");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
