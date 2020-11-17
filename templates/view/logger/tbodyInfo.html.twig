@@ -60,7 +60,7 @@
             }
         },
         attr : {
-            class : 'infolog-row cursor-pointer table-bordered ' ~ rowClass|trim,
+            class : 'infolog-row cursor-pointer ' ~ rowClass|trim,
             id: entity.id,
             href: '#info-' ~ entity.id,
             'data-toggle': 'collapse',
@@ -78,10 +78,13 @@
                     value : infoFull,
                     attr : {
                         colspan : 8,
-                        class : "p-0 table-paginator"
+                        class : "p-0"
                     }
                 }
             },
+            attr: {
+                class: "table-paginator"
+            }
         }
     } %}
 {% endfor %}

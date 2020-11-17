@@ -74,7 +74,7 @@ badge-pill">{{ entity.method }}</span>
             }
         },
         attr : {
-            class : 'errorlog-row cursor-pointer table-bordered ' ~ rowClass|trim,
+            class : 'errorlog-row cursor-pointer ' ~ rowClass|trim,
             id: entity.id,
             href: '#error-' ~ entity.id,
             'data-toggle': 'collapse',
@@ -92,11 +92,14 @@ badge-pill">{{ entity.method }}</span>
                     value : errorFull,
                     attr : {
                         colspan : 8,
-                        class : "p-0 table-paginator",
+                        class : "p-0",
                         style: 'min-height: 1px;'
                     }
                 }
             },
+            attr : {
+                class: "table-paginator"
+            }
         }
     } %}
 {% endfor %}
