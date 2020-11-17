@@ -70,24 +70,6 @@ class LoggerController extends AbstractController
     }
 
     /**
-     * Index
-     * @Route("", name="logger_index", methods={"GET"})
-     * @IsGranted("ROLE_GOD")
-     *
-     * @return Response
-     */
-    public function index(): Response
-    {
-        try {
-            return $this->render('view/logger/index.html.twig', [
-                'controller_name' => 'LoggerController',
-            ]);
-        } catch (Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
-    /**
      * Conseguir todos los registros de información
      * @Route("/info", name="logger_info_list", methods={"GET"})
      * @IsGranted("ROLE_GOD")
@@ -135,6 +117,25 @@ class LoggerController extends AbstractController
                 'maxPages' => $maxPages,
                 'thisPage' => ((isset($params->page)) ? $params->page : 1),
                 'showed' => (($showed > $entities->count()) ? $entities->count() : $showed),
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Index
+     * @Route("/{user}", name="logger_index", methods={"GET"})
+     * @IsGranted("ROLE_GOD")
+     *
+     * @param int $user
+     * @return Response
+     */
+    public function index(int $user = 0): Response
+    {
+        try {
+            return $this->render('view/logger/index.html.twig', [
+                'user' => $user
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

@@ -219,7 +219,7 @@ class ClientController extends AbstractController
             $client->updated($this->actualUser);
             $this->caRep->add($address);
             $this->cRep->update();
-            $this->util->info("Se ha agregado la dirección al cliente {$content->id}");
+            $this->util->info("Se ha agregado la dirección al cliente <b>{$content->id}</b>(<em>{$client->getName()}</em>)");
             return new Response("Se ha agregado la dirección al cliente");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -273,7 +273,7 @@ class ClientController extends AbstractController
             $address->getClient()->updated($this->actualUser);
             $this->caRep->update();
             $this->cRep->update();
-            $this->util->info($message . " de la dirección {$id}");
+            $this->util->info($message . " de la dirección del cliente <b>{$address->getClient()->getId()}</b>(<em>{$address->getClient()->getName()}</em>)");
             return new Response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -311,7 +311,7 @@ class ClientController extends AbstractController
             $client->updated($this->actualUser);
             $this->ceRep->add($extra);
             $this->cRep->update();
-            $this->util->info("Se ha agregado un nuevo ${type} al cliente {$id}");
+            $this->util->info("Se ha agregado un nuevo ${type}(<em>{$content->value}</em>) al cliente <b>{$id}</b>(<em>{$client->getName()}</em>)");
             return new Response("Se ha agregado un nuevo ${type} al cliente");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -330,9 +330,10 @@ class ClientController extends AbstractController
     {
         try {
             $extra = $this->ceRep->find($id);
+            $value = $extra->getValue();
             $this->ceRep->delete($extra);
             $extra->getClient()->updated($this->actualUser);
-            $this->util->info("Se ha eliminado el dato extra {$id} del cliente {$extra->getClient()->getId()}");
+            $this->util->info("Se ha eliminado el dato extra <b><em>{$value}</em></b> del cliente <b>{$extra->getClient()->getId()}</b>(<em>{$extra->getClient()->getName()}</em>)");
             return new Response("Se ha eliminado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -410,7 +411,7 @@ class ClientController extends AbstractController
             $this->coeRep->add($contactExtra);
             $this->coeRep->add($contactExtra2);
             $this->cRep->update();
-            $this->util->info("Se ha agregado al contacto {$contact->getId()} para el cliente {$id}");
+            $this->util->info("Se ha agregado al contacto <b>{$contact->getId()}</b>(<em>{$contact->getName()}</em>) para el cliente <b>{$id}</b>(<em>{$contact->getClient()->getName()}</em>)");
             return new Response("Contacto agregado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -472,17 +473,17 @@ class ClientController extends AbstractController
             if ($editable->name == "contactPhone") {
                 $contactExtra = $this->coeRep->find($editable->pk);
                 $contactExtra->setValue($editable->value);
-                $message .= " el teléfono";
+                $message .= " un teléfono";
             }
             if ($editable->name == "contactPhoneLevel") {
                 $contactExtra = $this->coeRep->find($editable->pk);
                 $contactExtra->setLevel($editable->value);
-                $message .= " el teléfono";
+                $message .= " un teléfono";
             }
             $contact->updated($this->actualUser);
             $this->coRep->update();
             $this->coeRep->update();
-            $this->util->info($message . " del contacto {$id} del cliente {$contact->getClient()->getId()}");
+            $this->util->info($message . " del contacto <b>{$id}</b>(<em>{$contact->getName()}</em>) del cliente <b>{$contact->getClient()->getId()}</b>(<em>{$contact->getClient()->getName()}</em>)");
             return new response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -505,7 +506,7 @@ class ClientController extends AbstractController
                 ->updated($this->actualUser);
             $this->cRep->find($contact->getClient())->updated($this->actualUser);
             $this->coRep->update();
-            $this->util->info("Se ha suspendido el contacto {$id}");
+            $this->util->info("Se ha suspendido el contacto <b>{$id}</b>(<em>{$contact->getClient()->getName()}</em>)");
             return new Response("Contacto eliminado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -541,7 +542,7 @@ class ClientController extends AbstractController
             $this->coRep->find($id)->updated($this->actualUser);
             $this->coeRep->add($extra);
             $this->coRep->update();
-            $this->util->info("Se ha agregado un nuevo ${type} al contacto {$id}");
+            $this->util->info("Se ha agregado un nuevo {$type}(<em>{$content->value}</em>) al contacto <b>{$id}</b>(<em>{$extra->getContact()->getName()}</em>)");
             return new Response("Se ha agregado un nuevo ${type} al contacto");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -561,9 +562,10 @@ class ClientController extends AbstractController
         try {
             $extra = $this->coeRep->find($id);
             $this->coeRep->delete($extra);
+            $value = $extra->getValue();
             $extra->getContact()->updated($this->actualUser);
             $this->coRep->update();
-            $this->util->info("Se ha eliminado el dato extra {$id} del contacto {$extra->getContact()->getId()}");
+            $this->util->info("Se ha eliminado el dato <b>$value</b> del contacto <b>{$extra->getContact()->getId()}</b>(<em>{$extra->getContact()->getName()}</em>)");
             return new Response("Se ha eliminado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -615,7 +617,7 @@ class ClientController extends AbstractController
             $this->cRep->add($client);
             $this->ceRep->add($clientExtra);
             $this->ceRep->add($clientExtra2);
-            $this->util->info("Se ha agregado al cliente {$client->getId()}");
+            $this->util->info("Se ha agregado al cliente <b>{$client->getId()}</b>(<em>{$client->getName()}</em>)");
             return new Response("Cliente agregado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -633,11 +635,12 @@ class ClientController extends AbstractController
     public function delete(int $id): Response
     {
         try {
-            ($this->cRep->find($id))
+            $client = $this->cRep->find($id);
+            $client
                 ->setSuspended(true)
                 ->updated($this->actualUser);
             $this->cRep->update();
-            $this->util->info("Se ha suspendido el cliente {$id}");
+            $this->util->info("Se ha suspendido el cliente <b>{$id}</b>(<em>{$client->getName()}</em>)");
             return new Response("Cliente eliminado");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -697,17 +700,17 @@ class ClientController extends AbstractController
             if ($editable->name == "clientPhone") {
                 $clientExtra = $this->ceRep->find($editable->pk);
                 $clientExtra->setValue($editable->value);
-                $message .= " el teléfono";
+                $message .= " un teléfono";
             }
             if ($editable->name == "clientPhoneLevel") {
                 $clientExtra = $this->ceRep->find($editable->pk);
                 $clientExtra->setLevel($editable->value);
-                $message .= " el teléfono";
+                $message .= " un teléfono";
             }
             $client->updated($this->actualUser);
             $this->cRep->update();
             $this->ceRep->update();
-            $this->util->info($message . " del cliente {$id}");
+            $this->util->info($message . " del cliente <b>{$id}</b>(<em>{$client->getName()}</em>)");
             return new response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
