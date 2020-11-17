@@ -28,7 +28,12 @@
 {# . #}
 {% if app.user and app.user.suspended %}
     <script>
-        window.location.href = "{{ path('app_logout') }}";
+        fetch('{{ path('user_resuspend', {'id' : app.user.id}) }}', {
+            method: 'POST'
+        })
+        .finally(() => {
+            window.location.href = "{{ path('app_logout') }}";
+        })
     </script>
 {% else %}
     {% include "navbar.html.twig" %}
