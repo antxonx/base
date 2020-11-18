@@ -54,15 +54,15 @@
         {% endif %}
         {# <-Developer #}
         {% set role %}
-            <div class="badge badge-role w-100
+            <div class="badge w-100
     {% if user.roles[0] == "ROLE_ADMIN" %}
-    badge-primary
+    table-primary
     {% elseif user.roles[0] == "ROLE_TEST" %}
-    badge-secondary
+    table-secondary
     {% else %}
     d-none
     {% endif %}
-    badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length))|lower }}</div>
+    badge-pill">{{ (user.roles[0]|slice(5, user.roles[0]|length)) }}</div>
         {% endset %}
         {# suspneder o reactivar #}
         {% set trashSusp %}
