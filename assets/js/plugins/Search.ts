@@ -8,6 +8,7 @@ let timer :  NodeJS.Timeout | undefined;
  */
 export const initialize = (componentSelector: string, callback: (data: string) => void) => {
     const COMPONENT = document.querySelector(componentSelector) as HTMLInputElement;
+    const ERASE_COMPS = COMPONENT.closest('.search-input')!.getElementsByClassName('erase-search');
     COMPONENT.addEventListener("input", () => {
         if(timer != undefined){
             clearTimeout(timer);
@@ -18,4 +19,11 @@ export const initialize = (componentSelector: string, callback: (data: string) =
             callback(DATA);
         }, 500);
     });
+    if(ERASE_COMPS && ERASE_COMPS.length > 0) {
+        ERASE_COMPS[0].addEventListener('click', () => {
+            COMPONENT.value = "";
+            callback("");
+        })
+    }
+
 };
