@@ -14,11 +14,19 @@
     {# . #}
     {% if allowed %}
         {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross mobile-2-desktop-1"></i></button>' %}
+        {% set divineKey = '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-cross mobile-2-desktop-1"></i></button>' %}
+        {% set divineLog = '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-cross mobile-2-desktop-1"></i></a>' %}
         {# Developer-> #}
         {% set extra = {
             value : '',
             attr : {
                 class: 'd-none'
+            }
+        } %}
+        {% set keyCol = {
+            value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
+            attr : {
+                class : 'action-btn border-0'
             }
         } %}
         {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
@@ -93,6 +101,18 @@
                     class : 'action-btn border-0'
                 },
             } %}
+            {% set keyCol = {
+                value: divineKey,
+                attr : {
+                    class: 'text-center action-btn border-0'
+                }
+            } %}
+            {% set logger = {
+                value: divineLog,
+                attr : {
+                    class: 'text-center action-btn border-0'
+                }
+            } %}
         {% else %}
             {% set trashCol =  {
                 value : trashSusp,
@@ -135,15 +155,10 @@
                         class : 'user-edit cursor-pointer'
                     }
                 },
-                key : {
-                    value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
-                    attr : {
-                        class : 'action-btn border-0'
-                    }
-                },
-                trash : trashCol,
+                key : keyCol,
                 extra : extraCol,
-                logger : logger
+                logger : logger,
+                trash : trashCol
             },
             attr : {
                 class : rowClass,
