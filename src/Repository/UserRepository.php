@@ -78,6 +78,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $searchCriteria = new Criteria();
             $searchCriteria->where(Criteria::expr()->contains("p.username", $params->search));
             $searchCriteria->orWhere(Criteria::expr()->contains("p.mail", $params->search));
+            $searchCriteria->orWhere(Criteria::expr()->contains("p.name", $params->search));
             $query->addCriteria($searchCriteria);
         }
         $query->getQuery();
