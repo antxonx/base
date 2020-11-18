@@ -3,9 +3,9 @@
     {# suspneder o reactivar #}
     {% set trashSusp %}
         {% if client.suspended %}
-            <button class="btn btn-sm btn-outline-dark border-0 w-100 client-reactivate"><i class="fas fa-redo-alt"></i></button>
+            <button class="btn btn-sm btn-outline-dark border-0 w-100 client-reactivate mobile-2-desktop-1"><i class="fas fa-redo-alt"></i></button>
         {% else %}
-            <button class="btn btn-sm btn-outline-dark border-0 w-100 client-delete"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-sm btn-outline-dark border-0 w-100 client-delete mobile-2-desktop-1"><i class="fas fa-trash-alt"></i></button>
         {% endif %}
     {% endset %}
     {# . #}
@@ -14,7 +14,7 @@
             id : {
                 value : client.id,
                 attr : {
-                    class : 'client-show cursor-pointer',
+                    class : 'client-show cursor-pointer text-right',
                 }
             },
             name : {
@@ -24,16 +24,10 @@
                 }
             },
             phone : {
-                value : client.getClientExtras(2)[0].value,
-                attr : {
-                    class : 'client-show cursor-pointer'
-                }
+                value : '<a class="btn btn-sm w-100 round alert-info text-center" href="tel:' ~ client.getClientExtras(2)[0].value ~ '">' ~ client.getClientExtras(2)[0].value ~ '</a>',
             },
             email : {
-                value : client.getClientExtras(1)[0].value,
-                attr : {
-                    class : 'client-show cursor-pointer'
-                }
+                value : '<a class="btn btn-sm w-100 round alert-info text-center" href="mailto:' ~ client.getClientExtras(1)[0].value ~ '">' ~ client.getClientExtras(1)[0].value ~ '</a>',
             },
             trash : {
                 value : trashSusp,
@@ -43,7 +37,7 @@
             }
         },
         attr : {
-            class : 'client-row table-bordered',
+            class : 'client-row',
             id: client.id,
             name: client.name
         }

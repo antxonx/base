@@ -16,6 +16,7 @@ $info-color: #17a2b8
 
 .material-icons-outlined, .material-icons
   vertical-align: middle !important
+
   &.s-2
     font-size: 2rem !important
 
@@ -52,12 +53,6 @@ $info-color: #17a2b8
 .board
   overflow-x: auto
   height: 350px !important
-
-.table-paginator
-  background-color: white !important
-
-  &:hover
-    background-color: white !important
 
 .plus-btn
   width: 21px
@@ -208,6 +203,7 @@ b, h5
     tr
       &:nth-child(odd)
         background-color: #e6e6fa57
+
         th, td
           border-left-color: #e6e6fa
           border-right-color: #e6e6fa
@@ -216,9 +212,58 @@ b, h5
   tbody
     tr
       transition: background-color 300ms ease-in
+
       &:hover
         background-color: #e6e6fa
         transition: background-color 300ms ease-out
+
         td, th
           border-left-color: #DCD0FF
           border-right-color: #DCD0FF
+
+.table-bordered2
+  thead
+    tr
+      border: none !important
+
+      th, td
+        border-top: none !important
+        border-left: 1px solid #dee2e6
+        border-right: 1px solid #dee2e6
+        border-bottom: 1px solid #dee2e6
+
+        &:first-child
+          border-left: none !important
+
+        &:last-child
+          border-right: none !important
+
+  tbody
+    tr
+      border: none !important
+
+      th, td
+        border-top: none !important
+        border-left: 1px solid #dee2e6
+        border-right: 1px solid #dee2e6
+        border-bottom: none !important
+
+        &:first-child
+          border-left: none !important
+
+        &:last-child
+          border-right: none !important
+
+
+.mobile-2-desktop-1
+  font-size: 1rem
+
+.table
+  thead
+    font-style: italic
+
+.erase-search
+  position: absolute
+  top: 6px
+  right: 30px
+  z-index: 10

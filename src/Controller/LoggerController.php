@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +35,13 @@ class LoggerController extends AbstractController
     /**
      * Repositorio de usuarios
      *
+     * @var UserRepository
+     */
+    protected $uRep;
+
+    /**
+     * Repositorio de usuarios
+     *
      * @var InfoLogRepository
      */
     protected $iRep;
@@ -58,14 +66,16 @@ class LoggerController extends AbstractController
      *
      * @param ErrorLogRepository $eRep
      * @param InfoLogRepository $iRep
+     * @param UserRepository $uRep
      * @param Util $util
      * @param Security $security
      */
-    public function __construct(ErrorLogRepository $eRep, InfoLogRepository $iRep, Util $util, Security $security)
+    public function __construct(ErrorLogRepository $eRep, InfoLogRepository $iRep, UserRepository $uRep, Util $util, Security $security)
     {
         $this->util = $util;
         $this->eRep = $eRep;
         $this->iRep = $iRep;
+        $this->uRep = $uRep;
         $this->actualUser = $security->getUser();
     }
 
@@ -134,8 +144,13 @@ class LoggerController extends AbstractController
     public function index(int $user = 0): Response
     {
         try {
+            $userEntity = null;
+            if($user > 0){
+                $userEntity = $this->uRep->find($user);
+            }
             return $this->render('view/logger/index.html.twig', [
-                'user' => $user
+                'user' => $user,
+                'userEntity' => $userEntity
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

@@ -1,4 +1,4 @@
-<table class="table table-sm table-striped2 w-100 table-hover2">
+<table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2">
     {% set sort %}
         <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
     {% endset %}
@@ -27,22 +27,25 @@
                     }
                 },
                 phone : {
-                    value : 'Teléfono'
+                    value : 'Teléfono',
+                    attr : {
+                        style: 'width: 1px;'
+                    }
                 },
                 email : {
-                    value : 'Correo'
+                    value : 'Correo',
+                    attr : {
+                        style: 'width: 1px;'
+                    }
                 },
                 delete : {
-                    value : '<i class="fas fa-trash-alt"></i>',
+                    value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
                     attr : {
                         class : 'text-center',
                         width : '50px'
                     }
                 },
             },
-            attr : {
-                class: 'table-bordered'
-            }
         }
     } %}
     <tbody id="clientsView"></tbody>

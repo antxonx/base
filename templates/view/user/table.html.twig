@@ -1,4 +1,4 @@
-<table class="table table-sm table-striped2 w-100 table-hover2">
+<table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2">
     {% set sort %}
         <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
     {% endset %}
@@ -17,18 +17,18 @@
     } %}
     {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
         {% set extra = {
-            value : '<i class="fas fa-user-tie"></i>',
+            value : '<i class="fas fa-user-tie mobile-2-desktop-1"></i>',
             attr : {
-                class : 'text-center',
+                class : 'text-center border-right-0 border-left-0',
                 style : 'width: 50px !important;'
             }
         } %}
     {% endif %}
     {% if is_granted("ROLE_GOD") %}
         {% set logger = {
-            value : '<i class="fas fa-book"></i>',
+            value : '<i class="fas fa-book mobile-2-desktop-1"></i>',
             attr : {
-                class: 'text-center',
+                class: 'text-center border-right-0 border-left-0',
                 style: 'width: 50px !important;'
             }
         } %}
@@ -75,25 +75,22 @@
                     value : 'Email',
                 },
                 key : {
-                    value : '<i class="fas fa-key"></i>',
+                    value : '<i class="fas fa-key mobile-2-desktop-1"></i>',
                     attr : {
-                        class : 'text-center',
+                        class : 'text-center border-right-0 border-left-0',
                         width : '50px'
                     }
                 },
                 delete : {
-                    value : '<i class="fas fa-trash-alt"></i>',
+                    value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
                     attr : {
-                        class : 'text-center',
+                        class : 'text-center border-right-0 border-left-0',
                         width : '50px'
                     }
                 },
                 extra : extra,
                 logger: logger
             },
-            attr : {
-                class: 'table-bordered'
-            }
         }
     } %}
     <tbody id="usersView"></tbody>

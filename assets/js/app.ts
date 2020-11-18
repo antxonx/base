@@ -72,5 +72,5 @@ export const ROUTES = {
 };
 
 export const BIG_LOADER = '<div class="loader"></div>';
-export const BIG_LOADER_TABLE = '<td colspan="0" class="table-paginator"><div class="loader"></div></td>';
+export const BIG_LOADER_TABLE = '<tr class="table-paginator"><td colspan="0"><div class="loader"></div></td></tr>';
 export const SPINNER_LOADER = '<div class="w-100 d-flex justify-content-center"><div class="spinner"></div></div>';
