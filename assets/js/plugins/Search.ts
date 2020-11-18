@@ -21,8 +21,10 @@ export const initialize = (componentSelector: string, callback: (data: string) =
     });
     if(ERASE_COMPS && ERASE_COMPS.length > 0) {
         ERASE_COMPS[0].addEventListener('click', () => {
-            COMPONENT.value = "";
-            callback("");
+            if(COMPONENT.value !== ""){
+                COMPONENT.value = "";
+                callback("");
+            }
         })
     }
 
