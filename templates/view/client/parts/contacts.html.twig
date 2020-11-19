@@ -14,25 +14,27 @@
                         name : {
                             value : contact.name,
                             attr : {
-                                class : 'font-weight-normal cursor-pointer contact-show text-center'
+                                class : 'font-weight-normal cursor-pointer contact-show text-center text-nowrap'
                             }
                         },
                         role : {
-                            value : contact.role,
+                            value : '<em>' ~ contact.role ~ '</em>',
                             attr : {
-                                class : 'cursor-pointer contact-show text-center'
+                                class : 'text-center'
                             }
                         },
                         phone : {
-                            value : '<a href="tel:' ~ contact.getContactExtras(2)[0].value ~ '">' ~ contact.getContactExtras(2)[0].value ~ '</a>',
+                            value : '<a class="btn btn-sm w-100 alert-info round" href="tel:' ~ contact.getContactExtras(2)[0].value ~ '">' ~ contact.getContactExtras(2)[0].value ~ '</a>',
                             attr : {
-                                class : 'text-center'
+                                class : 'text-center',
+                                style: 'width: 1px;'
                             }
                         },
                         email : {
-                            value : '<a href="mailto:' ~ contact.getContactExtras(1)[0].value ~ '">' ~ contact.getContactExtras(1)[0].value ~ '</a>',
+                            value : '<a class="btn btn-sm w-100 alert-info round" href="mailto:' ~ contact.getContactExtras(1)[0].value ~ '">' ~ contact.getContactExtras(1)[0].value ~ '</a>',
                             attr : {
-                                class : 'text-center'
+                                class : 'text-center',
+                                style: 'width: 1px;'
                             }
                         },
                         trash : {
