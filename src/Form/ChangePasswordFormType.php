@@ -42,16 +42,16 @@ class ChangePasswordFormType extends AbstractType
                             'max' => 4096,
                         ]),
                     ],
-                    'label' => ' ',
+                    'label' => false,
                     'attr' => [
                         'class' => 'form-control round',
                         'placeholder' => 'Nueva contraseña'
                     ]
                 ],
                 'second_options' => [
-                    'label' => ' ',
+                    'label' => false,
                     'attr' => [
-                        'class' => 'form-control round',
+                        'class' => 'form-control round mt-4',
                         'placeholder' => 'Confirmar contraseña'
                     ]
                 ],
