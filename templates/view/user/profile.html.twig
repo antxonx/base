@@ -9,12 +9,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <b>Usuario:</b> <br>
+                        <b class="field-title">Usuario:</b> <br>
                         <a class="editable-field" href="#" data-name="username" data-type="text"
                            data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
                            data-title="Ingresa el usuario">{{ app.user.username }}</a> <br>
-                        <b>Correo:</b> <br>
+                        <b class="field-title">Correo:</b> <br>
                         <a class="editable-field" href="#" data-name="email" data-type="text"
                            data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
@@ -22,11 +22,11 @@
 
                     </div>
                     <div class="col-md-6 border-left">
-                        <b>Nombre:</b> <br>
+                        <b class="field-title">Nombre:</b> <br>
                         <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}"
                            data-url="{{ path('user_update') }}"
                            data-title="Ingresa el nombre">{{ app.user.name }}</a> <br>
-                        <b>roles:</b> <br>
+                        <b class="field-title">roles:</b> <br>
                         {% for role in app.user.roles %}
                             {% if role != "ROLE_USER" %}
                                 <span class="badge badge-info badge-pill">{{ role|slice(5, role|length) }}</span>
