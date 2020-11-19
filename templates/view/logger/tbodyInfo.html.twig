@@ -2,21 +2,20 @@
 {% for entity in entities %}
     {# tipo de petición #}
     {% set badge %}
-        <span class="badge badge-role w-100
+        <span class="btn btn-sm2 w-100
         {% if entity.method == "GET" %}
-        table-success
+        alert-success
         {% elseif entity.method == "POST" %}
-        table-primary
+        alert-primary
         {% elseif entity.method == "PUT" %}
-        table-warning
+        alert-warning
         {% elseif entity.method == "PATCH" %}
-        table-warning
+        alert-warning
         {% elseif entity.method == "DELETE" %}
-        table-danger
+        alert-danger
         {% else %}
-        d-none
-        {% endif %}
-        badge-pill">{{ entity.method }}</span>
+        alert-light
+        {% endif %}">{{ entity.method }}</span>
     {% endset %}
     {# . #}
     {# Info completa #}
@@ -25,9 +24,11 @@
     {% endset %}
     {# . #}
     {# verificar si es de sistema #}
-    {% set rowClass %}
+    {% set dateClass %}
         {% if entity.system %}
-            table-info
+            alert-info
+        {% else %}
+            alert-light
         {% endif %}
     {% endset %}
     {# . #}
@@ -47,7 +48,7 @@
                 }
             },
             creation : {
-                value : entity.createdAt|format_datetime("medium", "short", locale="es"),
+                value : '<span class="btn btn-sm2 w-100 ' ~ dateClass|trim ~ '">' ~ entity.createdAt|format_datetime("medium", "short", locale="es") ~ '</span>',
                 attr : {
                     class : 'text-nowrap'
                 }
@@ -69,7 +70,7 @@
             }
         },
         attr : {
-            class : 'infolog-row cursor-pointer ' ~ rowClass|trim,
+            class : 'infolog-row cursor-pointer',
             id: entity.id,
             href: '#info-' ~ entity.id,
             'data-toggle': 'collapse',
