@@ -14,8 +14,6 @@
     {# . #}
     {% if allowed %}
         {% set divine = '<button class="w-100 btn btn-sm cursor-normal"><i class="fas fa-cross mobile-2-desktop-1"></i></button>' %}
-        {% set divineKey = '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-cross mobile-2-desktop-1"></i></button>' %}
-        {% set divineLog = '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-cross mobile-2-desktop-1"></i></a>' %}
         {# Developer-> #}
         {% set extra = {
             value : '',
@@ -24,7 +22,7 @@
             }
         } %}
         {% set keyCol = {
-            value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
+            value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password round"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
             attr : {
                 class : 'action-btn border-0'
             }
@@ -39,7 +37,7 @@
                 } %}
             {% else %}
                 {% set extra = {
-                    value : '<a class="w-100 btn btn-sm btn-outline-info border-0" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie mobile-2-desktop-1"></i></a>',
+                    value : '<a class="w-100 btn btn-sm btn-outline-info border-0 round" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie mobile-2-desktop-1"></i></a>',
                     attr : {
                         class : 'action-btn border-0'
                     }
@@ -54,7 +52,7 @@
         } %}
         {% if is_granted("ROLE_GOD") %}
             {% set logger = {
-                value: '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-book mobile-2-desktop-1"></i></a>',
+                value: '<a target="_blank" class="w-100 btn btn-sm btn-outline-secondary border-0 round" href="' ~ path("logger_index", {'user' : user.id}) ~ '"><i class="fas fa-book mobile-2-desktop-1"></i></a>',
                 attr : {
                     class: 'text-center action-btn border-0'
                 }
@@ -74,11 +72,11 @@
         {# suspneder o reactivar #}
         {% set trashSusp %}
             {% if user.suspended %}
-                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate"><i
+                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-reactivate round"><i
                             class="fas fa-redo-alt mobile-2-desktop-1"></i>
                 </button>
             {% else %}
-                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete"><i
+                <button class="btn btn-sm btn-outline-dark border-0 w-100 user-delete round"><i
                             class="fas fa-trash-alt mobile-2-desktop-1"></i>
                 </button>
             {% endif %}
@@ -99,18 +97,6 @@
                 attr : {
                     class : 'action-btn border-0'
                 },
-            } %}
-            {% set keyCol = {
-                value: divineKey,
-                attr : {
-                    class: 'text-center action-btn border-0'
-                }
-            } %}
-            {% set logger = {
-                value: divineLog,
-                attr : {
-                    class: 'text-center action-btn border-0'
-                }
             } %}
         {% else %}
             {% set trashCol =  {
@@ -155,8 +141,8 @@
                     }
                 },
                 key : keyCol,
-                extra : extraCol,
                 logger : logger,
+                extra : extraCol,
                 trash : trashCol
             },
             attr : {
