@@ -1,4 +1,4 @@
-<table class="table table-sm w-100 table-hover2 table-bordered2">
+<table class="table fixed table-sm w-100 table-hover2 table-bordered2 table-striped2-4">
     {% set sort %}
         <span class="float-right sort-icon"><i class="fas fa-sort"></i></span>
     {% endset %}
@@ -10,27 +10,34 @@
                     attr: {
                         class: 'cursor-pointer sort-column',
                         column: 'id',
-                        style: 'width: 120px !important;'
+                        style: 'width: 7%;'
                     }
                 },
                 creation : {
                     value : 'Creación' ~ sort,
                     attr : {
                         class: 'cursor-pointer sort-column',
-                        column: 'createdAt'
+                        column: 'createdAt',
+                        style: 'width: 12%;'
                     }
-                },
-                route : {
-                    value : 'Ruta'
                 },
                 method : {
                     value : 'Método',
                     attr: {
-                        style: 'width: 150px !important;'
+                        style: 'width: 6%;'
+                    }
+                },
+                route : {
+                    value : 'Ruta',
+                    attr : {
+                        style: 'width: 25%;'
                     }
                 },
                 message : {
-                    value : 'Mensaje'
+                    value : 'Mensaje',
+                    attr : {
+                        style: 'width: 50%;'
+                    }
                 },
             }
         }

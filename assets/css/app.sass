@@ -208,6 +208,16 @@ b, h5
           border-left-color: #e6e6fa
           border-right-color: #e6e6fa
 
+.table-striped2-4
+  tbody
+    tr
+      &:nth-child(4n+1)
+        background-color: #e6e6fa57
+
+        th, td
+          border-left-color: #e6e6fa
+          border-right-color: #e6e6fa
+
 .table-hover2
   tbody
     tr
@@ -259,15 +269,25 @@ b, h5
   font-size: 1rem
 
 .table
+  &.fixed
+    table-layout: fixed
   thead
     font-style: italic
   tbody
     tr
       th, td
         vertical-align: middle !important
+        padding-left: 0.5rem
+        padding-right: 0.5rem
 
 .erase-search
   position: absolute
   top: 6px
   right: 30px
   z-index: 10
+
+.btn-sm2
+  padding: 0 1rem
+  font-size: 0.875rem
+  line-height: 1.5
+  border-radius: 1.25rem

@@ -33,9 +33,6 @@
         {% include "view/logger/table.html.twig" %}
     </div>
     <input type="hidden" id="registerUser" value="{{ user }}">
-    <div class="text-left ml-3">
-        <small class="text-muted"><em>*Si tienen color son registros de sistema, no de usuario.</em></small>
-    </div>
 {% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('logger') }}
