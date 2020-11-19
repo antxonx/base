@@ -24,7 +24,7 @@
     <b class="field-title">Teléfono</b>
     {% for phone in contact.getContactExtras(TYPE_PHONE) %}
         {# Teléfono #}
-        <p class="m-0 border-bottom phone-container row" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
+        <p class="m-0 phone-container row" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
 
             {# Tipo de teléfono #}
             <a class="editable-field font-weight-bold col-md-2" href="#" data-name="contactPhoneLevel"
@@ -45,7 +45,7 @@
             {% if not loop.first %}
                 {# Eliminar #}
                 <span class="col-md-1 text-right p-0">
-                <button class="btn btn-sm btn-outline-danger border-0 trash-btn trash-phone float-right" style="display: none;"><i
+                <button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-phone float-right" style="display: none;"><i
                             class="fas fa-trash-alt"></i></button>
             </span>
                 {# . #}
@@ -61,15 +61,19 @@
     <b class="field-title">Correo</b>
     {% for email in contact.getContactExtras(TYPE_MAIL) %}
         {# Correo #}
-        <p class="m-0 border-bottom email-container" email-id="{{ email.id }}" email-email="{{ email.value }}">
-            <a class="editable-field editable-clickable" href="mailto:{{ email.value }}" data-name="contactEmail"
-               data-type="text" data-pk="{{ email.id }}"
-               data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
-               data-title="Ingresa el correo">{{ email.value }}</a>
+        <p class="m-0 email-container row" email-id="{{ email.id }}" email-email="{{ email.value }}">
+            <span class="col-md-11">
+                <a class="editable-field editable-clickable" href="mailto:{{ email.value }}" data-name="contactEmail"
+                   data-type="text" data-pk="{{ email.id }}"
+                   data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
+                   data-title="Ingresa el correo">{{ email.value }}</a>
+            </span>
             {% if not loop.first %}
                 {# Eliminar #}
-                <button class="btn btn-sm btn-outline-danger border-0 trash-btn trash-email float-right" style="display: none;"><i
-                            class="fas fa-trash-alt"></i></button>
+                <span class="col-md-1 text-right p-0">
+                    <button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-email float-right" style="display: none;"><i
+                                class="fas fa-trash-alt"></i></button>
+                </span>
                 {# . #}
             {% endif %}
         </p>
