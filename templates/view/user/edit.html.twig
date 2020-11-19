@@ -23,6 +23,7 @@
             </p>
             {% if "ROLE_GOD" in user.roles %}
             {% else %}
+                {% if user.id != app.user.id %}
                 <p class="editable-container">
                     {% set roles = "" %}
                     {% for userrole in user.roles %}
@@ -44,6 +45,14 @@
                        data-source="{{ rolesToSelect|json_encode() }}" data-value="{{ roles }}">
                     </a>
                 </p>
+                {% else %}
+                    <b class="field-title">Puesto</b> <br>
+                    {% for role in user.roles %}
+                        {% if role != "ROLE_USER" %}
+                            <span class="btn btn-sm2 alert-info cursor-normal">{{ role|slice(5, role|length) }}</span>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </div>

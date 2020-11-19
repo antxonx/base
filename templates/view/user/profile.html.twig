@@ -29,7 +29,7 @@
                         <b class="field-title">roles:</b> <br>
                         {% for role in app.user.roles %}
                             {% if role != "ROLE_USER" %}
-                                <span class="badge badge-info badge-pill">{{ role|slice(5, role|length) }}</span>
+                                <span class="btn btn-sm2 alert-info cursor-normal">{{ role|slice(5, role|length) }}</span>
                             {% endif %}
                         {% endfor %} <br>
                     </div>
