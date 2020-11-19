@@ -115,7 +115,7 @@ const reactivateAction = (e: Event) => {
  * @param {Event} e
  */
 const changePassAction = (e: Event) => {
-    openKeyModal(+(e.currentTarget as HTMLElement).closest(".user-row")!.getAttribute("id")!);
+    openKeyModal((e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement);
 };
 
 /**
