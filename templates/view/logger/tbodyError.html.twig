@@ -56,12 +56,15 @@ badge-pill">{{ entity.method }}</span>
         values : {
             id : {
                 value : entity.id,
+                attr : {
+                    class: 'text-right'
+                }
             },
             creation : {
-                value : entity.createdAt|format_datetime("medium", "short", locale="es")
-            },
-            route : {
-                value : entity.route,
+                value : entity.createdAt|format_datetime("medium", "short", locale="es"),
+                attr : {
+                    class : 'text-nowrap'
+                }
             },
             method : {
                 value : badge,
@@ -69,8 +72,14 @@ badge-pill">{{ entity.method }}</span>
                     class : 'smallest-cell text-center'
                 }
             },
+            route : {
+                value : entity.route,
+            },
             message : {
-                value : entity.message|u.truncate(70, "...", true),
+                value : entity.message,
+                attr : {
+                    class: 'text-truncate'
+                }
             }
         },
         attr : {
