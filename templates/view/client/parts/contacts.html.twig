@@ -4,7 +4,7 @@
     </div>
 {% else %}
 
-    <table class="table w-99 mb-0">
+    <table class="table w-99 mb-0" style="transform: translateY(-1rem);">
         <tbody>
         {% for contact in client.contacts %}
 
@@ -14,26 +14,26 @@
                         name : {
                             value : contact.name,
                             attr : {
-                                class : 'font-weight-normal cursor-pointer contact-show text-center text-nowrap'
+                                class : 'font-weight-normal cursor-pointer contact-show text-center text-nowrap border-top-0 border-bottom'
                             }
                         },
                         role : {
                             value : '<em>' ~ contact.role ~ '</em>',
                             attr : {
-                                class : 'text-center cursor-pointer contact-show'
+                                class : 'text-center cursor-pointer contact-show border-top-0 border-bottom'
                             }
                         },
                         phone : {
                             value : '<a class="btn btn-sm btn-outline-info border-0 w-100 round" href="tel:' ~ contact.getContactExtras(2)[0].value ~ '">' ~ contact.getContactExtras(2)[0].value ~ '</a>',
                             attr : {
-                                class : 'text-center',
+                                class : 'text-center border-top-0 border-bottom',
                                 style: 'width: 1px;'
                             }
                         },
                         email : {
                             value : '<a class="btn btn-sm btn-outline-info border-0 w-100 round" href="mailto:' ~ contact.getContactExtras(1)[0].value ~ '">' ~ contact.getContactExtras(1)[0].value ~ '</a>',
                             attr : {
-                                class : 'text-center',
+                                class : 'text-center border-top-0 border-bottom',
                                 style: 'width: 1px;'
                             }
                         },
@@ -41,7 +41,7 @@
                             value : '<button class="btn btn-sm btn-outline-dark border-0 trash-contact w-100 contact-delete" style="display: none;"><i class="fas fa-trash-alt"></i></button>',
                             attr : {
                                 style : 'width: 50px;',
-                                class : 'p-1'
+                                class : 'p-1 border-top-0 border-bottom'
                             }
                         }
                     },

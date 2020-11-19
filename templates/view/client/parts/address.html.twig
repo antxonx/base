@@ -1,8 +1,8 @@
 {% set address = client.getClientAddress %}
 {% if address == null %}
-    <div class="alert alert-info round">
+    <div class="alert alert-info round text-center">
         Este cliente no tiene una dirección asignada aún. <br>
-        <button class="btn btn-success round w-100" id="address-add">Agregar dirección</button>
+        <button class="btn btn-success round w-100 mt-2" id="address-add">Agregar dirección</button>
     </div>
     <div id="client-edit-control row" class="mt-2">
         <button id="client-edit-active" class="btn btn-warning round col-md-6" active="0">Editar Cliente</button>
