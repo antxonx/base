@@ -4,8 +4,7 @@
  * @export
  * @class ButtonCheck
  */
-export default class ButtonCheck
-{
+export default class ButtonCheck {
     /**
      * Button element
      *
@@ -13,7 +12,7 @@ export default class ButtonCheck
      * @type {HTMLButtonElement}
      * @memberof ButtonCheck
      */
-    private readonly button : HTMLButtonElement;
+    private readonly button: HTMLButtonElement;
 
     /**
      * On state change callback
@@ -21,7 +20,7 @@ export default class ButtonCheck
      * @private
      * @memberof ButtonCheck
      */
-    private readonly onChange : (buttonCheck : ButtonCheck) => void;
+    private readonly onChange: (buttonCheck: ButtonCheck) => void;
 
     /**
      * Button status
@@ -30,7 +29,16 @@ export default class ButtonCheck
      * @type {boolean}
      * @memberof ButtonCheck
      */
-    private status : boolean;
+    private status: boolean;
+
+    /**
+     * Button id
+     *
+     * @private
+     * @type {string}
+     * @memberof ButtonCheck
+     */
+    private readonly id: string;
 
     /**
      * Creates an instance of ButtonCheck.
@@ -40,13 +48,15 @@ export default class ButtonCheck
      * @memberof ButtonCheck
      */
     public constructor(
-        button : HTMLButtonElement,
-        onChange : (buttonCheck : ButtonCheck) => void = () => {},
+        button: HTMLButtonElement,
+        onChange: (buttonCheck: ButtonCheck) => void = () => {
+        },
         status = false
     ) {
         this.button = button;
         this.onChange = onChange;
         this.status = status;
+        this.id = this.button.getAttribute("id")!;
         this.button.addEventListener("click", this.toggleState);
     }
 
@@ -55,8 +65,7 @@ export default class ButtonCheck
      *
      * @memberof ButtonCheck
      */
-    public unmarkActive()
-    {
+    public unmarkActive() {
         this.button.classList.remove("btn-success");
         this.button.classList.add("btn-outline-success");
         this.status = false;
@@ -83,10 +92,20 @@ export default class ButtonCheck
     /**
      * get button status
      *
-     * @returns
+     * @returns {boolean}
      * @memberof ButtonCheck
      */
-    public getStatus () {
+    public getStatus(): boolean {
         return this.status;
     };
+
+    /**
+     * get button id
+     *
+     * @returns {string}
+     * @memberof ButtonCheck
+     */
+    public getId(): string {
+        return this.id;
+    }
 }

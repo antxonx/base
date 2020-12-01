@@ -3,7 +3,7 @@ import * as Paginator from '@scripts/plugins/Paginator';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
-import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
+import {initButtonCheck, unMarkActive} from '@plugins/__ButtonCheck';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("logsView") as HTMLElement;
