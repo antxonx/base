@@ -81,7 +81,6 @@ const searchField = (data: string) => {
  * @param {string[]} value
  */
 const changeType = (value : string[]) => {
-    console.log(value);
     if(value.includes('info')){
         ROUTE = ROUTES.logger.view.infoList;
         changePage(1);
