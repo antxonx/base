@@ -18,10 +18,9 @@
                     <input type="text" class="form-control round" id="searchUserInput" placeholder="">
                 </div><span class="erase-search cursor-pointer text-muted">&times;</span>
             </div>
-            <div class="col-md-3 my-1">
-                <button id="suspendedFilter" class="btn btn-outline-success no-hover w-100 round">Suspendidos
-                </button>
-            </div>
+                <div class="col-md-3 btn-group my-1" id="suspendedFilter" role="group" aria-label="supended type">
+                    <button type="button" value="suspended" class="btn no-hover">Suspendidos</button>
+                </div>
         </div>
         {% include "view/user/table.html.twig" %}
     </div>
