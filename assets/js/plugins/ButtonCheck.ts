@@ -1,53 +1,92 @@
-let ONCHANGE: (state: boolean, id?: string) => void;
-
 /**
- *Cambiar estado del botón
+ * ButtonCheck class
  *
- * @param {Event} e
+ * @export
+ * @class ButtonCheck
  */
-const toggleState = (e: Event) => {
-    const BUTTON = (e.currentTarget as HTMLElement);
-    const STATE = !!(+BUTTON.getAttribute("checkedB")!);
-    if (STATE) {
-        BUTTON.classList.remove("btn-success");
-        BUTTON.classList.add("btn-outline-success");
-    } else {
-        BUTTON.classList.add("btn-success");
-        BUTTON.classList.remove("btn-outline-success");
+export default class ButtonCheck
+{
+    /**
+     * Button element
+     *
+     * @private
+     * @type {HTMLButtonElement}
+     * @memberof ButtonCheck
+     */
+    private readonly button : HTMLButtonElement;
+
+    /**
+     * On state change callback
+     *
+     * @private
+     * @memberof ButtonCheck
+     */
+    private readonly onChange : (buttonCheck : ButtonCheck) => void;
+
+    /**
+     * Button status
+     *
+     * @private
+     * @type {boolean}
+     * @memberof ButtonCheck
+     */
+    private status : boolean;
+
+    /**
+     * Creates an instance of ButtonCheck.
+     * @param {HTMLButtonElement} button
+     * @param {(buttonCheck : ButtonCheck) => void} [onChange=() => {}]
+     * @param {boolean} [status=false]
+     * @memberof ButtonCheck
+     */
+    public constructor(
+        button : HTMLButtonElement,
+        onChange : (buttonCheck : ButtonCheck) => void = () => {},
+        status = false
+    ) {
+        this.button = button;
+        this.onChange = onChange;
+        this.status = status;
+        this.button.addEventListener("click", this.toggleState);
     }
-    BUTTON.setAttribute("checkedB", (+!STATE).toString());
-    ONCHANGE(!STATE, BUTTON.getAttribute("id")!);
-};
 
-/**
- * Marcar un botón como no activado
- *
- * @param {HTMLElement} button
- */
-export const unMarkActive = (button: HTMLElement) => {
-    button.classList.remove("btn-success");
-    button.classList.add("btn-outline-success");
-    button.setAttribute("checkedB", '0');
-};
+    /**
+     * unmark Active
+     *
+     * @memberof ButtonCheck
+     */
+    public unmarkActive()
+    {
+        this.button.classList.remove("btn-success");
+        this.button.classList.add("btn-outline-success");
+        this.status = false;
+    }
 
-/**
- *Cargar evento al clickear botón
- *
- * @param {HTMLElement} button
- * @param {*} [onChange=(state : boolean) => {}]
- */
-export const initButtonCheck = (button: HTMLElement, onChange = (state: boolean, id?: string) => {
-}) => {
-    ONCHANGE = onChange;
-    button.addEventListener("click", toggleState);
-};
+    /**
+     * Change status and visuals
+     *
+     * @memberof ButtonCheck
+     */
+    public toggleState = () => {
+        const STATE = this.status;
+        if (STATE) {
+            this.button.classList.remove("btn-success");
+            this.button.classList.add("btn-outline-success");
+        } else {
+            this.button.classList.add("btn-success");
+            this.button.classList.remove("btn-outline-success");
+        }
+        this.status = !STATE;
+        this.onChange(this);
+    };
 
-/**
- *Devolver estado actual del botón
- *
- * @param {HTMLElement} button
- * @returns
- */
-export const getStatus = (button: HTMLElement) => {
-    return !!(+button.getAttribute("checkedB")!);
-};
+    /**
+     * get button status
+     *
+     * @returns
+     * @memberof ButtonCheck
+     */
+    public getStatus () {
+        return this.status;
+    };
+}
