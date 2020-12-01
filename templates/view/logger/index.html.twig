@@ -6,9 +6,9 @@
 {% block body %}
     <div class="w-99 mx-auto">
         <div class="m-1 row">
-            <div class="col-md-3 btn-group my-1" role="group" aria-label="log type">
-                <button type="button" id="infoLogSwitch" class="btn btn-outline-success no-hover round">Info</button>
-                <button type="button" id="errorLogSwitch" class="btn btn-outline-success no-hover round">Error</button>
+            <div class="col-md-3 btn-group my-1" id="logSwitch" role="group" aria-label="log type">
+                <button type="button" value="info" class="btn no-hover">Info</button>
+                <button type="button" value="error" class="btn no-hover">Error</button>
             </div>
             <div class="col-md-6 search-input my-1">
                 <label class="sr-only" for="searchLogInput">Registro...</label>

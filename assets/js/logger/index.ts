@@ -3,7 +3,7 @@ import * as Paginator from '@scripts/plugins/Paginator';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
-import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
+import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
 const MAIN_VIEW = document.getElementById("logsView") as HTMLElement;
@@ -55,8 +55,12 @@ const changePage = (page: number) => {
 const mainView = () => {
     MAIN_VIEW.innerHTML = defaultView;
     Search.initialize("#searchLogInput", searchField);
-    initButtonCheck(document.getElementById(INFO_ID) as HTMLElement, changeType);
-    initButtonCheck(document.getElementById(ERROR_ID) as HTMLElement, changeType);
+    new ButtonCheckGroup(document.getElementById('logSwitch') as HTMLElement, {
+        onChange: changeType,
+        unCheckClass: 'btn-outline-success',
+        checkClass: 'btn-success',
+        extraClass: 'round'
+    });
     loadEvs();
 };
 
@@ -74,21 +78,16 @@ const searchField = (data: string) => {
 /**
  * Cambiar tipo de registros
  *
- * @param {boolean} state
- * @param {string} id
+ * @param {string[]} value
  */
-const changeType = (state: boolean, id?: string) => {
-    if (state) {
-        if (id == INFO_ID) {
-            ROUTE = ROUTES.logger.view.infoList;
-            unMarkActive(document.getElementById(ERROR_ID) as HTMLElement);
-        } else if (id == ERROR_ID) {
-            ROUTE = ROUTES.logger.view.errorList;
-            unMarkActive(document.getElementById(INFO_ID) as HTMLElement);
-        }
+const changeType = (value : string[]) => {
+    if(value.includes('info')){
+        ROUTE = ROUTES.logger.view.infoList;
+        changePage(1);
+    } else if(value.includes('error')) {
+        ROUTE = ROUTES.logger.view.errorList;
         changePage(1);
     } else {
-        unMarkActive(document.getElementById(id!) as HTMLElement);
         MAIN_VIEW.innerHTML = defaultView;
     }
 };
