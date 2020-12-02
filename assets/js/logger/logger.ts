@@ -12,15 +12,7 @@ export default class Logger {
     private method: string;
     private route: string;
     private orderBy: SortColumn;
-    private readonly defaultView = `
-        <tr class="table-paginator">
-        <td colspan="6">
-            <div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">
-                Debe selecionar un tipo de regsitro
-            </div>
-        </td>
-        </tr>
-        `;
+    private readonly defaultView = `<tr class="table-paginator"><td colspan="6"><div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">Debe selecionar un tipo de regsitro</div></td></tr>`;
 
     public constructor() {
         this.searchInput = '';
