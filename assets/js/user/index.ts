@@ -7,11 +7,9 @@ import {editUser} from '@scripts/user/edit';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {openKeyModal} from '@scripts/user/key';
-import {initButtonCheck, unMarkActive} from '@scripts/plugins/ButtonCheck';
+import ButtonCheck from '@plugins/ButtonCheckGroup';
 import {reactiveUser} from './reactive';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
-import {hideElement, showElement} from "@plugins/Required";
-import $ from "jquery";
 
 const MAIN_VIEW = document.getElementById("usersView")!;
 
@@ -46,8 +44,12 @@ const changePage = (page: number) => {
  *
  */
 const mainView = () => {
-    unMarkActive(document.getElementById("suspendedFilter") as HTMLElement);
-    initButtonCheck(document.getElementById("suspendedFilter") as HTMLElement, suspendedFilter);
+    new ButtonCheck(document.getElementById("suspendedFilter") as HTMLButtonElement,  {
+        onChange: suspendedFilter,
+        unCheckClass: 'btn-outline-success',
+        checkClass: 'btn-success',
+        extraClass: 'round'
+    });
     MAIN_VIEW.innerHTML = BIG_LOADER;
     Search.initialize("#searchUserInput", searchField);
     changePage(1);
@@ -67,10 +69,10 @@ const searchField = (data: string) => {
 /**
  * Filtrar por usuarios suspendidos
  *
- * @param {boolean} status
+ * @param value
  */
-const suspendedFilter = (status: boolean) => {
-    SUSPENDED = +status;
+const suspendedFilter = (value: string[]) => {
+    SUSPENDED = +value.includes('suspended');
     changePage(1);
 };
 
