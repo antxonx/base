@@ -106,12 +106,8 @@ const deleteAction = (e: Event) => {
  */
 const reactivateAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-    // noinspection JSIgnoredPromiseFromCall
     reactiveUser(ELEMENT, () => {
     }, loadEvs);
-    // reactiveUser(+ELEMENT.getAttribute("id")!, () => {
-    //     deleteElement(ELEMENT as HTMLElement);
-    // });
 };
 
 /**
