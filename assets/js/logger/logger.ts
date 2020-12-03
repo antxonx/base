@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
-import * as Search from '@scripts/plugins/Search';
+import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
@@ -88,7 +88,10 @@ export default class Logger {
      */
     public main = () => {
         this.mainView.innerHTML = this.defaultView;
-        Search.initialize("#searchLogInput", this.searchField);
+        new Search({
+            callback: this.searchField,
+            selector: "#searchLogInput"
+        });
         new ButtonCheckGroup(document.getElementById('logSwitch') as HTMLElement, {
             onChange: this.changeType,
             unCheckClass: 'btn-outline-success',

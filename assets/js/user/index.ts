@@ -4,7 +4,7 @@ import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
 import {openModal} from '@scripts/user/add';
 import {deleteUser} from '@scripts/user/delete';
 import {editUser} from '@scripts/user/edit';
-import * as Search from '@scripts/plugins/Search';
+import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {openKeyModal} from '@scripts/user/key';
 import ButtonCheck from '@plugins/ButtonCheckGroup';
@@ -51,7 +51,10 @@ const mainView = () => {
         extraClass: 'round'
     });
     MAIN_VIEW.innerHTML = BIG_LOADER;
-    Search.initialize("#searchUserInput", searchField);
+    new Search({
+        callback: searchField,
+        selector: "#searchUserInput"
+    });
     changePage(1);
 };
 
