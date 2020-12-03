@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import * as Paginator from '@scripts/plugins/Paginator';
+import Paginator from '@scripts/plugins/Paginator';
 import {ROUTES, BIG_LOADER_TABLE} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import * as Search from '@scripts/plugins/Search';
@@ -27,7 +27,7 @@ const changePage = (page: number) => {
         .then(res => {
             MAIN_VIEW.innerHTML = res.data;
             loadEvs();
-            Paginator.initialize(changePage);
+            new Paginator({callback: changePage});
         })
         .catch(err => {
             console.error(err.response.data);

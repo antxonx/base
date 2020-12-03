@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import * as Paginator from '@scripts/plugins/Paginator';
+import Paginator from '@scripts/plugins/Paginator';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
 import {openModal} from '@scripts/user/add';
 import {deleteUser} from '@scripts/user/delete';
@@ -31,7 +31,7 @@ const changePage = (page: number) => {
         .then(res => {
             MAIN_VIEW.innerHTML = res.data;
             loadEvs();
-            Paginator.initialize(changePage);
+            new Paginator({callback: changePage});
         })
         .catch(err => {
             console.error(err.response.data);

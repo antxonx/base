@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import * as Paginator from '@scripts/plugins/Paginator';
+import Paginator from '@scripts/plugins/Paginator';
 import * as Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
@@ -122,7 +122,7 @@ export default class Logger {
                 .then(res => {
                     this.mainView.innerHTML = res.data;
                     this.loadEvs();
-                    Paginator.initialize(this.changePage);
+                    new Paginator({callback: this.changePage});
                 })
                 .catch(err => {
                     console.error(err.response.data);
