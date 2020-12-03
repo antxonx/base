@@ -199,7 +199,7 @@ export default class Modal {
         this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
-            setTimeout( () => {
+            setTimeout(() => {
                 this.modal.setAttribute("style", "display: none !important;")
                 this.deleteModal();
                 //Verificamos si hay algún modal abierto para mantener la clase `modal-open`

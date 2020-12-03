@@ -99,7 +99,7 @@ export default class Alert {
      * @type {AlertOptions}
      * @memberOf Alert
      */
-    private options : AlertOptions;
+    private options: AlertOptions;
 
     /**
      * status
@@ -283,7 +283,7 @@ export default class Alert {
      * @memberof Alert
      */
     private build() {
-        let icon : string;
+        let icon: string;
         switch (this.options.type) {
             case 'info':
                 icon = this.INFO_ALERT;

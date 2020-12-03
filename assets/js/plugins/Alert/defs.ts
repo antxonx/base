@@ -5,7 +5,7 @@ export interface AlertOptions {
     typeText?: string
 }
 
-export const DEFAULT_ALERT_OPTIONS : AlertOptions = {
+export const DEFAULT_ALERT_OPTIONS: AlertOptions = {
     hasCancel: true,
     onDismiss: () => {},
     typeText: '',
