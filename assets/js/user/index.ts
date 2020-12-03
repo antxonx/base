@@ -1,10 +1,10 @@
 import Axios from 'axios';
-import * as Paginator from '@scripts/plugins/Paginator';
+import Paginator from '@scripts/plugins/Paginator';
 import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
 import {openModal} from '@scripts/user/add';
 import {deleteUser} from '@scripts/user/delete';
 import {editUser} from '@scripts/user/edit';
-import * as Search from '@scripts/plugins/Search';
+import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {openKeyModal} from '@scripts/user/key';
 import ButtonCheck from '@plugins/ButtonCheckGroup';
@@ -31,7 +31,7 @@ const changePage = (page: number) => {
         .then(res => {
             MAIN_VIEW.innerHTML = res.data;
             loadEvs();
-            Paginator.initialize(changePage);
+            new Paginator({callback: changePage});
         })
         .catch(err => {
             console.error(err.response.data);
@@ -51,7 +51,10 @@ const mainView = () => {
         extraClass: 'round'
     });
     MAIN_VIEW.innerHTML = BIG_LOADER;
-    Search.initialize("#searchUserInput", searchField);
+    new Search({
+        callback: searchField,
+        selector: "#searchUserInput"
+    });
     changePage(1);
 };
 
@@ -103,12 +106,8 @@ const deleteAction = (e: Event) => {
  */
 const reactivateAction = (e: Event) => {
     const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-    // noinspection JSIgnoredPromiseFromCall
     reactiveUser(ELEMENT, () => {
     }, loadEvs);
-    // reactiveUser(+ELEMENT.getAttribute("id")!, () => {
-    //     deleteElement(ELEMENT as HTMLElement);
-    // });
 };
 
 /**

@@ -94,30 +94,7 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private structure = `
-    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
-        <div class="modal-dialog  round" id="modalDialogId" role="document">
-            <div class="modal-content round main">
-                <div class="modal-body">
-                    <h5 class="modal-title text-center" id="modalViewIdLabel">
-                        <label id="modalTitleId">Vista</label>
-                        <button type="button" id="closeModal" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </h5>
-                    <hr class="divide">
-                    <div id="modalBodyId">
-                    </div>
-                    <div class="mt-2 text-right">
-                        <button type="button" id="closeModal" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">
-                            Cerrar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
+    private structure = `<div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true"><div class="modal-dialog  round" id="modalDialogId" role="document"><div class="modal-content round main"><div class="modal-body"><h5 class="modal-title text-center" id="modalViewIdLabel"><label id="modalTitleId">Vista</label><button type="button" id="closeModal" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></h5><hr class="divide"><div id="modalBodyId"></div><div class="mt-2 text-right"><button type="button" id="closeModal" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">Cerrar</button></div></div></div></div></div>`;
 
     /**
      *Creates an instance of Modal.

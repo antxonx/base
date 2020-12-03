@@ -40,20 +40,7 @@ export default class Toast {
      * @static
      * @memberof Toast
      */
-    static TOAST_TEMPLATE = `
-     <div class="toast toast-changClass" id="changeMe" style="min-width: 300px;" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="mr-auto text-dark">toastIcon toastTitle</strong>
-
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body">
-            <div><b>toastBodyChange</b></div>
-        </div>
-    </div>
-    `
+    static TOAST_TEMPLATE = `<div class="toast toast-changClass" id="changeMe" style="min-width: 300px;" role="alert" aria-live="assertive" aria-atomic="true"><div class="toast-header"><strong class="mr-auto text-dark">toastIcon toastTitle</strong><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="toast-body"><div><b>toastBodyChange</b></div></div></div>`
 
     /**
      *Muestra una alerta de éxito
