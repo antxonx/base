@@ -1,79 +1,67 @@
 import $ from 'jquery';
 import 'bootstrap';
-
-export interface AlertOptions {
-    hasCancel?: boolean;
-    onDismiss?: (status: boolean) => void;
-    type?: ('info' | 'warning' | 'danger' | 'success');
-    typeText?: string
-}
-
-const DEFAULT_ALERT_OPTIONS : AlertOptions = {
-    hasCancel: true,
-    onDismiss: () => {},
-    typeText: '',
-}
+import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
 
 /**
- *Clase para crear alertas con respeustas
+ * Clase para crear alertas con respeustas
  *
  * @export
- * @class Modal
+ * @class Alert
  */
-export default class Modal {
+export default class Alert {
     /**
-     *Tamaño del modal
+     * Modal size
      *
      * @private
-     * @memberof Modal
+     * @memberof Alert
      */
     private size = 40;
     /**
-     *Id del modal
+     * Modal id
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalId: string;
     /**
-     *idLael del modal
+     * idLael
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalViewIdLabel: string;
     /**
-     *id del dialog del modal
+     * dialog id
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalDialogId: string;
     /**
-     *Id del body del modal
+     * body id
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalBodyId: string;
     /**
-     *Id del header del modal
+     * header id
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalHeaderId: string;
     /**
-     * Id del footer del modal
+     * footer id
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private readonly modalFooter: string;
     /**
@@ -81,53 +69,53 @@ export default class Modal {
      *
      * @private
      * @type {HTMLElement}
-     * @memberof Modal
+     * @memberof Alert
      */
     private modal: HTMLElement;
 
     /**
-     * Texto para aceptar
+     * ok text
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private ok: string = 'Aceptar';
 
     /**
-     *texte para cancelar
+     * cancel text
      *
      * @private
      * @type {string}
-     * @memberof Modal
+     * @memberof Alert
      */
     private cancel: string = 'Cancelar';
 
 
     /**
-     * Opciones
+     * options
      *
      * @private
      * @type {AlertOptions}
-     * @memberOf Modal
+     * @memberOf Alert
      */
     private options : AlertOptions;
 
     /**
-     * Estado de la petición
+     * status
      *
      * @private
      * @type {boolean}
-     * @memberof Modal
+     * @memberof Alert
      */
     private status: boolean;
 
     /**
-     * Consición de espera del usuario
+     * next
      *
      * @private
      * @type {boolean}
-     * @memberof Modal
+     * @memberof Alert
      */
     private next: boolean;
 
@@ -138,53 +126,37 @@ export default class Modal {
     private readonly NO_ICON_ALERT = `<i class=""></i> <span class="h5 font-weight-bold">#text#</span>`;
 
     /**
-     *Estrutura principal del modal
+     * structure
      *
      * @private
      * @memberof Modal
      */
-    private structure = `
-    <div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document">
-            <div class="modal-content p-0 round shadow-lg">
-                <div class="modal-header" id="modalHeaderId">
-                
-                </div>
-                <div class="h4 text-center mx-auto text-dark font-weight-bold mt-5 mb-5" id="modalBodyId">
-                    
-                </div>
-                <div class="toast-body p-0" id="modalFooter">
-                        
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
+    private structure = `<div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" id="modalDialogId" role="document"><div class="modal-content p-0 round shadow-lg"><div class="modal-header" id="modalHeaderId"></div><div class="h4 text-center mx-auto text-dark font-weight-bold mt-5 mb-5" id="modalBodyId"></div><div class="toast-body p-0" id="modalFooter"></div></div></div></div>`;
 
     /**
      * Crear una instancia de Alert
-     * @memberof Modal
+     * @memberof Alert
      * @param options
      */
     public constructor(options: AlertOptions = DEFAULT_ALERT_OPTIONS) {
-        this.modalId = this.randomId();
+        this.modalId = Alert.randomId();
         this.options = {...DEFAULT_ALERT_OPTIONS, ...options};
-        this.modalViewIdLabel = this.randomId();
-        this.modalDialogId = this.randomId();
-        this.modalBodyId = this.randomId();
-        this.modalHeaderId = this.randomId();
-        this.modalFooter = this.randomId();
+        this.modalViewIdLabel = Alert.randomId();
+        this.modalDialogId = Alert.randomId();
+        this.modalBodyId = Alert.randomId();
+        this.modalHeaderId = Alert.randomId();
+        this.modalFooter = Alert.randomId();
         this.status = false;
         this.next = false;
-        this.modal = Modal.htmlToElement("<div></div>");
+        this.modal = Alert.htmlToElement("<div></div>");
         this.createModal();
     }
 
     /**
-     * Crear el modal
+     * Create modal
      *
      * @private
-     * @memberof Modal
+     * @memberof Alert
      */
     private createModal() {
         let newTemplate = this.structure.replace("modalId", this.modalId);
@@ -193,18 +165,18 @@ export default class Modal {
         newTemplate = newTemplate.replace("modalBodyId", this.modalBodyId);
         newTemplate = newTemplate.replace("modalHeaderId", this.modalHeaderId);
         newTemplate = newTemplate.replace("modalFooter", this.modalFooter);
-        this.modal = Modal.htmlToElement(newTemplate);
+        this.modal = Alert.htmlToElement(newTemplate);
         document.body.appendChild(this.modal);
         this.build();
     }
 
     /**
-     * Convertir un string a un elemento de HTML
+     * html to HTMLElement
      *
      * @private
      * @param {string} html
      * @returns {HTMLElement}
-     * @memberof Modal
+     * @memberof Alert
      */
     private static htmlToElement(html: string): HTMLElement {
         const template = document.createElement('template');
@@ -214,21 +186,21 @@ export default class Modal {
     }
 
     /**
-     *Establecer tamaño del modal
+     * set size
      *
      * @private
-     * @memberof Modal
+     * @memberof Alert
      */
     private setSize() {
         document.getElementById(this.modalDialogId)!.style.width = `${this.size}%`;
     }
 
     /**
-     *Actualizar el contenido
+     * update body
      *
      * @param {string} content
      * @returns
-     * @memberof Modal
+     * @memberof Alert
      */
     public updateBody(content: string) {
         document.getElementById(this.modalBodyId)!.innerHTML = content;
@@ -236,11 +208,11 @@ export default class Modal {
     }
 
     /**
-     * Mostrar la alerta
+     * show alert
      *
      * @param {boolean} [dismiss=true]
      * @returns {Promise<boolean>}
-     * @memberof Modal
+     * @memberof Alert
      */
     public async show(dismiss: boolean = true): Promise<boolean> {
         this.setSize();
@@ -266,9 +238,9 @@ export default class Modal {
     }
 
     /**
-     * Esperar input de usuario
+     * wait for user input
      *
-     * @memberof Modal
+     * @memberof Alert
      */
     public async waitForInput() {
         while (!this.next) await this.timeout(50);
@@ -276,9 +248,9 @@ export default class Modal {
     }
 
     /**
-     * Mostrar sin destruir al ocultar
+     * show but don't destroy on hide
      *
-     * @memberof Modal
+     * @memberof Alert
      */
     public showNoDelete() {
         this.setSize();
@@ -286,29 +258,29 @@ export default class Modal {
     }
 
     /**
-     * destruir modal
+     * destroy modal
      *
      * @private
-     * @memberof Modal
+     * @memberof Alert
      */
     private deleteModal = () => {
         this.modal.parentNode!.removeChild(this.modal);
     };
 
     /**
-     * Esconder modal
+     * hide modal
      *
-     * @memberof Modal
+     * @memberof Alert
      */
     public hide() {
         $(this.modal).modal("hide");
     }
 
     /**
-     * Construir el footer del modal
+     * build
      *
      * @private
-     * @memberof Modal
+     * @memberof Alert
      */
     private build() {
         let icon : string;
@@ -375,12 +347,12 @@ export default class Modal {
     private timeout = async (ms: number) => new Promise(res => setTimeout(res, ms));
 
     /**
-     * Generar un ID aleatorio
+     * random id
      *
      * @returns {string}
-     * @memberof Modal
+     * @memberof Alert
      */
-    randomId(): string {
+    public static randomId(): string {
         return "_" + Math.floor(Math.random() * 1000000) + 1;
     }
 }
