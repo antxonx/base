@@ -1,3 +1,3 @@
-import Logger from "@scripts/logger/logger";
+import Logger from "./logger";
 
 (new Logger().main());
