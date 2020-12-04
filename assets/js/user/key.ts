@@ -18,7 +18,7 @@ let ID: number;
 /**
  * Abrir modal de contraseña
  *
- * @param id
+ * @param element
  * @param {() => void} [callback=CALLBACK]
  */
 export const openKeyModal = (element : HTMLElement, callback: () => void = CALLBACK) => {
@@ -26,7 +26,10 @@ export const openKeyModal = (element : HTMLElement, callback: () => void = CALLB
     ID = +element.getAttribute('id')!;
     const NAME = element.getAttribute('name')!;
     const USERNAME = element.getAttribute('username')!;
-    MODAL = (new Modal(`<em><b>${NAME}</b> | ${USERNAME}</em>`, 30)).show();
+    MODAL = (new Modal({
+        title: `<em><b>${NAME}</b> | ${USERNAME}</em>`,
+        size: 30,
+    })).show();
     loadForm();
 };
 

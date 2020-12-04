@@ -24,12 +24,18 @@ let CALLBACK: () => void = () => {
 export const showClient = (id: number, callback: () => void = CALLBACK) => {
     CALLBACK = callback;
     ID = id;
-    MODAL = (new Modal(`Cliente`, 90)).show();
+    MODAL = (new Modal({
+        title: 'Cliente',
+        size: 90
+    })).show();
     loadClient();
 };
 
 const showClientLocal = () => {
-    MODAL = (new Modal(`Cliente`, 90)).show();
+    MODAL = (new Modal({
+        title: 'Cliente',
+        size: 90,
+    })).show();
     loadClient();
 };
 
