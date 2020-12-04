@@ -126,10 +126,11 @@ export default class Modal {
      *
      * @memberof Modal
      */
-    public show() {
+    public show(loading = true) {
         this.setTitle();
         this.setSize();
-        this.loadingBody();
+        if(loading)
+            this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
             setTimeout(() => {
@@ -151,10 +152,11 @@ export default class Modal {
      *
      * @memberof Modal
      */
-    public showNoDelete() {
+    public showNoDelete(loading = true) {
         this.setTitle();
         this.setSize();
-        this.loadingBody();
+        if(loading)
+            this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
             setTimeout(() => {
