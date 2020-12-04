@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import 'bootstrap';
-import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "@plugins/Modal/defs";
+import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./defs";
 
 /**
  *Clase para crear modals
@@ -9,7 +9,14 @@ import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "@plug
  * @class Modal
  */
 export default class Modal {
-    private readonly options : ModalOptions;
+    /**
+     *modal options
+     *
+     * @private
+     * @type {ModalOptions}
+     * @memberof Modal
+     */
+    private readonly options: ModalOptions;
     /**
      *Id del modal
      *
@@ -33,33 +40,14 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private structure = `
-    <div class="modal fade2" id="${ModalIds.MODAL}#id#" tabindex="-1" role="dialog" aria-labelledby="${ModalIds.LABEL}#id#" aria-hidden="true">
-        <div class="modal-dialog round" id="${ModalIds.DIALOG}#id#" role="document">
-            <div class="modal-content round main">
-                <div class="modal-body">
-                <h5 class="modal-title text-center" id="modalLabel_#id#">
-                    <label id="${ModalIds.TITLE}#id#">Vista</label>
-                    <button type="button" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-                <hr class="divide">
-                <div id="${ModalIds.BODY}#id#"></div>
-                <div class="mt-2 text-right">
-                    <button type="button" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">Cerrar</button>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>`;
+    private structure = `<div class="modal fade2" id="${ModalIds.MODAL}#id#" tabindex="-1" role="dialog" aria-labelledby="${ModalIds.LABEL}#id#" aria-hidden="true"><div class="modal-dialog round" id="${ModalIds.DIALOG}#id#" role="document"><div class="modal-content round main"><div class="modal-body"><h5 class="modal-title text-center" id="modalLabel_#id#"><label id="${ModalIds.TITLE}#id#">Vista</label><button type="button" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></h5><hr class="divide"><div id="${ModalIds.BODY}#id#"></div><div class="mt-2 text-right"><button type="button" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">Cerrar</button></div></div></div></div></div>`;
 
     /**
      *Creates an instance of Modal.
      * @memberof Modal
      * @param options
      */
-    public constructor(options : ModalOptions) {
+    public constructor(options: ModalOptions) {
         this.options = {...DEFAULT_MODAL_OPTIONS, ...options};
         this.id = Modal.randomId();
         this.modal = Modal.htmlToElement("<div></div>");
@@ -100,7 +88,7 @@ export default class Modal {
      * @memberof Modal
      */
     private setTitle() {
-        document.getElementById(ModalIds.TITLE + this.id)!.innerHTML = this.options.title as string;
+        document.getElementById(ModalIds.TITLE + this.id)!.innerHTML = this.options.title!;
     }
 
     /**
@@ -145,7 +133,7 @@ export default class Modal {
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
             setTimeout(() => {
-                this.modal.setAttribute("style", "display: none !important;")
+                this.modal.setAttribute("style", "display: none !important;");
                 this.deleteModal();
                 //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
                 if (document.getElementsByClassName("modal").length > 0) {
@@ -170,7 +158,7 @@ export default class Modal {
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
             setTimeout(() => {
-                this.modal.setAttribute("style", "display: none !important;")
+                this.modal.setAttribute("style", "display: none !important;");
                 //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
                 if (document.getElementsByClassName("modal").length > 0) {
                     $('body').addClass('modal-open');
@@ -179,6 +167,7 @@ export default class Modal {
                 this.options.onHide!();
             }, 200);
         });
+        return this;
     }
 
     /**
