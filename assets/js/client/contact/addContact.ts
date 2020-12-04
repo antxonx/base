@@ -16,7 +16,11 @@ let ID: number;
 export const openContactModal = (id: number, callback: () => void = () => {
 }) => {
     ID = id;
-    MODAL = (new Modal("Agregar contacto", 30, callback)).show();
+    MODAL = (new Modal({
+        title: "Agregar contacto",
+        size: 30,
+        onHide: callback
+    })).show();
     loadForm();
 };
 

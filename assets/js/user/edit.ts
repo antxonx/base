@@ -17,7 +17,10 @@ let MODAL: Modal;
 export const editUser = (id: number, callback: () => void = CALLBACK) => {
     CALLBACK = callback;
     ID = id;
-    MODAL = (new Modal("Usuario", 50)).show();
+    MODAL = (new Modal({
+        title: "Usuario",
+        size: 50,
+    })).show();
     loadEdit();
 };
 

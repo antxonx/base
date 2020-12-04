@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'bootstrap';
+import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./defs";
 
 /**
  *Clase para crear modals
@@ -9,21 +10,13 @@ import 'bootstrap';
  */
 export default class Modal {
     /**
-     *Título del modal
+     *modal options
      *
      * @private
-     * @type {string}
+     * @type {ModalOptions}
      * @memberof Modal
      */
-    private readonly title: string;
-    /**
-     *Tamaño del modal
-     *
-     * @private
-     * @type {number}
-     * @memberof Modal
-     */
-    private readonly size: number;
+    private readonly options: ModalOptions;
     /**
      *Id del modal
      *
@@ -31,39 +24,7 @@ export default class Modal {
      * @type {string}
      * @memberof Modal
      */
-    private readonly modalId: string;
-    /**
-     *Id del label del modal
-     *
-     * @private
-     * @type {string}
-     * @memberof Modal
-     */
-    private readonly modalViewIdLabel: string;
-    /**
-     *id del dialog del modal
-     *
-     * @private
-     * @type {string}
-     * @memberof Modal
-     */
-    private readonly modalDialogId: string;
-    /**
-     *id del título del modal
-     *
-     * @private
-     * @type {string}
-     * @memberof Modal
-     */
-    private readonly modalTitleId: string;
-    /**
-     *is del body del modal
-     *
-     * @private
-     * @type {string}
-     * @memberof Modal
-     */
-    private readonly modalBodyId: string;
+    private readonly id: string;
     /**
      *Elemento modal
      *
@@ -72,21 +33,6 @@ export default class Modal {
      * @memberof Modal
      */
     private modal: HTMLElement;
-    /**
-     *Loader al cargar datos
-     *
-     * @private
-     * @memberof Modal
-     */
-    private BIG_LOADER = '<div class="loader"></div>';
-
-    /**
-     * llamar al esconder modal
-     *
-     * @private
-     * @memberof Modal
-     */
-    private readonly onHide: () => void;
 
     /**
      * Estruxtura principal del modal
@@ -94,25 +40,16 @@ export default class Modal {
      * @private
      * @memberof Modal
      */
-    private structure = `<div class="modal fade2" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalViewIdLabel" aria-hidden="true"><div class="modal-dialog  round" id="modalDialogId" role="document"><div class="modal-content round main"><div class="modal-body"><h5 class="modal-title text-center" id="modalViewIdLabel"><label id="modalTitleId">Vista</label><button type="button" id="closeModal" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></h5><hr class="divide"><div id="modalBodyId"></div><div class="mt-2 text-right"><button type="button" id="closeModal" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">Cerrar</button></div></div></div></div></div>`;
+    private structure = `<div class="modal fade2" id="${ModalIds.MODAL}#id#" tabindex="-1" role="dialog" aria-labelledby="${ModalIds.LABEL}#id#" aria-hidden="true"><div class="modal-dialog round" id="${ModalIds.DIALOG}#id#" role="document"><div class="modal-content round main"><div class="modal-body"><h5 class="modal-title text-center" id="modalLabel_#id#"><label id="${ModalIds.TITLE}#id#">Vista</label><button type="button" class="close float-right hide-on-mobile" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></h5><hr class="divide"><div id="${ModalIds.BODY}#id#"></div><div class="mt-2 text-right"><button type="button" class="btn btn-danger round w-100 text-center hide-on-desktop" data-dismiss="modal" aria-label="Close">Cerrar</button></div></div></div></div></div>`;
 
     /**
      *Creates an instance of Modal.
-     * @param {string} title
-     * @param {number} size
-     * @param {() => void} [onHide=() => {}]
      * @memberof Modal
+     * @param options
      */
-    public constructor(title: string, size: number, onHide: () => void = () => {
-    }) {
-        this.title = title;
-        this.size = size;
-        this.onHide = onHide;
-        this.modalId = Modal.randomId();
-        this.modalViewIdLabel = Modal.randomId();
-        this.modalDialogId = Modal.randomId();
-        this.modalTitleId = Modal.randomId();
-        this.modalBodyId = Modal.randomId();
+    public constructor(options: ModalOptions) {
+        this.options = {...DEFAULT_MODAL_OPTIONS, ...options};
+        this.id = Modal.randomId();
         this.modal = Modal.htmlToElement("<div></div>");
         this.createModal();
     }
@@ -124,11 +61,7 @@ export default class Modal {
      * @memberof Modal
      */
     private createModal() {
-        let newTemplate = this.structure.replace("modalId", this.modalId);
-        newTemplate = newTemplate.replace("modalViewIdLabel", this.modalViewIdLabel);
-        newTemplate = newTemplate.replace("modalDialogId", this.modalDialogId);
-        newTemplate = newTemplate.replace("modalTitleId", this.modalTitleId);
-        newTemplate = newTemplate.replace("modalBodyId", this.modalBodyId);
+        let newTemplate = this.structure.replace(/#id#/g, this.id);
         this.modal = Modal.htmlToElement(newTemplate);
         document.body.appendChild(this.modal);
     }
@@ -155,7 +88,7 @@ export default class Modal {
      * @memberof Modal
      */
     private setTitle() {
-        document.getElementById(this.modalTitleId)!.innerHTML = this.title;
+        document.getElementById(ModalIds.TITLE + this.id)!.innerHTML = this.options.title!;
     }
 
     /**
@@ -165,7 +98,7 @@ export default class Modal {
      * @memberof Modal
      */
     private setSize() {
-        document.getElementById(this.modalDialogId)!.style.width = `${this.size}%`;
+        document.getElementById(ModalIds.DIALOG + this.id)!.style.width = `${this.options.size}%`;
     }
 
     /**
@@ -175,7 +108,7 @@ export default class Modal {
      * @memberof Modal
      */
     public updateBody(content: string) {
-        document.getElementById(this.modalBodyId)!.innerHTML = content;
+        document.getElementById(ModalIds.BODY + this.id)!.innerHTML = content;
     }
 
     /**
@@ -184,7 +117,7 @@ export default class Modal {
      * @memberof Modal
      */
     public loadingBody() {
-        this.updateBody(this.BIG_LOADER);
+        this.updateBody(MODAL_LOADER);
     }
 
 
@@ -193,21 +126,22 @@ export default class Modal {
      *
      * @memberof Modal
      */
-    public show() {
+    public show(loading = true) {
         this.setTitle();
         this.setSize();
-        this.loadingBody();
+        if(loading)
+            this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
-            setTimeout( () => {
-                this.modal.setAttribute("style", "display: none !important;")
+            setTimeout(() => {
+                this.modal.setAttribute("style", "display: none !important;");
                 this.deleteModal();
                 //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
                 if (document.getElementsByClassName("modal").length > 0) {
                     $('body').addClass('modal-open');
                 }
                 //.
-                this.onHide();
+                this.options.onHide!();
             }, 200);
         });
         return this;
@@ -218,11 +152,24 @@ export default class Modal {
      *
      * @memberof Modal
      */
-    public showNoDelete() {
+    public showNoDelete(loading = true) {
         this.setTitle();
         this.setSize();
-        this.loadingBody();
+        if(loading)
+            this.loadingBody();
         $(this.modal).modal("show");
+        $(this.modal).on("hidden.bs.modal", () => {
+            setTimeout(() => {
+                this.modal.setAttribute("style", "display: none !important;");
+                //Verificamos si hay algún modal abierto para mantener la clase `modal-open`
+                if (document.getElementsByClassName("modal").length > 0) {
+                    $('body').addClass('modal-open');
+                }
+                //.
+                this.options.onHide!();
+            }, 200);
+        });
+        return this;
     }
 
     /**
@@ -262,6 +209,6 @@ export default class Modal {
      * @memberof Modal
      */
     public getId(): string {
-        return this.modalId;
+        return this.id;
     }
 }

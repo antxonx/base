@@ -18,7 +18,11 @@ let ID: number;
 export const showContact = (id: number, callback: () => void = () => {
 }) => {
     ID = id;
-    MODAL = (new Modal("Contacto", 50, callback)).show();
+    MODAL = (new Modal({
+        title: "Contacto",
+        size: 50,
+        onHide: callback
+    })).show();
     loadView();
 };
 

@@ -15,7 +15,10 @@ let CALLBACK: () => void = () => {
  */
 export const openAddModal = (callback: () => void = CALLBACK) => {
     CALLBACK = callback;
-    MODAL = (new Modal("Nuevo cliente", 30)).show();
+    MODAL = (new Modal({
+        title: "Nuevo cliente",
+        size: 30
+    })).show();
     loadForm();
 };
 

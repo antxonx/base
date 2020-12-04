@@ -1,16 +1,31 @@
 import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
 
-export default class Paginator
-{
+/**
+ * Paginator class
+ *
+ * @export
+ * @class Paginator
+ */
+export default class Paginator {
     private readonly options: PaginatorOptions;
 
-    public constructor(options : PaginatorOptions = DEFAULT_PAGINATOR_OPTIONS) {
+    /**
+     * Creates an instance of Paginator.
+     * @param {PaginatorOptions} [options=DEFAULT_PAGINATOR_OPTIONS]
+     * @memberof Paginator
+     */
+    public constructor(options: PaginatorOptions = DEFAULT_PAGINATOR_OPTIONS) {
         this.options = {...DEFAULT_PAGINATOR_OPTIONS, ...options};
-        let elements :  HTMLCollectionOf<Element>
+        let elements: HTMLCollectionOf<Element>
         elements = this.options.elements || document.getElementsByClassName(this.options.classname!);
         [...elements].forEach(element => element.addEventListener("click", this.changePage));
     }
 
+    /**
+     * Change page
+     *
+     * @memberof Paginator
+     */
     public changePage = (e: Event) => {
         e.preventDefault();
         this.options.callback(+(e.currentTarget as HTMLElement).getAttribute(this.options.indexname!)!);

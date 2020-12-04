@@ -16,7 +16,11 @@ let ID: number;
 export const openAddressModal = (id: number, callback: () => void = () => {
 }) => {
     ID = id;
-    MODAL = (new Modal("Agregar dirección", 70, callback)).show();
+    MODAL = (new Modal({
+        title: "Agregar dirección",
+        size: 70,
+        onHide: callback
+    })).show();
     loadForm();
 };
 
