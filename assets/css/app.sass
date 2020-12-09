@@ -10,6 +10,7 @@
 @import './scroll'
 @import './logger'
 @import './checkbox'
+@import './table'
 
 $success-color: #28a745
 $info-color: #17a2b8
@@ -197,87 +198,8 @@ b, h5
 .no-round
   border-radius: 0 !important
 
-.table-striped2
-  tbody
-    tr
-      &:nth-child(odd)
-        background-color: #e6e6fa57
-
-        th, td
-          border-left-color: #e6e6fa
-          border-right-color: #e6e6fa
-
-.table-striped2-4
-  tbody
-    tr
-      &:nth-child(4n+1)
-        background-color: #e6e6fa57
-
-        th, td
-          border-left-color: #e6e6fa
-          border-right-color: #e6e6fa
-
-.table-hover2
-  tbody
-    tr
-      transition: background-color 300ms ease-in
-
-      &:hover
-        background-color: #e6e6fa
-        transition: background-color 300ms ease-out
-
-        td, th
-          border-left-color: #DCD0FF
-          border-right-color: #DCD0FF
-
-.table-bordered2
-  thead
-    tr
-      border: none !important
-
-      th, td
-        border-top: none !important
-        border-left: 1px solid #dee2e6
-        border-right: 1px solid #dee2e6
-        border-bottom: 1px solid #dee2e6
-
-        &:first-child
-          border-left: none !important
-
-        &:last-child
-          border-right: none !important
-
-  tbody
-    tr
-      border: none !important
-
-      th, td
-        border-top: none !important
-        border-left: 1px solid #dee2e6
-        border-right: 1px solid #dee2e6
-        border-bottom: none !important
-
-        &:first-child
-          border-left: none !important
-
-        &:last-child
-          border-right: none !important
-
-
 .mobile-2-desktop-1
   font-size: 1rem
-
-.table
-  &.fixed
-    table-layout: fixed
-  thead
-    font-style: italic
-  tbody
-    tr
-      th, td
-        vertical-align: middle !important
-        padding-left: 0.5rem
-        padding-right: 0.5rem
 
 .erase-search
   position: absolute
