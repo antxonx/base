@@ -5,6 +5,7 @@ import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import {ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS} from "@scripts/clientCategory/defs";
+import ClientCategoryAdd from "@scripts/clientCategory/add";
 
 /**
  * ClientCategory class
@@ -74,6 +75,7 @@ export default class ClientCategory {
         if (this.options.control) {
             this.options.control = false;
             document.getElementById("client-category-add")!.addEventListener('click', () => {
+                (new ClientCategoryAdd(this.update)).load();
             });
             new Search({
                 callback: this.setSearch,
@@ -93,7 +95,7 @@ export default class ClientCategory {
      */
     private update = (page: number = 1) => {
         if (!this.options.extern) {
-            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "3");
+            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
             Axios.get(`${ROUTES.clientCategory.view.list}?search=${this.search}&page=${page}&ordercol=${this.orderBy.column}&orderorder=${this.orderBy.order}`)
                 .then(res => {
                     this.mainView.innerHTML = res.data;

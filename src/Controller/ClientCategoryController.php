@@ -5,6 +5,7 @@ namespace App\Controller;
 use Antxony\Util;
 use App\Entity\ClientCategory;
 use App\Repository\ClientCategoryRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,7 +67,46 @@ class ClientCategoryController extends AbstractController
                 'thisPage' => ((isset($params->page)) ? $params->page : 1),
                 'showed' => (($showed > $categories->count()) ? $categories->count() : $showed),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * add form
+     *
+     * @Route("/form", name="client_category_add_form", methods={"GET"})
+     * @return Response
+     */
+    public function form() : Response
+    {
+        try {
+            return $this->render("view/client_category/form.html.twig");
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Add category
+     *
+     * @Route("/add", name="client_category_add", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function add(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $category = (new ClientCategory())
+                ->setName($content->name)
+                ->setDescription($content->description)
+                ->setColor($content->color);
+            $this->rep->add($category);
+            $message = "Se ha agregado la categoría <b>{$content->name}</b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }

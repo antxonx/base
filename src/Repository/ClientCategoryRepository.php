@@ -6,6 +6,8 @@ use Antxony\Util;
 use App\Entity\ClientCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,6 +49,46 @@ class ClientCategoryRepository extends ServiceEntityRepository
             ->setMaxResults(Util::PAGE_COUNT); // Limit
 
         return array('paginator' => $paginator, 'query' => $query);
+    }
+
+    /**
+     * Agregar entidad
+     *
+     * @param ClientCategory $entity
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function add(ClientCategory $entity)
+    {
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Actualizar entidad
+     *
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update()
+    {
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Eliminar entidad
+     *
+     * @param ClientCategory $entity
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(ClientCategory $entity)
+    {
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush();
     }
 
     // /**

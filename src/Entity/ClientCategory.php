@@ -27,6 +27,11 @@ class ClientCategory
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $color;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class ClientCategory
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
