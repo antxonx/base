@@ -6,16 +6,55 @@ import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import {ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS} from "@scripts/clientCategory/defs";
 
+/**
+ * ClientCategory class
+ *
+ * @export
+ * @class ClientCategory
+ */
 export default class ClientCategory {
 
-    protected options : ClientCategoryOptions
+    /**
+     * options
+     *
+     * @protected
+     * @type {ClientCategoryOptions}
+     * @memberof ClientCategory
+     */
+    protected options: ClientCategoryOptions
 
-    protected mainView : HTMLElement;
+    /**
+     * mainView
+     *
+     * @protected
+     * @type {HTMLElement}
+     * @memberof ClientCategory
+     */
+    protected mainView: HTMLElement;
 
-    protected search : string;
+    /**
+     * search
+     *
+     * @protected
+     * @type {string}
+     * @memberof ClientCategory
+     */
+    protected search: string;
 
-    protected  orderBy : SortColumn;
+    /**
+     * orderBy
+     *
+     * @protected
+     * @type {SortColumn}
+     * @memberof ClientCategory
+     */
+    protected orderBy: SortColumn;
 
+    /**
+     * Creates an instance of ClientCategory.
+     * @param {ClientCategoryOptions} [options]
+     * @memberof ClientCategory
+     */
     public constructor(options?: ClientCategoryOptions) {
         this.mainView = ((document.getElementById("clientCategoriesView") as HTMLElement) || document.createElement("div"));
         this.search = "";
@@ -26,10 +65,16 @@ export default class ClientCategory {
         this.options = {...DEFAULT_CLIENT_CATEGORY_OPTIONS, ...options};
     }
 
+    /**
+     * main
+     *
+     * @memberof ClientCategory
+     */
     public main = () => {
         if (this.options.control) {
             this.options.control = false;
-            document.getElementById("client-category-add")!.addEventListener('click', () => {});
+            document.getElementById("client-category-add")!.addEventListener('click', () => {
+            });
             new Search({
                 callback: this.setSearch,
                 selector: "#searchCategoryInput"
@@ -40,8 +85,14 @@ export default class ClientCategory {
         return this;
     }
 
+    /**
+     * update
+     *
+     * @private
+     * @memberof ClientCategory
+     */
     private update = (page: number = 1) => {
-        if(!this.options.extern) {
+        if (!this.options.extern) {
             this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "3");
             Axios.get(`${ROUTES.clientCategory.view.list}?search=${this.search}&page=${page}&ordercol=${this.orderBy.column}&orderorder=${this.orderBy.order}`)
                 .then(res => {
@@ -56,11 +107,23 @@ export default class ClientCategory {
         }
     }
 
+    /**
+     * set search
+     *
+     * @private
+     * @memberof ClientCategory
+     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
     }
 
+    /**
+     * sort
+     *
+     * @private
+     * @memberof ClientCategory
+     */
     private sort = (e: Event) => {
         this.orderBy = getSort(e.currentTarget as HTMLElement);
         this.update();
