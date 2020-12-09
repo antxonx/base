@@ -1,0 +1,42 @@
+<table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2 mobile">
+    {% set sort %}
+        <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
+    {% endset %}
+    {# Sort column solo en desktop #}
+    {% set sortClass = 'cursor-pointer sort-column' %}
+    {% if isMobile %}
+        {% set sortClass = '' %}
+    {% endif %}
+    {# . #}
+    {% include "table/thead.html.twig" with {
+        tr : {
+            values : {
+                id : {
+                    value : 'Id' ~ sort,
+                    attr : {
+                        class: sortClass,
+                        column: 'id',
+                        style: 'width: 120px !important;',
+                    }
+                },
+                name : {
+                    value : 'Nombre' ~ sort,
+                    attr : {
+                        class: sortClass,
+                        column: 'name'
+                    }
+                },
+                description : {
+                    value : 'Descripción',
+                },
+                delete : {
+                    value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
+                    attr : {
+                        class : 'text-center icon-col',
+                    }
+                },
+            },
+        }
+    } %}
+    <tbody id="clientCategoriesView"></tbody>
+</table>

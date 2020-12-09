@@ -62,6 +62,12 @@ export const ROUTES = {
             contactUpdate: (document.getElementById("client-contact-update-api") as HTMLInputElement).value,
         }
     },
+    clientCategory : {
+      view: {
+          index: (document.getElementById("client-category-index-route") as HTMLInputElement).value,
+          list: (document.getElementById("client-category-list-route") as HTMLInputElement).value,
+      }
+    },
     logger: {
         view: {
             index: (document.getElementById("logger-index-route") as HTMLInputElement).value,

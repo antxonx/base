@@ -1,0 +1,51 @@
+{% set tr = {} %}
+{% for category in categories %}
+    {# suspneder o reactivar #}
+    {% set trashSusp %}
+            <button class="btn btn-sm round btn-outline-dark border-0 w-100 client-delete mobile-2-desktop-1"><i class="fas fa-trash-alt"></i></button>
+    {% endset %}
+    {# . #}
+    {% set tr = {
+        values : {
+            id : {
+                value : category.id,
+                attr : {
+                    class : 'category-show cursor-pointer text-right',
+                }
+            },
+            name : {
+                value : category.name,
+                attr : {
+                    class : 'category-show cursor-pointer text-nowrap',
+                }
+            },
+            desscription : {
+                value : category.description,
+                attr : {
+                    class : 'category-show cursor-pointer'
+                }
+            },
+            trash : {
+                value : trashSusp,
+                attr : {
+                    class : 'text-center action-btn'
+                }
+            }
+        },
+        attr : {
+            class : 'category-row',
+            id: category.id,
+            name: category.name
+        }
+    } %}
+    {% include "table/tr.html.twig" with {
+        tr : tr
+    } %}
+{% endfor %}
+{% if tr.values is defined %}
+    {% include "paginatorTable.html.twig" with {
+        items: categories,
+        cols : tr.values|length
+    } %}
+{% endif %}
+

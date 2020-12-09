@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use Antxony\Util;
 use App\Entity\ClientCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query\QueryException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +21,32 @@ class ClientCategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ClientCategory::class);
+    }
+
+    /**
+     * @param $params
+     * @return array
+     * @throws QueryException
+     */
+    public function getBy($params): array
+    {
+        $page = ((isset($params->page)) ? $params->page : 1);
+        // Create our query
+        $query = $this->createQueryBuilder('p');
+        $query->orderBy("p." . $params->ordercol, $params->orderorder);
+        if (isset($params->search) && $params->search != "") {
+            $searchCriteria = new Criteria();
+            $searchCriteria->where(Criteria::expr()->contains("p.name", $params->search));
+            $searchCriteria->orWhere(Criteria::expr()->contains("p.description", $params->search));
+            $query->addCriteria($searchCriteria);
+        }
+        $query->getQuery();
+        $paginator = new Paginator($query);
+        $paginator->getQuery()
+            ->setFirstResult(Util::PAGE_COUNT * ($page - 1)) // Offset
+            ->setMaxResults(Util::PAGE_COUNT); // Limit
+
+        return array('paginator' => $paginator, 'query' => $query);
     }
 
     // /**
