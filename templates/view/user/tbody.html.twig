@@ -24,7 +24,7 @@
         {% set keyCol = {
             value : '<button class="btn btn-sm btn-outline-danger border-0 w-100 user-password round"><i class="fas fa-key mobile-2-desktop-1"></i></button>',
             attr : {
-                class : 'action-btn border-0'
+                class : 'action-btn border-0 text-center'
             }
         } %}
         {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
@@ -32,14 +32,14 @@
                 {% set extra = {
                     value : divine,
                     attr : {
-                        class : 'action-btn border-0'
+                        class : 'action-btn border-0 text-center'
                     }
                 } %}
             {% else %}
                 {% set extra = {
                     value : '<a class="w-100 btn btn-sm btn-outline-info border-0 round" href="' ~ path("home_index", {"_switch_user" : user.username}) ~ '"><i class="fas fa-user-tie mobile-2-desktop-1"></i></a>',
                     attr : {
-                        class : 'action-btn border-0'
+                        class : 'action-btn border-0 text-center'
                     }
                 } %}
             {% endif %}
@@ -95,7 +95,7 @@
             {% set extraCol = {
                 value : divine,
                 attr : {
-                    class : 'action-btn border-0'
+                    class : 'action-btn border-0 text-center'
                 },
             } %}
         {% else %}
