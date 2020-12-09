@@ -77,7 +77,7 @@
         padding-right: 0.5rem
   .button-action
     cursor: pointer
-    color: #9b88cd
+    color: #3f7abe
     border: none
     display: inline-block
     font-weight: 400
@@ -92,5 +92,29 @@
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
     &:hover
       color: #ffffff
-      background-color: #9b88cd
+      background-color: #3f7abe
       text-decoration: none
+
+@media screen and (max-width: 900px) and (min-width: 300px)
+  .table
+    tr
+      border-top: solid 3px #DCD0FF !important
+    th, td
+      font-size: 1rem
+      min-height: 2rem
+    .button-action
+      color: #ffffff !important
+      background-color: #3f7abe !important
+      font-size: 1rem
+    .btn-outline-dark
+      color: #ffffff
+      background-color: #343a40
+    .btn-outline-danger
+      color: #ffffff
+      background-color: #dc3545
+    .btn-outline-info
+      color: #ffffff
+      background-color: #17a2b8
+    .btn-outline-secondary
+      color: #ffffff
+      background-color: #6c757d
