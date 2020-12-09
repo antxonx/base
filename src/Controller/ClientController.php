@@ -145,9 +145,6 @@ class ClientController extends AbstractController
                 'clients' => $clients,
                 'maxPages' => $maxPages,
                 'thisPage' => ((isset($params->page)) ? $params->page : 1),
-                'showed' => (($showed > $clients->count()) ? $clients->count() : $showed),'clients' => $clients,
-                'maxPages' => $maxPages,
-                'thisPage' => ((isset($params->page)) ? $params->page : 1),
                 'showed' => (($showed > $clients->count()) ? $clients->count() : $showed),
             ]);
         } catch (Exception $e) {
