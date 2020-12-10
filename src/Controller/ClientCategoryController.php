@@ -110,4 +110,24 @@ class ClientCategoryController extends AbstractController
             return $this->util->errorResponse($e);
         }
     }
+
+    /**
+     * Delete Category
+     *
+     * @Route("/delete/{id}", name="client_category_delete", methods={"DELETE"})
+     * @param int $id
+     * @return Response
+     */
+    public function delete(int $id) : Response
+    {
+        try {
+            $category = $this->rep->find($id);
+            $this->rep->delete($category);
+            $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
 }

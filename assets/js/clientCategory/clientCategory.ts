@@ -6,6 +6,7 @@ import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import {ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS} from "@scripts/clientCategory/defs";
 import ClientCategoryAdd from "@scripts/clientCategory/add";
+import ClientCategoryDelete from "@scripts/clientCategory/delete";
 
 /**
  * ClientCategory class
@@ -84,6 +85,12 @@ export default class ClientCategory {
             this.update();
         }
         [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
+        [...document.getElementsByClassName("catgeory-delete")].forEach(element => element.addEventListener("click", (e: Event) => {
+            (new ClientCategoryDelete({
+                element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
+                onError: this.main
+            })).delete();
+        }));
         return this;
     }
 
