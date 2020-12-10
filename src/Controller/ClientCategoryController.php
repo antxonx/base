@@ -5,6 +5,7 @@ namespace App\Controller;
 use Antxony\Util;
 use App\Entity\ClientCategory;
 use App\Repository\ClientCategoryRepository;
+use App\Repository\ClientRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,15 +25,27 @@ class ClientCategoryController extends AbstractController
     protected $rep;
 
     /**
+     * @var ClientRepository;
+     */
+    protected $cRep;
+
+    /**
      * herramientas útiles
      *
      * @var Util
      */
     protected $util;
 
-    public function __construct(ClientCategoryRepository $rep, Util $util)
+    /**
+     * ClientCategoryController constructor.
+     * @param ClientCategoryRepository $rep
+     * @param ClientRepository $cRep
+     * @param Util $util
+     */
+    public function __construct(ClientCategoryRepository $rep, ClientRepository $cRep, Util $util)
     {
         $this->rep = $rep;
+        $this->cRep = $cRep;
         $this->util = $util;
     }
 
@@ -126,6 +139,27 @@ class ClientCategoryController extends AbstractController
             $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
             $this->util->info($message);
             return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Cargar formulario de cambio de categorpia
+     *
+     * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"})
+     * @param int $id
+     * @return Response
+     */
+    public function changeForm(int $id) : Response
+    {
+        try {
+            $client = $this->cRep->find($id);
+            $categories = $this->rep->findAll();
+            return $this->render("view/client_category/changeForm.html.twig", [
+                'client' => $client,
+                'categories' => $categories,
+            ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

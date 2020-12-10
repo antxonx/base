@@ -10,6 +10,7 @@ import {evaluateInputs, hideElement, showElement} from '@scripts/plugins/Require
 import {openContactModal} from './contact/addContact';
 import {showContact} from './contact/show';
 import {deleteElement, disableRow} from '@scripts/plugins/DeleteElement';
+import ChangeCategory from "@scripts/clientCategory/changeCategory";
 
 let MODAL: Modal;
 let ID: number;
@@ -74,6 +75,18 @@ const loadClient = (loading = true) => {
             document.getElementById("client-email-extra-form")!.addEventListener("submit", addExtraEmail);
             [...document.getElementsByClassName("trash-phone")].forEach(el => el.addEventListener('click', deletePhone));
             [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', deleteEmail));
+            //.
+            // Ctegoría
+            document.getElementById("changeClientCategory")?.addEventListener("click", () => {
+                MODAL.hide();
+                (new ChangeCategory({
+                    idClient: ID,
+                    onClose: () => {
+                        MODAL.show();
+                        loadClient();
+                    }
+                })).load();
+            });
             //.
 
             /* ------------------------------------ . ----------------------------------- */

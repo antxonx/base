@@ -25,3 +25,13 @@ export const DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS : ClientCategoryDeleteOption
     onError: () => {},
     onSuccess: () => {},
 }
+
+export interface ClientCategoryChangeOptions {
+    idClient: number;
+    onClose: () => void;
+}
+
+export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS : ClientCategoryChangeOptions = {
+    idClient: 0,
+    onClose: () => {},
+}

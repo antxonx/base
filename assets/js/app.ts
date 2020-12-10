@@ -67,6 +67,7 @@ export const ROUTES = {
           index: (document.getElementById("client-category-index-route") as HTMLInputElement).value,
           list: (document.getElementById("client-category-list-route") as HTMLInputElement).value,
           form: (document.getElementById("client-category-form-route") as HTMLInputElement).value,
+          changeForm: (document.getElementById("client-category-change-form-route") as HTMLInputElement).value,
       },
       api: {
           add: (document.getElementById("client-category-api-add-route") as HTMLInputElement).value,

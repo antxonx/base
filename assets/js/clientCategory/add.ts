@@ -34,7 +34,7 @@ export default class ClientCategoryAdd {
         e.preventDefault();
         if (evaluateInputs(
             [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>],
-            1
+            0
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;

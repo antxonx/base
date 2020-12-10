@@ -228,3 +228,13 @@ b, h5
 
 .color-shadow
   box-shadow: 0 0.25rem 0.4rem rgba(0, 0, 0, 0.55) !important
+
+.list-group-item.hover
+  transition: background-color 300ms ease-in
+  &:hover
+    background-color: #e6e6fa
+    transition: background-color 300ms ease-out
+  &.active
+    background-color: #dcd0ff
+    border: 1px solid #dcd0ff
+    color: black
