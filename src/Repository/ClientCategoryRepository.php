@@ -87,6 +87,9 @@ class ClientCategoryRepository extends ServiceEntityRepository
      */
     public function delete(ClientCategory $entity)
     {
+        foreach($entity->getClients() as $client) {
+            $client->setCategory(null);
+        }
         $this->getEntityManager()->remove($entity);
         $this->getEntityManager()->flush();
     }
