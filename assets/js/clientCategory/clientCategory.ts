@@ -7,6 +7,7 @@ import Toast from "@plugins/AlertToast";
 import {ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS} from "@scripts/clientCategory/defs";
 import ClientCategoryAdd from "@scripts/clientCategory/add";
 import ClientCategoryDelete from "@scripts/clientCategory/delete";
+import Show from "@scripts/clientCategory/show";
 
 /**
  * ClientCategory class
@@ -90,6 +91,14 @@ export default class ClientCategory {
                 element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
                 onError: this.main
             })).delete();
+        }));
+        [...document.getElementsByClassName("category-show")].forEach(element => element.addEventListener("click", (e: Event) => {
+            (new Show({
+                idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                onClose: () => {
+                    this.update();
+                }
+            })).load();
         }));
         return this;
     }

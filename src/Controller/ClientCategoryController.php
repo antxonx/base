@@ -200,7 +200,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Show category
      *
-     * @Route("/show/{id}", name="client_category_show", methods={"GET"})
+     * @Route("/show/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})
      * @param int $id
      * @return Response
      */
