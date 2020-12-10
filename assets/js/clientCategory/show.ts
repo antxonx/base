@@ -28,7 +28,8 @@ export default class Show
                 this.modal.updateBody(res.data);
                 $('.editable-field').editable({
                     success: (res: any) => {
-                        Toast.success(res)
+                        Toast.success(res);
+                        this.options.onClose();
                     },
                     error: (err: any) => {
                         console.error(err.responseText);
