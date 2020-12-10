@@ -594,6 +594,7 @@ class ClientController extends AbstractController
      * @Route("", name="client_add", methods={"POST"})
      * @IsGranted("ROLE_TEST")
      *
+     *
      * @param Request $request
      * @return Response
      */

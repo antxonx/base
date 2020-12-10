@@ -5,8 +5,9 @@ import 'x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css';
 import 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable';
 import '@styles/app.sass';
 const routes = require('@scripts/fos_js_routes.json');
-// @ts-ignore
-import Routing from '@scripts/bundles/fosjsrouting/js/router.min';
+
+//import Routing from '@scripts/bundles/fosjsrouting/js/router.min';
+import {Router as Routing} from 'symfony-ts-router';
 /* ------------------ Configuración para bootstrap-editable ----------------- */
 
 //@ts-ignore
@@ -22,11 +23,13 @@ $.fn.editable.defaults.send = 'always';
 
 /* ------------------------------------ . ----------------------------------- */
 
-const BASE_URL = (document.getElementById('baseURL') as HTMLInputElement).value;
-
-Routing.setRoutingData(routes);
-Routing.setBaseUrl(BASE_URL);
-export const Router : FOS.Router = Routing;
+const BASE_ELEMENT = (document.getElementById('baseURL') as HTMLInputElement);
+const BASE_URL = BASE_ELEMENT.value;
+const router = new Routing();
+BASE_ELEMENT.parentElement!.removeChild(BASE_ELEMENT);
+router.setRoutingData(routes);
+router.setBaseUrl(BASE_URL);
+export const Router = router;
 
 export const ROUTES = {
     user: {

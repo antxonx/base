@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Antxony\Def\Editable\Editable;
 use Antxony\Util;
 use App\Entity\ClientCategory;
 use App\Repository\ClientCategoryRepository;
@@ -101,50 +102,6 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
-     * Add category
-     *
-     * @Route("/add", name="client_category_add", methods={"POST"})
-     * @param Request $request
-     * @return Response
-     */
-    public function add(Request $request) : Response
-    {
-        try {
-            $content = json_decode($request->getContent());
-            $category = (new ClientCategory())
-                ->setName($content->name)
-                ->setDescription($content->description)
-                ->setColor($content->color);
-            $this->rep->add($category);
-            $message = "Se ha agregado la categoría <b>{$content->name}</b>";
-            $this->util->info($message);
-            return new Response($message);
-        } catch (Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
-    /**
-     * Delete Category
-     *
-     * @Route("/delete/{id}", name="client_category_delete", methods={"DELETE"})
-     * @param int $id
-     * @return Response
-     */
-    public function delete(int $id) : Response
-    {
-        try {
-            $category = $this->rep->find($id);
-            $this->rep->delete($category);
-            $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
-            $this->util->info($message);
-            return new Response($message);
-        } catch (Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
-    /**
      * Cargar formulario de cambio de categorpia
      *
      * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"})
@@ -198,16 +155,97 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
-     * Show category
+     * Add category
      *
-     * @Route("/show/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})
+     * @Route("/", name="client_category_add", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function add(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $category = (new ClientCategory())
+                ->setName($content->name)
+                ->setDescription($content->description)
+                ->setColor($content->color);
+            $this->rep->add($category);
+            $message = "Se ha agregado la categoría <b>{$content->name}</b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Delete Category
+     *
+     * @Route("/{id}", name="client_category_delete", methods={"DELETE"})
      * @param int $id
      * @return Response
      */
-    public function show(int $id)
+    public function delete(int $id) : Response
     {
         try {
-            return new Response("ok");
+            $category = $this->rep->find($id);
+            $this->rep->delete($category);
+            $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Show category
+     *
+     * @Route("/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})
+     * @param int $id
+     * @return Response
+     */
+    public function show(int $id) : Response
+    {
+        try {
+            $category = $this->rep->find($id);
+            return $this->render("view/client_category/show.html.twig", [
+                'category' => $category
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Update category with x-editable
+     *
+     * @Route("/{id}", name="client_category_edit", methods={"PUT", "PATCH"})
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function update(int $id, Request $request) : Response
+    {
+        try {
+            parse_str($request->getContent(), $content);
+            $editable = new Editable($content);
+            $category = $this->rep->find($id);
+            if($category == null){
+                throw new Exception("No se pudo localizar la categoría");
+            }
+            $message = "se ha actualizado";
+            if ($editable->name == "categoryName") {
+                $category->setName($editable->value);
+                $message .= " el nombre";
+            }
+            if ($editable->name == "categoryDescription") {
+                $category->setDescription($editable->value);
+                $message .= " la descripción";
+            }
+            $this->rep->update();
+            $this->util->info($message . " para la categoría <b>{$category->getId()}</b>(<em>{$category->getName()}</em>)");
+            return new Response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

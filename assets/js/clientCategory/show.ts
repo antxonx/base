@@ -1,3 +1,5 @@
+import $ from 'jquery';
+import 'bootstrap';
 import Modal from "@plugins/Modal";
 import {ClientCategoryShowOptions, DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS} from "@scripts/clientCategory/defs";
 import Axios from "axios";
@@ -14,7 +16,7 @@ export default class Show
         this.options = {...DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS, ...options};
         this.modal = new Modal({
             title: 'Categoría',
-            size: 50
+            size: 30
         });
     }
 
@@ -24,6 +26,16 @@ export default class Show
         Axios.get(Router.generate('client_category_show', {'id': this.options.idCategory.toString()}))
             .then(res => {
                 this.modal.updateBody(res.data);
+                $('.editable-field').editable({
+                    success: (res: any) => {
+                        Toast.success(res)
+                    },
+                    error: (err: any) => {
+                        console.error(err.responseText);
+                        Toast.error(err.responseText);
+                    },
+                    disabled: false
+                });
             })
             .catch(err => {
                 console.error(err.response.data);
