@@ -8,7 +8,7 @@ import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
 
-export default class ChangeCategory
+export default class Change
 {
     protected options: ClientCategoryChangeOptions;
 

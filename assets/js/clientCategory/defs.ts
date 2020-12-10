@@ -35,3 +35,13 @@ export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS : ClientCategoryChangeOption
     idClient: 0,
     onClose: () => {},
 }
+
+export interface ClientCategoryShowOptions {
+    idCategory: number;
+    onClose: () => void;
+}
+
+export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS : ClientCategoryShowOptions = {
+    idCategory: 0,
+    onClose: () => {},
+}

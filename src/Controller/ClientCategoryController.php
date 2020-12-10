@@ -196,4 +196,20 @@ class ClientCategoryController extends AbstractController
             return $this->util->errorResponse($e);
         }
     }
+
+    /**
+     * Show category
+     *
+     * @Route("/show/{id}", name="client_category_show", methods={"GET"})
+     * @param int $id
+     * @return Response
+     */
+    public function show(int $id)
+    {
+        try {
+            return new Response("ok");
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
 }

@@ -10,7 +10,7 @@ import {evaluateInputs, hideElement, showElement} from '@scripts/plugins/Require
 import {openContactModal} from './contact/addContact';
 import {showContact} from './contact/show';
 import {deleteElement, disableRow} from '@scripts/plugins/DeleteElement';
-import ChangeCategory from "@scripts/clientCategory/changeCategory";
+import Change from "@scripts/clientCategory/change";
 
 let MODAL: Modal;
 let ID: number;
@@ -79,7 +79,7 @@ const loadClient = (loading = true) => {
             // Ctegoría
             document.getElementById("changeClientCategory")?.addEventListener("click", () => {
                 MODAL.hide();
-                (new ChangeCategory({
+                (new Change({
                     idClient: ID,
                     onClose: () => {
                         MODAL.show();
