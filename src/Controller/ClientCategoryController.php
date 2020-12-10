@@ -164,4 +164,36 @@ class ClientCategoryController extends AbstractController
             return $this->util->errorResponse($e);
         }
     }
+
+    /**
+     * Change client category
+     *
+     * @Route("/change", name="client_category_change", methods={"PUT", "PATCH"})
+     * @param Request $request
+     * @return Response
+     */
+    public function changeClientCategory(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $client = $this->cRep->find($content->clientId);
+            $category = $this->rep->find($content->categoryId);
+            if($client == null)
+                throw new Exception("No se pudo localizar al cliente");
+            if($category == null)
+                throw new Exception("No se pudo localizar la categoría");
+            $oldCat = $client->getCategory();
+            $client->setCategory($category);
+            $this->cRep->update();
+            $message = "Se ha cambiado la categoría del cliente <b>{$client->getId()}</b> (<em>{$client->getName()}</em>)";
+            if($oldCat != null){
+                $message .= "de <b>{$oldCat->getName()}</b>";
+            }
+            $message .= "a <b>{$category->getName()}</b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
 }

@@ -72,6 +72,7 @@ export const ROUTES = {
       api: {
           add: (document.getElementById("client-category-api-add-route") as HTMLInputElement).value,
           delete: (document.getElementById("client-category-api-delete-route") as HTMLInputElement).value,
+          update: (document.getElementById("client-category-api-update-route") as HTMLInputElement).value,
       }
     },
     logger: {

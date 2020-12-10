@@ -84,6 +84,7 @@ const loadClient = (loading = true) => {
                     onClose: () => {
                         MODAL.show();
                         loadClient();
+                        CALLBACK();
                     }
                 })).load();
             });
