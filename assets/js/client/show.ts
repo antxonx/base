@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import 'bootstrap';
 import Modal from "@scripts/plugins/Modal";
 import Alert from '@scripts/plugins/Alert';
 import Axios from "axios";
@@ -49,6 +50,7 @@ const loadClient = (loading = true) => {
     Axios.get(ROUTES.client.view.show.replace('0', ID.toString()))
         .then(res => {
             MODAL.updateBody(res.data);
+            $('[data-toggle="tooltip"]').tooltip();
             $('.editable-field').editable({
                 success: onSuccess,
                 error: onError,
