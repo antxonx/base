@@ -60,6 +60,7 @@ const validate = (e: Event) => {
                 phone: (document.getElementById("phone") as HTMLInputElement).value,
             },
             email: (document.getElementById("email") as HTMLInputElement).value,
+            category: (document.getElementById("category-select") as HTMLInputElement).value
         })
             .then(res => {
                 Toast.success(res.data);
