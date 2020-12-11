@@ -5,9 +5,27 @@ import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
 import {PASSWORD_INPUT} from "@scripts/profile/defs";
 
+/**
+ * Key class
+ *
+ * @export
+ * @class Key
+ */
 export default class Key {
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Key
+     */
     protected modal: Modal;
 
+    /**
+     * Creates an instance of Key.
+     * @memberof Key
+     */
     public constructor() {
         this.modal = new Modal({
             title: 'CAmbiar contraseña',
@@ -15,6 +33,11 @@ export default class Key {
         });
     }
 
+    /**
+     * load
+     *
+     * @memberof Key
+     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.passform))
@@ -28,6 +51,11 @@ export default class Key {
             });
     }
 
+    /**
+     * validate
+     *
+     * @memberof Key
+     */
     public validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;

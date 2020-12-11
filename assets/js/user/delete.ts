@@ -5,9 +5,28 @@ import Axios from "axios";
 import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
+/**
+ * Delete class
+ *
+ * @export
+ * @class Delete
+ */
 export default class Delete {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {DeleteReactiveOptions}
+     * @memberof Delete
+     */
     protected options: DeleteReactiveOptions;
 
+    /**
+     * Creates an instance of Delete.
+     * @param {DeleteReactiveOptions} options
+     * @memberof Delete
+     */
     public constructor(options: DeleteReactiveOptions) {
         this.options = {...DEFAULT_DELETE_REACTIVE_OPTIONS, ...options};
         this.options.id = this.options.id || +this.options.element.getAttribute("id")!;
@@ -15,6 +34,11 @@ export default class Delete {
         this.options.username = this.options.username || this.options.element.getAttribute("username")!;
     }
 
+    /**
+     * delete
+     *
+     * @memberof Delete
+     */
     public delete = async () => {
         const ALERT = new Alert({
             type: 'danger',
@@ -38,6 +62,11 @@ export default class Delete {
         }
     }
 
+    /**
+     * reactive
+     *
+     * @memberof Delete
+     */
     public reactive = async () => {
         const ALERT = new Alert({
             type: 'danger',

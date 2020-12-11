@@ -2,7 +2,19 @@ import $ from "jquery";
 import Key from "@scripts/profile/key";
 import Toast from "@plugins/AlertToast";
 
+/**
+ * Profile class
+ *
+ * @export
+ * @class Profile
+ */
 export default class Profile {
+    
+    /**
+     * load
+     *
+     * @memberof Profile
+     */
     public load = () => {
         const EDIT_BTN = document.getElementById('profile-edit')!;
         $('.editable-field').editable({

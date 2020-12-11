@@ -4,12 +4,37 @@ import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
+/**
+ * Add class
+ *
+ * @export
+ * @class Add
+ */
 export default class Add {
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Add
+     */
     protected modal: Modal;
+
+    /**
+     * callback
+     *
+     * @protected
+     * @memberof Add
+     */
     protected callback: () => void;
 
-    public constructor(callback: () => void = () => {
-    }) {
+    /**
+     * Creates an instance of Add.
+     * @param {() => void} [callback=() => {}]
+     * @memberof Add
+     */
+    public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = new Modal({
             title: 'Nuevo usuario',
@@ -17,6 +42,11 @@ export default class Add {
         });
     }
 
+    /**
+     * load
+     *
+     * @memberof Add
+     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.form))
@@ -30,6 +60,12 @@ export default class Add {
             });
     }
 
+    /**
+     * validate
+     *
+     * @private
+     * @memberof Add
+     */
     private validate = (e: Event) => {
         e.preventDefault();
         clearErrorMsg();

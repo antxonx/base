@@ -8,13 +8,46 @@ import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
 
+/**
+ * Change class
+ *
+ * @export
+ * @class Change
+ */
 export default class Change {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {ClientCategoryChangeOptions}
+     * @memberof Change
+     */
     protected options: ClientCategoryChangeOptions;
 
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Change
+     */
     protected modal: Modal;
 
+    /**
+     * list
+     *
+     * @protected
+     * @type {HTMLElement}
+     * @memberof Change
+     */
     protected list: HTMLElement;
 
+    /**
+     * Creates an instance of Change.
+     * @param {ClientCategoryChangeOptions} options
+     * @memberof Change
+     */
     public constructor(options: ClientCategoryChangeOptions) {
         this.options = {...DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS, ...options};
         this.list = document.createElement("div") as HTMLElement;
@@ -28,6 +61,11 @@ export default class Change {
         }
     }
 
+    /**
+     * load
+     *
+     * @memberof Change
+     */
     public load() {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm, {'id': this.options.idClient}))
@@ -43,6 +81,12 @@ export default class Change {
             });
     }
 
+    /**
+     * listChange
+     *
+     * @private
+     * @memberof Change
+     */
     private listchange = async (data: string[]) => {
         if (Array.isArray(data) && data.length) {
             const LIST_BEF = this.list.innerHTML;
@@ -76,6 +120,12 @@ export default class Change {
         }
     }
 
+    /**
+     * startEvents
+     *
+     * @private
+     * @memberof Change
+     */
     private startEvents = () => {
         (new ListSelect({
             element: this.list,

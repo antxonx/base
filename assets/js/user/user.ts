@@ -10,7 +10,14 @@ import Delete from "@scripts/user/delete";
 import Key from "@scripts/user/key";
 import Show from "@scripts/user/show";
 
+/**
+ * User class
+ *
+ * @export
+ * @class User
+ */
 export default class User {
+
     /**
      * options
      *
@@ -19,6 +26,7 @@ export default class User {
      * @memberof User
      */
     protected control: boolean
+
     /**
      * mainView
      *
@@ -37,6 +45,13 @@ export default class User {
      */
     protected search: string;
 
+    /**
+     * suspended
+     *
+     * @protected
+     * @type {number}
+     * @memberof User
+     */
     protected suspended: number
 
     /**
@@ -48,6 +63,10 @@ export default class User {
      */
     protected orderBy: SortColumn;
 
+    /**
+     * Creates an instance of User.
+     * @memberof User
+     */
     public constructor() {
         this.mainView = ((document.getElementById("usersView") as HTMLElement) || document.createElement("div"));
         this.search = "";
@@ -59,6 +78,11 @@ export default class User {
         this.control = true;
     }
 
+    /**
+     * load
+     *
+     * @memberof User
+     */
     public load = () => {
         if (this.control) {
             document.getElementById("user-add")!.addEventListener("click", this.add);
@@ -90,6 +114,12 @@ export default class User {
         [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
     }
 
+    /**
+     * update
+     *
+     * @private
+     * @memberof User
+     */
     private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
         Axios.get(Router.generate(ROUTES.user.view.list, {
@@ -110,20 +140,44 @@ export default class User {
             });
     }
 
+    /**
+     * add
+     *
+     * @private
+     * @memberof User
+     */
     private add = () => {
         (new Add(this.load)).load();
     }
 
+    /**
+     * setSuspended
+     *
+     * @private
+     * @memberof User
+     */
     private setSuspended = (value: string[]) => {
         this.suspended = +value.includes('suspended');
         this.update();
     }
 
+    /**
+     * setSearch
+     *
+     * @private
+     * @memberof User
+     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
     }
 
+    /**
+     * delete
+     *
+     * @private
+     * @memberof User
+     */
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
@@ -131,6 +185,12 @@ export default class User {
         })).delete();
     }
 
+    /**
+     * reactive
+     *
+     * @private
+     * @memberof User
+     */
     private reactive = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
@@ -138,15 +198,26 @@ export default class User {
         })).reactive();
     }
 
+    /**
+     * show
+     *
+     * @private
+     * @memberof User
+     */
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-        //editUser(+ELEMENT.getAttribute("id")!, this.update);
         (new Show({
             id: +ELEMENT.getAttribute("id")!,
             callback: this.update
         })).load();
     }
 
+    /**
+     * key
+     *
+     * @private
+     * @memberof User
+     */
     private key = (e: Event) => {
         (new Key({
             element: (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement
@@ -154,6 +225,12 @@ export default class User {
 
     }
 
+    /**
+     * sort
+     *
+     * @private
+     * @memberof User
+     */
     private sort = (e: Event) => {
         this.orderBy = getSort(e.currentTarget as HTMLElement);
         this.update();

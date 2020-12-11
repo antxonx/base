@@ -5,10 +5,37 @@ import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
 
+/**
+ * Key class
+ *
+ * @export
+ * @class Key
+ */
 export default class Key {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {keyOptions}
+     * @memberof Key
+     */
     protected options: keyOptions;
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Key
+     */
     protected modal: Modal;
 
+    /**
+     * Creates an instance of Key.
+     * @param {keyOptions} options
+     * @memberof Key
+     */
     public constructor(options: keyOptions) {
         this.options = {...DEFAULT_KEY_OPTIONS, ...options};
         this.options.id = this.options.id || +this.options.element!.getAttribute("id")!;
@@ -20,6 +47,11 @@ export default class Key {
         });
     }
 
+    /**
+     * load
+     *
+     * @memberof Key
+     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.key))
@@ -33,6 +65,12 @@ export default class Key {
             });
     }
 
+    /**
+     * validate
+     *
+     * @private
+     * @memberof Key
+     */
     private validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
