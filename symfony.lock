@@ -108,6 +108,9 @@
             "./config/routes/fos_js_routing.yaml"
         ]
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },
@@ -118,7 +121,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.2.32"
+        "version": "7.4.10"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -570,6 +573,9 @@
     },
     "twig/twig": {
         "version": "v3.0.5"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.9.1"
