@@ -51,7 +51,7 @@ export default class Modal {
         this.options = {...DEFAULT_MODAL_OPTIONS, ...options};
         this.id = Modal.randomId();
         this.modal = Modal.htmlToElement("<div></div>");
-        this.createModal();
+        //this.createModal();
     }
 
     /**
@@ -127,6 +127,8 @@ export default class Modal {
      * @memberof Modal
      */
     public show(loading = true) {
+        //console.log(this);
+        this.createModal();
         this.setTitle();
         this.setSize();
         if(loading)

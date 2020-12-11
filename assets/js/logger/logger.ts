@@ -74,7 +74,7 @@ export default class Logger {
         this.searchInput = '';
         this.method = '';
         this.route = '';
-        this.mainView = ((document.getElementById("logsView") as HTMLElement) || new HTMLElement());
+        this.mainView = ((document.getElementById("logsView") as HTMLElement) || document.createElement("div"));
         this.orderBy = {
             column: "createdAt",
             order: "DESC"

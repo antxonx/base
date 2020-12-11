@@ -4,7 +4,10 @@ import 'bootstrap';
 import 'x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css';
 import 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable';
 import '@styles/app.sass';
+const routes = require('@scripts/fos_js_routes.json');
 
+//import Routing from '@scripts/bundles/fosjsrouting/js/router.min';
+import {Router as Routing} from 'symfony-ts-router';
 /* ------------------ Configuración para bootstrap-editable ----------------- */
 
 //@ts-ignore
@@ -19,6 +22,14 @@ $.fn.editable.defaults.onblur = 'ignore';
 $.fn.editable.defaults.send = 'always';
 
 /* ------------------------------------ . ----------------------------------- */
+
+const BASE_ELEMENT = (document.getElementById('baseURL') as HTMLInputElement);
+const BASE_URL = BASE_ELEMENT.value;
+const router = new Routing();
+BASE_ELEMENT.parentElement!.removeChild(BASE_ELEMENT);
+router.setRoutingData(routes);
+router.setBaseUrl(BASE_URL);
+export const Router = router;
 
 export const ROUTES = {
     user: {
@@ -61,6 +72,19 @@ export const ROUTES = {
             contactDelete: (document.getElementById("client-contact-delete-api") as HTMLInputElement).value,
             contactUpdate: (document.getElementById("client-contact-update-api") as HTMLInputElement).value,
         }
+    },
+    clientCategory : {
+      view: {
+          index: (document.getElementById("client-category-index-route") as HTMLInputElement).value,
+          list: (document.getElementById("client-category-list-route") as HTMLInputElement).value,
+          form: (document.getElementById("client-category-form-route") as HTMLInputElement).value,
+          changeForm: (document.getElementById("client-category-change-form-route") as HTMLInputElement).value,
+      },
+      api: {
+          add: (document.getElementById("client-category-api-add-route") as HTMLInputElement).value,
+          delete: (document.getElementById("client-category-api-delete-route") as HTMLInputElement).value,
+          update: (document.getElementById("client-category-api-update-route") as HTMLInputElement).value,
+      }
     },
     logger: {
         view: {

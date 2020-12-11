@@ -17,14 +17,6 @@
                         class : 'text-center icon-col',
                     }
                 },
-                id : {
-                    value : 'Id' ~ sort,
-                    attr : {
-                        class: sortClass,
-                        column: 'id',
-                        style: 'width: 120px !important;',
-                    }
-                },
                 name : {
                     value : 'Nombre' ~ sort,
                     attr : {
@@ -32,17 +24,8 @@
                         column: 'name'
                     }
                 },
-                phone : {
-                    value : 'Teléfono',
-                    attr : {
-                        style: 'width: 1px;'
-                    }
-                },
-                email : {
-                    value : 'Correo',
-                    attr : {
-                        style: 'width: 1px;'
-                    }
+                description : {
+                    value : 'Descripción',
                 },
                 delete : {
                     value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
@@ -53,5 +36,5 @@
             },
         }
     } %}
-    <tbody id="clientsView"></tbody>
+    <tbody id="clientCategoriesView"></tbody>
 </table>

@@ -1,0 +1,19 @@
+<form id="clientCategoryForm">
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        id: 'name',
+        label: 'Nombre',
+        placeholder: 'Nombre',
+        required : true,
+        error : 'Ingrese un nombre para la categoría'
+    } %}
+    <div class="form-group">
+        <textarea class="form-control" rows="5" id="description" name="description" placeholder="Descripción"></textarea>
+    </div>
+    <div class="form-group d-flex justify-content-between">
+        <b class="text-muted font-italic">Color: </b><input type="color" id="color" name="color" value="#eee7e7"><span></span><span></span><span></span><span></span>
+    </div>
+    <div id="submit-btn" class="w-100 text-left">
+        <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
+    </div>
+</form>

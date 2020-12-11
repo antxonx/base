@@ -14,6 +14,7 @@ use App\Entity\ClientExtra;
 use App\Entity\Contact;
 use App\Entity\ContactExtra;
 use App\Entity\User;
+use App\Repository\ClientCategoryRepository;
 use App\Repository\ClientRepository;
 use App\Repository\ClientExtraRepository;
 use Antxony\Util;
@@ -41,6 +42,13 @@ class ClientController extends AbstractController
      * @var ClientRepository
      */
     protected $cRep;
+
+    /**
+     * Repositorio de usuarios
+     *
+     * @var ClientCategoryRepository
+     */
+    protected $ccRep;
 
     /**
      * Repositorio de extras para usuarios
@@ -88,6 +96,7 @@ class ClientController extends AbstractController
      * Constructor
      *
      * @param ClientRepository $cRep
+     * @param ClientCategoryRepository $ccRep
      * @param ClientExtraRepository $ceRep
      * @param ClientAddressRepository $caRep
      * @param ContactRepository $coRep
@@ -97,6 +106,7 @@ class ClientController extends AbstractController
      */
     public function __construct(
         ClientRepository $cRep,
+        ClientCategoryRepository $ccRep,
         ClientExtraRepository $ceRep,
         ClientAddressRepository $caRep,
         ContactRepository $coRep,
@@ -106,6 +116,7 @@ class ClientController extends AbstractController
     {
         $this->util = $util;
         $this->cRep = $cRep;
+        $this->ccRep = $ccRep;
         $this->ceRep = $ceRep;
         $this->coRep = $coRep;
         $this->coeRep = $coeRep;
@@ -162,9 +173,11 @@ class ClientController extends AbstractController
     public function form(): Response
     {
         try {
+            $categories = $this->ccRep->findAll();
             return $this->render("view/client/form.html.twig", [
                 'id' => 'clientForm',
-                'contact' => false
+                'contact' => false,
+                'categories' => $categories
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -581,6 +594,7 @@ class ClientController extends AbstractController
      * @Route("", name="client_add", methods={"POST"})
      * @IsGranted("ROLE_TEST")
      *
+     *
      * @param Request $request
      * @return Response
      */
@@ -588,10 +602,12 @@ class ClientController extends AbstractController
     {
         try {
             $content = json_decode($request->getContent());
+            $category = $this->ccRep->find($content->category);
             // Damos de alta al cliente
             $client = (new Client)
                 ->setName($content->name)
                 ->setSuspended(false)
+                ->setCategory($category)
                 ->created($this->actualUser);
             //.
             //Agregaos su correo

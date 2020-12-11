@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import 'bootstrap';
 import Modal from "@scripts/plugins/Modal";
 import Alert from '@scripts/plugins/Alert';
 import Axios from "axios";
@@ -9,6 +10,7 @@ import {evaluateInputs, hideElement, showElement} from '@scripts/plugins/Require
 import {openContactModal} from './contact/addContact';
 import {showContact} from './contact/show';
 import {deleteElement, disableRow} from '@scripts/plugins/DeleteElement';
+import Change from "@scripts/clientCategory/change";
 
 let MODAL: Modal;
 let ID: number;
@@ -49,6 +51,7 @@ const loadClient = (loading = true) => {
     Axios.get(ROUTES.client.view.show.replace('0', ID.toString()))
         .then(res => {
             MODAL.updateBody(res.data);
+            $('[data-toggle="tooltip"]').tooltip();
             $('.editable-field').editable({
                 success: onSuccess,
                 error: onError,
@@ -72,6 +75,19 @@ const loadClient = (loading = true) => {
             document.getElementById("client-email-extra-form")!.addEventListener("submit", addExtraEmail);
             [...document.getElementsByClassName("trash-phone")].forEach(el => el.addEventListener('click', deletePhone));
             [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', deleteEmail));
+            //.
+            // Ctegoría
+            document.getElementById("changeClientCategory")?.addEventListener("click", () => {
+                MODAL.hide();
+                (new Change({
+                    idClient: ID,
+                    onClose: () => {
+                        MODAL.show();
+                        loadClient();
+                        CALLBACK();
+                    }
+                })).load();
+            });
             //.
 
             /* ------------------------------------ . ----------------------------------- */

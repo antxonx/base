@@ -44,6 +44,7 @@
     </div>
     {% block body %}{% endblock %}
     {% include "routes.html.twig" %}
+<input type="hidden" id="baseURL" value="{{ app.request.baseUrl }}">
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
