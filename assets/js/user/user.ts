@@ -5,11 +5,11 @@ import Search from "@plugins/Search";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
-import Delete from "@scripts/user/delete";
 import {editUser} from "@scripts/user/edit";
-import {reactiveUser} from "@scripts/user/reactive";
-import {openKeyModal} from "@scripts/user/key";
+//import {openKeyModal} from "@scripts/user/key";
 import Add from "@scripts/user/add";
+import Delete from "@scripts/user/delete";
+import Key from "@scripts/user/key";
 
 export default class User {
     /**
@@ -129,12 +129,14 @@ export default class User {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
             element: ELEMENT,
-        })).load();
+        })).delete();
     }
 
     private reactive = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-        reactiveUser(ELEMENT, () => {}, this.update);
+        (new Delete({
+            element: ELEMENT,
+        })).reactive();
     }
 
     private show = (e: Event) => {
@@ -143,7 +145,10 @@ export default class User {
     }
 
     private key = (e: Event) => {
-        openKeyModal((e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement);
+        (new Key({
+            element: (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement
+        })).load();
+
     }
 
     private sort = (e: Event) => {

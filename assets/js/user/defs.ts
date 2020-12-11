@@ -1,5 +1,5 @@
-export interface DeleteOptions {
-    element?: HTMLElement;
+export interface DeleteReactiveOptions {
+    element: HTMLElement;
     onSuccess?: () => void;
     onError?: () => void;
     id?: number;
@@ -7,10 +7,24 @@ export interface DeleteOptions {
     username?: string
 }
 
-export const DEFAULT_DELETE_OPTIONS :DeleteOptions = {
+export const DEFAULT_DELETE_REACTIVE_OPTIONS :DeleteReactiveOptions = {
     element: document.createElement("div"),
     onSuccess: () => {},
     onError: () => {},
+    id: 0,
+    name: '',
+    username: '',
+};
+
+export interface keyOptions {
+    element?: HTMLElement;
+    id?: number;
+    name?: string;
+    username?: string
+}
+
+export const DEFAULT_KEY_OPTIONS :keyOptions = {
+    element:  document.createElement("div"),
     id: 0,
     name: '',
     username: '',
