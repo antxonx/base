@@ -14,13 +14,19 @@
                 }
             },
             name : {
-                value : category.name,
+                value : '<span class="btn btn-sm2 w-100 alert-primary"><b>' ~ category.name ~ '</b></span>',
                 attr : {
                     class : 'category-show cursor-pointer text-nowrap',
                 }
             },
             desscription : {
                 value : category.description,
+                attr : {
+                    class : 'category-show cursor-pointer text-justify'
+                }
+            },
+            count : {
+                value: '<span class="btn btn-sm2 w-100 alert-secondary"><b>' ~ category.clients | length ~ '</b></span>',
                 attr : {
                     class : 'category-show cursor-pointer'
                 }

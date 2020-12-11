@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ClientCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -90,7 +91,9 @@ class ClientCategory
      */
     public function getClients(): Collection
     {
-        return $this->clients;
+        $criteria = (new Criteria())
+            ->where(Criteria::expr()->eq('suspended', '0'));
+        return $this->clients->matching($criteria);
     }
 
     public function addClient(Client $client): self
