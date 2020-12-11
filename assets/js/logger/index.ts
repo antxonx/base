@@ -1,3 +1,5 @@
 import Logger from "./logger";
 
-(new Logger().main());
+(() => {
+    (new Logger().load());
+})();

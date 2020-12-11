@@ -20,10 +20,12 @@ export interface ClientCategoryDeleteOptions {
     onSuccess?: () => void
 }
 
-export const DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS : ClientCategoryDeleteOptions = {
+export const DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS: ClientCategoryDeleteOptions = {
     element: document.createElement("div"),
-    onError: () => {},
-    onSuccess: () => {},
+    onError: () => {
+    },
+    onSuccess: () => {
+    },
 }
 
 export interface ClientCategoryChangeOptions {
@@ -31,9 +33,10 @@ export interface ClientCategoryChangeOptions {
     onClose: () => void;
 }
 
-export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS : ClientCategoryChangeOptions = {
+export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS: ClientCategoryChangeOptions = {
     idClient: 0,
-    onClose: () => {},
+    onClose: () => {
+    },
 }
 
 export interface ClientCategoryShowOptions {
@@ -41,7 +44,8 @@ export interface ClientCategoryShowOptions {
     onClose: () => void;
 }
 
-export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS : ClientCategoryShowOptions = {
+export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS: ClientCategoryShowOptions = {
     idCategory: 0,
-    onClose: () => {},
+    onClose: () => {
+    },
 }

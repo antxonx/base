@@ -7,10 +7,12 @@ export interface DeleteReactiveOptions {
     username?: string
 }
 
-export const DEFAULT_DELETE_REACTIVE_OPTIONS :DeleteReactiveOptions = {
+export const DEFAULT_DELETE_REACTIVE_OPTIONS: DeleteReactiveOptions = {
     element: document.createElement("div"),
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+    },
+    onError: () => {
+    },
     id: 0,
     name: '',
     username: '',
@@ -23,8 +25,8 @@ export interface keyOptions {
     username?: string
 }
 
-export const DEFAULT_KEY_OPTIONS :keyOptions = {
-    element:  document.createElement("div"),
+export const DEFAULT_KEY_OPTIONS: keyOptions = {
+    element: document.createElement("div"),
     id: 0,
     name: '',
     username: '',
@@ -35,7 +37,8 @@ export interface EditOptions {
     callback?: () => void;
 }
 
-export const DEFAULT_EDIT_OPTIONS : EditOptions = {
+export const DEFAULT_EDIT_OPTIONS: EditOptions = {
     id: 0,
-    callback: () => {},
+    callback: () => {
+    },
 }

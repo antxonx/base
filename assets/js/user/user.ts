@@ -60,9 +60,9 @@ export default class User {
     }
 
     public load = () => {
-        if(this.control) {
+        if (this.control) {
             document.getElementById("user-add")!.addEventListener("click", this.add);
-            new ButtonCheck(document.getElementById("suspendedFilter") as HTMLButtonElement,  {
+            new ButtonCheck(document.getElementById("suspendedFilter") as HTMLButtonElement, {
                 onChange: this.setSuspended,
                 unCheckClass: 'btn-outline-success',
                 checkClass: 'btn-success',
@@ -90,7 +90,7 @@ export default class User {
         [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
     }
 
-    private update = (page : number = 1) => {
+    private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
         Axios.get(Router.generate(ROUTES.user.view.list, {
             'search': this.search,

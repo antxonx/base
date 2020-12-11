@@ -5,10 +5,11 @@ import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 export default class Add {
-    protected modal : Modal;
-    protected callback : () => void;
+    protected modal: Modal;
+    protected callback: () => void;
 
-    public constructor(callback : () => void = () => {}) {
+    public constructor(callback: () => void = () => {
+    }) {
         this.callback = callback;
         this.modal = new Modal({
             title: 'Nuevo usuario',

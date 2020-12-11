@@ -6,10 +6,11 @@ import Toast from "@plugins/AlertToast";
 
 export default class Show {
     protected options: EditOptions
-    protected modal : Modal;
-    public constructor(options : EditOptions) {
+    protected modal: Modal;
+
+    public constructor(options: EditOptions) {
         this.options = {...DEFAULT_EDIT_OPTIONS, ...options};
-        if(this.options.id === 0) {
+        if (this.options.id === 0) {
             throw new Error("No se ha podido determinar al usuario");
         }
         this.modal = new Modal({
@@ -17,6 +18,7 @@ export default class Show {
             size: 50
         });
     }
+
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.show, {'id': this.options.id.toString()}))

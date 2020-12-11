@@ -6,8 +6,7 @@ import Axios from "axios";
 import {ROUTES, Router} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
-export default class Show
-{
+export default class Show {
     protected modal: Modal
 
     protected options: ClientCategoryShowOptions;

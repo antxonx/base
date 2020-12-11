@@ -7,7 +7,8 @@ import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setVal
 
 export default class Key {
     protected options: keyOptions;
-    protected modal : Modal;
+    protected modal: Modal;
+
     public constructor(options: keyOptions) {
         this.options = {...DEFAULT_KEY_OPTIONS, ...options};
         this.options.id = this.options.id || +this.options.element!.getAttribute("id")!;
@@ -42,7 +43,7 @@ export default class Key {
                 INPUTS.forEach(el => setValidInput(el));
                 const BEF = BTN.innerHTML;
                 BTN.innerHTML = SPINNER_LOADER;
-                Axios.patch(Router.generate(ROUTES.user.api.key, {'id':this.options.id!.toString() }),{
+                Axios.patch(Router.generate(ROUTES.user.api.key, {'id': this.options.id!.toString()}), {
                     password: INPUTS[0].value
                 })
                     .then(res => {

@@ -1,3 +1,5 @@
 import User from '@scripts/user/user';
 
-(new User).load();
+(() => {
+    (new User).load();
+})();

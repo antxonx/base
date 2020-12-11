@@ -8,15 +8,14 @@ import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
 
-export default class Change
-{
+export default class Change {
     protected options: ClientCategoryChangeOptions;
 
-    protected modal : Modal;
+    protected modal: Modal;
 
-    protected list : HTMLElement;
+    protected list: HTMLElement;
 
-    public constructor(options : ClientCategoryChangeOptions) {
+    public constructor(options: ClientCategoryChangeOptions) {
         this.options = {...DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS, ...options};
         this.list = document.createElement("div") as HTMLElement;
         this.modal = new Modal({
@@ -24,19 +23,19 @@ export default class Change
             size: 50,
             onHide: this.options.onClose
         });
-        if(this.options.idClient == 0) {
+        if (this.options.idClient == 0) {
             throw new Error("No se ha podido identificar al cliente");
         }
     }
 
-    public load(){
+    public load() {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm, {'id': this.options.idClient}))
             .then(res => {
-               this.modal.updateBody(res.data);
-               this.list =  document.getElementById('categoryList') as HTMLElement;
-               $('[data-toggle="tooltip"]').tooltip();
-               this.startEvents();
+                this.modal.updateBody(res.data);
+                this.list = document.getElementById('categoryList') as HTMLElement;
+                $('[data-toggle="tooltip"]').tooltip();
+                this.startEvents();
             })
             .catch(err => {
                 this.modal.hide();
@@ -44,8 +43,8 @@ export default class Change
             });
     }
 
-    private listchange = async (data : string[]) => {
-        if(Array.isArray(data) && data.length) {
+    private listchange = async (data: string[]) => {
+        if (Array.isArray(data) && data.length) {
             const LIST_BEF = this.list.innerHTML;
             this.list.innerHTML = BIG_LOADER;
             const res = await (new Alert({

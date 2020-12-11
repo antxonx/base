@@ -5,10 +5,11 @@ import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
 export default class ClientCategoryAdd {
-    protected modal : Modal;
+    protected modal: Modal;
     protected callback: () => void;
 
-    public constructor(callback: () => void = () => {}) {
+    public constructor(callback: () => void = () => {
+    }) {
         this.callback = callback;
         this.modal = (new Modal({
             title: "Nuevo cliente",
