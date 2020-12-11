@@ -6,6 +6,7 @@ import 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable';
 import '@styles/app.sass';
 import {Router as Routing} from 'symfony-ts-router';
 import {Routes} from "@scripts/routes";
+
 const routes = require('@scripts/fos_js_routes.json');
 /* ------------------ Configuración para bootstrap-editable ----------------- */
 

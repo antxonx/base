@@ -309,7 +309,7 @@ class UserController extends AbstractController
             } else {
                 $message = $e->getMessage();
             }
-            $this->util->errorException($e);
+            //$this->util->errorException($e);
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -369,7 +369,7 @@ class UserController extends AbstractController
             } else {
                 $message = $e->getMessage();
             }
-            $this->util->errorException($e);
+            //$this->util->errorException($e);
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
