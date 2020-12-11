@@ -209,7 +209,6 @@ class Logger extends AbstractProcessingHandler
             }
 
             /* ------------------------ Crear un objeto ErrorLog ------------------------ */
-
             $errorLog = (new ErrorLog)
                 ->setFile($file)
                 ->setRoute($this->router->getContext()->getPathInfo())

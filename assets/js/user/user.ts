@@ -1,5 +1,4 @@
 import getSort, {SortColumn} from "@plugins/SortColumn";
-import {openModal} from "@scripts/user/add";
 import ButtonCheck from "@plugins/ButtonCheckGroup";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Search from "@plugins/Search";
@@ -10,6 +9,7 @@ import {deleteUser} from "@scripts/user/delete";
 import {editUser} from "@scripts/user/edit";
 import {reactiveUser} from "@scripts/user/reactive";
 import {openKeyModal} from "@scripts/user/key";
+import Add from "@scripts/user/add";
 
 export default class User {
     /**
@@ -112,7 +112,7 @@ export default class User {
     }
 
     private add = () => {
-        openModal(this.main);
+        (new Add(this.main)).load();
     }
 
     private setSuspended = (value: string[]) => {
