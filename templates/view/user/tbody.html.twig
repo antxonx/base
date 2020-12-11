@@ -60,7 +60,10 @@
         {% endif %}
         {# <-Developer #}
         {% set role %}
-            <span class="btn btn-sm2 w-100
+            {% if "ROLE_GOD" in user.roles %}
+                <span class="btn btn-sm2 w-100"><i class="fas fa-cross mobile-2-desktop-1"></i></span>
+            {% else %}
+                <span class="btn btn-sm2 w-100
     {% if user.roles[0] == "ROLE_ADMIN" %}
     alert-primary
     {% elseif user.roles[0] == "ROLE_TEST" %}
@@ -68,6 +71,7 @@
     {% else %}
     d-none
     {% endif %}">{{ (user.roles[0]|slice(5, user.roles[0]|length)) }}</span>
+            {% endif %}
         {% endset %}
         {# suspneder o reactivar #}
         {% set trashSusp %}
@@ -128,16 +132,16 @@
                         class : 'user-edit cursor-pointer text-nowrap'
                     }
                 },
+                email : {
+                    value : '<a class="button-action ww-100 text-center" href="mailto:' ~ user.mail ~ '">' ~ user.mail ~ '</a>',
+                    attr : {
+                        class : 'cursor-pointer'
+                    }
+                },
                 role : {
                     value : role,
                     attr : {
                         class : 'user-edit cursor-pointer text-center'
-                    }
-                },
-                email : {
-                    value : user.mail,
-                    attr : {
-                        class : 'user-edit cursor-pointer'
                     }
                 },
                 key : keyCol,
