@@ -14,34 +14,56 @@ export const DEFAULT_CLIENT_CATEGORY_OPTIONS: ClientCategoryOptions = {
     extern: false
 };
 
+/**
+ * ClientCategoryDeleteOptions interface
+ *
+ * @export
+ * @interface ClientCategoryDeleteOptions
+ */
 export interface ClientCategoryDeleteOptions {
     element: HTMLElement;
     onError?: () => void
     onSuccess?: () => void
 }
 
-export const DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS : ClientCategoryDeleteOptions = {
+export const DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS: ClientCategoryDeleteOptions = {
     element: document.createElement("div"),
-    onError: () => {},
-    onSuccess: () => {},
+    onError: () => {
+    },
+    onSuccess: () => {
+    },
 }
 
+/**
+ * ClientCategoryChangeOptions interface
+ *
+ * @export
+ * @interface ClientCategoryChangeOptions
+ */
 export interface ClientCategoryChangeOptions {
     idClient: number;
     onClose: () => void;
 }
 
-export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS : ClientCategoryChangeOptions = {
+export const DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS: ClientCategoryChangeOptions = {
     idClient: 0,
-    onClose: () => {},
+    onClose: () => {
+    },
 }
 
+/**
+ * ClientCategoryShowOptions interface
+ *
+ * @export
+ * @interface ClientCategoryShowOptions
+ */
 export interface ClientCategoryShowOptions {
     idCategory: number;
     onClose: () => void;
 }
 
-export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS : ClientCategoryShowOptions = {
+export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS: ClientCategoryShowOptions = {
     idCategory: 0,
-    onClose: () => {},
+    onClose: () => {
+    },
 }

@@ -69,11 +69,11 @@ export default class ClientCategory {
     }
 
     /**
-     * main
+     * load
      *
      * @memberof ClientCategory
      */
-    public main = () => {
+    public load = () => {
         if (this.options.control) {
             this.options.control = false;
             document.getElementById("client-category-add")!.addEventListener('click', () => {
@@ -89,7 +89,7 @@ export default class ClientCategory {
         [...document.getElementsByClassName("catgeory-delete")].forEach(element => element.addEventListener("click", (e: Event) => {
             (new ClientCategoryDelete({
                 element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
-                onError: this.main
+                onError: this.load
             })).delete();
         }));
         [...document.getElementsByClassName("category-show")].forEach(element => element.addEventListener("click", (e: Event) => {
@@ -120,7 +120,7 @@ export default class ClientCategory {
             }))
                 .then(res => {
                     this.mainView.innerHTML = res.data;
-                    this.main();
+                    this.load();
                     new Paginator({callback: this.update});
                 })
                 .catch(err => {

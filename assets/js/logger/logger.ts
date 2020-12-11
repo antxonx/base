@@ -82,11 +82,11 @@ export default class Logger {
     }
 
     /**
-     * main
+     * load
      *
      * @memberof Logger
      */
-    public main = () => {
+    public load = () => {
         this.mainView.innerHTML = this.defaultView;
         new Search({
             callback: this.searchField,

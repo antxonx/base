@@ -32,7 +32,7 @@ services:
 
     antxony.logger:
         class: Antxony\Logger
-        arguments: ['@doctrine.orm.entity_manager', '@router', '@security.helper']
+        arguments: ['@doctrine.orm.entity_manager', '@router', '@security.helper', '@doctrine.orm.entity_manager']
 
     Antxony\Util:
         tags: ['Antxony.util']
