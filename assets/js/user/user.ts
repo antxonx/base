@@ -5,7 +5,7 @@ import Search from "@plugins/Search";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
-import {deleteUser} from "@scripts/user/delete";
+import Delete from "@scripts/user/delete";
 import {editUser} from "@scripts/user/edit";
 import {reactiveUser} from "@scripts/user/reactive";
 import {openKeyModal} from "@scripts/user/key";
@@ -60,7 +60,7 @@ export default class User {
         this.control = true;
     }
 
-    public main = () => {
+    public load = () => {
         if(this.control) {
             document.getElementById("user-add")!.addEventListener("click", this.add);
             new ButtonCheck(document.getElementById("suspendedFilter") as HTMLButtonElement,  {
@@ -102,7 +102,7 @@ export default class User {
         }))
             .then(res => {
                 this.mainView.innerHTML = res.data;
-                this.main();
+                this.load();
                 new Paginator({callback: this.update});
             })
             .catch(err => {
@@ -112,7 +112,7 @@ export default class User {
     }
 
     private add = () => {
-        (new Add(this.main)).load();
+        (new Add(this.load)).load();
     }
 
     private setSuspended = (value: string[]) => {
@@ -127,7 +127,9 @@ export default class User {
 
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-        deleteUser(ELEMENT, () => {}, this.update);
+        (new Delete({
+            element: ELEMENT,
+        })).load();
     }
 
     private reactive = (e: Event) => {
