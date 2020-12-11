@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
-import {ROUTES, BIG_LOADER_TABLE} from '@scripts/app';
+import {BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import Search from '@scripts/plugins/Search';
 import {openAddModal} from './add';
@@ -23,7 +23,12 @@ let ORDER_BY: SortColumn = {
  */
 const changePage = (page: number) => {
     MAIN_VIEW.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
-    Axios.get(`${ROUTES.client.view.list}?search=${SEARCH_INPUT}&page=${page}&ordercol=${ORDER_BY.column}&orderorder=${ORDER_BY.order}`)
+    Axios.get(Router.generate(ROUTES.client.view.list, {
+        'search': SEARCH_INPUT,
+        'page': page,
+        'ordercol': ORDER_BY.column,
+        'orderorder': ORDER_BY.order
+    }))
         .then(res => {
             MAIN_VIEW.innerHTML = res.data;
             loadEvs();

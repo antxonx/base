@@ -1,6 +1,6 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {ROUTES, SPINNER_LOADER} from '@scripts/app';
+import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import {
     evaluateInputs,
@@ -39,7 +39,7 @@ export const openKeyModal = (element : HTMLElement, callback: () => void = CALLB
  *
  */
 const loadForm = () => {
-    Axios.get(ROUTES.user.view.key)
+    Axios.get(Router.generate(ROUTES.user.view.key))
         .then(res => {
             MODAL.updateBody(res.data);
             document.getElementById("keyForm")!.addEventListener("submit", validate);
@@ -65,7 +65,7 @@ const validate = (e: Event) => {
             INPUTS.forEach(el => setValidInput(el));
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.patch(ROUTES.user.api.keyUpdate.replace('0', ID.toString()), {
+            Axios.patch(Router.generate(ROUTES.user.api.key, {'id':ID.toString() }),{
                 password: INPUTS[0].value
             })
                 .then(res => {

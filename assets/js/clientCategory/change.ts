@@ -3,7 +3,7 @@ import 'bootstrap';
 import {ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS} from "@scripts/clientCategory/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
-import {ROUTES, BIG_LOADER} from "@scripts/app";
+import {BIG_LOADER, Router, ROUTES} from "@scripts/app";
 import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
@@ -31,7 +31,7 @@ export default class Change
 
     public load(){
         this.modal.show();
-        Axios.get(ROUTES.clientCategory.view.changeForm.replace('0', this.options.idClient.toString()))
+        Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm))
             .then(res => {
                this.modal.updateBody(res.data);
                this.list =  document.getElementById('categoryList') as HTMLElement;
@@ -55,7 +55,7 @@ export default class Change
                 .updateBody("¿Seguro que desea cambiar la categoría?")
                 .show();
             if (res) {
-                Axios.patch(ROUTES.clientCategory.api.update, {
+                Axios.patch(Router.generate(ROUTES.clientCategory.api.update), {
                     clientId: this.options.idClient,
                     categoryId: data[0],
                 })

@@ -1,5 +1,5 @@
 import Modal from "@plugins/Modal";
-import {ROUTES, SPINNER_LOADER} from "@scripts/app";
+import {ROUTES, Router, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
@@ -30,7 +30,7 @@ export const passModal = (onHide: () => void = () => {
  * Cargar formulario
  */
 const loadForm = () => {
-    Axios.get(ROUTES.user.view.passform)
+    Axios.get(Router.generate(ROUTES.user.view.passform))
         .then((res: AxiosResponse) => {
             MODAL.updateBody(res.data);
             document.getElementById('passForm')!.addEventListener('submit', validate);
@@ -60,7 +60,7 @@ const validate = (e: Event) => {
             BTN.innerHTML = SPINNER_LOADER;
             setValidInput(INPUTS[PASS.NEW]);
             setValidInput(INPUTS[PASS.CONF]);
-            Axios.put(ROUTES.user.api.passchange, {
+            Axios.put(Router.generate(ROUTES.user.api.passchange), {
                 old: INPUTS[PASS.OLD].value,
                 new: INPUTS[PASS.NEW].value,
                 conf: INPUTS[PASS.CONF].value,

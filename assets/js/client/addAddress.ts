@@ -1,6 +1,6 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {ROUTES, SPINNER_LOADER} from '@scripts/app';
+import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
@@ -29,7 +29,7 @@ export const openAddressModal = (id: number, callback: () => void = () => {
  *
  */
 const loadForm = () => {
-    Axios.get(ROUTES.client.view.addresForm.replace('0', ID.toString()))
+    Axios.get(Router.generate(ROUTES.client.address.view.form, {'id': ID.toString()}))
         .then(res => {
             MODAL.updateBody(res.data);
             document.getElementById("clientAddressForm")!.addEventListener("submit", validate);
@@ -54,7 +54,7 @@ const validate = (e: Event) => {
         const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.post(ROUTES.client.api.addressAdd, {
+        Axios.post(Router.generate(ROUTES.client.address.api.add), {
             id: ID,
             street: (document.getElementById("street") as HTMLInputElement).value,
             extnum: (document.getElementById("extnum") as HTMLInputElement).value,

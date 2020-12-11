@@ -1,6 +1,6 @@
 import getSort, {SortColumn} from "@plugins/SortColumn";
 import Search from "@plugins/Search";
-import {BIG_LOADER_TABLE, ROUTES} from "@scripts/app";
+import {BIG_LOADER_TABLE, ROUTES, Router} from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
@@ -112,7 +112,12 @@ export default class ClientCategory {
     private update = (page: number = 1) => {
         if (!this.options.extern) {
             this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
-            Axios.get(`${ROUTES.clientCategory.view.list}?search=${this.search}&page=${page}&ordercol=${this.orderBy.column}&orderorder=${this.orderBy.order}`)
+            Axios.get(Router.generate(ROUTES.clientCategory.view.list, {
+                'search': this.search,
+                'page': page,
+                'ordercol': this.orderBy.column,
+                'orderorder': this.orderBy.order
+            }))
                 .then(res => {
                     this.mainView.innerHTML = res.data;
                     this.main();

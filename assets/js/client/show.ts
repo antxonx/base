@@ -3,7 +3,7 @@ import 'bootstrap';
 import Modal from "@scripts/plugins/Modal";
 import Alert from '@scripts/plugins/Alert';
 import Axios from "axios";
-import {ROUTES, SPINNER_LOADER} from "@scripts/app";
+import {ROUTES, Router, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import {openAddressModal} from './addAddress';
 import {evaluateInputs, hideElement, showElement} from '@scripts/plugins/Required';
@@ -48,7 +48,7 @@ const showClientLocal = () => {
 const loadClient = (loading = true) => {
     if (loading)
         MODAL.loadingBody();
-    Axios.get(ROUTES.client.view.show.replace('0', ID.toString()))
+    Axios.get(Router.generate(ROUTES.client.view.show, {'id' : ID.toString()}))
         .then(res => {
             MODAL.updateBody(res.data);
             $('[data-toggle="tooltip"]').tooltip();
@@ -181,7 +181,7 @@ const addExtraPhone = (e: Event) => {
         const BTN = document.getElementById("submit-phone-extra-btn")!;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.post(ROUTES.client.api.addExtra.replace("0", ID.toString()), {
+        Axios.post(Router.generate(ROUTES.client.extra.api.add, {'id': ID.toString()}), {
             type: 2,
             level: (document.getElementById("phoneType") as HTMLInputElement).value,
             value: (document.getElementById("phone") as HTMLInputElement).value,
@@ -209,7 +209,7 @@ const addExtraEmail = (e: Event) => {
         const BTN = document.getElementById("submit-email-extra-btn")!;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.post(ROUTES.client.api.addExtra.replace("0", ID.toString()), {
+        Axios.post(Router.generate(ROUTES.client.extra.api.add, {'id': ID.toString()}), {
             type: 1,
             level: 1,
             value: (document.getElementById("email") as HTMLInputElement).value,
@@ -242,7 +242,7 @@ const deletePhone = async (e: Event) => {
     const res = await ALERT.updateBody(`¿Eliminar el número <b>${PHONE}</b>?`).show();
     if (res) {
         disableRow(ELEMENT);
-        Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
+        Axios.delete(Router.generate(ROUTES.client.extra.api.delete, {'id' : ID.toString()}))
             .then(res => {
                 deleteElement(ELEMENT);
                 Toast.success(res.data);
@@ -269,7 +269,7 @@ const deleteEmail = async (e: Event) => {
     const res = await ALERT.updateBody(`¿Eliminar el correo <b>${EMAIL}</b>?`).show();
     if (res) {
         disableRow(ELEMENT);
-        Axios.delete(ROUTES.client.api.extraDelete.replace("0", ID.toString()))
+        Axios.delete(Router.generate(ROUTES.client.extra.api.delete, {'id' : ID.toString()}))
             .then(res => {
                 deleteElement(ELEMENT);
                 Toast.success(res.data);
@@ -296,7 +296,7 @@ const deleteContactAction = async (e: Event) => {
     const res = await ALERT.updateBody(`¿Eliminar el contacto <b>${NAME}</b>?`).show();
     if (res) {
         MODAL.loadingBody();
-        await Axios.delete(ROUTES.client.api.contactDelete.replace("0", ID.toString()))
+        await Axios.delete(Router.generate(ROUTES.client.contact.api.delete, {'id' : ID.toString()}))
             .then(res => {
                 Toast.success(res.data);
                 loadClient(false);

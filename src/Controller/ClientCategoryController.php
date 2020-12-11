@@ -63,7 +63,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Get category list
      *
-     * @Route("/list", name="client_category_list", methods={"GET"})
+     * @Route("/list", name="client_category_list", methods={"GET"}, options={"expose" = true})
      * @param Request $request
      * @return Response
      */
@@ -89,7 +89,7 @@ class ClientCategoryController extends AbstractController
     /**
      * add form
      *
-     * @Route("/form", name="client_category_add_form", methods={"GET"})
+     * @Route("/form", name="client_category_add_form", methods={"GET"}, options={"expose" = true})
      * @return Response
      */
     public function form() : Response
@@ -104,7 +104,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Cargar formulario de cambio de categorpia
      *
-     * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"})
+     * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"}, options={"expose" = true})
      * @param int $id
      * @return Response
      */
@@ -125,7 +125,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Change client category
      *
-     * @Route("/change", name="client_category_change", methods={"PUT", "PATCH"})
+     * @Route("/change", name="client_category_change", methods={"PUT", "PATCH"}, options={"expose" = true})
      * @param Request $request
      * @return Response
      */
@@ -157,7 +157,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Add category
      *
-     * @Route("/", name="client_category_add", methods={"POST"})
+     * @Route("/", name="client_category_add", methods={"POST"}, options={"expose" = true})
      * @param Request $request
      * @return Response
      */
@@ -181,7 +181,7 @@ class ClientCategoryController extends AbstractController
     /**
      * Delete Category
      *
-     * @Route("/{id}", name="client_category_delete", methods={"DELETE"})
+     * @Route("/{id}", name="client_category_delete", methods={"DELETE"}, options={"expose" = true})
      * @param int $id
      * @return Response
      */
@@ -199,6 +199,7 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
+     * Show category
      * Show category
      *
      * @Route("/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})

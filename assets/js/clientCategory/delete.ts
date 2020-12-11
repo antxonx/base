@@ -2,7 +2,7 @@ import {ClientCategoryDeleteOptions, DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS} fro
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
 import Axios from "axios";
-import {ROUTES} from "@scripts/app";
+import {ROUTES, Router} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 export default class ClientCategoryDelete {
@@ -23,7 +23,7 @@ export default class ClientCategoryDelete {
         let res = await ALERT.updateBody(`¿Eliminar la categoría <b>${NAME}</b>?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.delete(ROUTES.clientCategory.api.delete.replace("0", ID.toString()))
+            Axios.delete(Router.generate(ROUTES.clientCategory.api.delete, {'id': ID.toString()}))
                 .then(res => {
                     Toast.success(res.data);
                     deleteElement(this.options.element);

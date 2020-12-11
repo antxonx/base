@@ -1,6 +1,6 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {ROUTES, SPINNER_LOADER} from '@scripts/app';
+import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
@@ -18,7 +18,7 @@ export default class ClientCategoryAdd {
 
     public load = () => {
         this.modal.show();
-        Axios.get(ROUTES.clientCategory.view.form)
+        Axios.get(Router.generate(ROUTES.clientCategory.view.form))
             .then(res => {
                 this.modal.updateBody(res.data);
                 document.getElementById("clientCategoryForm")!.addEventListener("submit", this.validate);
@@ -44,7 +44,7 @@ export default class ClientCategoryAdd {
                 description: (document.getElementById("description") as HTMLInputElement).value,
                 color: (document.getElementById("color") as HTMLInputElement).value,
             }
-            Axios.post(ROUTES.clientCategory.api.add, DATA)
+            Axios.post(Router.generate(ROUTES.clientCategory.api.add), DATA)
                 .then(res => {
                     Toast.success(res.data);
                     this.modal.hide();
