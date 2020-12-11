@@ -177,7 +177,6 @@ class ClientController extends AbstractController
             return $this->render("view/client/form.html.twig", [
                 'id' => 'clientForm',
                 'contact' => false,
-                'contact' => false,
                 'categories' => $categories
             ]);
         } catch (Exception $e) {

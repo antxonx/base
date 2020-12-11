@@ -23,7 +23,7 @@ export const deleteClient = async (element: HTMLElement, onSuccess: () => void =
     let res = await ALERT.updateBody(`¿Eliminar a <b>${NAME}</b>?`).show();
     if (res) {
         const BTNS_BEF = disableRow(element);
-        Axios.delete(Router.generate(ROUTES.client.api.delete))
+        Axios.delete(Router.generate(ROUTES.client.api.delete, {'id': ID.toString()}))
             .then(res => {
                 Toast.success(res.data);
                 deleteElement(element);

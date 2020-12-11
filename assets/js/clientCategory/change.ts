@@ -31,7 +31,7 @@ export default class Change
 
     public load(){
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm))
+        Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm, {'id': this.options.idClient}))
             .then(res => {
                this.modal.updateBody(res.data);
                this.list =  document.getElementById('categoryList') as HTMLElement;

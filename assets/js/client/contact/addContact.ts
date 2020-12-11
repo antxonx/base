@@ -54,7 +54,7 @@ const validate = (e: Event) => {
         const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.post(Router.generate(ROUTES.client.contact.api.add), {
+        Axios.post(Router.generate(ROUTES.client.contact.api.add, {'id' : ID.toString()}), {
             name: (document.getElementById("name") as HTMLInputElement).value,
             role: (document.getElementById("role") as HTMLInputElement).value,
             phone: {
