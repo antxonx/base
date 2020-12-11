@@ -5,11 +5,10 @@ import Search from "@plugins/Search";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
-import {editUser} from "@scripts/user/edit";
-//import {openKeyModal} from "@scripts/user/key";
 import Add from "@scripts/user/add";
 import Delete from "@scripts/user/delete";
 import Key from "@scripts/user/key";
+import Show from "@scripts/user/show";
 
 export default class User {
     /**
@@ -141,7 +140,11 @@ export default class User {
 
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
-        editUser(+ELEMENT.getAttribute("id")!, this.update);
+        //editUser(+ELEMENT.getAttribute("id")!, this.update);
+        (new Show({
+            id: +ELEMENT.getAttribute("id")!,
+            callback: this.update
+        })).load();
     }
 
     private key = (e: Event) => {

@@ -29,3 +29,13 @@ export const DEFAULT_KEY_OPTIONS :keyOptions = {
     name: '',
     username: '',
 };
+
+export interface EditOptions {
+    id: number;
+    callback?: () => void;
+}
+
+export const DEFAULT_EDIT_OPTIONS : EditOptions = {
+    id: 0,
+    callback: () => {},
+}
