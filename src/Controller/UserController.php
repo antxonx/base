@@ -87,7 +87,7 @@ class UserController extends AbstractController
 
     /**
      * Conseguir todos los usuarios
-     * @Route("/list", name="user_list", methods={"GET"})
+     * @Route("/list", name="user_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param Request $request
@@ -114,7 +114,7 @@ class UserController extends AbstractController
 
     /**
      * Cargar formulario de usuarios
-     * @Route("/form", name="user_form", methods={"GET"})
+     * @Route("/form", name="user_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @return Response
@@ -130,7 +130,7 @@ class UserController extends AbstractController
 
     /**
      * Formulario de cambio de contraseña
-     * @Route("/key", name="user_key", methods={"GET"})
+     * @Route("/key", name="user_key", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @return Response
@@ -146,7 +146,7 @@ class UserController extends AbstractController
 
     /**
      * Cambiar contraseña
-     * @Route("/key/{id}", name="user_key_update", methods={"PATCH"})
+     * @Route("/key/{id}", name="user_key_update", methods={"PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param integer $id
@@ -160,7 +160,7 @@ class UserController extends AbstractController
             $user = $this->rep->find($id);
             $user->setPassword($this->passwordEncoder->encodePassword($user, $content->password));
             $this->rep->update();
-            $this->util->info("Se ha acutalizado la contraseña del usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
+            $this->util->info("Se ha actalizado la contraseña del usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Se ha actualizado la contraseña");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -169,7 +169,7 @@ class UserController extends AbstractController
 
     /**
      * Formulario de cambio de contraseña
-     * @Route("/reactivate/{id}", name="user_reactivate", methods={"PATCH"})
+     * @Route("/reactivate/{id}", name="user_reactivate", methods={"PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param integer $id
@@ -190,7 +190,7 @@ class UserController extends AbstractController
 
     /**
      * Cargar formulario de cambio de contraseña
-     * @Route("/profile/pass", name="user_profile_pass_form", methods={"GET"})
+     * @Route("/profile/pass", name="user_profile_pass_form", methods={"GET"}, options={"expose" = true})
      *
      * @return Response
      */
@@ -205,7 +205,7 @@ class UserController extends AbstractController
 
     /**
      * Cambiar contraseña del usuario
-     * @Route("/profile/pass", name="user_profile_pass_change", methods={"PUT"})
+     * @Route("/profile/pass", name="user_profile_pass_change", methods={"PUT"}, options={"expose" = true})
      * @param Request $request
      *
      * @return Response
@@ -252,7 +252,7 @@ class UserController extends AbstractController
 
     /**
      * Mostrar a un usuario
-     * @Route("/{id}", name="user_edit", methods={"GET"})
+     * @Route("/{id}", name="user_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param integer $id
@@ -275,7 +275,7 @@ class UserController extends AbstractController
 
     /**
      * Agregar a un usuario
-     * @Route("/", name="user_add", methods={"POST"})
+     * @Route("/", name="user_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param Request $request
@@ -378,7 +378,7 @@ class UserController extends AbstractController
 
     /**
      * Eliminar/Suspender a un usuario
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="user_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
      *
      * @param integer $id

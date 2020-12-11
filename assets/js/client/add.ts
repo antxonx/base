@@ -1,6 +1,6 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {ROUTES, SPINNER_LOADER} from '@scripts/app';
+import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
@@ -27,7 +27,7 @@ export const openAddModal = (callback: () => void = CALLBACK) => {
  *
  */
 const loadForm = () => {
-    Axios.get(ROUTES.client.view.form)
+    Axios.get(Router.generate(ROUTES.client.view.form))
         .then(res => {
             MODAL.updateBody(res.data);
             document.getElementById("clientForm")!.addEventListener("submit", validate);
@@ -53,13 +53,14 @@ const validate = (e: Event) => {
         const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
         const BEF = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.post(ROUTES.client.api.add, {
+        Axios.post(Router.generate(ROUTES.client.api.add), {
             name: (document.getElementById("name") as HTMLInputElement).value,
             phone: {
                 type: (document.getElementById("phoneType") as HTMLInputElement).value,
                 phone: (document.getElementById("phone") as HTMLInputElement).value,
             },
             email: (document.getElementById("email") as HTMLInputElement).value,
+            category: (document.getElementById("category-select") as HTMLInputElement).value
         })
             .then(res => {
                 Toast.success(res.data);

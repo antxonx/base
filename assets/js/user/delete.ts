@@ -1,7 +1,7 @@
 import Alert from '@scripts/plugins/Alert';
 import Axios from 'axios';
 import Toast from '@scripts/plugins/AlertToast';
-import {ROUTES} from '@scripts/app';
+import {ROUTES, Router} from '@scripts/app';
 import {deleteElement, disableRow, restoreRow} from '@scripts/plugins/DeleteElement';
 
 /**
@@ -24,7 +24,7 @@ export const deleteUser = async (element: HTMLElement, onSuccess: () => void = (
     let res = await ALERT.updateBody(`¿Suspender a <b>${NAME}</b>(${USERNAME})?`).show();
     if (res) {
         const BTNS_BEF = disableRow(element);
-        Axios.delete(ROUTES.user.api.delete.replace("0", ID.toString()))
+        Axios.delete(Router.generate(ROUTES.user.api.delete, {'id': ID.toString()}))
             .then(res => {
                 Toast.success(res.data);
                 deleteElement(element);

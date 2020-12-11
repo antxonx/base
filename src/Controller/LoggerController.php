@@ -81,7 +81,7 @@ class LoggerController extends AbstractController
 
     /**
      * Conseguir todos los registros de información
-     * @Route("/info", name="logger_info_list", methods={"GET"})
+     * @Route("/info", name="logger_info_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
      *
      * @param Request $request
@@ -108,7 +108,7 @@ class LoggerController extends AbstractController
 
     /**
      * Conseguir todos los registros de error
-     * @Route("/error", name="logger_error_list", methods={"GET"})
+     * @Route("/error", name="logger_error_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
      *
      * @param Request $request
@@ -135,7 +135,7 @@ class LoggerController extends AbstractController
 
     /**
      * Index
-     * @Route("/{user}", name="logger_index", methods={"GET"})
+     * @Route("/{user}", name="logger_index", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
      *
      * @param int $user

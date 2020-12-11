@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
 import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
-import {ROUTES, BIG_LOADER, BIG_LOADER_TABLE} from '@scripts/app';
+import {BIG_LOADER, BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
@@ -74,7 +74,7 @@ export default class Logger {
         this.searchInput = '';
         this.method = '';
         this.route = '';
-        this.mainView = ((document.getElementById("logsView") as HTMLElement) || new HTMLElement());
+        this.mainView = ((document.getElementById("logsView") as HTMLElement) || document.createElement("div"));
         this.orderBy = {
             column: "createdAt",
             order: "DESC"
@@ -121,7 +121,14 @@ export default class Logger {
         if (this.route != undefined || this.route != null) {
             this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "6");
             const USER = (document.getElementById("registerUser") as HTMLInputElement).value;
-            Axios.get(`${this.route}?search=${this.searchInput}&page=${page}&method=${this.method}&ordercol=${this.orderBy.column}&orderorder=${this.orderBy.order}&user=${USER}`)
+            Axios.get(Router.generate(this.route, {
+                'search': this.searchInput,
+                'page': page,
+                'method': this.method,
+                'ordercol': this.orderBy.column,
+                'orderorder': this.orderBy.order,
+                'user': USER
+            }))
                 .then(res => {
                     this.mainView.innerHTML = res.data;
                     this.loadEvs();
@@ -141,10 +148,10 @@ export default class Logger {
      */
     public changeType = (value: string[]) => {
         if (value.includes('info')) {
-            this.route = ROUTES.logger.view.infoList;
+            this.route = ROUTES.logger.view.info;
             this.changePage(1);
         } else if (value.includes('error')) {
-            this.route = ROUTES.logger.view.errorList;
+            this.route = ROUTES.logger.view.error;
             this.changePage(1);
         } else {
             this.mainView.innerHTML = this.defaultView;

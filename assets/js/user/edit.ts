@@ -1,5 +1,5 @@
 import Modal from '@scripts/plugins/Modal';
-import {ROUTES} from '@scripts/app';
+import {ROUTES, Router} from '@scripts/app';
 import Axios from 'axios';
 import Toast from '@scripts/plugins/AlertToast';
 
@@ -29,7 +29,7 @@ export const editUser = (id: number, callback: () => void = CALLBACK) => {
  *
  */
 const loadEdit = () => {
-    Axios.get(ROUTES.user.view.edit.replace('0', ID.toString()))
+    Axios.get(Router.generate(ROUTES.user.view.show, {'id': ID.toString()}))
         .then(res => {
             MODAL.updateBody(res.data);
             $('.editable-field').editable({

@@ -1,8 +1,7 @@
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {SPINNER_LOADER} from '@scripts/app';
+import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import {evaluateInputs, clearErrorMsg, insertAlertAfter} from '@scripts/plugins/Required';
-import {ROUTES} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 
 let MODAL: Modal;
@@ -22,7 +21,7 @@ export const openModal = (callback: () => void = () => {
         size: 30
     });
     MODAL.show();
-    Axios.get(ROUTES.user.view.form)
+    Axios.get(Router.generate(ROUTES.user.view.form))
         .then(res => {
             MODAL.updateBody(res.data);
             document.getElementById("userForm")!.addEventListener("submit", validate);
@@ -51,7 +50,7 @@ const validate = (e: Event) => {
         if (ROLE.length > 0) {
             const BTN_BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(ROUTES.user.api.add, {
+            Axios.post(Router.generate(ROUTES.user.api.add), {
                 username: (document.getElementById("username") as HTMLInputElement).value,
                 password: (document.getElementById("password") as HTMLInputElement).value,
                 email: (document.getElementById("email") as HTMLInputElement).value,
