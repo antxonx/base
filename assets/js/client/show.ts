@@ -6,12 +6,11 @@ import $ from "jquery";
 import Change from "@scripts/clientCategory/change";
 import Toast from "@plugins/AlertToast";
 import {evaluateInputs, hideElement, showElement} from "@plugins/Required";
-//import {openAddressModal} from "@scripts/client/addAddress";
-import {openContactModal} from "@scripts/client/contact/addContact";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow} from "@plugins/DeleteElement";
 import {showContact} from "@scripts/client/contact/show";
 import AddAddress from "@scripts/client/address/add";
+import AddContact from "@scripts/client/contact/add";
 
 export default class Show {
     protected options: ShowOptions
@@ -118,7 +117,10 @@ export default class Show {
     public addContact = (e: Event) => {
         this.modal.hide();
         this.control = true;
-        openContactModal(this.options.id, this.load);
+        (new AddContact({
+            id: this.options.id,
+            callback: this.load
+        })).load();
     }
 
     public addExtraPhone = (e: Event) => {
