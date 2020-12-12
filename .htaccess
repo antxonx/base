@@ -20,10 +20,13 @@ DirectoryIndex index.php
 Options -Indexes
 
 # block files which needs to be hidden, specify .example extension of the file
-<Files ~ "\.(env|env.local|json|config.js|md|gitignore|gitattributes|lock|dist|phar|test)$">
+<Files ~ "\.(env|env.local|json|config.js|md|gitignore|gitattributes|lock|dist|phar|test|ts|php|twig|yaml|yml|sass)$">
     Order allow,deny
     Deny from all
 </Files>
+<FilesMatch "^index\.php$" >
+    Allow from all
+</FilesMatch>
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
