@@ -3,10 +3,11 @@ import Paginator from '@scripts/plugins/Paginator';
 import {BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import Search from '@scripts/plugins/Search';
-import {openAddModal} from './add';
+//import {openAddModal} from './add';
 import {deleteClient} from './delete';
 import {showClient} from './show';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
+import Add from "@scripts/client/add";
 
 const MAIN_VIEW = document.getElementById("clientsView") as HTMLElement;
 
@@ -78,7 +79,7 @@ const deleteAction = (e: Event) => {
  *
  */
 const addAction = () => {
-    openAddModal(mainView);
+    (new Add(mainView)).load();
 };
 
 /**
