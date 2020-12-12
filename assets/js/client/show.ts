@@ -8,9 +8,9 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, hideElement, showElement} from "@plugins/Required";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow} from "@plugins/DeleteElement";
-import {showContact} from "@scripts/client/contact/show";
 import AddAddress from "@scripts/client/address/add";
 import AddContact from "@scripts/client/contact/add";
+import ShowContact from "@scripts/client/contact/show";
 
 export default class Show {
     protected options: ShowOptions
@@ -238,10 +238,10 @@ export default class Show {
     public showContact = (e: Event) => {
         this.modal.hide();
         this.control = true;
-        showContact(
-            +(e.currentTarget as HTMLInputElement).closest(".contact-row")!.getAttribute("contactid")!,
-            this.load
-        );
+        (new ShowContact({
+            id: +(e.currentTarget as HTMLInputElement).closest(".contact-row")!.getAttribute("contactid")!,
+            callback: this.load
+        })).load();
     }
 
 }
