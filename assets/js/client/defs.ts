@@ -13,3 +13,13 @@ export const DEFAULT_DELETE_OPTIONS : DeleteOptions = {
     onSuccess: () => {},
     onError: () => {},
 }
+
+export interface ShowOptions {
+    id: number;
+    callback: () => void;
+}
+
+export const DEFAULT_SHOW_OPTIONS : ShowOptions = {
+    id: 0,
+    callback: () => {}
+}

@@ -6,7 +6,8 @@ import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import Add from "@scripts/client/add";
 import Delete from "@scripts/client/delete";
-import {showClient} from "@scripts/client/show";
+import Show from "@scripts/client/show";
+//import {showClient} from "@scripts/client/show";
 
 export default class Client {
     protected mainView: HTMLElement;
@@ -76,7 +77,11 @@ export default class Client {
 
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
-        showClient(+ELEMENT.getAttribute("id")!, this.load);
+        //showClient(+ELEMENT.getAttribute("id")!, this.load);
+        (new Show({
+            id: +ELEMENT.getAttribute("id")!,
+            callback: this.update
+        })).load();
     }
 
     private sort = (e: Event) => {
