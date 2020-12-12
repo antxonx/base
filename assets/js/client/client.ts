@@ -7,7 +7,6 @@ import Toast from "@plugins/AlertToast";
 import Add from "@scripts/client/add";
 import Delete from "@scripts/client/delete";
 import Show from "@scripts/client/show";
-//import {showClient} from "@scripts/client/show";
 
 export default class Client {
     protected mainView: HTMLElement;
