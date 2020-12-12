@@ -144,9 +144,9 @@ class ClientCategoryController extends AbstractController
             $this->cRep->update();
             $message = "Se ha cambiado la categoría del cliente <b>{$client->getId()}</b> (<em>{$client->getName()}</em>)";
             if($oldCat != null){
-                $message .= "de <b>{$oldCat->getName()}</b>";
+                $message .= " de <b>{$oldCat->getName()}</b>";
             }
-            $message .= "a <b>{$category->getName()}</b>";
+            $message .= " a <b>{$category->getName()}</b>";
             $this->util->info($message);
             return new Response($message);
         } catch (Exception $e) {
