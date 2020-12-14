@@ -12,12 +12,16 @@ namespace Antxony\Def\Contact;
  */
 class Type {
     /**
-     * @var int email
+     * Email type
+     *
+     * @var int
      */
     public const EMAIL = 1;
 
     /**
-     * @var int Teléfono
+     * Phone type
+     *
+     * @var int
      */
     public const PHONE = 2;
 }

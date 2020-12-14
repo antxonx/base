@@ -1,12 +1,12 @@
 <?php
 /**
- * definición para x-editable
+ * X-Editable type of request
  */
 
 namespace Antxony\Def\Editable;
 
 /**
- * Class Editable
+ * Editable Class for X-Editable request
  * @package Antxony\Def\Editable
  * @author Antxony <dantonyofcarim@gmail.com>
  */
@@ -14,24 +14,27 @@ class Editable
 {
     /**
      * Primary key
+     *
      * @var int
      */
     public $pk;
 
     /**
-     * Nombre del campo
+     * Field name
+     *
      * @var string
      */
     public $name;
 
     /**
-     * Valor del campo
+     * new Field value
      * @var mixed
      */
     public $value;
 
     /**
-     * Editable constructor.
+     * Editable constructor
+     *
      * @param array $content
      */
     public function __construct(array $content)

@@ -12,17 +12,23 @@ namespace Antxony\Def\Contact;
  */
 class Level {
     /**
-     * @var int work
+     * Work level
+     *
+     * @var int
      */
     public const WORK = 1;
 
     /**
-     * @var int Mobile
+     * Mobile level
+     *
+     * @var int
      */
     public const MOBILE = 2;
 
     /**
-     * @var int Home
+     * Home level
+     *
+     * @var int
      */
     public const HOME = 3;
 }

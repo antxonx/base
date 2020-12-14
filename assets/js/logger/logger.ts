@@ -4,7 +4,8 @@ import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
 import {BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
-import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
+import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import SortColumn from "@plugins/SortColumn";
 
 /**
  * Logger Class
@@ -63,10 +64,10 @@ export default class Logger {
      * order by
      *
      * @private
-     * @type {SortColumn}
+     * @type {SortColumnOrder}
      * @memberof Logger
      */
-    protected orderBy: SortColumn;
+    protected orderBy: SortColumnOrder;
 
     /**
      * default view
@@ -90,6 +91,10 @@ export default class Logger {
             column: "createdAt",
             order: "DESC"
         };
+        (new SortColumn({
+            table: document.getElementById('loggerTable') as HTMLElement,
+            callback: this.sort,
+        })).load();
     }
 
     /**
@@ -113,7 +118,6 @@ export default class Logger {
             });
         }
         document.getElementById("methodSelect")!.addEventListener("input", this.changeMethod);
-        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sortAction));
     };
 
     /**
@@ -178,8 +182,8 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    private sortAction = (e: Event) => {
-        this.orderBy = getSort(e.currentTarget as HTMLElement);
+    private sort = (order: SortColumnOrder) => {
+        this.orderBy = order;
         this.update();
     }
 

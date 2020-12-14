@@ -1,4 +1,3 @@
-import getSort, {SortColumn} from "@plugins/SortColumn";
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, ROUTES, Router} from "@scripts/app";
 import Axios from "axios";
@@ -8,6 +7,8 @@ import {ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS} from "@scripts/c
 import ClientCategoryAdd from "@scripts/clientCategory/add";
 import ClientCategoryDelete from "@scripts/clientCategory/delete";
 import Show from "@scripts/clientCategory/show";
+import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import SortColumn from "@plugins/SortColumn";
 
 /**
  * ClientCategory class
@@ -51,7 +52,7 @@ export default class ClientCategory {
      * @type {SortColumn}
      * @memberof ClientCategory
      */
-    protected orderBy: SortColumn;
+    protected orderBy: SortColumnOrder;
 
     /**
      * Creates an instance of ClientCategory.
@@ -66,6 +67,10 @@ export default class ClientCategory {
             order: "ASC"
         }
         this.options = {...DEFAULT_CLIENT_CATEGORY_OPTIONS, ...options};
+        (new SortColumn({
+            table: document.getElementById('clientCategoryTable') as HTMLElement,
+            callback: this.sort
+        })).load();
     }
 
     /**
@@ -85,7 +90,6 @@ export default class ClientCategory {
             });
             this.update();
         }
-        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
         [...document.getElementsByClassName("catgeory-delete")].forEach(element => element.addEventListener("click", (e: Event) => {
             (new ClientCategoryDelete({
                 element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
@@ -147,8 +151,8 @@ export default class ClientCategory {
      * @private
      * @memberof ClientCategory
      */
-    private sort = (e: Event) => {
-        this.orderBy = getSort(e.currentTarget as HTMLElement);
+    private sort = (order: SortColumnOrder) => {
+        this.orderBy = order;
         this.update();
     }
 }

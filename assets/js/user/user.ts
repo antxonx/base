@@ -1,4 +1,3 @@
-import getSort, {SortColumn} from "@plugins/SortColumn";
 import ButtonCheck from "@plugins/ButtonCheckGroup";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Search from "@plugins/Search";
@@ -9,6 +8,8 @@ import Add from "@scripts/user/add";
 import Delete from "@scripts/user/delete";
 import Key from "@scripts/user/key";
 import Show from "@scripts/user/show";
+import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import SortColumn from "@plugins/SortColumn";
 
 /**
  * User class
@@ -61,7 +62,7 @@ export default class User {
      * @type {SortColumn}
      * @memberof User
      */
-    protected orderBy: SortColumn;
+    protected orderBy: SortColumnOrder;
 
     /**
      * Creates an instance of User.
@@ -76,6 +77,10 @@ export default class User {
             order: "ASC"
         }
         this.control = true;
+        (new SortColumn({
+            table: document.getElementById('userTable') as HTMLElement,
+            callback: this.sort
+        })).load();
     }
 
     /**
@@ -111,7 +116,6 @@ export default class User {
         [...document.getElementsByClassName("user-reactivate")].forEach(
             element => element.addEventListener("click", this.reactive)
         );
-        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
     }
 
     /**
@@ -231,8 +235,8 @@ export default class User {
      * @private
      * @memberof User
      */
-    private sort = (e: Event) => {
-        this.orderBy = getSort(e.currentTarget as HTMLElement);
+    private sort = (order: SortColumnOrder) => {
+        this.orderBy = order;
         this.update();
     }
 }
