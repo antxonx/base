@@ -9,6 +9,7 @@
         "esModuleInterop": true,
         "strict": true,
         "baseUrl": ".",
+        "resolveJsonModule": true,
         "paths": {
             "@scripts/*": ["assets/js/*"],
             "@styles/*": ["assets/css/*"],
