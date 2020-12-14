@@ -5,9 +5,37 @@ import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
+/**
+ * Add class
+ *
+ * @export
+ * @class Add
+ */
 export default class Add {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {AddOptions}
+     * @memberof Add
+     */
     protected options: AddOptions;
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Add
+     */
     protected modal: Modal;
+
+    /**
+     * Creates an instance of Add.
+     * @param {AddOptions} options
+     * @memberof Add
+     */
     public constructor(options: AddOptions) {
         this.options = {...DEFAULT_ADD_OPTIONS,...options};
         if(this.options.id === 0) {
@@ -20,6 +48,11 @@ export default class Add {
         });
     }
 
+    /**
+     *load
+     *
+     * @memberof Add
+     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.client.address.view.form, {'id': this.options.id.toString()}))
@@ -33,6 +66,11 @@ export default class Add {
             });
     }
 
+    /**
+     * validate
+     *
+     * @memberof Add
+     */
     public validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(

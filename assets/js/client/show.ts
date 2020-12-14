@@ -12,10 +12,46 @@ import AddAddress from "@scripts/client/address/add";
 import AddContact from "@scripts/client/contact/add";
 import ShowContact from "@scripts/client/contact/show";
 
+/**
+ * Show class
+ *
+ * @export
+ * @class Show
+ */
 export default class Show {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {ShowOptions}
+     * @memberof Show
+     */
     protected options: ShowOptions
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Show
+     */
     protected modal: Modal;
+
+    /**
+     * control
+     *
+     * @protected
+     * @type {boolean}
+     * @memberof Show
+     */
     protected control: boolean;
+
+    /**
+     * Creates an instance of Show.
+     * @param {ShowOptions} options
+     * @memberof Show
+     */
     public constructor(options: ShowOptions) {
         this.options = {...DEFAULT_SHOW_OPTIONS, ...options};
         this.control = true;
@@ -27,6 +63,12 @@ export default class Show {
             size: 90
         });
     }
+
+    /**
+     * load
+     *
+     * @memberof Show
+     */
     public load = () => {
         if(this.control) {
             this.control = false;
@@ -55,6 +97,11 @@ export default class Show {
         });
     }
 
+    /**
+     * update
+     *
+     * @memberof Show
+     */
     public update = () => {
         Axios.get(Router.generate(ROUTES.client.view.show, {'id' : this.options.id!.toString()}))
             .then(res => {
@@ -79,6 +126,11 @@ export default class Show {
             });
     }
 
+    /**
+     * edit
+     *
+     * @memberof Show
+     */
     public edit = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
         if (!!(+BTN.getAttribute("active")!)) {
@@ -105,6 +157,11 @@ export default class Show {
         $('.editable-field').editable('toggleDisabled');
     }
 
+    /**
+     * addAddress
+     *
+     * @memberof Show
+     */
     public addAddress = (e: Event) => {
         this.modal.hide();
         this.control = true;
@@ -114,6 +171,11 @@ export default class Show {
         })).load();
     }
 
+    /**
+     * addContact
+     *
+     * @memberof Show
+     */
     public addContact = (e: Event) => {
         this.modal.hide();
         this.control = true;
@@ -123,6 +185,11 @@ export default class Show {
         })).load();
     }
 
+    /**
+     * addExtraPhone
+     *
+     * @memberof Show
+     */
     public addExtraPhone = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
@@ -146,6 +213,11 @@ export default class Show {
         }
     }
 
+    /**
+     * addExtraEmail
+     *
+     * @memberof Show
+     */
     public addExtraEmail = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
@@ -169,6 +241,11 @@ export default class Show {
         }
     }
 
+    /**
+     * deletePhone
+     *
+     * @memberof Show
+     */
     public deletePhone = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("phone-id")!;
@@ -191,6 +268,11 @@ export default class Show {
         }
     }
 
+    /**
+     * deleteEmail
+     *
+     * @memberof Show
+     */
     public deleteEmail = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("email-id")!;
@@ -213,6 +295,11 @@ export default class Show {
         }
     }
 
+    /**
+     * deleteContact
+     *
+     * @memberof Show
+     */
     public deleteContact = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".contact-row") as HTMLElement;
         const NAME = ELEMENT.getAttribute("contactname")!;
@@ -235,6 +322,11 @@ export default class Show {
         }
     }
 
+    /**
+     * showContact
+     *
+     * @memberof Show
+     */
     public showContact = (e: Event) => {
         this.modal.hide();
         this.control = true;

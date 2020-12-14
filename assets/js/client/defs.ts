@@ -1,3 +1,9 @@
+/**
+ * DeleteOptions
+ *
+ * @export
+ * @interface DeleteOptions
+ */
 export interface DeleteOptions {
     element: HTMLElement;
     id?: number;
@@ -14,6 +20,12 @@ export const DEFAULT_DELETE_OPTIONS : DeleteOptions = {
     onError: () => {},
 }
 
+/**
+ * ShowOptions
+ *
+ * @export
+ * @interface ShowOptions
+ */
 export interface ShowOptions {
     id: number;
     callback: () => void;

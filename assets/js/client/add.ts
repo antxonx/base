@@ -4,6 +4,12 @@ import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
+/**
+ * Add
+ *
+ * @export
+ * @class Add
+ */
 export default class Add {
     protected modal;
     protected callback;
@@ -15,6 +21,11 @@ export default class Add {
         });
     }
 
+    /**
+     * load
+     *
+     * @memberof Add
+     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.client.view.form))
@@ -29,6 +40,11 @@ export default class Add {
             });
     }
 
+    /**
+     * validate
+     *
+     * @memberof Add
+     */
     public validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(

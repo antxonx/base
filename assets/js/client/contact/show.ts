@@ -7,10 +7,46 @@ import {evaluateInputs, hideElement, showElement} from "@plugins/Required";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow} from "@plugins/DeleteElement";
 
+/**
+ * Show class
+ *
+ * @export
+ * @class Show
+ */
 export default class Show {
+
+    /**
+     * options
+     *
+     * @protected
+     * @type {showOptions}
+     * @memberof Show
+     */
     protected options: showOptions;
+
+    /**
+     * modal
+     *
+     * @protected
+     * @type {Modal}
+     * @memberof Show
+     */
     protected modal: Modal;
+
+    /**
+     * control
+     *
+     * @protected
+     * @type {boolean}
+     * @memberof Show
+     */
     protected control: boolean;
+
+    /**
+     * Creates an instance of Show.
+     * @param {showOptions} options
+     * @memberof Show
+     */
     public constructor(options: showOptions) {
         this.options = {...DEFAULT_SHOW_OPTIONS,...options};
         this.control = true;
@@ -23,6 +59,12 @@ export default class Show {
             onHide: this.options.callback
         });
     }
+
+    /**
+     * load
+     *
+     * @memberof Show
+     */
     public load = () => {
         if(this.control) {
             this.control = false;
@@ -36,6 +78,11 @@ export default class Show {
         [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', this.deleteEmail));
     }
 
+    /**
+     * update
+     *
+     * @memberof Show
+     */
     public update = () => {
         Axios.get(Router.generate(ROUTES.client.contact.view.show, {'id': this.options.id.toString()}))
             .then(res => {
@@ -58,6 +105,11 @@ export default class Show {
             });
     }
 
+    /**
+     * edit
+     *
+     * @memberof Show
+     */
     public edit = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
         if (!!(+BTN.getAttribute("active")!)) {
@@ -84,6 +136,11 @@ export default class Show {
         $('.editable-field').editable('toggleDisabled');
     }
 
+    /**
+     * addExtraPhone
+     *
+     * @memberof Show
+     */
     public addExtraPhone = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
@@ -107,6 +164,11 @@ export default class Show {
         }
     }
 
+    /**
+     * addExtraEmail
+     *
+     * @memberof Show
+     */
     public addExtraEmail = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
@@ -130,6 +192,11 @@ export default class Show {
         }
     }
 
+    /**
+     * deletePhone
+     *
+     * @memberof Show
+     */
     public deletePhone = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("phone-id")!;
@@ -152,6 +219,11 @@ export default class Show {
         }
     }
 
+    /**
+     * deleteEmail
+     *
+     * @memberof Show
+     */
     public deleteEmail = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("email-id")!;

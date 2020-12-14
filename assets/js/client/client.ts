@@ -8,6 +8,12 @@ import Add from "@scripts/client/add";
 import Delete from "@scripts/client/delete";
 import Show from "@scripts/client/show";
 
+/**
+ * Client class
+ *
+ * @export
+ * @class Client
+ */
 export default class Client {
     protected mainView: HTMLElement;
     protected search: string;
@@ -23,6 +29,11 @@ export default class Client {
         }
     }
 
+    /**
+     * load
+     *
+     * @memberof Client
+     */
     public load = () => {
         if (this.control) {
             document.getElementById("client-add")?.addEventListener("click", this.add);
@@ -38,6 +49,12 @@ export default class Client {
         [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
     }
 
+    /**
+     * update
+     *
+     * @private
+     * @memberof Client
+     */
     private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
         Axios.get(Router.generate(ROUTES.client.view.list, {
@@ -57,6 +74,12 @@ export default class Client {
             });
     }
 
+    /**
+     * setSearch
+     *
+     * @private
+     * @memberof Client
+     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
@@ -66,6 +89,12 @@ export default class Client {
         (new Add(this.load)).load();
     }
 
+    /**
+     * delete
+     *
+     * @private
+     * @memberof Client
+     */
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
         (new Delete({
@@ -74,6 +103,12 @@ export default class Client {
         })).delete();
     }
 
+    /**
+     * show
+     *
+     * @private
+     * @memberof Client
+     */
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
         //showClient(+ELEMENT.getAttribute("id")!, this.load);
@@ -83,6 +118,12 @@ export default class Client {
         })).load();
     }
 
+    /**
+     * sort
+     *
+     * @private
+     * @memberof Client
+     */
     private sort = (e: Event) => {
         this.orderBy = getSort(e.currentTarget as HTMLElement);
         this.update();

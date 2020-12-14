@@ -1,3 +1,9 @@
+/**
+ * addOptions
+ *
+ * @export
+ * @interface AddOptions
+ */
 export interface AddOptions {
     id: number;
     callback?: () => void;
