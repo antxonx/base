@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
 import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
-import {BIG_LOADER, BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
+import {BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
 
@@ -13,14 +13,24 @@ import getSort, {SortColumn} from '@scripts/plugins/SortColumn';
  * @class Logger
  */
 export default class Logger {
+
     /**
-     * mainView
+     * control
+     *
+     * @private
+     * @type {boolean}
+     * @memberof Logger
+     */
+    protected control: boolean
+
+    /**
+     * view
      *
      * @private
      * @type {HTMLElement}
      * @memberof Logger
      */
-    private mainView: HTMLElement;
+    protected view: HTMLElement;
 
     /**
      * searchInput
@@ -29,7 +39,7 @@ export default class Logger {
      * @type {string}
      * @memberof Logger
      */
-    private searchInput: string;
+    protected searchInput: string;
 
     /**
      * method
@@ -38,7 +48,7 @@ export default class Logger {
      * @type {string}
      * @memberof Logger
      */
-    private method: string;
+    protected method: string;
 
     /**
      * route
@@ -47,7 +57,7 @@ export default class Logger {
      * @type {string}
      * @memberof Logger
      */
-    private route: string;
+    protected route: string|null;
 
     /**
      * order by
@@ -56,7 +66,7 @@ export default class Logger {
      * @type {SortColumn}
      * @memberof Logger
      */
-    private orderBy: SortColumn;
+    protected orderBy: SortColumn;
 
     /**
      * default view
@@ -64,17 +74,18 @@ export default class Logger {
      * @private
      * @memberof Logger
      */
-    private readonly defaultView = `<tr class="table-paginator"><td colspan="6"><div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">Debe selecionar un tipo de regsitro</div></td></tr>`;
+    protected readonly defaultView = `<tr class="table-paginator"><td colspan="6"><div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">Debe selecionar un tipo de regsitro</div></td></tr>`;
 
     /**
      * Creates an instance of Logger.
      * @memberof Logger
      */
     public constructor() {
+        this.control = true;
         this.searchInput = '';
         this.method = '';
-        this.route = '';
-        this.mainView = ((document.getElementById("logsView") as HTMLElement) || document.createElement("div"));
+        this.route = null;
+        this.view = ((document.getElementById("logsView") as HTMLElement) || document.createElement("div"));
         this.orderBy = {
             column: "createdAt",
             order: "DESC"
@@ -87,18 +98,22 @@ export default class Logger {
      * @memberof Logger
      */
     public load = () => {
-        this.mainView.innerHTML = this.defaultView;
-        new Search({
-            callback: this.searchField,
-            selector: "#searchLogInput"
-        });
-        new ButtonCheckGroup(document.getElementById('logSwitch') as HTMLElement, {
-            onChange: this.changeType,
-            unCheckClass: 'btn-outline-success',
-            checkClass: 'btn-success',
-            extraClass: 'round'
-        });
-        this.loadEvs();
+        if(this.control) {
+            this.control = false;
+            this.updateView(this.defaultView);
+            new Search({
+                callback: this.searchField,
+                selector: "#searchLogInput"
+            });
+            new ButtonCheckGroup(document.getElementById('logSwitch') as HTMLElement, {
+                onChange: this.changeType,
+                unCheckClass: 'btn-outline-success',
+                checkClass: 'btn-success',
+                extraClass: 'round'
+            });
+        }
+        document.getElementById("methodSelect")!.addEventListener("input", this.changeMethod);
+        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sortAction));
     };
 
     /**
@@ -106,10 +121,9 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    public searchField = (data: string) => {
-        this.mainView.innerHTML = BIG_LOADER;
+    private searchField = (data: string) => {
         this.searchInput = data.replace(/\//g, "_");
-        this.changePage(1);
+        this.update();
     };
 
     /**
@@ -117,9 +131,9 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    public changePage = (page: number) => {
-        if (this.route != undefined || this.route != null) {
-            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "6");
+    private update = (page: number = 1) => {
+        if (this.route != null) {
+            this.updateView(BIG_LOADER_TABLE.replace("0", "6"));
             const USER = (document.getElementById("registerUser") as HTMLInputElement).value;
             Axios.get(Router.generate(this.route, {
                 'search': this.searchInput,
@@ -130,14 +144,16 @@ export default class Logger {
                 'user': USER
             }))
                 .then(res => {
-                    this.mainView.innerHTML = res.data;
-                    this.loadEvs();
-                    new Paginator({callback: this.changePage});
+                    this.updateView(res.data);
+                    this.load();
+                    new Paginator({callback: this.update});
                 })
                 .catch(err => {
                     console.error(err.response.data);
                     Toast.error(err.response.data);
                 });
+        } else {
+            this.updateView(this.defaultView);
         }
     }
 
@@ -146,16 +162,15 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    public changeType = (value: string[]) => {
+    private changeType = (value: string[]) => {
         if (value.includes('info')) {
             this.route = ROUTES.logger.view.info;
-            this.changePage(1);
         } else if (value.includes('error')) {
             this.route = ROUTES.logger.view.error;
-            this.changePage(1);
         } else {
-            this.mainView.innerHTML = this.defaultView;
+            this.route = null;
         }
+        this.update();
     };
 
     /**
@@ -163,9 +178,9 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    public sortAction = (e: Event) => {
+    private sortAction = (e: Event) => {
         this.orderBy = getSort(e.currentTarget as HTMLElement);
-        this.changePage(1);
+        this.update();
     }
 
     /**
@@ -173,18 +188,18 @@ export default class Logger {
      *
      * @memberof Logger
      */
-    public changeMethod = (e: Event) => {
+    private changeMethod = (e: Event) => {
         this.method = (e.currentTarget as HTMLInputElement).value;
-        this.changePage(1);
+        this.update();
     }
 
     /**
-     * load events
+     * updateView
      *
+     * @private
      * @memberof Logger
      */
-    public loadEvs = () => {
-        document.getElementById("methodSelect")!.addEventListener("input", this.changeMethod);
-        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sortAction));
+    private updateView = (newView : string) => {
+        this.view.innerHTML = newView;
     }
 }
