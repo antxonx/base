@@ -1,16 +1,22 @@
-# SISTEMA BASE
+# BASE SYSTEM
 
-Proyecto base con control de usuarios, clientes y registros.
+Base project with users control, roles, clients, logger, categories...
 
-## Documentación
+## Documentation
 
-Para generar la documentación debe ejecutar en la raíz:
+PHP docs:
 
 ```console
 foo@bar:~$ php phpDocumentor.phar -d src -d Antxony -t docs --title="Base"
 ```
 
-## Rutas con FOS
+Typescript docs
+
+```console
+foo@bar:~$ "node_modules/.bin/typedoc" --out tsdocs assets/js
+```
+
+## FOS routes
 ```console
 foo@bar:~$ php bin/console fos:js-routing:dump --format=json --target=assets/js/fos_js_routes.json
 ```
