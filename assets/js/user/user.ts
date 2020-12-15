@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import ButtonCheck from "@plugins/ButtonCheckGroup";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Search from "@plugins/Search";

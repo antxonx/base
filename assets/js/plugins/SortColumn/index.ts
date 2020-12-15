@@ -1,4 +1,9 @@
-/** @module SortColumn */
+/**
+* get sort information from clicks on a table header
+* @packageDocumentation
+* @module SortColumn
+* @preferred
+*/
 import {DEFAULT_SORT_COLUMN_OPTIONS, SortColumnOrder, SortColumOptions, SortIcons} from "@plugins/SortColumn/defs";
 import {deleteElement} from "@plugins/DeleteElement";
 import {htmlToElement} from "@plugins/Required";

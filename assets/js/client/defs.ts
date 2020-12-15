@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 
 export interface DeleteOptions {
     element: HTMLElement;

@@ -1,4 +1,9 @@
-/** @module Search */
+/**
+ * Triggers the search input and acllback a funcion with the field value
+ * @packageDocumentation
+ * @module Search
+ * @preferred
+ */
 import {DEFAULT_SEARCH_OPTIONS, SearchOptions} from './defs';
 
 /**

@@ -1,4 +1,7 @@
-/** @module SortColumn */
+/**
+* @packageDocumentation
+* @module SortColumn
+*/
 
 export interface SortColumnOrder {
     column: string;

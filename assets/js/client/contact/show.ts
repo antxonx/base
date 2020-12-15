@@ -1,4 +1,7 @@
-/** @module Client/Contact */
+/**
+* @packageDocumentation
+* @module Client/Contact
+*/
 
 import { DEFAULT_SHOW_OPTIONS, showOptions } from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";

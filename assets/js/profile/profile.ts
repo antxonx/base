@@ -1,4 +1,7 @@
-/** @module Profile */
+/**
+* @packageDocumentation
+* @module Profile
+*/
 import $ from "jquery";
 import Key from "@scripts/profile/key";
 import Toast from "@plugins/AlertToast";

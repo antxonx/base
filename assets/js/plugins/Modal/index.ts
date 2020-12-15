@@ -1,4 +1,9 @@
-/** @module Modal */
+/**
+ * Opens a bootstrap modal 
+ * @packageDocumentation
+ * @module Modal
+ * @preferred
+ */
 import $ from 'jquery';
 import 'bootstrap';
 import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./defs";

@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Axios from "axios";

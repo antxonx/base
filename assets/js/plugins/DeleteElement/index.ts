@@ -1,4 +1,9 @@
-/** @module DeleteElement */
+/**
+* Delete a row from a table
+* @packageDocumentation
+* @module DeleteElement
+* @preferred
+*/
 import {SPINNER_LOADER} from "@scripts/app";
 
 /**

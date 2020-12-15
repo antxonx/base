@@ -1,4 +1,7 @@
-/** @module Modal */
+/**
+ * @packageDocumentation
+ * @module Modal
+ */
 
 export interface ModalOptions {
     title?: string;

@@ -1,4 +1,7 @@
-/** @module Client/Address */
+/**
+* @packageDocumentation
+* @module Client/Address
+*/
 
 export interface AddOptions {
     id: number;

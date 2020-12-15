@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import {DEFAULT_KEY_OPTIONS, keyOptions} from "@scripts/user/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";

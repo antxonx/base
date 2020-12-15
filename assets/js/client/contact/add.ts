@@ -1,4 +1,9 @@
-/** @module Client/Contact */
+/**
+* view, add, edit and delete a client contact
+* @packageDocumentation
+* @module Client/Contact
+* @preferred
+*/
 import {AddOptions, DEFAULT_ADD_OPTIONS} from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";

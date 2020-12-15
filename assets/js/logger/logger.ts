@@ -1,4 +1,7 @@
-/** @module Logger */
+/**
+* @packageDocumentation
+* @module Logger
+*/
 import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
 import Search from '@scripts/plugins/Search';

@@ -1,4 +1,9 @@
-/** @module ListSelect */
+/**
+ * Get the value or values of a list
+ * @packageDocumentation
+ * @module ListSelect
+ * @preferred
+ */
 import {DEFAULT_LIST_SELECT_OPTIONS, ListSelectNames, ListSelectOptions} from "@plugins/ListSelect/defs";
 
 /**
@@ -6,11 +11,15 @@ import {DEFAULT_LIST_SELECT_OPTIONS, ListSelectNames, ListSelectOptions} from "@
 * @class ListSelect
 * @author Antxony <dantonyofcarim@gmail.com>
 */
-export default class ListSelect
-{
+export default class ListSelect {
+
     protected options : ListSelectOptions;
+
+    protected values: string[];
+
     public constructor(options : ListSelectOptions) {
         this.options = {...DEFAULT_LIST_SELECT_OPTIONS, ...options};
+        this.values = [];
     }
 
     public load = () => {
@@ -25,13 +34,18 @@ export default class ListSelect
                     el.classList.add(ListSelectNames.ACTIVE_CLASS);
                 }
             }
-            this.options.callback!(Array.from(LIST).map(el => {
+            this.values = Array.from(LIST).map(el => {
                 if(el.classList.contains(ListSelectNames.ACTIVE_CLASS))
-                    return el.getAttribute(this.options.attribute!)!
+                    return el.getAttribute(this.options.attribute!)!;
                 else
-                    return ""
-            }).filter(data => data != ""));
+                    return "";
+            }).filter(data => data != "");
+            this.options.callback!(this.values);
         }));
+    }
+
+    public getValues = () => {
+        return this.values;
     }
 
     private toggle = (element: HTMLElement, tClass : string = ListSelectNames.ACTIVE_CLASS) => {

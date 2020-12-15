@@ -1,4 +1,9 @@
-/** @module Client/Address */
+/**
+* view, add, edit and delete a client address
+* @packageDocumentation
+* @module Client/Address
+* @preferred
+*/
 import {AddOptions, DEFAULT_ADD_OPTIONS} from "@scripts/client/address/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";

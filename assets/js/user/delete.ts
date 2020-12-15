@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import {DEFAULT_DELETE_REACTIVE_OPTIONS, DeleteReactiveOptions} from "@scripts/user/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";

@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import {DEFAULT_DELETE_OPTIONS, DeleteOptions} from "@scripts/client/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";

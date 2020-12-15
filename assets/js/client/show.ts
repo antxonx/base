@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import {DEFAULT_SHOW_OPTIONS, ShowOptions} from "@scripts/client/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";

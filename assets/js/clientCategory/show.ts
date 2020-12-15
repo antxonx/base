@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import $ from 'jquery';
 import 'bootstrap';
 import Modal from "@plugins/Modal";

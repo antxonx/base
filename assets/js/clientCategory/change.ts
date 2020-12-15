@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import 'bootstrap';
 import {ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS} from "@scripts/clientCategory/defs";
 import Modal from "@plugins/Modal";

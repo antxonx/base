@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import Modal from "@plugins/Modal";
 import Axios from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
