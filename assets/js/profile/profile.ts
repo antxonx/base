@@ -7,11 +7,10 @@ import Key from "@scripts/profile/key";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Profile class
+ * Profile main view to edit and see permissions
  *
  * @export
  * @class Profile
- * @classdesc Profile main view to edit and see permissions
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Profile {

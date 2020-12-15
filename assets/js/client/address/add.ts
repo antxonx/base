@@ -12,11 +12,10 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add class for address
+ * Add a new address for a client
  *
  * @export
  * @class Add
- * @classdesc Add a new address for a client
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

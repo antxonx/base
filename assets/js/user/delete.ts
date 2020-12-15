@@ -10,11 +10,10 @@ import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Delete class
+ * Open a confirmation alerto to suspend an user
  *
  * @export
  * @class Delete
- * @classdesc Open a confirmation alerto to suspend an user
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Delete {

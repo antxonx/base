@@ -12,11 +12,10 @@ import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Change class
+ * Change a client category
  *
  * @export
  * @class Change
- * @classdesc change a client category
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Change {

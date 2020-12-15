@@ -9,11 +9,10 @@ import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
 /**
- * ClientCategoryAdd class
+ * Add a new category for clients
  *
  * @export
  * @class ClientCategoryAdd
- * @classdesc Add a new category for clients
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryAdd {

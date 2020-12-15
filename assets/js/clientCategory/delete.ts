@@ -10,11 +10,10 @@ import {ROUTES, Router} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * ClientCategoryDelete class
+ * Delete a category
  *
  * @export
  * @class ClientCategoryDelete
- * @description Delete a category
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryDelete {

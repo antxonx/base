@@ -15,11 +15,10 @@ import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
- * ClientCategory class
+ * Client category main view and table
  *
  * @export
  * @class ClientCategory
- * @classdesc Client category main view and table
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategory {

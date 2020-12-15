@@ -12,11 +12,10 @@ import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
- * Logger Class
+ * Logger main biew and table
  *
  * @export
  * @class Logger
- * @classdesc Logger main biew and table
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Logger {

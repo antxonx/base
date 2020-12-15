@@ -14,11 +14,10 @@ import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
- * Client class
+ * Controls the main view and table actions of clients
  *
  * @export
  * @class Client
- * @classdesc Controls the main view and table actions of clients
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Client {

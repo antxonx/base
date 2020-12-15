@@ -12,11 +12,10 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add class
+ * Opens a modal to enter contact data and send a post request with the values if is validated
  *
  * @export
  * @class Add
- * @classdesc Opens a modal to enter contact data and send a post request with the values if is validated
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

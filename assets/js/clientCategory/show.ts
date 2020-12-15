@@ -11,11 +11,10 @@ import {ROUTES, Router} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Show class
+ * Show the category and allows to edit
  *
  * @export
  * @class Show
- * @classdesc Show the category and allows to edit
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {

@@ -13,11 +13,10 @@ import Alert from "@plugins/Alert";
 import { deleteElement, disableRow } from "@plugins/DeleteElement";
 
 /**
- * Show class for contact
+ * Opens a modal with the contact info
  *
  * @export
  * @class Show
- * @classdesc Opens a modal with the contact info
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {

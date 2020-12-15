@@ -10,11 +10,10 @@ import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
 
 /**
- * Key class
+ * Change user password
  *
  * @export
  * @class Key
- * @classdesc Change user password
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Key {
