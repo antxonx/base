@@ -1,3 +1,5 @@
+/** @module Required */
+
 /**
  * clase para elementos válidos
  * @const `string`

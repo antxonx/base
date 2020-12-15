@@ -1,4 +1,4 @@
-import getSort, {SortColumn} from "@plugins/SortColumn";
+/** @module Client */
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Axios from "axios";
@@ -7,12 +7,27 @@ import Toast from "@plugins/AlertToast";
 import Add from "@scripts/client/add";
 import Delete from "@scripts/client/delete";
 import Show from "@scripts/client/show";
+import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import SortColumn from "@plugins/SortColumn";
 
+/**
+ * Client class
+ *
+ * @export
+ * @class Client
+ * @classdesc Controls the main view and table actions of clients
+ * @author Antxony <dantonyofcarim@gmail.com>
+ */
 export default class Client {
+
     protected mainView: HTMLElement;
+
     protected search: string;
-    protected orderBy: SortColumn
+
+    protected orderBy: SortColumnOrder
+
     protected control: boolean
+
     public constructor() {
         this.search = '';
         this.mainView = (document.getElementById("clientsView") || document.createElement("div"));
@@ -20,7 +35,11 @@ export default class Client {
         this.orderBy = {
             column: "name",
             order: "ASC"
-        }
+        };
+        (new SortColumn({
+            table: document.getElementById('clientTable') as HTMLElement,
+            callback: this.sort
+        })).load();
     }
 
     public load = () => {
@@ -35,7 +54,6 @@ export default class Client {
         }
         [...document.getElementsByClassName("client-delete")].forEach(element => element.addEventListener("click", this.delete));
         [...document.getElementsByClassName("client-show")].forEach(element => element.addEventListener("click", this.show));
-        [...document.getElementsByClassName("sort-column")].forEach(element => element.addEventListener("click", this.sort));
     }
 
     private update = (page: number = 1) => {
@@ -76,15 +94,14 @@ export default class Client {
 
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
-        //showClient(+ELEMENT.getAttribute("id")!, this.load);
         (new Show({
             id: +ELEMENT.getAttribute("id")!,
             callback: this.update
         })).load();
     }
 
-    private sort = (e: Event) => {
-        this.orderBy = getSort(e.currentTarget as HTMLElement);
+    private sort = (order: SortColumnOrder) => {
+        this.orderBy = order;
         this.update();
     }
 }

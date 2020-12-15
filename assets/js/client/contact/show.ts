@@ -1,20 +1,34 @@
-import {DEFAULT_SHOW_OPTIONS, showOptions} from "@scripts/client/contact/defs";
+/** @module Client/Contact */
+
+import { DEFAULT_SHOW_OPTIONS, showOptions } from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
-import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
+import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
-import {evaluateInputs, hideElement, showElement} from "@plugins/Required";
+import { evaluateInputs, hideElement, showElement } from "@plugins/Required";
 import Alert from "@plugins/Alert";
-import {deleteElement, disableRow} from "@plugins/DeleteElement";
+import { deleteElement, disableRow } from "@plugins/DeleteElement";
 
+/**
+ * Show class for contact
+ *
+ * @export
+ * @class Show
+ * @classdesc Opens a modal with the contact info
+ * @author Antxony <dantonyofcarim@gmail.com>
+ */
 export default class Show {
+
     protected options: showOptions;
+
     protected modal: Modal;
+
     protected control: boolean;
+
     public constructor(options: showOptions) {
-        this.options = {...DEFAULT_SHOW_OPTIONS,...options};
+        this.options = { ...DEFAULT_SHOW_OPTIONS, ...options };
         this.control = true;
-        if(this.options.id === 0) {
+        if (this.options.id === 0) {
             throw new Error("No se ha podido obtener información del cliente");
         }
         this.modal = new Modal({
@@ -23,8 +37,9 @@ export default class Show {
             onHide: this.options.callback
         });
     }
+
     public load = () => {
-        if(this.control) {
+        if (this.control) {
             this.control = false;
             this.modal.show();
             this.update();
@@ -36,8 +51,8 @@ export default class Show {
         [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', this.deleteEmail));
     }
 
-    public update = () => {
-        Axios.get(Router.generate(ROUTES.client.contact.view.show, {'id': this.options.id.toString()}))
+    private update = () => {
+        Axios.get(Router.generate(ROUTES.client.contact.view.show, { 'id': this.options.id.toString() }))
             .then(res => {
                 this.modal.updateBody(res.data);
                 $('.editable-field').editable({
@@ -58,7 +73,7 @@ export default class Show {
             });
     }
 
-    public edit = (e: Event) => {
+    private edit = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
         if (!!(+BTN.getAttribute("active")!)) {
             BTN.setAttribute("active", "0");
@@ -84,13 +99,13 @@ export default class Show {
         $('.editable-field').editable('toggleDisabled');
     }
 
-    public addExtraPhone = (e: Event) => {
+    private addExtraPhone = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
             const BTN = document.getElementById("submit-phone-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, {'id': this.options.id.toString()}), {
+            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }), {
                 type: 2,
                 level: (document.getElementById("phoneType") as HTMLInputElement).value,
                 value: (document.getElementById("phone") as HTMLInputElement).value,
@@ -107,13 +122,13 @@ export default class Show {
         }
     }
 
-    public addExtraEmail = (e: Event) => {
+    private addExtraEmail = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
             const BTN = document.getElementById("submit-email-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, {'id': this.options.id.toString()}), {
+            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }), {
                 type: 1,
                 level: 1,
                 value: (document.getElementById("email") as HTMLInputElement).value,
@@ -130,7 +145,7 @@ export default class Show {
         }
     }
 
-    public deletePhone = async (e: Event) => {
+    private deletePhone = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("phone-id")!;
         const PHONE = ELEMENT.getAttribute("phone-phone")!;
@@ -141,7 +156,7 @@ export default class Show {
         const res = await ALERT.updateBody(`¿Eliminar el número <b>${PHONE}</b>?`).show();
         if (res) {
             disableRow(ELEMENT);
-            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, {'id': ID.toString()}))
+            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() }))
                 .then(res => {
                     deleteElement(ELEMENT);
                     Toast.success(res.data);
@@ -152,7 +167,7 @@ export default class Show {
         }
     }
 
-    public deleteEmail = async (e: Event) => {
+    private deleteEmail = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("email-id")!;
         const NAME = ELEMENT.getAttribute("email-email")!;
@@ -163,7 +178,7 @@ export default class Show {
         const res = await ALERT.updateBody(`¿Eliminar el correo <b>${NAME}</b>?`).show();
         if (res) {
             disableRow(ELEMENT);
-            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, {'id': ID.toString()}))
+            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() }))
                 .then(res => {
                     deleteElement(ELEMENT);
                     Toast.success(res.data);

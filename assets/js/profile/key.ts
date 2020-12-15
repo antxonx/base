@@ -1,3 +1,4 @@
+/** @module Profile */
 import Modal from "@plugins/Modal";
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
@@ -10,22 +11,13 @@ import {PASSWORD_INPUT} from "@scripts/profile/defs";
  *
  * @export
  * @class Key
+ * @classdesc Change user password with confirmation
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Key {
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Key
-     */
     protected modal: Modal;
 
-    /**
-     * Creates an instance of Key.
-     * @memberof Key
-     */
     public constructor() {
         this.modal = new Modal({
             title: 'CAmbiar contraseña',
@@ -33,11 +25,6 @@ export default class Key {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Key
-     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.passform))
@@ -51,11 +38,6 @@ export default class Key {
             });
     }
 
-    /**
-     * validate
-     *
-     * @memberof Key
-     */
     public validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;

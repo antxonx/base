@@ -1,3 +1,4 @@
+/** @module AlertToast */
 import $ from 'jquery';
 import 'bootstrap';
 
@@ -6,6 +7,7 @@ import 'bootstrap';
  *
  * @export
  * @class Toast
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Toast {
 

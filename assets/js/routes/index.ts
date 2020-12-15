@@ -1,4 +1,15 @@
-export const Routes = {
+/**
+ * Defined routes from symfony
+ * @packageDocumentation
+ * @module Routes
+ * @preferred
+ */
+
+/**
+* @exports
+* @module Routes
+*/
+export const Routes : any = {
     client: {
         view: {
             list: 'client_list',

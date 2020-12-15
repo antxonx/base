@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "module": "commonjs",
+        "target": "esnext",
+        "module": "CommonJS",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
@@ -9,6 +9,7 @@
         "esModuleInterop": true,
         "strict": true,
         "baseUrl": ".",
+        "resolveJsonModule": true,
         "paths": {
             "@scripts/*": ["assets/js/*"],
             "@styles/*": ["assets/css/*"],

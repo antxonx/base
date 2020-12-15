@@ -1,3 +1,5 @@
+/** @module Modal */
+
 export interface ModalOptions {
     title?: string;
     size?: number;

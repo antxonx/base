@@ -1,3 +1,5 @@
+/** @module ListSelect */
+
 export enum ListSelectNames {
     LIST_ELEMENT = 'li',
     ACTIVE_CLASS = 'active',

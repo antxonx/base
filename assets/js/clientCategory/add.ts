@@ -1,3 +1,4 @@
+/** @module Client/Category */
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
 import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
@@ -9,31 +10,15 @@ import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
  *
  * @export
  * @class ClientCategoryAdd
+ * @classdesc Add a new category for clients
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryAdd {
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof ClientCategoryAdd
-     */
     protected modal: Modal;
 
-    /**
-     * callback
-     *
-     * @protected
-     * @memberof ClientCategoryAdd
-     */
     protected callback: () => void;
 
-    /**
-     * Creates an instance of ClientCategoryAdd.
-     * @param {() => void} [callback=() => {}]
-     * @memberof ClientCategoryAdd
-     */
     public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = (new Modal({
@@ -42,11 +27,6 @@ export default class ClientCategoryAdd {
         }));
     }
 
-    /**
-     * load
-     *
-     * @memberof ClientCategoryAdd
-     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.clientCategory.view.form))
@@ -61,12 +41,6 @@ export default class ClientCategoryAdd {
             });
     }
 
-    /**
-     * validate
-     *
-     * @private
-     * @memberof ClientCategoryAdd
-     */
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(

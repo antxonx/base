@@ -1,3 +1,4 @@
+/** @module User */
 import {DEFAULT_EDIT_OPTIONS, EditOptions} from "@scripts/user/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -9,32 +10,15 @@ import Toast from "@plugins/AlertToast";
  *
  * @export
  * @class Show
+ * @classdesc Show an user and edit
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {EditOptions}
-     * @memberof Show
-     */
     protected options: EditOptions;
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Show
-     */
     protected modal: Modal;
 
-    /**
-     * Creates an instance of Show.
-     * @param {EditOptions} options
-     * @memberof Show
-     */
     public constructor(options: EditOptions) {
         this.options = {...DEFAULT_EDIT_OPTIONS, ...options};
         if (this.options.id === 0) {
@@ -46,11 +30,6 @@ export default class Show {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Show
-     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.show, {'id': this.options.id.toString()}))
@@ -75,12 +54,6 @@ export default class Show {
             });
     }
 
-    /**
-     * toggle
-     *
-     * @private
-     * @memberof Show
-     */
     private toggle = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
         if (!!(+BTN.getAttribute("active")!)) {

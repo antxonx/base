@@ -1,3 +1,5 @@
+/** @module Client */
+
 export interface DeleteOptions {
     element: HTMLElement;
     id?: number;

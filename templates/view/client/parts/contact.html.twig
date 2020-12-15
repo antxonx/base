@@ -21,7 +21,7 @@
            data-title="Ingresa el Puesto o referencia">{{ contact.role }}</a>
     </p>
     {# . #}
-    <b class="field-title">Teléfono</b>
+    <b class="field-title">Teléfono<small>(s)</small></b>
     {% for phone in contact.getContactExtras(TYPE_PHONE) %}
         {# Teléfono #}
         <p class="m-0 phone-container row round" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
@@ -58,7 +58,7 @@
         id : 'contact-phone-extra-form'
     } %}
     {# . #}
-    <b class="field-title">Correo</b>
+    <b class="field-title">Correo<small>(s)</small></b>
     {% for email in contact.getContactExtras(TYPE_MAIL) %}
         {# Correo #}
         <p class="m-0 email-container row round" email-id="{{ email.id }}" email-email="{{ email.value }}">

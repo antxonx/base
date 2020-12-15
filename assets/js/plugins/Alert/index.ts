@@ -1,3 +1,4 @@
+/** @module Alert */
 import $ from 'jquery';
 import 'bootstrap';
 import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
@@ -7,6 +8,7 @@ import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
  *
  * @export
  * @class Alert
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Alert {
     /**
@@ -308,14 +310,14 @@ export default class Alert {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="d-flex justify-content-between w-100">
-                <button type="button" class="btn btn-lg btn-light p-3 no-round w-100" 
-                data-dismiss="modal" 
+                <button type="button" class="btn btn-lg btn-light p-3 no-round w-100"
+                data-dismiss="modal"
                 style="
                 border-bottom-left-radius: 1.25rem !important;
                 ">
                 <b>${this.cancel}</b></button>
-                <button type="button" id="acceptAlert" 
-                class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal" 
+                <button type="button" id="acceptAlert"
+                class="btn btn-lg btn-light p-3 no-round w-100" data-dismiss="modal"
                 style="
                 border-bottom-right-radius: 1.25rem !important;
                 "><b>${this.ok}</b></button>
@@ -325,13 +327,13 @@ export default class Alert {
             document.getElementById(this.modalFooter)!.innerHTML =
                 `
                 <div class="text-center">
-                <button 
-                type="button" 
-                id="acceptAlert" 
-                class="btn btn-lg btn-light p-3 no-round w-100" 
-                data-dismiss="modal" 
+                <button
+                type="button"
+                id="acceptAlert"
+                class="btn btn-lg btn-light p-3 no-round w-100"
+                data-dismiss="modal"
                 style="
-                border-bottom-right-radius: 1.25rem !important; 
+                border-bottom-right-radius: 1.25rem !important;
                 border-bottom-left-radius: 1.25rem !important
                 ">
                 <b>

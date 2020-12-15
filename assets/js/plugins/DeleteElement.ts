@@ -1,3 +1,4 @@
+/** @module DeleteElement */
 import {SPINNER_LOADER} from "@scripts/app";
 
 /**

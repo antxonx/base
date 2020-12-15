@@ -1,3 +1,4 @@
+/** @module Logger */
 import Logger from "./logger";
 
 (() => {

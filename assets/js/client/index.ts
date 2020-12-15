@@ -1,3 +1,4 @@
+/** @module Client */
 import Client from "@scripts/client/client";
 
 (() => {

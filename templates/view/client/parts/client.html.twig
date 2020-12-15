@@ -7,7 +7,7 @@
            data-title="Ingresa el nombre">{{ client.name }}</a>
     </p>
     {# . #}
-    <b class="field-title">Teléfono</b>
+    <b class="field-title">Teléfono<small>(s)</small></b>
     {% for phone in client.getClientExtras(TYPE_PHONE) %}
         {# Teléfono #}
         <p class="m-0 phone-container row round" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
@@ -45,7 +45,7 @@
         id : 'client-phone-extra-form'
     } %}
     {# . #}
-    <b class="field-title">Correo</b>
+    <b class="field-title">Correo<small>(s)</small></b>
     {% for email in client.getClientExtras(TYPE_MAIL) %}
         {# Correo #}
         <p class="m-0 email-container row round" email-id="{{ email.id }}" email-email="{{ email.value }}">

@@ -1,6 +1,6 @@
 <?php
 /**
- * Elementos útiles
+ * Util tools
  */
 
 namespace Antxony;
@@ -10,25 +10,30 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Util class
+ * Utilities
  * @package Antxony
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class Util {
 
     /**
-     * Cantidad de elementos por página
+     * Max elements per page
      * @var int
      */
     public const PAGE_COUNT = 30;
 
     /**
-     * Logger para escribir registros
+     * Logger interface
      *
      * @var LoggerInterface
      */
     private $logger;
 
+    /**
+     * Random string charset
+     *
+     * @var string
+     */
     public const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     /**
@@ -42,7 +47,7 @@ class Util {
     }
 
     /**
-     * Escribir un registro de error
+     * Write error log
      *
      * @param string $message Mensaje a resgistrar
      * @return void
@@ -55,7 +60,7 @@ class Util {
     }
 
     /**
-     * Escribir un registro de error a partir de una excepción
+     * Write error log from exception
      *
      * @param Exception $e Excepción
      * @return void
@@ -70,7 +75,7 @@ class Util {
     }
 
     /**
-     * Escribir un registro de información
+     * Write info log
      *
      * @param string $message Mensaje a Registrar
      * @return void
@@ -83,7 +88,7 @@ class Util {
     }
 
     /**
-     * Devolver una respuesta de error y escribir un registro a partir de la excepción
+     * Write error log from exception and return error Response
      *
      * @param Exception $e Excepción
      * @return Response
@@ -106,7 +111,7 @@ class Util {
     }
 
     /**
-     * Ver si existe o no una cadena de texto dentro de otra
+     * Is the needle in the haystack?
      *
      * @param string $haystack Cadena de origen
      * @param string $needle Cadena que estamos buscando
@@ -118,6 +123,8 @@ class Util {
     }
 
     /**
+     * Generate random string
+     *
      * @param int $size
      * @param string $identifier
      * @return string

@@ -1,20 +1,7 @@
-import 'bootstrap';
-//import {showClient} from '@scripts/client/show';
-
+/** @module Dashboard */
 import '@components/simplecard';
-import Show from "@scripts/client/show";
+import Dashboard from "@scripts/dashboard/dashboard";
 
-const loadEvs = () => {
-    [...document.getElementsByClassName("client-list")].forEach(el => el.addEventListener("click", loadClient));
-};
-
-const loadClient = (e: Event) => {
-    e.preventDefault();
-    const ID = +(e.currentTarget as HTMLElement).getAttribute("id")!;
-    (new Show({
-        id: ID,
-        callback: () => {}
-    })).load();
-};
-
-loadEvs();
+(() => {
+    (new Dashboard()).load();
+})();

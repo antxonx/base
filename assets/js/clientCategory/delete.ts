@@ -1,3 +1,4 @@
+/** @module Client/Category */
 import {ClientCategoryDeleteOptions, DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS} from "@scripts/clientCategory/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
@@ -10,32 +11,17 @@ import Toast from "@plugins/AlertToast";
  *
  * @export
  * @class ClientCategoryDelete
+ * @description Delete a category
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryDelete {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {ClientCategoryDeleteOptions}
-     * @memberof ClientCategoryDelete
-     */
     protected options: ClientCategoryDeleteOptions;
 
-    /**
-     * Creates an instance of ClientCategoryDelete.
-     * @param {ClientCategoryDeleteOptions} options
-     * @memberof ClientCategoryDelete
-     */
     public constructor(options: ClientCategoryDeleteOptions) {
         this.options = {...DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS, ...options};
     }
 
-    /**
-     * delete
-     *
-     * @memberof ClientCategoryDelete
-     */
     public delete = async () => {
         const ID = +this.options.element.getAttribute("id")!;
         const NAME = this.options.element.getAttribute("name")!;

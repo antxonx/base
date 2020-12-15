@@ -118,3 +118,24 @@
     .btn-outline-secondary
       color: #ffffff
       background-color: #6c757d
+  .mobile
+      &.table-striped2
+        tr:nth-child(odd)
+          background-color: #e6e6fa
+      &.table-striped2-4
+        tr:nth-child(4n+1)
+          background-color: #e6e6fa
+      tbody
+        display: block !important
+        width: auto !important
+        tr
+          display: block !important
+          width: auto !important
+          &:hover
+            background-color: initial
+          th, td
+            display: block !important
+            width: auto !important
+            min-height: 3rem !important
+      thead
+        display: none !important

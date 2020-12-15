@@ -1,3 +1,4 @@
+/** @module Client */
 import {DEFAULT_DELETE_OPTIONS, DeleteOptions} from "@scripts/client/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
@@ -5,7 +6,16 @@ import Axios from "axios";
 import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
+/**
+ * Delete client class
+ *
+ * @export
+ * @class Delete
+ * @classdesc Opens an alert to confirm if delete client or not
+ * @author Antxony <dantonyofcarim@gmail.com>
+ */
 export default class Delete {
+
     protected options: DeleteOptions;
 
     public constructor(options: DeleteOptions) {

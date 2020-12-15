@@ -1,3 +1,4 @@
+/** @module Client/Contact */
 import {AddOptions, DEFAULT_ADD_OPTIONS} from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -5,9 +6,18 @@ import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
+/**
+ * Add class
+ *
+ * @export
+ * @class Add
+ * @classdesc Opens a modal to enter contact data and send a post request with the values if is validated
+ * @author Antxony <dantonyofcarim@gmail.com>
+ */
 export default class Add {
     protected options : AddOptions;
     protected modal: Modal;
+
     public constructor(options: AddOptions) {
         this.options = {...DEFAULT_ADD_OPTIONS, ...options};
         if(this.options.id === 0) {
@@ -19,6 +29,7 @@ export default class Add {
             onHide: this.options.callback
         });
     }
+
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.client.contact.view.form))
@@ -32,7 +43,7 @@ export default class Add {
             });
     }
 
-    public validate = (e: Event) => {
+    private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
             [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>],

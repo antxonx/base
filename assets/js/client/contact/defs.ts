@@ -1,3 +1,5 @@
+/** @module Client/Contact */
+
 export interface AddOptions {
     id: number;
     callback: () => void;
