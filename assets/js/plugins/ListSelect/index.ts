@@ -7,6 +7,8 @@
 import {DEFAULT_LIST_SELECT_OPTIONS, ListSelectNames, ListSelectOptions} from "@plugins/ListSelect/defs";
 
 /**
+* Manages a list behavior
+*
 * @export
 * @class ListSelect
 * @author Antxony <dantonyofcarim@gmail.com>

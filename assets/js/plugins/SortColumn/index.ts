@@ -9,6 +9,8 @@ import {deleteElement} from "@plugins/DeleteElement";
 import {htmlToElement} from "@plugins/Required";
 
 /**
+* stablish a new order for the query on DB 
+*
 * @export
 * @class SortColumn
 * @author Antxony <dantonyofcarim@gmail.com>

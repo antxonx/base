@@ -1,5 +1,5 @@
 /**
- * check buttons and switch
+ * Check buttons and switch
  * @packageDocumentation
  * @module ButtonCehckGroup
  * @preferred
@@ -7,7 +7,7 @@
 import {checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS} from "./defs";
 
 /**
- * ButtonCehckGroup class (button checkboxes)
+ * ButtonCehckGroup class (button checkboxes or switch)
  *
  * @export
  * @class ButtonCheckGroup

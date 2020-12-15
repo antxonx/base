@@ -7,7 +7,7 @@
 import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
 
 /**
- * Paginator class
+ * trigger page buttons
  *
  * @export
  * @class Paginator

@@ -8,7 +8,7 @@ import $ from 'jquery';
 import 'bootstrap';
 
 /**
- *Clase para alertas de informe temporales
+ * Shows an alert toast for success or error actions
  *
  * @export
  * @class Toast

@@ -9,7 +9,7 @@ import 'bootstrap';
 import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
 
 /**
- * Clase para crear alertas con respeustas
+ * Shows alert to confirm or accept
  *
  * @export
  * @class Alert
