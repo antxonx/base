@@ -1,9 +1,5 @@
-/**
- * PASSWORD_INPUT enum
- *
- * @export
- * @enum {number}
- */
+/** @module Profile */
+
 export enum PASSWORD_INPUT {
     OLD,
     NEW,

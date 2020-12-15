@@ -1,8 +1,9 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.30.0",
+        "@symfony/webpack-encore": "^0.33.0",
         "core-js": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
+        "typedoc-plugin-external-module-name": "^4.0.3",
         "webpack-notifier": "^1.6.0"
     },
     "license": "MIT",

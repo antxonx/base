@@ -1,3 +1,4 @@
+/** @module Profile */
 import $ from "jquery";
 import Key from "@scripts/profile/key";
 import Toast from "@plugins/AlertToast";
@@ -7,14 +8,11 @@ import Toast from "@plugins/AlertToast";
  *
  * @export
  * @class Profile
+ * @classdesc Profile main view to edit and see permissions
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Profile {
-    
-    /**
-     * load
-     *
-     * @memberof Profile
-     */
+
     public load = () => {
         const EDIT_BTN = document.getElementById('profile-edit')!;
         $('.editable-field').editable({

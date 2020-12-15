@@ -1,9 +1,5 @@
-/**
- * AddOptions
- *
- * @export
- * @interface AddOptions
- */
+/** @module Client/Contact */
+
 export interface AddOptions {
     id: number;
     callback: () => void;
@@ -14,12 +10,6 @@ export const DEFAULT_ADD_OPTIONS : AddOptions = {
     callback: () => {}
 };
 
-/**
- * showOptions
- *
- * @export
- * @interface showOptions
- */
 export interface showOptions {
     id: number;
     callback: () => void;

@@ -1,5 +1,11 @@
+/** @module ListSelect */
 import {DEFAULT_LIST_SELECT_OPTIONS, ListSelectNames, ListSelectOptions} from "@plugins/ListSelect/defs";
 
+/**
+* @export
+* @class ListSelect
+* @author Antxony <dantonyofcarim@gmail.com>
+*/
 export default class ListSelect
 {
     protected options : ListSelectOptions;

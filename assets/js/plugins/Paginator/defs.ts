@@ -1,3 +1,4 @@
+/** @module Paginator */
 export declare type PaginatorCallback = (page: number) => void;
 
 /**

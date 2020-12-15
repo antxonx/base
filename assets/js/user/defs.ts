@@ -1,9 +1,5 @@
-/**
- * DeleteReactiveOptions interface
- *
- * @export
- * @interface DeleteReactiveOptions
- */
+/** @module User */
+
 export interface DeleteReactiveOptions {
     element: HTMLElement;
     onSuccess?: () => void;
@@ -24,12 +20,6 @@ export const DEFAULT_DELETE_REACTIVE_OPTIONS: DeleteReactiveOptions = {
     username: '',
 };
 
-/**
- * keyOptions interface
- *
- * @export
- * @interface keyOptions
- */
 export interface keyOptions {
     element?: HTMLElement;
     id?: number;
@@ -44,12 +34,6 @@ export const DEFAULT_KEY_OPTIONS: keyOptions = {
     username: '',
 };
 
-/**
- * EditOptions interface
- *
- * @export
- * @interface EditOptions
- */
 export interface EditOptions {
     id: number;
     callback?: () => void;

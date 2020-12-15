@@ -1,3 +1,4 @@
+/** @module Dashboard */
 import ShowClient from "@scripts/client/show";
 
 /**
@@ -5,23 +6,15 @@ import ShowClient from "@scripts/client/show";
  *
  * @export
  * @class Dashboard
+ * @classdesc Principal view with boards
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Dashboard {
 
-    /**
-     * load
-     *
-     * @memberof Dashboard
-     */
     public load = () => {
         [...document.getElementsByClassName("client-list")].forEach(el => el.addEventListener("click", this.client));
     }
 
-    /**
-     * client
-     *
-     * @memberof Dashboard
-     */
     public client = (e: Event) => {
         e.preventDefault();
         const ID = +(e.currentTarget as HTMLElement).getAttribute("id")!;

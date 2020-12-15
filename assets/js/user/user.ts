@@ -1,3 +1,4 @@
+/** @module User */
 import ButtonCheck from "@plugins/ButtonCheckGroup";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Search from "@plugins/Search";
@@ -16,58 +17,21 @@ import SortColumn from "@plugins/SortColumn";
  *
  * @export
  * @class User
+ * @classdesc User main view and table
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class User {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {boolean}
-     * @memberof User
-     */
     protected control: boolean
 
-    /**
-     * mainView
-     *
-     * @protected
-     * @type {HTMLElement}
-     * @memberof User
-     */
     protected mainView: HTMLElement;
 
-    /**
-     * search
-     *
-     * @protected
-     * @type {string}
-     * @memberof User
-     */
     protected search: string;
 
-    /**
-     * suspended
-     *
-     * @protected
-     * @type {number}
-     * @memberof User
-     */
     protected suspended: number
 
-    /**
-     * orderBy
-     *
-     * @protected
-     * @type {SortColumn}
-     * @memberof User
-     */
     protected orderBy: SortColumnOrder;
 
-    /**
-     * Creates an instance of User.
-     * @memberof User
-     */
     public constructor() {
         this.mainView = ((document.getElementById("usersView") as HTMLElement) || document.createElement("div"));
         this.search = "";
@@ -83,11 +47,6 @@ export default class User {
         })).load();
     }
 
-    /**
-     * load
-     *
-     * @memberof User
-     */
     public load = () => {
         if (this.control) {
             document.getElementById("user-add")!.addEventListener("click", this.add);
@@ -118,12 +77,6 @@ export default class User {
         );
     }
 
-    /**
-     * update
-     *
-     * @private
-     * @memberof User
-     */
     private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
         Axios.get(Router.generate(ROUTES.user.view.list, {
@@ -144,44 +97,20 @@ export default class User {
             });
     }
 
-    /**
-     * add
-     *
-     * @private
-     * @memberof User
-     */
     private add = () => {
         (new Add(this.load)).load();
     }
 
-    /**
-     * setSuspended
-     *
-     * @private
-     * @memberof User
-     */
     private setSuspended = (value: string[]) => {
         this.suspended = +value.includes('suspended');
         this.update();
     }
 
-    /**
-     * setSearch
-     *
-     * @private
-     * @memberof User
-     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
     }
 
-    /**
-     * delete
-     *
-     * @private
-     * @memberof User
-     */
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
@@ -189,12 +118,6 @@ export default class User {
         })).delete();
     }
 
-    /**
-     * reactive
-     *
-     * @private
-     * @memberof User
-     */
     private reactive = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
@@ -202,12 +125,6 @@ export default class User {
         })).reactive();
     }
 
-    /**
-     * show
-     *
-     * @private
-     * @memberof User
-     */
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Show({
@@ -216,12 +133,6 @@ export default class User {
         })).load();
     }
 
-    /**
-     * key
-     *
-     * @private
-     * @memberof User
-     */
     private key = (e: Event) => {
         (new Key({
             element: (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement
@@ -229,12 +140,6 @@ export default class User {
 
     }
 
-    /**
-     * sort
-     *
-     * @private
-     * @memberof User
-     */
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();

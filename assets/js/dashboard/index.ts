@@ -1,3 +1,4 @@
+/** @module Dashboard */
 import '@components/simplecard';
 import Dashboard from "@scripts/dashboard/dashboard";
 

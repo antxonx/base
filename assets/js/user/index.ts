@@ -1,3 +1,4 @@
+/** @module User */
 import User from '@scripts/user/user';
 
 (() => {

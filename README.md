@@ -13,7 +13,7 @@ foo@bar:~$ php phpDocumentor.phar -d src -d Antxony -t docs --title="Base"
 Typescript docs
 
 ```console
-foo@bar:~$ "node_modules/.bin/typedoc" --out tsdocs assets/js
+foo@bar:~$ typedoc
 ```
 
 ## FOS routes

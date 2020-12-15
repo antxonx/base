@@ -1,3 +1,4 @@
+/** @module User */
 import Modal from "@plugins/Modal";
 import Axios from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
@@ -9,31 +10,15 @@ import {clearErrorMsg, evaluateInputs, insertAlertAfter} from "@plugins/Required
  *
  * @export
  * @class Add
+ * @classdesc Add a new user
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Add
-     */
     protected modal: Modal;
 
-    /**
-     * callback
-     *
-     * @protected
-     * @memberof Add
-     */
     protected callback: () => void;
 
-    /**
-     * Creates an instance of Add.
-     * @param {() => void} [callback=() => {}]
-     * @memberof Add
-     */
     public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = new Modal({
@@ -42,11 +27,6 @@ export default class Add {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Add
-     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.form))
@@ -60,12 +40,6 @@ export default class Add {
             });
     }
 
-    /**
-     * validate
-     *
-     * @private
-     * @memberof Add
-     */
     private validate = (e: Event) => {
         e.preventDefault();
         clearErrorMsg();

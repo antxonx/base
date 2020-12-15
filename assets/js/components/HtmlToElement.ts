@@ -1,7 +1,5 @@
-/**
- * @return {HTMLElement}
- * @param html
- */
+/** @module Components */
+
 export default function (html: string): HTMLElement {
     const template = document.createElement('template');
     html = html.trim();

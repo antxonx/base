@@ -1,9 +1,5 @@
-/**
- * Check button options
- *
- * @export
- * @interface checkOptions
- */
+/** @module ButtonCheckGroup */
+
 export interface checkOptions {
     onChange?: (value: string[]) => void;
     multiple?: boolean
@@ -12,21 +8,12 @@ export interface checkOptions {
     extraClass?: string;
 }
 
-/**
- * Check button attribute names
- *
- * @export
- * @enum checkAttributes
- */
 export enum checkAttributes {
     STATUS = 'status',
     ID = 'id',
     VALUE = 'value'
 }
 
-/**
- * Default options
- */
 export const DEFAULT_CHECK_OPTIONS: checkOptions = {
     onChange: () => {},
     multiple: false,

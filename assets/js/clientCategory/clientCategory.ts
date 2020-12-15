@@ -1,3 +1,4 @@
+/** @module Client/Category */
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, ROUTES, Router} from "@scripts/app";
 import Axios from "axios";
@@ -15,50 +16,19 @@ import SortColumn from "@plugins/SortColumn";
  *
  * @export
  * @class ClientCategory
+ * @classdesc Client category main view and table
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategory {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {ClientCategoryOptions}
-     * @memberof ClientCategory
-     */
     protected options: ClientCategoryOptions
 
-    /**
-     * mainView
-     *
-     * @protected
-     * @type {HTMLElement}
-     * @memberof ClientCategory
-     */
     protected mainView: HTMLElement;
 
-    /**
-     * search
-     *
-     * @protected
-     * @type {string}
-     * @memberof ClientCategory
-     */
     protected search: string;
 
-    /**
-     * orderBy
-     *
-     * @protected
-     * @type {SortColumn}
-     * @memberof ClientCategory
-     */
     protected orderBy: SortColumnOrder;
 
-    /**
-     * Creates an instance of ClientCategory.
-     * @param {ClientCategoryOptions} [options]
-     * @memberof ClientCategory
-     */
     public constructor(options?: ClientCategoryOptions) {
         this.mainView = ((document.getElementById("clientCategoriesView") as HTMLElement) || document.createElement("div"));
         this.search = "";
@@ -73,11 +43,6 @@ export default class ClientCategory {
         })).load();
     }
 
-    /**
-     * load
-     *
-     * @memberof ClientCategory
-     */
     public load = () => {
         if (this.options.control) {
             this.options.control = false;
@@ -107,12 +72,6 @@ export default class ClientCategory {
         return this;
     }
 
-    /**
-     * update
-     *
-     * @private
-     * @memberof ClientCategory
-     */
     private update = (page: number = 1) => {
         if (!this.options.extern) {
             this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
@@ -134,23 +93,11 @@ export default class ClientCategory {
         }
     }
 
-    /**
-     * set search
-     *
-     * @private
-     * @memberof ClientCategory
-     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
     }
 
-    /**
-     * sort
-     *
-     * @private
-     * @memberof ClientCategory
-     */
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();

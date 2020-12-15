@@ -1,3 +1,4 @@
+/** @module Logger */
 import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
 import Search from '@scripts/plugins/Search';
@@ -12,75 +13,25 @@ import SortColumn from "@plugins/SortColumn";
  *
  * @export
  * @class Logger
+ * @classdesc Logger main biew and table
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Logger {
 
-    /**
-     * control
-     *
-     * @private
-     * @type {boolean}
-     * @memberof Logger
-     */
     protected control: boolean
 
-    /**
-     * view
-     *
-     * @private
-     * @type {HTMLElement}
-     * @memberof Logger
-     */
     protected view: HTMLElement;
 
-    /**
-     * searchInput
-     *
-     * @private
-     * @type {string}
-     * @memberof Logger
-     */
     protected searchInput: string;
 
-    /**
-     * method
-     *
-     * @private
-     * @type {string}
-     * @memberof Logger
-     */
     protected method: string;
 
-    /**
-     * route
-     *
-     * @private
-     * @type {string}
-     * @memberof Logger
-     */
     protected route: string|null;
 
-    /**
-     * order by
-     *
-     * @private
-     * @type {SortColumnOrder}
-     * @memberof Logger
-     */
     protected orderBy: SortColumnOrder;
 
-    /**
-     * default view
-     *
-     * @private
-     * @memberof Logger
-     */
     protected readonly defaultView = `<tr class="table-paginator"><td colspan="6"><div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">Debe selecionar un tipo de regsitro</div></td></tr>`;
 
-    /**
-     * Creates an instance of Logger.
-     * @memberof Logger
-     */
     public constructor() {
         this.control = true;
         this.searchInput = '';
@@ -97,11 +48,6 @@ export default class Logger {
         })).load();
     }
 
-    /**
-     * load
-     *
-     * @memberof Logger
-     */
     public load = () => {
         if(this.control) {
             this.control = false;
@@ -120,21 +66,11 @@ export default class Logger {
         document.getElementById("methodSelect")!.addEventListener("input", this.changeMethod);
     };
 
-    /**
-     * search field
-     *
-     * @memberof Logger
-     */
     private searchField = (data: string) => {
         this.searchInput = data.replace(/\//g, "_");
         this.update();
     };
 
-    /**
-     * change page
-     *
-     * @memberof Logger
-     */
     private update = (page: number = 1) => {
         if (this.route != null) {
             this.updateView(BIG_LOADER_TABLE.replace("0", "6"));
@@ -161,11 +97,6 @@ export default class Logger {
         }
     }
 
-    /**
-     * change type
-     *
-     * @memberof Logger
-     */
     private changeType = (value: string[]) => {
         if (value.includes('info')) {
             this.route = ROUTES.logger.view.info;
@@ -177,32 +108,16 @@ export default class Logger {
         this.update();
     };
 
-    /**
-     * sort action
-     *
-     * @memberof Logger
-     */
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();
     }
 
-    /**
-     * change method
-     *
-     * @memberof Logger
-     */
     private changeMethod = (e: Event) => {
         this.method = (e.currentTarget as HTMLInputElement).value;
         this.update();
     }
 
-    /**
-     * updateView
-     *
-     * @private
-     * @memberof Logger
-     */
     private updateView = (newView : string) => {
         this.view.innerHTML = newView;
     }

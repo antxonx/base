@@ -1,3 +1,4 @@
+/** @module Modal */
 import $ from 'jquery';
 import 'bootstrap';
 import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./defs";
@@ -7,6 +8,7 @@ import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./def
  *
  * @export
  * @class Modal
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Modal {
     /**

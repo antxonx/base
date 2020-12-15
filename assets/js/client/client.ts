@@ -1,3 +1,4 @@
+/** @module Client */
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Axios from "axios";
@@ -14,12 +15,19 @@ import SortColumn from "@plugins/SortColumn";
  *
  * @export
  * @class Client
+ * @classdesc Controls the main view and table actions of clients
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Client {
+
     protected mainView: HTMLElement;
+
     protected search: string;
+
     protected orderBy: SortColumnOrder
+
     protected control: boolean
+
     public constructor() {
         this.search = '';
         this.mainView = (document.getElementById("clientsView") || document.createElement("div"));
@@ -34,11 +42,6 @@ export default class Client {
         })).load();
     }
 
-    /**
-     * load
-     *
-     * @memberof Client
-     */
     public load = () => {
         if (this.control) {
             document.getElementById("client-add")?.addEventListener("click", this.add);
@@ -53,12 +56,6 @@ export default class Client {
         [...document.getElementsByClassName("client-show")].forEach(element => element.addEventListener("click", this.show));
     }
 
-    /**
-     * update
-     *
-     * @private
-     * @memberof Client
-     */
     private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
         Axios.get(Router.generate(ROUTES.client.view.list, {
@@ -78,12 +75,6 @@ export default class Client {
             });
     }
 
-    /**
-     * setSearch
-     *
-     * @private
-     * @memberof Client
-     */
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
@@ -93,12 +84,6 @@ export default class Client {
         (new Add(this.load)).load();
     }
 
-    /**
-     * delete
-     *
-     * @private
-     * @memberof Client
-     */
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
         (new Delete({
@@ -107,12 +92,6 @@ export default class Client {
         })).delete();
     }
 
-    /**
-     * show
-     *
-     * @private
-     * @memberof Client
-     */
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
         (new Show({
@@ -121,12 +100,6 @@ export default class Client {
         })).load();
     }
 
-    /**
-     * sort
-     *
-     * @private
-     * @memberof Client
-     */
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();

@@ -1,3 +1,4 @@
+/** @module Client/Category */
 import $ from 'jquery';
 import 'bootstrap';
 import Modal from "@plugins/Modal";
@@ -11,32 +12,15 @@ import Toast from "@plugins/AlertToast";
  *
  * @export
  * @class Show
+ * @classdesc Show the category and allows to edit
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Show
-     */
     protected modal: Modal
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {ClientCategoryShowOptions}
-     * @memberof Show
-     */
     protected options: ClientCategoryShowOptions;
 
-    /**
-     * Creates an instance of Show.
-     * @param {ClientCategoryShowOptions} options
-     * @memberof Show
-     */
     public constructor(options: ClientCategoryShowOptions) {
         this.options = {...DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS, ...options};
         this.modal = new Modal({
@@ -45,11 +29,6 @@ export default class Show {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Show
-     */
     public load = () => {
         this.modal.show();
         console.log(Router);

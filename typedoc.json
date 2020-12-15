@@ -1,0 +1,7 @@
+{
+  "inputFiles": ["./assets/js"],
+  "mode": "modules",
+  "out": "tsdocs",
+  "name": "Base",
+  "exclude": ["./assets/js/plugins/*"]
+}

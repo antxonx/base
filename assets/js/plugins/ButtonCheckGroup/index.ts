@@ -1,3 +1,4 @@
+/** @module ButtonCheckGroup */
 import {checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS} from "./defs";
 
 /**
@@ -5,6 +6,7 @@ import {checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS} from "./defs";
  *
  * @export
  * @class ButtonCheckGroup
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ButtonCheckGroup {
     /**

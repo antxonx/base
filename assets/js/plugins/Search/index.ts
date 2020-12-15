@@ -1,3 +1,4 @@
+/** @module Search */
 import {DEFAULT_SEARCH_OPTIONS, SearchOptions} from './defs';
 
 /**
@@ -5,6 +6,7 @@ import {DEFAULT_SEARCH_OPTIONS, SearchOptions} from './defs';
  *
  * @export
  * @class Search
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Search
 {

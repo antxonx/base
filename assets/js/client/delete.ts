@@ -1,3 +1,4 @@
+/** @module Client */
 import {DEFAULT_DELETE_OPTIONS, DeleteOptions} from "@scripts/client/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
@@ -6,30 +7,23 @@ import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Delete class
+ * Delete client class
  *
  * @export
  * @class Delete
+ * @classdesc Opens an alert to confirm if delete client or not
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Delete {
+
     protected options: DeleteOptions;
 
-    /**
-     * Creates an instance of Delete.
-     * @param {DeleteOptions} options
-     * @memberof Delete
-     */
     public constructor(options: DeleteOptions) {
         this.options = {...DEFAULT_DELETE_OPTIONS, ...options}
         this.options.id = this.options.id || +this.options.element.getAttribute('id')!;
         this.options.name = this.options.name || this.options.element.getAttribute('name')!;
     }
 
-    /**
-     * delete
-     *
-     * @memberof Delete
-     */
     public delete = async () => {
         const ALERT = new Alert({
             type: 'danger',

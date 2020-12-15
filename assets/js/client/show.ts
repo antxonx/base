@@ -1,3 +1,4 @@
+/** @module Client */
 import {DEFAULT_SHOW_OPTIONS, ShowOptions} from "@scripts/client/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -13,45 +14,21 @@ import AddContact from "@scripts/client/contact/add";
 import ShowContact from "@scripts/client/contact/show";
 
 /**
- * Show class
+ * Show client class
  *
  * @export
  * @class Show
+ * @classdesc Opens client modal with the info and actions
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {ShowOptions}
-     * @memberof Show
-     */
     protected options: ShowOptions
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Show
-     */
     protected modal: Modal;
 
-    /**
-     * control
-     *
-     * @protected
-     * @type {boolean}
-     * @memberof Show
-     */
     protected control: boolean;
 
-    /**
-     * Creates an instance of Show.
-     * @param {ShowOptions} options
-     * @memberof Show
-     */
     public constructor(options: ShowOptions) {
         this.options = {...DEFAULT_SHOW_OPTIONS, ...options};
         this.control = true;
@@ -64,11 +41,6 @@ export default class Show {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Show
-     */
     public load = () => {
         if(this.control) {
             this.control = false;
@@ -97,12 +69,7 @@ export default class Show {
         });
     }
 
-    /**
-     * update
-     *
-     * @memberof Show
-     */
-    public update = () => {
+    private update = () => {
         Axios.get(Router.generate(ROUTES.client.view.show, {'id' : this.options.id!.toString()}))
             .then(res => {
                 this.modal.updateBody(res.data);
@@ -126,12 +93,7 @@ export default class Show {
             });
     }
 
-    /**
-     * edit
-     *
-     * @memberof Show
-     */
-    public edit = (e: Event) => {
+    private edit = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
         if (!!(+BTN.getAttribute("active")!)) {
             BTN.setAttribute("active", "0");
@@ -157,12 +119,7 @@ export default class Show {
         $('.editable-field').editable('toggleDisabled');
     }
 
-    /**
-     * addAddress
-     *
-     * @memberof Show
-     */
-    public addAddress = (e: Event) => {
+    private addAddress = () => {
         this.modal.hide();
         this.control = true;
         (new AddAddress({
@@ -171,12 +128,7 @@ export default class Show {
         })).load();
     }
 
-    /**
-     * addContact
-     *
-     * @memberof Show
-     */
-    public addContact = (e: Event) => {
+    private addContact = () => {
         this.modal.hide();
         this.control = true;
         (new AddContact({
@@ -185,12 +137,7 @@ export default class Show {
         })).load();
     }
 
-    /**
-     * addExtraPhone
-     *
-     * @memberof Show
-     */
-    public addExtraPhone = (e: Event) => {
+    private addExtraPhone = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
             const BTN = document.getElementById("submit-phone-extra-btn")!;
@@ -213,12 +160,7 @@ export default class Show {
         }
     }
 
-    /**
-     * addExtraEmail
-     *
-     * @memberof Show
-     */
-    public addExtraEmail = (e: Event) => {
+    private addExtraEmail = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
             const BTN = document.getElementById("submit-email-extra-btn")!;
@@ -241,12 +183,7 @@ export default class Show {
         }
     }
 
-    /**
-     * deletePhone
-     *
-     * @memberof Show
-     */
-    public deletePhone = async (e: Event) => {
+    private deletePhone = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("phone-id")!;
         const PHONE = ELEMENT.getAttribute("phone-phone")!;
@@ -268,12 +205,7 @@ export default class Show {
         }
     }
 
-    /**
-     * deleteEmail
-     *
-     * @memberof Show
-     */
-    public deleteEmail = async (e: Event) => {
+    private deleteEmail = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
         const ID = +ELEMENT.getAttribute("email-id")!;
         const EMAIL = ELEMENT.getAttribute("email-email")!;
@@ -295,12 +227,7 @@ export default class Show {
         }
     }
 
-    /**
-     * deleteContact
-     *
-     * @memberof Show
-     */
-    public deleteContact = async (e: Event) => {
+    private deleteContact = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".contact-row") as HTMLElement;
         const NAME = ELEMENT.getAttribute("contactname")!;
         const ID = +ELEMENT.getAttribute("contactid")!;
@@ -322,12 +249,7 @@ export default class Show {
         }
     }
 
-    /**
-     * showContact
-     *
-     * @memberof Show
-     */
-    public showContact = (e: Event) => {
+    private showContact = (e: Event) => {
         this.modal.hide();
         this.control = true;
         (new ShowContact({
@@ -335,5 +257,4 @@ export default class Show {
             callback: this.load
         })).load();
     }
-
 }

@@ -1,3 +1,4 @@
+/** @module Paginator */
 import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
 
 /**
@@ -5,6 +6,7 @@ import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
  *
  * @export
  * @class Paginator
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Paginator {
     private readonly options: PaginatorOptions;

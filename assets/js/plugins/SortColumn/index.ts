@@ -1,7 +1,13 @@
+/** @module SortColumn */
 import {DEFAULT_SORT_COLUMN_OPTIONS, SortColumnOrder, SortColumOptions, SortIcons} from "@plugins/SortColumn/defs";
 import {deleteElement} from "@plugins/DeleteElement";
 import {htmlToElement} from "@plugins/Required";
 
+/**
+* @export
+* @class SortColumn
+* @author Antxony <dantonyofcarim@gmail.com>
+*/
 export default class SortColumn {
     protected sort : SortColumnOrder;
     protected options : SortColumOptions;

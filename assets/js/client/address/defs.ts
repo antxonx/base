@@ -1,9 +1,5 @@
-/**
- * addOptions
- *
- * @export
- * @interface AddOptions
- */
+/** @module Client/Address */
+
 export interface AddOptions {
     id: number;
     callback?: () => void;

@@ -1,3 +1,4 @@
+/** @module User */
 import {DEFAULT_KEY_OPTIONS, keyOptions} from "@scripts/user/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -10,32 +11,15 @@ import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setVal
  *
  * @export
  * @class Key
+ * @classdesc Change user password
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Key {
 
-    /**
-     * options
-     *
-     * @protected
-     * @type {keyOptions}
-     * @memberof Key
-     */
     protected options: keyOptions;
 
-    /**
-     * modal
-     *
-     * @protected
-     * @type {Modal}
-     * @memberof Key
-     */
     protected modal: Modal;
 
-    /**
-     * Creates an instance of Key.
-     * @param {keyOptions} options
-     * @memberof Key
-     */
     public constructor(options: keyOptions) {
         this.options = {...DEFAULT_KEY_OPTIONS, ...options};
         this.options.id = this.options.id || +this.options.element!.getAttribute("id")!;
@@ -47,11 +31,6 @@ export default class Key {
         });
     }
 
-    /**
-     * load
-     *
-     * @memberof Key
-     */
     public load = () => {
         this.modal.show();
         Axios.get(Router.generate(ROUTES.user.view.key))
@@ -65,12 +44,6 @@ export default class Key {
             });
     }
 
-    /**
-     * validate
-     *
-     * @private
-     * @memberof Key
-     */
     private validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
