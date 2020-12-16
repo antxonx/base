@@ -1,4 +1,9 @@
-/** @module Client/Address */
+/**
+* view, add, edit and delete a client address
+* @packageDocumentation
+* @module Client/Address
+* @preferred
+*/
 import {AddOptions, DEFAULT_ADD_OPTIONS} from "@scripts/client/address/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -7,11 +12,10 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add class for address
+ * Add a new address for a client
  *
  * @export
  * @class Add
- * @classdesc Add a new address for a client
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import {DEFAULT_DELETE_REACTIVE_OPTIONS, DeleteReactiveOptions} from "@scripts/user/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
@@ -7,11 +10,10 @@ import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Delete class
+ * Open a confirmation alerto to suspend an user
  *
  * @export
  * @class Delete
- * @classdesc Open a confirmation alerto to suspend an user
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Delete {

@@ -1,4 +1,7 @@
-/** @module Client/Contact */
+/**
+* @packageDocumentation
+* @module Client/Contact
+*/
 
 import { DEFAULT_SHOW_OPTIONS, showOptions } from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";
@@ -10,11 +13,10 @@ import Alert from "@plugins/Alert";
 import { deleteElement, disableRow } from "@plugins/DeleteElement";
 
 /**
- * Show class for contact
+ * Opens a modal with the contact info
  *
  * @export
  * @class Show
- * @classdesc Opens a modal with the contact info
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {

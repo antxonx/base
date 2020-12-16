@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 
 export interface ClientCategoryOptions {
     control?: boolean,

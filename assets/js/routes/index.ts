@@ -4,11 +4,7 @@
  * @module Routes
  * @preferred
  */
-
-/**
-* @exports
-* @module Routes
-*/
+ 
 export const Routes : any = {
     client: {
         view: {

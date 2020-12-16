@@ -1,4 +1,9 @@
-/** @module Client/Contact */
+/**
+* view, add, edit and delete a client contact
+* @packageDocumentation
+* @module Client/Contact
+* @preferred
+*/
 import {AddOptions, DEFAULT_ADD_OPTIONS} from "@scripts/client/contact/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -7,11 +12,10 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add class
+ * Opens a modal to enter contact data and send a post request with the values if is validated
  *
  * @export
  * @class Add
- * @classdesc Opens a modal to enter contact data and send a post request with the values if is validated
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

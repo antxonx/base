@@ -1,4 +1,7 @@
-/** @module Alert */
+/**
+ * @packageDocumentation
+ * @module Alert
+ */
 
 export interface AlertOptions {
     hasCancel?: boolean;

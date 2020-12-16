@@ -1,4 +1,7 @@
-/** @module Profile */
+/**
+* @packageDocumentation
+* @module Profile
+*/
 import Modal from "@plugins/Modal";
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
@@ -7,11 +10,10 @@ import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setVal
 import {PASSWORD_INPUT} from "@scripts/profile/defs";
 
 /**
- * Key class
+ * Change user password with confirmation
  *
  * @export
  * @class Key
- * @classdesc Change user password with confirmation
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Key {

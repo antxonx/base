@@ -1,4 +1,9 @@
-/** @module App */
+/**
+ * Entry index and global definitions
+ * @packageDocumentation
+ * @module App
+ * @preferred
+ */
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/js/all.min.js';
 import 'bootstrap';

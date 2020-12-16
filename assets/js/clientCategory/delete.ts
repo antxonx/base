@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import {ClientCategoryDeleteOptions, DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS} from "@scripts/clientCategory/defs";
 import Alert from "@plugins/Alert";
 import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
@@ -7,11 +10,10 @@ import {ROUTES, Router} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * ClientCategoryDelete class
+ * Delete a category
  *
  * @export
  * @class ClientCategoryDelete
- * @description Delete a category
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryDelete {

@@ -7,7 +7,7 @@ Base project with users control, roles, clients, logger, categories...
 PHP docs:
 
 ```console
-foo@bar:~$ php phpDocumentor.phar -d src -d Antxony -t docs --title="Base"
+foo@bar:~$ php phpDocumentor.phar -d src -d Antxony -t docs/php --title="Base"
 ```
 
 Typescript docs

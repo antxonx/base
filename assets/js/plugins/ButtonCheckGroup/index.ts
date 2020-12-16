@@ -1,8 +1,13 @@
-/** @module ButtonCheckGroup */
+/**
+ * Check buttons and switch
+ * @packageDocumentation
+ * @module ButtonCehckGroup
+ * @preferred
+ */
 import {checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS} from "./defs";
 
 /**
- * ButtonCehckGroup class (button checkboxes)
+ * ButtonCehckGroup class (button checkboxes or switch)
  *
  * @export
  * @class ButtonCheckGroup
@@ -129,5 +134,9 @@ export default class ButtonCheckGroup {
      */
     private static randmonId(): number {
         return Math.floor((Math.random() * 100000) + 1000);
+    }
+
+    public getId = () => {
+        return this.id;
     }
 }

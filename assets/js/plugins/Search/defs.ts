@@ -1,4 +1,7 @@
-/** @module Search */
+/**
+ * @packageDocumentation
+ * @module Search
+ */
 export declare type SearchCallback = (data: string) => void;
 
 /**

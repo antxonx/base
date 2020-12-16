@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import {DEFAULT_EDIT_OPTIONS, EditOptions} from "@scripts/user/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -6,11 +9,10 @@ import {Router, ROUTES} from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Show
+ * Show an user and edit
  *
  * @export
  * @class Show
- * @classdesc Show an user and edit
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {

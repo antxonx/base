@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import Modal from "@plugins/Modal";
 import Axios from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
@@ -6,11 +9,10 @@ import Toast from "@plugins/AlertToast";
 import {evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add client class
+ * Opens modal to add a new client
  *
  * @export
  * @class Add
- * @classdesc Opens modal to add a new client
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

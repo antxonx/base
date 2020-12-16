@@ -1,4 +1,7 @@
-/** @module ButtonCheckGroup */
+/**
+ * @packageDocumentation
+ * @module ButtonCehckGroup
+ */
 
 export interface checkOptions {
     onChange?: (value: string[]) => void;

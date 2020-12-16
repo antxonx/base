@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 
 export interface DeleteReactiveOptions {
     element: HTMLElement;

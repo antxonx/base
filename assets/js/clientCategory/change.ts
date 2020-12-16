@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import 'bootstrap';
 import {ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS} from "@scripts/clientCategory/defs";
 import Modal from "@plugins/Modal";
@@ -9,11 +12,10 @@ import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
 
 /**
- * Change class
+ * Change a client category
  *
  * @export
  * @class Change
- * @classdesc change a client category
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Change {

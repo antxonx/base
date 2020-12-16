@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import Search from "@plugins/Search";
 import {BIG_LOADER_TABLE, ROUTES, Router} from "@scripts/app";
 import Axios from "axios";
@@ -12,11 +15,10 @@ import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
- * ClientCategory class
+ * Client category main view and table
  *
  * @export
  * @class ClientCategory
- * @classdesc Client category main view and table
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategory {

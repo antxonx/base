@@ -1,6 +1,9 @@
-/** @module Components */
+/**
+* @packageDocumentation
+* @module Components
+*/
 
-export default function (html: string): HTMLElement {
+export default function HtmlToElement(html: string): HTMLElement {
     const template = document.createElement('template');
     html = html.trim();
     template.innerHTML = html;

@@ -1,8 +1,13 @@
-/** @module Paginator */
+/**
+ * helps to change page with a callback with the index pressed
+ * @packageDocumentation
+ * @module Paginator
+ * @preferred
+ */
 import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
 
 /**
- * Paginator class
+ * trigger page buttons
  *
  * @export
  * @class Paginator

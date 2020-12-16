@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import Modal from "@plugins/Modal";
 import Axios from "axios";
 import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
@@ -6,11 +9,10 @@ import Toast from "@plugins/AlertToast";
 import {clearErrorMsg, evaluateInputs, insertAlertAfter} from "@plugins/Required";
 
 /**
- * Add class
+ * Add a new user
  *
  * @export
  * @class Add
- * @classdesc Add a new user
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Add {

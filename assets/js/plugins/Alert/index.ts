@@ -1,10 +1,15 @@
-/** @module Alert */
+/**
+ * Shows alert to confirm or accept
+ * @packageDocumentation
+ * @module Alert
+ * @preferred
+ */
 import $ from 'jquery';
 import 'bootstrap';
 import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
 
 /**
- * Clase para crear alertas con respeustas
+ * Shows alert to confirm or accept
  *
  * @export
  * @class Alert
@@ -216,7 +221,7 @@ export default class Alert {
      * @returns {Promise<boolean>}
      * @memberof Alert
      */
-    public async show(dismiss: boolean = true): Promise<boolean> {
+    public async show(): Promise<boolean> {
         this.setSize();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {

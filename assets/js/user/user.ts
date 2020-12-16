@@ -1,4 +1,7 @@
-/** @module User */
+/**
+* @packageDocumentation
+* @module User
+*/
 import ButtonCheck from "@plugins/ButtonCheckGroup";
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Search from "@plugins/Search";
@@ -13,11 +16,10 @@ import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
- * User class
+ * User main view and table
  *
  * @export
  * @class User
- * @classdesc User main view and table
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class User {

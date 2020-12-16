@@ -1,4 +1,7 @@
-/** @module Client/Category */
+/**
+* @packageDocumentation
+* @module Client/Category
+*/
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
 import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
@@ -6,11 +9,10 @@ import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
 /**
- * ClientCategoryAdd class
+ * Add a new category for clients
  *
  * @export
  * @class ClientCategoryAdd
- * @classdesc Add a new category for clients
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class ClientCategoryAdd {

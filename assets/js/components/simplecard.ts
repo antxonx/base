@@ -1,4 +1,7 @@
-/** @module Components */
+/**
+* @packageDocumentation
+* @module Components
+*/
 import htmlToElement from "@components/HtmlToElement";
 
 /* -------------------------------------------------------------------------- */

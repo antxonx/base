@@ -1,4 +1,9 @@
-/** @module Required */
+/**
+* Validate inputs and other utilities
+* @packageDocumentation
+* @module Required
+* @preferred
+*/
 
 /**
  * clase para elementos válidos

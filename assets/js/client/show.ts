@@ -1,4 +1,7 @@
-/** @module Client */
+/**
+* @packageDocumentation
+* @module Client
+*/
 import {DEFAULT_SHOW_OPTIONS, ShowOptions} from "@scripts/client/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
@@ -14,11 +17,10 @@ import AddContact from "@scripts/client/contact/add";
 import ShowContact from "@scripts/client/contact/show";
 
 /**
- * Show client class
+ * Opens client modal with the info and actions
  *
  * @export
  * @class Show
- * @classdesc Opens client modal with the info and actions
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 export default class Show {

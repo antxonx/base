@@ -1,4 +1,7 @@
-/** @module ListSelect */
+/**
+ * @packageDocumentation
+ * @module ListSelect
+ */
 
 export enum ListSelectNames {
     LIST_ELEMENT = 'li',

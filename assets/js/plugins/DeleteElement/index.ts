@@ -1,8 +1,13 @@
-/** @module DeleteElement */
+/**
+* Delete a row from a table
+* @packageDocumentation
+* @module DeleteElement
+* @preferred
+*/
 import {SPINNER_LOADER} from "@scripts/app";
 
 /**
- * Eliminar un elemento del DOM
+ * Deletes a DOM element
  *
  * @param {HTMLElement} element
  */
@@ -11,7 +16,7 @@ export const deleteElement = (element: HTMLElement) => {
 };
 
 /**
- * Cambiar contenido de columnas por spinner loader
+ * set a row as disabled
  *
  * @param {HTMLElement} element
  * @returns {string[]}
@@ -28,7 +33,7 @@ export const disableRow = (element: HTMLElement): string[] => {
 
 
 /**
- * Restaura fila a su estado original
+ * Restores a disabled row
  *
  * @param {HTMLElement} element
  * @param {string[]} btnBef
