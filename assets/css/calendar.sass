@@ -28,11 +28,19 @@
                 height: 8rem
                 text-align: center
                 border: 1px solid #e6e6fa
+                cursor: pointer
         .schedule-row:last-child
             .schedule-day:last-child
                 border-bottom-right-radius: 0.9rem
             .schedule-day:first-child
                 border-bottom-left-radius: 0.9rem
+        .schedule-info
+            height: 0
+            overflow-y: auto
+            transition: height 0.3s ease-in
+            &.show
+                height: 40vh
+                transition: height 0.3s ease-in
     .schedule-day-number
         width: 95%
         text-align: right

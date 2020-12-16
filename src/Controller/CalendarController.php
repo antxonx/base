@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Exception;
 use Antxony\Util;
@@ -36,11 +37,12 @@ class CalendarController extends AbstractController
     /**
     * @Route("/month", name="calendar_month", methods={"GET"}, options={"expose" = true})
     */
-    public function month(): Response
+    public function month(Request $request): Response
     {
         try {
             setlocale(LC_TIME, "es_MX.UTF8");
-            $monthOffset = 0;
+            $params = json_decode(json_encode($request->query->all()));
+            $monthOffset = $params->offset;
             $month = [];
             $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
             $last = (int)strftime("%e", strtotime("last day of {$monthOffset} month"));

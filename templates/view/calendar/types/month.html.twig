@@ -6,13 +6,18 @@
         {% endfor %}
     </div>
     <div class="schedule">
+    {% set weekNumber = 0 %}
         <div class="schedule-row">
             {% for day in month %}
                 {% if (loop.index - 1) % 7 == 0 %}
                 </div>
+                {% if weekNumber != 0 %}
+                <div class="schedule-info" week="{{ weekNumber }}"></div>
+                {% endif %}
+                {% set weekNumber = weekNumber + 1 %}
                 <div class="schedule-row">
             {% endif %}
-            <div class="schedule-day" day="{{ day }}">
+            <div class="schedule-day" day="{{ day }}" week="{{ weekNumber }}">
                 <div class="schedule-day-number">
                     <span>{{ day }}</span>
                 </div>
@@ -22,5 +27,6 @@
             </div>
             {% endfor %}
         </div>
+        <div class="schedule-info" day="0" week="{{ weekNumber }}"></div>
     </div>
 </div>
