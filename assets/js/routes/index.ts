@@ -4,8 +4,8 @@
  * @module Routes
  * @preferred
  */
- 
-export const Routes : any = {
+
+export const Routes = {
     client: {
         view: {
             list: 'client_list',
@@ -81,6 +81,11 @@ export const Routes : any = {
             index: 'logger_index',
             info: 'logger_info_list',
             error: 'logger_error_list'
+        }
+    },
+    calendar: {
+        view: {
+            view: 'calendar_view'
         }
     }
 }

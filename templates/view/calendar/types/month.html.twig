@@ -1,0 +1,29 @@
+<div class="calendar">
+    <div class="days">
+        <div><b>Domingo</b></div>
+        <div><b>Lunes</b></div>
+        <div><b>Martes</b></div>
+        <div><b>Miércoles</b></div>
+        <div><b>Jueves</b></div>
+        <div><b>Viernes</b></div>
+        <div><b>Sábado</b></div>
+    </div>
+    <div class="schedule">
+        <div class="schedule-row">
+            {% for day in month %}
+                {% if (loop.index - 1) % 7 == 0 %}
+                </div>
+                <div class="schedule-row">
+            {% endif %}
+            <div class="schedule-day">
+                <div class="schedule-day-number">
+                    <span>{{ day }}</span>
+                </div>
+                <div class="schedule-content">
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
