@@ -23,6 +23,5 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /docs/
-/tsdocs/
 /.phpdoc/
 /.idea/
