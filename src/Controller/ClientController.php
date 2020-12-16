@@ -131,8 +131,10 @@ class ClientController extends AbstractController
      */
     public function index(): Response
     {
+        $categories = $this->ccRep->findAll();
         return $this->render('view/client/index.html.twig', [
             'controller_name' => 'ClientController',
+            'categories' => $categories,
         ]);
     }
 
