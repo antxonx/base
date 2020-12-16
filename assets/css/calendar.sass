@@ -29,6 +29,8 @@
                 text-align: center
                 border: 1px solid #e6e6fa
                 cursor: pointer
+                &.disabled
+                    cursor: default
         .schedule-row:last-child
             .schedule-day:last-child
                 border-bottom-right-radius: 0.9rem
@@ -37,12 +39,25 @@
         .schedule-info
             height: 0
             overflow-y: auto
-            transition: height 0.3s ease-in
+            transition: height 0.3s ease-in, padding 0.3s ease-in
+            padding: 0
             &.show
                 height: 40vh
-                transition: height 0.3s ease-in
+                transition: height 0.3s ease-in, padding 0.3s ease-in
+                padding: 1rem
     .schedule-day-number
         width: 95%
         text-align: right
         span
-            color: #979797
+            color: #979797a6
+            display: block
+            transform: translateY(4px)
+            &.active::after
+                content: '\2800'
+                display: inline-block
+                transform: translateX(-1.35rem)
+                padding-left: 0.5rem
+                padding-right: 0.5rem
+                border-radius: 1.25rem
+                position: absolute
+                background-color: #d48fff2e

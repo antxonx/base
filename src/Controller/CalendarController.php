@@ -64,6 +64,7 @@ class CalendarController extends AbstractController
                 $month[] = null;
             }
             return $this->render("view/calendar/types/month.html.twig", [
+                'first' => $first,
                 'month' => $month,
                 'monthName' => $monthName,
                 'week' => $week
