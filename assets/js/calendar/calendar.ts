@@ -26,7 +26,7 @@ export default class Calendar {
     }
 
     public update = () => {
-        Axios.get(Router.generate(ROUTES.calendar.view.view))
+        Axios.get(Router.generate(ROUTES.calendar.view.month))
         .then(res => {
             this.mainView.innerHTML = res.data;
         })

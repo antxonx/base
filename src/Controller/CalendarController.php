@@ -34,19 +34,21 @@ class CalendarController extends AbstractController
     }
 
     /**
-    * @Route("/view", name="calendar_view", methods={"GET"}, options={"expose" = true})
+    * @Route("/month", name="calendar_month", methods={"GET"}, options={"expose" = true})
     */
-    public function view(): Response
+    public function month(): Response
     {
         try {
             setlocale(LC_TIME, "es_MX.UTF8");
+            $monthOffset = 0;
             $month = [];
-            $first = (int)strftime("%w", strtotime("first day of this month"));
-            $last = (int)strftime("%e", strtotime("last day of this month"));
-            $monthName = strftime("%B", strtotime("this month"));
+            $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
+            $last = (int)strftime("%e", strtotime("last day of {$monthOffset} month"));
+            $actual = (int)strftime("%w", strtotime("0 day"));
+            $monthName = strftime("%B %Y", strtotime("{$monthOffset} month"));
             $week = [];
             for ($i=0; $i < 7; $i++) {
-                $dif = $i - $first -1;
+                $dif = $i - $actual;
                 $week[] = strftime("%A", strtotime("{$dif} day"));
             }
             for ($i=0; $i < $last+$first; $i++) {

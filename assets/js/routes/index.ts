@@ -85,7 +85,7 @@ export const Routes = {
     },
     calendar: {
         view: {
-            view: 'calendar_view'
+            month: 'calendar_month'
         }
     }
 }
