@@ -6,10 +6,10 @@
 {% block body %}
     <div class="w-99 mx-auto">
         <div class="m-1 row">
-            <div class="col-md-3 m-1">
+            <div class="col-md-3 my-1">
                 <button class="btn btn-primary w-100 round" id="client-add">Agregar cliente</button>
             </div>
-            <div class="col-md-6 search-input m-1">
+            <div class="col-md-6 search-input my-1">
                 <label class="sr-only" for="searchClientInput">Cliente...</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -17,6 +17,14 @@
                     </div>
                     <input type="text" class="form-control round" id="searchClientInput" placeholder="">
                 </div><span class="erase-search cursor-pointer text-muted">&times;</span>
+            </div>
+            <div class="col-md-3 my-1">
+                <select class="form-control" id="categorySelect">
+                    <option value="0">TODAS</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
         {% include "view/client/table.html.twig" %}

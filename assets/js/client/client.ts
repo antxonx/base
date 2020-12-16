@@ -27,12 +27,15 @@ export default class Client {
 
     protected search: string;
 
-    protected orderBy: SortColumnOrder
+    protected orderBy: SortColumnOrder;
 
-    protected control: boolean
+    protected category: number;
+
+    protected control: boolean;
 
     public constructor() {
         this.search = '';
+        this.category = 0;
         this.mainView = (document.getElementById("clientsView") || document.createElement("div"));
         this.control = true;
         this.orderBy = {
@@ -48,6 +51,7 @@ export default class Client {
     public load = () => {
         if (this.control) {
             document.getElementById("client-add")?.addEventListener("click", this.add);
+            document.getElementById("categorySelect")?.addEventListener("change", this.setCategory);
             new Search({
                 callback: this.setSearch,
                 selector: "#searchClientInput"
@@ -65,7 +69,8 @@ export default class Client {
             'search': this.search,
             'page': page,
             'ordercol': this.orderBy.column,
-            'orderorder': this.orderBy.order
+            'orderorder': this.orderBy.order,
+            'category': this.category,
         }))
             .then(res => {
                 this.mainView.innerHTML = res.data;
@@ -106,6 +111,11 @@ export default class Client {
 
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
+        this.update();
+    }
+
+    private setCategory = (e: Event) => {
+        this.category = +(e.currentTarget as HTMLInputElement).value;
         this.update();
     }
 }
