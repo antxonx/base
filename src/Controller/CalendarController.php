@@ -39,9 +39,16 @@ class CalendarController extends AbstractController
     public function view(): Response
     {
         try {
+            setlocale(LC_TIME, "es_MX.UTF8");
             $month = [];
-            $first = (int)date("w", strtotime("first day of this month"));
-            $last = (int)date("d", strtotime("last day of this month"));
+            $first = (int)strftime("%w", strtotime("first day of this month"));
+            $last = (int)strftime("%e", strtotime("last day of this month"));
+            $monthName = strftime("%B", strtotime("this month"));
+            $week = [];
+            for ($i=0; $i < 7; $i++) {
+                $dif = $i - $first -1;
+                $week[] = strftime("%A", strtotime("{$dif} day"));
+            }
             for ($i=0; $i < $last+$first; $i++) {
                 if($i < $first) {
                     $month[] = null;
@@ -53,7 +60,9 @@ class CalendarController extends AbstractController
                 $month[] = null;
             }
             return $this->render("view/calendar/types/month.html.twig", [
-                'month' => $month
+                'month' => $month,
+                'monthName' => $monthName,
+                'week' => $week
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

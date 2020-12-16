@@ -1,12 +1,9 @@
+<h5 class="text-center">{{ monthName }}</h5>
 <div class="calendar">
     <div class="days">
-        <div><b>Domingo</b></div>
-        <div><b>Lunes</b></div>
-        <div><b>Martes</b></div>
-        <div><b>Miércoles</b></div>
-        <div><b>Jueves</b></div>
-        <div><b>Viernes</b></div>
-        <div><b>Sábado</b></div>
+        {% for day in week %}
+            <div><b>{{ day }}</b></div>
+        {% endfor %}
     </div>
     <div class="schedule">
         <div class="schedule-row">
@@ -20,7 +17,7 @@
                     <span>{{ day }}</span>
                 </div>
                 <div class="schedule-content">
-                    
+
                 </div>
             </div>
             {% endfor %}
