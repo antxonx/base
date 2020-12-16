@@ -3,6 +3,7 @@
 * @module Client
 */
 import Search from "@plugins/Search";
+import 'bootstrap'
 import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
@@ -68,6 +69,7 @@ export default class Client {
         }))
             .then(res => {
                 this.mainView.innerHTML = res.data;
+                $('[data-toggle="tooltip"]').tooltip();
                 this.load();
                 new Paginator({callback: this.update});
             })
