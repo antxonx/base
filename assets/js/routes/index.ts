@@ -85,7 +85,8 @@ export const Routes = {
     },
     calendar: {
         view: {
-            month: 'schedule_month'
+            month: 'schedule_month',
+            week: 'schedule_week'
         }
     }
 }

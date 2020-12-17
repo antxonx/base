@@ -17,11 +17,15 @@ export default class Schedule {
 
     protected opened: number;
 
+    protected route: string;
+
     public constructor() {
         this.control = true;
         this.offset = 0;
         this.opened = 0;
         this.mainView = document.getElementById("CalendarView") || document.createElement("div");
+        this.route = ROUTES.calendar.view.week
+        ;
     }
 
     public load = () => {
@@ -37,7 +41,7 @@ export default class Schedule {
 
     private update = () => {
         this.mainView.innerHTML = BIG_LOADER;
-        Axios.get(Router.generate(ROUTES.calendar.view.month, {
+        Axios.get(Router.generate(this.route, {
             'offset': this.offset
         }))
         .then(res => {

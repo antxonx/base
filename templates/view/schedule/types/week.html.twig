@@ -1,0 +1,24 @@
+<h5 class="text-center">{{ monthName }}</h5>
+<div class="calendar">
+    <div class="days">
+        {% for day in week %}
+            <div><b>{{ day.name }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
+        {% endfor %}
+    </div>
+    <div class="days-list">
+    {% for day in week %}
+    <div class="day">
+        {% for event in day.events %}
+                <div class="event" style="background-color: {{ event.color ~ '99' }}">
+                    <span class="time">
+                        <b>{{ event.date|format_datetime("none", "short", locale="es") }}</b>
+                    </span>
+                    <span>
+                        <em>{{ event.title }}</em>
+                    </span>
+                </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    </div>
+</div>
