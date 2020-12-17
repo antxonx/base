@@ -55,13 +55,20 @@ class CalendarController extends AbstractController
             }
             for ($i=0; $i < $last+$first; $i++) {
                 if($i < $first) {
-                    $month[] = null;
+                    $month[] = ['day' => null, 'events' => []];
                 } else {
-                    $month[] = ($i - $first + 1);
+                    $events = [];
+                    if(($i - $first + 1) % 5 == 0) {
+                        $events = [
+                            'color' => '#ededed',
+                            'title' => 'evento'
+                        ];
+                    }
+                    $month[] = ['day' => ($i - $first + 1), 'events' => $events];
                 }
             }
             while(count($month) % 7 != 0) {
-                $month[] = null;
+                $month[] = ['day' => null, 'events' => []];
             }
             return $this->render("view/calendar/types/month.html.twig", [
                 'first' => $first,

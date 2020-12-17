@@ -29,8 +29,43 @@
                 text-align: center
                 border: 1px solid #e6e6fa
                 cursor: pointer
+                overflow-y: hidden
                 &.disabled
                     cursor: default
+                .schedule-day-number
+                    width: 95%
+                    .total
+                        display: block
+                        transform: translate(0.4rem, -1.4rem)
+                        text-align: left
+                        .events-length
+                            background-color: #594eff
+                            border: 1px solid #594eff
+                            color: white
+                            border-radius: 1.25rem
+                            padding-left: 0.4rem
+                            padding-right: 0.4rem
+                            padding-bottom: 0.1rem
+                            -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                    .number
+                        color: #979797a6
+                        display: block
+                        transform: translateY(4px)
+                        text-align: right
+                        &.active::after
+                            content: '\2800'
+                            display: inline-block
+                            transform: translateX(-1.35rem)
+                            padding-left: 0.5rem
+                            padding-right: 0.5rem
+                            border-radius: 1.25rem
+                            position: absolute
+                            background-color: #d48fff2e
+                .schedule-content
+                    overflow-y: hidden
+                    transform: translateY(-1.5rem)
         .schedule-row:last-child
             .schedule-day:last-child
                 border-bottom-right-radius: 0.9rem
@@ -45,19 +80,3 @@
                 height: 40vh
                 transition: height 0.3s ease-in, padding 0.3s ease-in
                 padding: 1rem
-    .schedule-day-number
-        width: 95%
-        text-align: right
-        span
-            color: #979797a6
-            display: block
-            transform: translateY(4px)
-            &.active::after
-                content: '\2800'
-                display: inline-block
-                transform: translateX(-1.35rem)
-                padding-left: 0.5rem
-                padding-right: 0.5rem
-                border-radius: 1.25rem
-                position: absolute
-                background-color: #d48fff2e

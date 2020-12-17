@@ -1,0 +1,7 @@
+{% if ((index) >= 0) and ((index) < month|length) %}
+    {% if month[index].events|length > 0 %}
+        title: {{ month[index].events.title }}
+    {% else %}
+        No hay
+    {% endif %}
+{% endif %}
