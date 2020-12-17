@@ -16,7 +16,7 @@
                     {% for i in 0.. 6 %}
                     {% set index = dayy - 7 + i - first %}
                         <div class="schedule-info" day="{{ index }}">
-                        {% include 'view/calendar/sumary.html.twig' with {
+                        {% include 'view/schedule/sumary.html.twig' with {
                             index: (index + first - 1)
                         } %}
                         </div>
@@ -37,12 +37,13 @@
                 </div>
                 <div class="schedule-content">
                     {% if day.events|length > 0 %}
-                        {{ day.events|length }} <br>
-                        {{ day.events|length }} <br>
-                        {{ day.events|length }} <br>
-                        {{ day.events|length }} <br>
-                        {{ day.events|length }} <br>
-                        {{ day.events|length }} <br>
+                    {% for event in day.events %}
+                        <span
+                            style="background-color: {{ event.color }}"
+                        >
+                            {{ event.title }}
+                        </span>
+                    {% endfor %}
                     {% endif %}
                 </div>
             </div>
@@ -50,7 +51,7 @@
         </div>
         {% for i in 0.. 6 %}
         <div class="schedule-info" day="{{ dayy + i - first }}">
-        {% include 'view/calendar/sumary.html.twig' with {
+        {% include 'view/schedule/sumary.html.twig' with {
             index: (dayy + i - 1)
         } %}
         </div>

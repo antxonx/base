@@ -6,13 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ScheduleRepository;
 use Exception;
 use Antxony\Util;
 
 /**
-* @Route("/calendar")
+* @Route("/schedule")
 */
-class CalendarController extends AbstractController
+class ScheduleController extends AbstractController
 {
 
     /**
@@ -20,22 +21,28 @@ class CalendarController extends AbstractController
     */
     protected $util;
 
-    public function __construct(Util $util)
+    /**
+    * @var ScheduleRepository
+    */
+    protected $rep;
+
+    public function __construct(Util $util, ScheduleRepository $rep)
     {
         $this->util = $util;
+        $this->rep = $rep;
     }
     /**
-     * @Route("", name="calendar_index", methods={"GET"})
+     * @Route("", name="schedule_index", methods={"GET"})
      */
     public function index(): Response
     {
-        return $this->render('view/calendar/index.html.twig', [
+        return $this->render('view/schedule/index.html.twig', [
             'controller_name' => 'CalendarController',
         ]);
     }
 
     /**
-    * @Route("/month", name="calendar_month", methods={"GET"}, options={"expose" = true})
+    * @Route("/month", name="schedule_month", methods={"GET"}, options={"expose" = true})
     */
     public function month(Request $request): Response
     {
@@ -47,8 +54,9 @@ class CalendarController extends AbstractController
             $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
             $last = (int)strftime("%e", strtotime("last day of {$monthOffset} month"));
             $actual = (int)strftime("%w", strtotime("0 day"));
-            $monthName = strftime("%B %Y", strtotime("{$monthOffset} month"));
+            $monthName = strftime("%B %Y", strtotime("today {$monthOffset} month"));
             $week = [];
+            $eventsS = $this->rep->getBy("month", $params);
             for ($i=0; $i < 7; $i++) {
                 $dif = $i - $actual;
                 $week[] = strftime("%A", strtotime("{$dif} day"));
@@ -58,11 +66,14 @@ class CalendarController extends AbstractController
                     $month[] = ['day' => null, 'events' => []];
                 } else {
                     $events = [];
-                    if(($i - $first + 1) % 5 == 0) {
-                        $events = [
-                            'color' => '#ededed',
-                            'title' => 'evento'
-                        ];
+                    foreach ($eventsS as $event) {
+                        $eventDay = (int)$event->getDate()->format('d');
+                        if($eventDay == ($i - $first + 1)) {
+                            $events[] = [
+                                    'color' => $event->getColor(),
+                                    'title' => $event->getTitle()
+                                ];
+                        }
                     }
                     $month[] = ['day' => ($i - $first + 1), 'events' => $events];
                 }
@@ -70,11 +81,11 @@ class CalendarController extends AbstractController
             while(count($month) % 7 != 0) {
                 $month[] = ['day' => null, 'events' => []];
             }
-            return $this->render("view/calendar/types/month.html.twig", [
+            return $this->render("view/schedule/types/month.html.twig", [
                 'first' => $first,
                 'month' => $month,
                 'monthName' => $monthName,
-                'week' => $week
+                'week' => $week,
             ]);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

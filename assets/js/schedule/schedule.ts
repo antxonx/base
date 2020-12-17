@@ -1,13 +1,13 @@
 /**
 * @packageDocumentation
-* @module Calendar
+* @module Schedule
 */
 
 import { BIG_LOADER, Router, ROUTES } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
 
-export default class Calendar {
+export default class Schedule {
 
     protected control: boolean;
 
@@ -61,9 +61,7 @@ export default class Calendar {
 
     private openDay = (e: Event) => {
         const ELEMENT = e.currentTarget as HTMLElement;
-        //const INDEX = +ELEMENT.getAttribute("index")!;
         const DAY = +ELEMENT.getAttribute("day")!;
-        //    const WEEK = ELEMENT.getAttribute("week");
         if(DAY) {
             const INFO_CONT = document.querySelector(`.schedule-info[day="${DAY}"]`) as HTMLElement;
             if(this.opened != 0) {
@@ -80,25 +78,5 @@ export default class Calendar {
                 this.opened = DAY;
             }
         }
-        // if(DAY) {
-        //     console.log(this.opened);
-        //     const INFO_CONT = document.querySelector(`.schedule-info[week="${WEEK}"]`) as HTMLElement;
-        //     if(this.opened != 0) {
-        //         if(DAY == this.opened) {
-        //             INFO_CONT.classList.remove("show");
-        //             this.opened = 0;
-        //         } else {
-        //             [...document.getElementsByClassName("schedule-info")].forEach(el => {
-        //                 el.classList.remove("show");
-        //             });
-        //             INFO_CONT.classList.add("show");
-        //             this.opened = DAY;
-        //         }
-        //     } else {
-        //         INFO_CONT.classList.add("show");
-        //         this.opened = DAY;
-        //     }
-        //
-        // }
     }
 }

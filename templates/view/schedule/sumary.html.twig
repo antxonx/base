@@ -1,6 +1,8 @@
 {% if ((index) >= 0) and ((index) < month|length) %}
     {% if month[index].events|length > 0 %}
-        title: {{ month[index].events.title }}
+    {% for event in month[index].events %}
+        title: {{ event.title }}
+    {% endfor %}
     {% else %}
         No hay
     {% endif %}
