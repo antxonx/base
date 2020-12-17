@@ -83,10 +83,11 @@ export const Routes = {
             error: 'logger_error_list'
         }
     },
-    calendar: {
+    schedule: {
         view: {
             month: 'schedule_month',
-            week: 'schedule_week'
+            week: 'schedule_week',
+            day: 'schedule_day'
         }
     }
 }

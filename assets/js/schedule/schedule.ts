@@ -6,6 +6,8 @@
 import { BIG_LOADER, Router, ROUTES } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
+import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
+import { ScheduleType } from './defs';
 
 export default class Schedule {
 
@@ -19,13 +21,15 @@ export default class Schedule {
 
     protected route: string;
 
+    //protected bbb: ButtonCheckGroup|null;
+
     public constructor() {
         this.control = true;
         this.offset = 0;
         this.opened = 0;
         this.mainView = document.getElementById("CalendarView") || document.createElement("div");
-        this.route = ROUTES.calendar.view.week
-        ;
+        this.route = '';//ROUTES.schedule.view.week;
+        //this.bbb = null;
     }
 
     public load = () => {
@@ -34,6 +38,14 @@ export default class Schedule {
             document.getElementById("calendarBefore")?.addEventListener('click', () => {this.addOffset(-1)});
             document.getElementById("calendarToday")?.addEventListener('click', () => {this.addOffset(0, true)});
             document.getElementById("calendarAfter")?.addEventListener('click', () => {this.addOffset(1)});
+            const check = new ButtonCheckGroup(document.getElementById('scheduleTypeSwitch') as HTMLElement, {
+                onChange: this.changeType,
+                unCheckClass: 'btn-outline-success',
+                checkClass: 'btn-success',
+                extraClass: 'round',
+                activeValue: 'week',
+            });
+            this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
             this.update();
         }
         [...document.getElementsByClassName("schedule-day")].forEach(el => el.addEventListener("click", this.openDay));
@@ -82,5 +94,10 @@ export default class Schedule {
                 this.opened = DAY;
             }
         }
+    }
+
+    private changeType = (value: string[]) => {
+        this.route = ROUTES.schedule.view[(value[0] as ScheduleType)];
+        this.update();
     }
 }
