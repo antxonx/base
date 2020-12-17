@@ -79,10 +79,16 @@ class User implements UserInterface
      */
     private $errorLogs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Schedule::class, mappedBy="createdBy")
+     */
+    private $schedules;
+
     public function __construct()
     {
         $this->infoLogs = new ArrayCollection();
         $this->errorLogs = new ArrayCollection();
+        $this->schedules = new ArrayCollection();
     }
 
     /**
@@ -323,6 +329,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($errorLog->getUser() === $this) {
                 $errorLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schedule[]
+     */
+    public function getSchedules(): Collection
+    {
+        return $this->schedules;
+    }
+
+    public function addSchedule(Schedule $schedule): self
+    {
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules[] = $schedule;
+            $schedule->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedule(Schedule $schedule): self
+    {
+        if ($this->schedules->removeElement($schedule)) {
+            // set the owning side to null (unless already changed)
+            if ($schedule->getCreatedBy() === $this) {
+                $schedule->setCreatedBy(null);
             }
         }
 

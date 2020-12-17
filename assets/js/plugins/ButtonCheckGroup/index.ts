@@ -63,10 +63,14 @@ export default class ButtonCheckGroup {
         this.value = [];
         [...this.container.getElementsByTagName('button')].forEach((el) => {
             el.setAttribute(checkAttributes.ID, ButtonCheckGroup.randmonId().toString());
-            el.setAttribute(checkAttributes.STATUS, '0');
             if (this.options.extraClass && this.options.extraClass != '')
                 el.classList.add(this.options.extraClass);
-            el.classList.add(this.options.unCheckClass!);
+            if(el.getAttribute(checkAttributes.VALUE) == this.options.activeValue) {
+                this.markActive(el);
+                this.value = [this.options.activeValue];
+            } else {
+                this.unmarkActive(el);
+            }
             el.addEventListener('click', this.update);
         });
     }
@@ -82,7 +86,9 @@ export default class ButtonCheckGroup {
         const ID = BUTTON.getAttribute(checkAttributes.ID);
         const STATUS = !!(+BUTTON.getAttribute(checkAttributes.STATUS)!);
         if (STATUS) {
-            this.unmarkActive(BUTTON);
+            if(this.options.multiple && !this.options.oneActive) {
+                this.unmarkActive(BUTTON);
+            }
         } else {
             this.markActive(BUTTON);
         }
@@ -138,5 +144,9 @@ export default class ButtonCheckGroup {
 
     public getId = () => {
         return this.id;
+    }
+
+    public getValues = () => {
+        return this.value;
     }
 }

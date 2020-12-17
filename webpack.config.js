@@ -39,6 +39,7 @@ Encore
     .addEntry('dashboard', './assets/js/dashboard/index.ts')
     .addEntry('profile', './assets/js/profile/index.ts')
     .addEntry('clientCategory', './assets/js/clientCategory/index.ts')
+    .addEntry('schedule', './assets/js/schedule/index.ts')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

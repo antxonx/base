@@ -1,0 +1,60 @@
+<h5 class="text-center">{{ monthName }}</h5>
+<div class="calendar">
+    <div class="days">
+        {% for day in week %}
+            <div><b>{{ day }}</b></div>
+        {% endfor %}
+    </div>
+    <div class="schedule">
+        {% set dayy = 0 %}
+        {% set rows = 1 %}
+        <div class="schedule-row">
+            {% for day in month %}
+                {% if (loop.index != 1 ) and ((loop.index - 1) % 7 == 0) %}
+                    {% set dayy = loop.index %}
+                    </div>
+                    {% for i in 0.. 6 %}
+                    {% set index = dayy - 7 + i - first %}
+                        <div class="schedule-info" day="{{ index }}">
+                        {% include 'view/schedule/sumary.html.twig' with {
+                            index: (index + first - 1)
+                        } %}
+                        </div>
+                    {% endfor %}
+                    <div class="schedule-row">
+                    {% set rows = rows + 1 %}
+                {% endif %}
+            <div class="schedule-day {% if day.day == null %}disabled{% endif %}" day="{{ day.day }}">
+                <div class="schedule-day-number">
+                <div class="number {% if day.day != null %}active{% endif %}">{{ day.day }}</div>
+                    <div class="total">
+                    {% if day.events|length > 0 %}
+                    <span class="events-length">
+                        {{ day.events|length }}
+                    </span>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="schedule-content">
+                    {% if day.events|length > 0 %}
+                    {% for event in day.events %}
+                        <span
+                            style="background-color: {{ event.color }}"
+                        >
+                            {{ event.title }}
+                        </span>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% for i in 0.. 6 %}
+        <div class="schedule-info" day="{{ dayy + i - first }}">
+        {% include 'view/schedule/sumary.html.twig' with {
+            index: (dayy + i - 1)
+        } %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

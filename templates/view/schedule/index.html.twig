@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendarrio{% endblock %}
+
+{% block body %}
+{{ encore_entry_link_tags('schedule') }}
+<div class="row m-1">
+        <div class="col-md-7 my-1">
+
+        </div>
+        <div class="col-md-3 btn-group my-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
+            <button type="button" value="month" class="btn no-hover">Mes</button>
+            <button type="button" value="week" class="btn no-hover">Semana</button>
+            <button type="button" value="day" class="btn no-hover">Día</button>
+        </div>
+        <div class="col-md-2 my-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-light text-antxony" data-toggle="tooltip" data-placement="top" title="Anterior" id="calendarBefore"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                <button type="button" class="btn btn-light text-antxony" data-toggle="tooltip" data-placement="top" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
+                <button type="button" class="btn btn-light text-antxony" data-toggle="tooltip" data-placement="top" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
+            </div>
+        </div>
+</div>
+<div id="CalendarView">
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('schedule') }}
+{% endblock %}
