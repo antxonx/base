@@ -69,7 +69,7 @@
                     span
                         display: block
                         font-size: 0.7rem
-                        margin: 0.2em
+                        margin: 0.4em
                         border-radius: 1.25em
                         text-align: left
                         padding-left: 0.5em
@@ -91,3 +91,20 @@
                 height: 40vh
                 transition: height 0.3s ease-in, padding 0.3s ease-in
                 padding: 1rem
+            .schedule-sumary
+                margin: 0.5rem
+                border-radius: 1.25rem
+                padding: 0.5rem
+                &:not(.nothing)
+                    cursor: pointer
+                .date
+                    width: 20%
+                    display: inline-block
+                .info
+                    width: 75%
+                    display: inline-block
+                    &::before
+                        content: "|"
+                &.nothing
+                    text-align: center
+                    background-color: #e6e6fa

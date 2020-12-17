@@ -69,10 +69,7 @@ class ScheduleController extends AbstractController
                     foreach ($eventsS as $event) {
                         $eventDay = (int)$event->getDate()->format('d');
                         if($eventDay == ($i - $first + 1)) {
-                            $events[] = [
-                                    'color' => $event->getColor(),
-                                    'title' => $event->getTitle()
-                                ];
+                            $events[] = $event;
                         }
                     }
                     $month[] = ['day' => ($i - $first + 1), 'events' => $events];
