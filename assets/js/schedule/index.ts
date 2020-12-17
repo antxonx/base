@@ -9,4 +9,5 @@ import Schedule from "./schedule";
 
 (() => {
     (new Schedule()).load();
+    $('[data-toggle="tooltip"]').tooltip();
 })();
