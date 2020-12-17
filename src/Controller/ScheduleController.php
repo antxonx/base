@@ -126,4 +126,36 @@ class ScheduleController extends AbstractController
             return $this->util->errorResponse($e);
         }
     }
+
+    /**
+    * @Route("/day", name="schedule_day", methods={"GET"}, options={"expose" = true})
+    */
+    public function day(Request $request) : Response
+    {
+        try {
+            setlocale(LC_TIME, "es_MX.UTF8");
+            $day = [];
+            $params = json_decode(json_encode($request->query->all()));
+            $offset = $params->offset;
+            $monthName = strftime("%B %Y", strtotime("today {$offset} day"));
+            $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];
+            $day += ["day" => strftime("%d", strtotime("today {$offset} day"))];
+            $day += ["date" => strftime("%d-%m-%Y", strtotime("today {$offset} day"))];
+            $eventsS = $this->rep->getBy("week", $params);
+            $events = [];
+            $evDay = strftime("%d-%m-%Y", strtotime("today {$offset} day"));
+            foreach ($eventsS as $event) {
+                if($evDay == $event->getDate()->format("d-m-Y")) {
+                    $events[] = $event;
+                }
+            }
+            $day += ["events" => $events ];
+            return $this->render("view/schedule/types/day.html.twig", [
+                'monthName' => $monthName,
+                'day' => $day,
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
 }

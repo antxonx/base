@@ -3,6 +3,7 @@
 {% block title %}Calendarrio{% endblock %}
 
 {% block body %}
+{{ encore_entry_link_tags('schedule') }}
 <div class="row m-1">
         <div class="col-md-7 my-1">
 
@@ -10,6 +11,7 @@
         <div class="col-md-3 btn-group my-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
             <button type="button" value="month" class="btn no-hover">Mes</button>
             <button type="button" value="week" class="btn no-hover">Semana</button>
+            <button type="button" value="day" class="btn no-hover">Día</button>
         </div>
         <div class="col-md-2 my-1">
             <div class="btn-group w-100">

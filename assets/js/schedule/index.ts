@@ -6,6 +6,7 @@
 */
 
 import Schedule from "./schedule";
+import '@styles/schedule.sass';
 
 (() => {
     (new Schedule()).load();

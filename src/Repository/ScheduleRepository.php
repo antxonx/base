@@ -47,6 +47,15 @@ class ScheduleRepository extends ServiceEntityRepository
                 $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
+            case 'day':
+                $last = $offset + 1;
+                $start = new DateTime("today {$offset} day", new DateTimeZone("America/Mexico_city"));
+                $finish = new DateTime("today {$last} day -1 second", new DateTimeZone("America/Mexico_city"));
+                $dateCriteria = new Criteria();
+                $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
+                $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
+                $query->addCriteria($dateCriteria);
+                break;
             default:
                 // code...
                 break;

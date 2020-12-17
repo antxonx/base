@@ -28,8 +28,7 @@ export default class Schedule {
         this.offset = 0;
         this.opened = 0;
         this.mainView = document.getElementById("CalendarView") || document.createElement("div");
-        this.route = '';//ROUTES.schedule.view.week;
-        //this.bbb = null;
+        this.route = '';
     }
 
     public load = () => {
@@ -98,6 +97,7 @@ export default class Schedule {
 
     private changeType = (value: string[]) => {
         this.route = ROUTES.schedule.view[(value[0] as ScheduleType)];
+        this.offset = 0;
         this.update();
     }
 }
