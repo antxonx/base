@@ -103,7 +103,13 @@
                             padding-right: 0.5rem
                             border-radius: 1.25rem
                             position: absolute
+                        &:not(.today)::after
                             background-color: #d48fff2e
+                        &.today
+                            color: white
+                            &::after
+                                background-color: #6060cd
+                                z-index: -1
                 .schedule-content
                     overflow-y: hidden
                     transform: translateY(-1rem)

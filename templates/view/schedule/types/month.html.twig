@@ -26,7 +26,7 @@
                 {% endif %}
             <div class="schedule-day {% if day.day == null %}disabled{% endif %}" day="{{ day.day }}">
                 <div class="schedule-day-number">
-                <div class="number {% if day.day != null %}active{% endif %}">{{ day.day }}</div>
+            <div class="number {% if day.day != null %}active{% endif %}{% if ("now"|date("d-m-Y")) == day.date %} today{% endif %}">{{ day.day }}</div>
                     <div class="total">
                     {% if day.events|length > 0 %}
                     <span class="events-length">
