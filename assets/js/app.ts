@@ -37,4 +37,4 @@ export const ROUTES = Routes;
 /* ------------------------------------ . ----------------------------------- */
 export const BIG_LOADER: string = '<div class="loader"></div>';
 export const BIG_LOADER_TABLE: string = '<tr class="table-paginator"><td colspan="0"><div class="loader"></div></td></tr>';
-export const SPINNER_LOADER: string = '<div class="w-100 d-fle*/*/x justify-content-center"><div class="spinner"></div></div>';
+export const SPINNER_LOADER: string = '<div class="w-100 d-flex justify-content-center"><div class="spinner"></div></div>';

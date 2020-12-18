@@ -9,17 +9,7 @@
     {% for day in week %}
     <div class="day">
         {% for event in day.events %}
-                <div class="event"
-                    style="background-color: {{ event.color ~ '99' }}"
-                    event-id="{{ event.id }}"
-                >
-                    <span class="time">
-                        <b>{{ event.date|format_datetime("none", "short", locale="es") }}</b>
-                    </span>
-                    <span>
-                        <em>{{ event.title }}</em>
-                    </span>
-                </div>
+                {% include 'view/schedule/event.html.twig' %}
         {% endfor %}
     </div>
     {% endfor %}

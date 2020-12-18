@@ -1,0 +1,41 @@
+<table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2 mobile" id="scheduleCategoryTable">
+{% set sort %}
+    <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
+{% endset %}
+{% set sortClass = 'cursor-pointer sort-column' %}
+{% include "table/thead.html.twig" with {
+    tr : {
+        values : {
+            name : {
+                value : 'Nombre' ~ sort,
+                attr : {
+                    class: sortClass,
+                    column: 'name',
+                }
+            },
+            description : {
+                value : 'Descripción',
+            },
+            backgroundColor : {
+                value : '<span class="material-icons-round">format_color_fill</span>',
+                attr : {
+                    class: 'icon-col text-center'
+                }
+            },
+            color : {
+                value : '<span class="material-icons-round">format_color_text</span>',
+                attr : {
+                    class: 'icon-col text-center'
+                }
+            },
+            delete : {
+                value : '<i class="fas fa-trash-alt mobile-2-desktop-1"></i>',
+                attr : {
+                    class : 'text-center border-right-0 border-left-0 icon-col',
+                }
+            }
+        },
+    }
+} %}
+<tbody id="scheduleCategoriesView"></tbody>
+</table>

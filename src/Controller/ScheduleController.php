@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleRepository;
 use Exception;
 use Antxony\Util;
+use DateTime;
+use DateTimeZone;
 
 /**
 * @Route("/schedule")
@@ -47,7 +49,6 @@ class ScheduleController extends AbstractController
     public function month(Request $request): Response
     {
         try {
-            setlocale(LC_TIME, "es_MX.UTF8");
             $params = json_decode(json_encode($request->query->all()));
             $monthOffset = $params->offset;
             $month = [];
@@ -62,21 +63,36 @@ class ScheduleController extends AbstractController
                 $week[] = strftime("%A", strtotime("{$dif} day"));
             }
             for ($i=0; $i < $last+$first; $i++) {
+                $day = ($i - $first + 1);
                 if($i < $first) {
-                    $month[] = ['day' => null, 'events' => []];
+                    $month[] = [
+                        'day' => null,
+                        'date' => '',
+                        'events' => []
+                    ];
                 } else {
                     $events = [];
                     foreach ($eventsS as $event) {
                         $eventDay = (int)$event->getDate()->format('d');
-                        if($eventDay == ($i - $first + 1)) {
+                        if($eventDay == $day) {
                             $events[] = $event;
                         }
                     }
-                    $month[] = ['day' => ($i - $first + 1), 'events' => $events];
+                    $today = strftime("%d", strtotime("today"));
+                    $diff = $day - $today;
+                    $month[] = [
+                        'day' => $day,
+                        'date' => strftime("%d-%m-%Y", strtotime("{$diff} day {$monthOffset} month")),
+                        'events' => $events
+                    ];
                 }
             }
             while(count($month) % 7 != 0) {
-                $month[] = ['day' => null, 'events' => []];
+                $month[] = [
+                    'day' => null,
+                    'date' => '',
+                    'events' => []
+                ];
             }
             return $this->render("view/schedule/types/month.html.twig", [
                 'first' => $first,
@@ -95,7 +111,6 @@ class ScheduleController extends AbstractController
     public function week(Request $request) : Response
     {
         try {
-            setlocale(LC_TIME, "es_MX.UTF8");
             $params = json_decode(json_encode($request->query->all()));
             $offset = $params->offset;
             $monthName = strftime("%B %Y", strtotime("today {$offset} week"));
@@ -133,7 +148,6 @@ class ScheduleController extends AbstractController
     public function day(Request $request) : Response
     {
         try {
-            setlocale(LC_TIME, "es_MX.UTF8");
             $day = [];
             $params = json_decode(json_encode($request->query->all()));
             $offset = $params->offset;

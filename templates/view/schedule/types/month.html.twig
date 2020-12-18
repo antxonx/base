@@ -26,12 +26,20 @@
                 {% endif %}
             <div class="schedule-day {% if day.day == null %}disabled{% endif %}" day="{{ day.day }}">
                 <div class="schedule-day-number">
-                <div class="number {% if day.day != null %}active{% endif %}">{{ day.day }}</div>
+            <div class="number {% if day.day != null %}active{% endif %}{% if ("now"|date("d-m-Y")) == day.date %} today{% endif %}">{{ day.day }}</div>
                     <div class="total">
                     {% if day.events|length > 0 %}
-                    <span class="events-length">
-                        {{ day.events|length }}
-                    </span>
+                        {% set activeEvents = 0 %}
+                        {% for event in day.events %}
+                            {% if not event.done %}
+                                {% set activeEvents = activeEvents + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if activeEvents > 0 %}
+                            <span class="events-length">{{ activeEvents }}</span>
+                        {% else %}
+                            <span>&nbsp;</span>
+                        {% endif %}
                     {% endif %}
                     </div>
                 </div>
@@ -39,9 +47,21 @@
                     {% if day.events|length > 0 %}
                     {% for event in day.events %}
                         <span
-                            style="background-color: {{ event.color }}"
+                        {% if event.done %}
+                            style="background-color: #e8e8e8; color: #525252"
+                        {% else %}
+                            style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}"
+                        {% endif %}
                         >
                             {{ event.title }}
+                            {% if not event.done and event.priority != null %}
+                            <span
+                                    class="priority"
+                                    style="background-color: {{ event.priority.color }};"
+                            >
+                                &#x2800;
+                            </span>
+                            {% endif %}
                         </span>
                     {% endfor %}
                     {% endif %}

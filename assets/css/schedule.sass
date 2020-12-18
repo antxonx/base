@@ -23,7 +23,7 @@
                     background-color: #e6e6e66b
                     color: grey
                 &.today
-                    background-color: #6060cd
+                    background-color: #8181eb
                     color: white
         div:last-child
             border-top-right-radius: 0.9rem
@@ -39,21 +39,6 @@
             text-align: center
             border: 1px solid #e6e6fa
             overflow-x: hidden
-            .event
-                font-size: 0.85rem
-                margin: 0.4em
-                border-radius: 1.25em
-                padding-left: 0.5em
-                padding-right: 0.5em
-                cursor: pointer
-                span
-                    display: block
-                    text-align: left
-                    text-overflow: ellipsis
-                    white-space: nowrap
-                    overflow-x: hidden
-                .time
-                    text-align: center
         .day:last-child
             border-bottom-right-radius: 0.9rem
         .day:first-child
@@ -77,19 +62,39 @@
                     width: 95%
                     .total
                         display: block
-                        transform: translate(0.4rem, -1.4rem)
+                        transform: translateY(-1.4rem)
                         text-align: left
+                        padding-left: 0.2rem
+                        width: 1rem
                         .events-length
-                            background-color: #594eff
-                            border: 1px solid #594eff
-                            color: white
+                            display: inline-block
+                            padding: 0.5em 0.5em
+                            font-size: 75%
+                            font-weight: 700
+                            line-height: 1
+                            text-align: center
+                            white-space: nowrap
+                            vertical-align: baseline
                             border-radius: 1.25rem
-                            padding-left: 0.4rem
-                            padding-right: 0.4rem
-                            padding-bottom: 0.1rem
+                            color: #ffffff
+                            background-color: #4c4c99
+                            width: 1.5rem
                             -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
                             -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
                             box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            &.sss::before
+                                content: '\2800'
+                                display: inline-block
+                                transform: translateX(-0.35rem)
+                                padding-left: 0.5rem
+                                padding-right: 0.5rem
+                                border-radius: 1.25rem
+                                position: absolute
+                                background-color: #594eff
+                                z-index: -1
+                                -webkit-box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75)
+                                -moz-box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75)
+                                box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75)
                     .number
                         color: #979797a6
                         display: block
@@ -103,7 +108,13 @@
                             padding-right: 0.5rem
                             border-radius: 1.25rem
                             position: absolute
+                        &:not(.today)::after
                             background-color: #d48fff2e
+                        &.today
+                            color: white
+                            &::after
+                                background-color: #8181eb
+                                z-index: -1
                 .schedule-content
                     overflow-y: hidden
                     transform: translateY(-1rem)
@@ -114,10 +125,27 @@
                         border-radius: 1.25em
                         text-align: left
                         padding-left: 0.5em
-                        padding-right: 0.5em
+                        padding-right: 1.5em
                         text-overflow: ellipsis
                         white-space: nowrap
                         overflow-x: hidden
+                        position: relative
+                        .priority
+                            padding: 0
+                            margin: 0
+                            border-radius: 1.25rem
+                            margin-right: 0.2rem
+                            margin-top: 0.2rem
+                            height: 0.9em
+                            width: 0.9em
+                            overflow-y: hidden
+                            overflow-x: hidden
+                            -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                            position: absolute
+                            right: 0
+                            top: 0
             &:last-child
                 .schedule-day:last-child
                     border-bottom-right-radius: 0.9rem
@@ -140,6 +168,7 @@
                     cursor: pointer
                 .date
                     width: 20%
+                    font-weight: 700
                     display: inline-block
                 .info
                     width: 75%
@@ -149,3 +178,40 @@
                 &.nothing
                     text-align: center
                     background-color: #e6e6fa
+    .event
+        font-size: 0.85rem
+        margin: 0.4em
+        border-radius: 1.25em
+        padding-left: 0.5em
+        padding-right: 0.5em
+        cursor: pointer
+        padding-bottom: 0.2rem
+        span
+            display: block
+            text-align: left
+            text-overflow: ellipsis
+            white-space: nowrap
+            overflow-x: hidden
+        .time
+            float: right
+            font-weight: 700
+            font-size: 0.8em
+        .header
+            display: flex
+            justify-content: space-between
+            .assigned
+                text-align: left
+                font-weight: 700
+            .priority
+                padding: 0
+                margin: 0
+                border-radius: 1.25rem
+                margin-right: 0.2rem
+                margin-top: 0.2rem
+                height: 0.9rem
+                width: 0.9rem
+                overflow-y: hidden
+                overflow-x: hidden
+                -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)
+                box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75)

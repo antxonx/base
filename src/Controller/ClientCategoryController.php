@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class ClientCategoryController
@@ -52,6 +53,7 @@ class ClientCategoryController extends AbstractController
 
     /**
      * @Route("", name="client_category_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(): Response
     {
@@ -64,6 +66,8 @@ class ClientCategoryController extends AbstractController
      * Get category list
      *
      * @Route("/list", name="client_category_list", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param Request $request
      * @return Response
      */
@@ -90,6 +94,8 @@ class ClientCategoryController extends AbstractController
      * add form
      *
      * @Route("/form", name="client_category_add_form", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @return Response
      */
     public function form() : Response
@@ -105,6 +111,8 @@ class ClientCategoryController extends AbstractController
      * Cargar formulario de cambio de categorpia
      *
      * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param int $id
      * @return Response
      */
@@ -126,6 +134,8 @@ class ClientCategoryController extends AbstractController
      * Change client category
      *
      * @Route("/change", name="client_category_change", methods={"PUT", "PATCH"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param Request $request
      * @return Response
      */
@@ -158,6 +168,8 @@ class ClientCategoryController extends AbstractController
      * Add category
      *
      * @Route("/", name="client_category_add", methods={"POST"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param Request $request
      * @return Response
      */
@@ -182,6 +194,8 @@ class ClientCategoryController extends AbstractController
      * Delete Category
      *
      * @Route("/{id}", name="client_category_delete", methods={"DELETE"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param int $id
      * @return Response
      */
@@ -200,9 +214,10 @@ class ClientCategoryController extends AbstractController
 
     /**
      * Show category
-     * Show category
      *
      * @Route("/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param int $id
      * @return Response
      */
@@ -222,6 +237,8 @@ class ClientCategoryController extends AbstractController
      * Update category with x-editable
      *
      * @Route("/{id}", name="client_category_edit", methods={"PUT", "PATCH"})
+     * @IsGranted("ROLE_ADMIN")
+     *
      * @param int $id
      * @param Request $request
      * @return Response
@@ -245,7 +262,7 @@ class ClientCategoryController extends AbstractController
                 $message .= " la descripción";
             }
             $this->rep->update();
-            $this->util->info($message . " para la categoría <b>{$category->getId()}</b>(<em>{$category->getName()}</em>)");
+            $this->util->info($message . " para la categoría <b>{$category->getId()}</b> (<em>{$category->getName()}</em>)");
             return new Response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

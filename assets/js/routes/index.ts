@@ -89,5 +89,17 @@ export const Routes = {
             week: 'schedule_week',
             day: 'schedule_day'
         }
+    },
+    scheduleCategory: {
+        view: {
+            list: 'schedule_category_list',
+            form: 'schedule_category_form',
+            show: 'schedule_category_show'
+        },
+        api: {
+            add: 'schedule_category_add',
+            delete: 'schedule_category_delete',
+            color: 'schedule_category_color_edit'
+        }
     }
 }
