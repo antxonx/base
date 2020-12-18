@@ -37,7 +37,7 @@
                     {% if day.events|length > 0 %}
                     {% for event in day.events %}
                         <span
-                            style="background-color: {{ event.color }}"
+                            style="background-color: {{ event.category.backgroundColor }}; color: {{ event.category.color }}"
                         >
                             {{ event.title }}
                         </span>

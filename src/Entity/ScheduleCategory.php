@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ScheduleCategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class ScheduleCategory
      * @ORM\Column(type="string", length=10)
      */
     private $color;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Schedule::class, mappedBy="category")
+     */
+    private $schedules;
+
+    public function __construct()
+    {
+        $this->schedules = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class ScheduleCategory
     public function setColor(string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Schedule[]
+     */
+    public function getSchedules(): Collection
+    {
+        return $this->schedules;
+    }
+
+    public function addSchedule(Schedule $schedule): self
+    {
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules[] = $schedule;
+            $schedule->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedule(Schedule $schedule): self
+    {
+        if ($this->schedules->removeElement($schedule)) {
+            // set the owning side to null (unless already changed)
+            if ($schedule->getCategory() === $this) {
+                $schedule->setCategory(null);
+            }
+        }
 
         return $this;
     }
