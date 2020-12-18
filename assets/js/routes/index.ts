@@ -96,7 +96,8 @@ export const Routes = {
             form: 'schedule_category_form'
         },
         api: {
-            add: 'schedule_category_add'
+            add: 'schedule_category_add',
+            delete: 'schedule_category_delete'
         }
     }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleCategoryRepository;
 use App\Entity\ScheduleCategory;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * ScheduleCategoryController class
@@ -35,6 +36,7 @@ class ScheduleCategoryController extends AbstractController
 
     /**
      * @Route("", name="schedule_category_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(): Response
     {
@@ -45,6 +47,7 @@ class ScheduleCategoryController extends AbstractController
 
     /**
     * @Route("/list", name="schedule_category_list", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
     */
     public function list(Request $request) : Response
     {
@@ -67,6 +70,7 @@ class ScheduleCategoryController extends AbstractController
 
     /**
     * @Route("/form", name="schedule_category_form", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
     */
     public function form() : Response
     {
@@ -79,6 +83,7 @@ class ScheduleCategoryController extends AbstractController
 
     /**
     * @Route("/add", name="schedule_category_add", methods={"POST"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
     */
     public function add(Request $request) : Response
     {
@@ -91,6 +96,26 @@ class ScheduleCategoryController extends AbstractController
                 ->setColor($content->tColor);
             $this->rep->add($category);
             $message = "Se ha agregado evento <b>{$content->name}</b>";
+            $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/delete/{id}", name="schedule_category_delete", methods={"DELETE"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function delete(int $id) : Response
+    {
+        try {
+            $category = $this->rep->find($id);
+            if($category == null) {
+                throw new Exception("No se encontró la categoría");
+            }
+            $this->rep->delete($category);
+            $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
             $this->util->info($message);
             return new Response($message);
         } catch (Exception $e) {

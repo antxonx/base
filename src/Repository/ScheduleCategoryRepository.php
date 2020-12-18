@@ -87,9 +87,9 @@ class ScheduleCategoryRepository extends ServiceEntityRepository
      */
     public function delete(ScheduleCategory $entity)
     {
-        foreach($entity->getClients() as $client) {
-            $client->setCategory(null);
-        }
+        // foreach($entity->getClients() as $client) {
+        //     $client->setCategory(null);
+        // }
         $this->getEntityManager()->remove($entity);
         $this->getEntityManager()->flush();
     }

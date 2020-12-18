@@ -12,6 +12,7 @@ import Paginator from "@scripts/plugins/Paginator";
 import Toast from "@scripts/plugins/AlertToast";
 import Search from "@scripts/plugins/Search";
 import ScheduleCategoryAdd from "./add";
+import ScheduleCategoryDelete from "./delete";
 
 export default class ScheduleCategory {
 
@@ -50,10 +51,10 @@ export default class ScheduleCategory {
             this.update();
         }
         [...document.getElementsByClassName("category-delete")].forEach(element => element.addEventListener("click", (e: Event) => {
-            // (new ClientCategoryDelete({
-            //     element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
-            //     onError: this.load
-            // })).delete();
+            (new ScheduleCategoryDelete({
+                element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
+                onError: this.load
+            })).delete();
         }));
         [...document.getElementsByClassName("category-show")].forEach(element => element.addEventListener("click", (e: Event) => {
             // (new Show({
