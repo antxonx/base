@@ -15,8 +15,13 @@
                 &nbsp;
             {% endif %}
         </span>
-        <span class="priority">
-            &#x2800;
+        <span
+            {% if not event.done and event.priority != null %}
+            class="priority"
+                style="background-color: {{ event.priority.color }};"
+            {% endif %}
+        >
+                &#x2800;
         </span>
     </div>
     <span class="time"

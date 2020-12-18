@@ -53,6 +53,11 @@ class Schedule
      */
     private $assigned;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=SchedulePriority::class, inversedBy="schedules")
+     */
+    private $priority;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -168,6 +173,18 @@ class Schedule
     public function setAssigned(?User $assigned): self
     {
         $this->assigned = $assigned;
+
+        return $this;
+    }
+
+    public function getPriority(): ?SchedulePriority
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(?SchedulePriority $priority): self
+    {
+        $this->priority = $priority;
 
         return $this;
     }
