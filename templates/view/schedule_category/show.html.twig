@@ -1,0 +1,18 @@
+<div class="card-2">
+    <div class="card-body">
+        <p class="editable-container">
+            <b>Nombre</b> <br>
+            <a class="editable-field" href="#" data-name="categoryName" data-type="text"
+               data-pk="{{ category.id }}"
+               data-url="{{ path('schedule_category_edit', {'id' : category.id }) }}"
+               data-title="Ingresa el nombre">{{ category.name }}</a>
+        </p>
+        <p class="editable-container text-justify">
+            <b>Descripción</b> <br>
+            <a class="editable-field" href="#" data-name="categoryDescription" data-type="textarea"
+               data-pk="{{ category.id }}"
+               data-url="{{ path('schedule_category_edit', {'id' : category.id }) }}"
+               data-title="Ingresa la descripción">{{ category.description }}</a>
+        </p>
+    </div>
+</div>

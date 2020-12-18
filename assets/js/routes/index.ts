@@ -93,7 +93,8 @@ export const Routes = {
     scheduleCategory: {
         view: {
             list: 'schedule_category_list',
-            form: 'schedule_category_form'
+            form: 'schedule_category_form',
+            show: 'schedule_category_show'
         },
         api: {
             add: 'schedule_category_add',

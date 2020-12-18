@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Antxony\Util;
+use Antxony\Def\Editable\Editable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,6 +118,52 @@ class ScheduleCategoryController extends AbstractController
             $this->rep->delete($category);
             $message = "Se ha eliminado la categoría <b><em>{$category->getName()}</em></b>";
             $this->util->info($message);
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/show/{id}", name="schedule_category_show", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function show(int $id) : Response
+    {
+        try {
+            $category = $this->rep->find($id);
+            return $this->render("view/schedule_category/show.html.twig", [
+                'category' => $category
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/update/{id}", name="schedule_category_edit", methods={"PUT", "PATCH"})
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function update(int $id, Request $request) : Response
+    {
+        try {
+            parse_str($request->getContent(), $content);
+            $editable = new Editable($content);
+            $category = $this->rep->find($id);
+            if($category == null){
+                throw new Exception("No se pudo localizar la categoría");
+            }
+            $message = "se ha actualizado";
+            if ($editable->name == "categoryName") {
+                $category->setName($editable->value);
+                $message .= " el nombre";
+            }
+            if ($editable->name == "categoryDescription") {
+                $category->setDescription($editable->value);
+                $message .= " la descripción";
+            }
+            $this->rep->update();
+            $this->util->info($message . " para la categoría <b>{$category->getId()}</b> (<em>{$category->getName()}</em>)");
             return new Response($message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);

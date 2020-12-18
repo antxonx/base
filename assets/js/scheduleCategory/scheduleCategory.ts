@@ -13,6 +13,7 @@ import Toast from "@scripts/plugins/AlertToast";
 import Search from "@scripts/plugins/Search";
 import ScheduleCategoryAdd from "./add";
 import ScheduleCategoryDelete from "./delete";
+import Show from "./show";
 
 export default class ScheduleCategory {
 
@@ -57,12 +58,12 @@ export default class ScheduleCategory {
             })).delete();
         }));
         [...document.getElementsByClassName("category-show")].forEach(element => element.addEventListener("click", (e: Event) => {
-            // (new Show({
-            //     idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
-            //     onClose: () => {
-            //         this.update();
-            //     }
-            // })).load();
+            (new Show({
+                idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                onClose: () => {
+                    this.update();
+                }
+            })).load();
         }));
         return this;
     }

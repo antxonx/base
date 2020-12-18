@@ -26,3 +26,14 @@ export const DEFAULT_SCHEDULE_CATEGORY_DELETE_OPTIONS: ScheduleCategoryDeleteOpt
     onSuccess: () => {
     },
 }
+
+export interface ScheduleCategoryShowOptions {
+    idCategory: number;
+    onClose: () => void;
+}
+
+export const DEFAULT_SCHEDULE_CATEGORY_SHOW_OPTIONS: ScheduleCategoryShowOptions = {
+    idCategory: 0,
+    onClose: () => {
+    },
+}
