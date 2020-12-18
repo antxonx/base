@@ -3,7 +3,7 @@
     {% for event in month[index].events %}
         <div
             class="schedule-sumary"
-            style="background-color: {{ event.category.backgroundColor ~ '99' }}; color: {{ event.category.color }}"
+            style="background-color: {{ event.category.backgroundColor}}; color: {{ event.category.color }}"
             event-id="{{ event.id }}"
         >
             <div class="date">

@@ -11,7 +11,7 @@
         <div class="day">
             {% for event in day.events %}
                     <div class="event"
-                        style="background-color: {{ event.category.backgroundColor ~ '99' }}; color: {{ event.category.color }}"
+                        style="background-color: {{ event.category.backgroundColor }}; color: {{ event.category.color }}"
                         event-id="{{ event.id }}"
                     >
                         <span class="time">
