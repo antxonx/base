@@ -1,18 +1,7 @@
 {% if ((index) >= 0) and ((index) < month|length) %}
     {% if month[index].events|length > 0 %}
     {% for event in month[index].events %}
-        <div
-            class="schedule-sumary"
-            style="background-color: {{ event.category.backgroundColor}}; color: {{ event.category.color }}"
-            event-id="{{ event.id }}"
-        >
-            <div class="date">
-                {{ event.date|format_datetime("long", "short", locale="es") }}
-            </div>
-            <div class="info">
-                <em>{{ event.title }}</em>
-            </div>
-        </div>
+        {% include 'view/schedule/event.html.twig' %}
     {% endfor %}
     {% else %}
         <div class="schedule-sumary nothing">

@@ -54,7 +54,11 @@
                     white-space: nowrap
                     overflow-x: hidden
                 .time
-                    text-align: center
+                    float: right
+                    font-weight: 700
+                    font-size: 0.8em
+                .assigned
+                    text-align: left
                     font-weight: 700
         .day:last-child
             border-bottom-right-radius: 0.9rem
@@ -178,3 +182,24 @@
                 &.nothing
                     text-align: center
                     background-color: #e6e6fa
+            .event
+                font-size: 0.85rem
+                margin: 0.4em
+                border-radius: 1.25em
+                padding-left: 0.5em
+                padding-right: 0.5em
+                cursor: pointer
+                padding-bottom: 0.2rem
+                span
+                    display: block
+                    text-align: left
+                    text-overflow: ellipsis
+                    white-space: nowrap
+                    overflow-x: hidden
+                .time
+                    float: right
+                    font-weight: 700
+                    font-size: 0.8em
+                .assigned
+                    text-align: left
+                    font-weight: 700

@@ -43,6 +43,16 @@ class Schedule
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $done;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="assignedSchedules")
+     */
+    private $assigned;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +144,30 @@ class Schedule
     public function setCategory(?ScheduleCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(bool $done): self
+    {
+        $this->done = $done;
+
+        return $this;
+    }
+
+    public function getAssigned(): ?User
+    {
+        return $this->assigned;
+    }
+
+    public function setAssigned(?User $assigned): self
+    {
+        $this->assigned = $assigned;
 
         return $this;
     }

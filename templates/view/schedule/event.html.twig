@@ -1,0 +1,30 @@
+<div class="event"
+    {% if event.done %}
+        style="background-color: #e8e8e8; color: #525252"
+    {% else %}
+        style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}"
+    {% endif %}
+    event-id="{{ event.id }}"
+>
+<div style="width: 100%;">
+    <span class="assigned">
+        {% if event.assigned != null %}
+            {{ event.assigned.name }}
+        {% else %}
+            &nbsp;
+        {% endif %}
+    </span>
+    <span class="time"
+    {% if event.done %}
+        style="color: #52525288"
+    {% else %}
+        style="color: {{ event.category.color ~ '88'}};"
+    {% endif %}
+    >
+        {{ event.date|format_datetime("none", "short", locale="es") }}
+    </span>
+</div>
+    <span>
+        <em>{{ event.title }}</em>
+    </span>
+</div>

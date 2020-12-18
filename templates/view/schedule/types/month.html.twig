@@ -29,7 +29,17 @@
             <div class="number {% if day.day != null %}active{% endif %}{% if ("now"|date("d-m-Y")) == day.date %} today{% endif %}">{{ day.day }}</div>
                     <div class="total">
                     {% if day.events|length > 0 %}
-                    <span class="events-length">{{ day.events|length }}</span>
+                        {% set activeEvents = 0 %}
+                        {% for event in day.events %}
+                            {% if not event.done %}
+                                {% set activeEvents = activeEvents + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if activeEvents > 0 %}
+                            <span class="events-length">{{ activeEvents }}</span>
+                        {% else %}
+                            <span>&nbsp;</span>
+                        {% endif %}
                     {% endif %}
                     </div>
                 </div>
@@ -37,7 +47,11 @@
                     {% if day.events|length > 0 %}
                     {% for event in day.events %}
                         <span
-                            style="background-color: {{ event.category.backgroundColor }}; color: {{ event.category.color }}"
+                        {% if event.done %}
+                            style="background-color: #e8e8e8; color: #525252"
+                        {% else %}
+                            style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}"
+                        {% endif %}
                         >
                             {{ event.title }}
                         </span>
