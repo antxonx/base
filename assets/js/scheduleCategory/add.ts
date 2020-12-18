@@ -1,6 +1,6 @@
 /**
 * @packageDocumentation
-* @module Client/Category
+* @module Schedule/Category
 */
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
@@ -9,13 +9,13 @@ import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
 
 /**
- * Add a new category for clients
+ * Add a new category for events on scheduler
  *
  * @export
- * @class ClientCategoryAdd
+ * @class ScheduleCategoryAdd
  * @author Antxony <dantonyofcarim@gmail.com>
  */
-export default class ClientCategoryAdd {
+export default class ScheduleCategoryAdd {
 
     protected modal: Modal;
 
@@ -31,10 +31,10 @@ export default class ClientCategoryAdd {
 
     public load = () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.clientCategory.view.form))
+        Axios.get(Router.generate(ROUTES.scheduleCategory.view.form))
             .then(res => {
                 this.modal.updateBody(res.data);
-                document.getElementById("clientCategoryForm")!.addEventListener("submit", this.validate);
+                document.getElementById("scheduleCategoryForm")!.addEventListener("submit", this.validate);
             })
             .catch(err => {
                 Toast.error(err.response.data);
@@ -55,9 +55,10 @@ export default class ClientCategoryAdd {
             const DATA = {
                 name: (document.getElementById("name") as HTMLInputElement).value,
                 description: (document.getElementById("description") as HTMLInputElement).value,
-                color: (document.getElementById("color") as HTMLInputElement).value,
+                bColor: (document.getElementById("bColor") as HTMLInputElement).value,
+                tColor: (document.getElementById("tColor") as HTMLInputElement).value,
             }
-            Axios.post(Router.generate(ROUTES.clientCategory.api.add), DATA)
+            Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA)
                 .then(res => {
                     Toast.success(res.data);
                     this.modal.hide();

@@ -11,6 +11,7 @@ import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Paginator from "@scripts/plugins/Paginator";
 import Toast from "@scripts/plugins/AlertToast";
 import Search from "@scripts/plugins/Search";
+import ScheduleCategoryAdd from "./add";
 
 export default class ScheduleCategory {
 
@@ -40,7 +41,7 @@ export default class ScheduleCategory {
         if (this.options.control) {
             this.options.control = false;
             document.getElementById("schedule-category-add")!.addEventListener('click', () => {
-                //(new ClientCategoryAdd(this.update)).load();
+                (new ScheduleCategoryAdd(this.update)).load();
             });
             new Search({
                 callback: this.setSearch,
