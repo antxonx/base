@@ -23,6 +23,7 @@
                     <div class="dropdown-menu" aria-labelledby="adminMenu">
                         <a class="dropdown-item" href="{{ path("user_index") }}">Usuarios</a>
                         <a class="dropdown-item" href="{{ path("client_category_index") }}">Categorías</a>
+                        <a class="dropdown-item" href="{{ path("schedule_category_index") }}">Eventos</a>
                         {% if is_granted("ROLE_GOD") %}
                             <a class="dropdown-item" href="{{ path("logger_index") }}">Registro</a>
                         {% endif %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block body %}
+<div class="w-99 mx-auto">
+    <div class="m-1 row">
+        <div class="col-md-3 m-1">
+            <button class="btn btn-primary w-100 round" id="schedule-category-add">Agregar evento</button>
+        </div>
+        <div class="col-md-6 search-input m-1">
+            <label class="sr-only" for="searchScheduleCategoryInput">Categoría...</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text round">Buscar</div>
+                </div>
+                <input type="text" class="form-control round" id="searchScheduleCategoryInput" placeholder="">
+            </div><span class="erase-search cursor-pointer text-muted">&times;</span>
+        </div>
+    </div>
+    {% include "view/schedule_category/table.html.twig" %}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('scheduleCategory') }}
+{% endblock %}
