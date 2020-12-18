@@ -14,6 +14,7 @@ import Search from "@scripts/plugins/Search";
 import ScheduleCategoryAdd from "./add";
 import ScheduleCategoryDelete from "./delete";
 import Show from "./show";
+import Color from "./color";
 
 export default class ScheduleCategory {
 
@@ -63,6 +64,14 @@ export default class ScheduleCategory {
                 onClose: () => {
                     this.update();
                 }
+            })).load();
+        }));
+        [...document.getElementsByClassName("category-color")].forEach(el => el.addEventListener("click", (e: Event) => {
+            (new Color({
+                id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                type: ((e.currentTarget as HTMLElement).getAttribute('type')! as 'background'|'text'),
+                actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,
+                callback: this.update
             })).load();
         }));
         return this;

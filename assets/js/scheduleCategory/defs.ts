@@ -37,3 +37,19 @@ export const DEFAULT_SCHEDULE_CATEGORY_SHOW_OPTIONS: ScheduleCategoryShowOptions
     onClose: () => {
     },
 }
+
+export interface ScheduleCategoryColorOptions {
+    id?: number;
+    type?: 'background'|'text';
+    actualColor?: string;
+    newColor?: string;
+    callback?: () => void;
+}
+
+export const DEFAULT_SCHEDULE_CATEGORY_COLOR_OPTIONS: ScheduleCategoryColorOptions = {
+    id: 0,
+    type: 'background',
+    actualColor: '#ffffff',
+    newColor: '',
+    callback: () => {}
+}

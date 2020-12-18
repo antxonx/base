@@ -169,4 +169,34 @@ class ScheduleCategoryController extends AbstractController
             return $this->util->errorResponse($e);
         }
     }
+
+    /**
+    * @Route("/color", name="schedule_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function updateColor(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            /** @var ScheduleCategory */
+            $category = $this->rep->find($content->id);
+            if($category == null) {
+                throw new Exception("No se encontró la categoría");
+            }
+            $message = "Se ha actualizado el color del ";
+            if($content->type == "background") {
+                $category->setBackgroundColor($content->newColor);
+                $message .= "fondo";
+            } else {
+                $category->setColor($content->newColor);
+                $message .= "texto";
+            }
+            $this->rep->update();
+            $this->util->info($message . " de la categoría <b>{$category->getId()}</b> (<em>{$category->getName()}</em>)");
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+
+    }
 }

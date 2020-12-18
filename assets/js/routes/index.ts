@@ -98,7 +98,8 @@ export const Routes = {
         },
         api: {
             add: 'schedule_category_add',
-            delete: 'schedule_category_delete'
+            delete: 'schedule_category_delete',
+            color: 'schedule_category_color_edit'
         }
     }
 }
