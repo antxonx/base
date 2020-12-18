@@ -7,13 +7,18 @@
     event-id="{{ event.id }}"
 >
 <div style="width: 100%;">
-    <span class="assigned">
-        {% if event.assigned != null %}
-            {{ event.assigned.name }}
-        {% else %}
-            &nbsp;
-        {% endif %}
-    </span>
+    <div class="header">
+        <span class="assigned">
+            {% if event.assigned != null %}
+                {{ event.assigned.name }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </span>
+        <span class="priority">
+            &#x2800;
+        </span>
+    </div>
     <span class="time"
     {% if event.done %}
         style="color: #52525288"
