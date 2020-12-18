@@ -39,8 +39,8 @@ export default class Schedule {
             document.getElementById("calendarAfter")?.addEventListener('click', () => {this.addOffset(1)});
             const check = new ButtonCheckGroup(document.getElementById('scheduleTypeSwitch') as HTMLElement, {
                 onChange: this.changeType,
-                unCheckClass: 'btn-outline-success',
-                checkClass: 'btn-success',
+                unCheckClass: 'btn-outline-info',
+                checkClass: 'btn-info',
                 extraClass: 'round',
                 activeValue: 'week',
             });

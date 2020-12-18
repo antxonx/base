@@ -29,9 +29,7 @@
             <div class="number {% if day.day != null %}active{% endif %}{% if ("now"|date("d-m-Y")) == day.date %} today{% endif %}">{{ day.day }}</div>
                     <div class="total">
                     {% if day.events|length > 0 %}
-                    <span class="events-length">
-                        {{ day.events|length }}
-                    </span>
+                    <span class="events-length">{{ day.events|length }}</span>
                     {% endif %}
                     </div>
                 </div>
