@@ -8,6 +8,7 @@ import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { ScheduleType } from './defs';
+import Add from './add';
 
 export default class Schedule {
 
@@ -20,8 +21,6 @@ export default class Schedule {
     protected opened: number;
 
     protected route: string;
-
-    //protected bbb: ButtonCheckGroup|null;
 
     public constructor() {
         this.control = true;
@@ -37,6 +36,9 @@ export default class Schedule {
             document.getElementById("calendarBefore")?.addEventListener('click', () => {this.addOffset(-1)});
             document.getElementById("calendarToday")?.addEventListener('click', () => {this.addOffset(0, true)});
             document.getElementById("calendarAfter")?.addEventListener('click', () => {this.addOffset(1)});
+            document.getElementById("schedule-add")?.addEventListener('click', () => {
+                (new Add(this.update)).load();
+            })
             const check = new ButtonCheckGroup(document.getElementById('scheduleTypeSwitch') as HTMLElement, {
                 onChange: this.changeType,
                 unCheckClass: 'btn-outline-info',

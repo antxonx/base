@@ -1,0 +1,43 @@
+<form id="scheduleForm">
+    {% include 'form/input.html.twig' with {
+        type : 'text',
+        id: 'title',
+        label: 'Tarea',
+        placeholder: 'Tarea',
+        required : true,
+        error : 'Ingrese un título para la tarea'
+    } %}
+    <div class="form-group" style="position: relative;">
+        <input
+            type="text"
+            t-type="text"
+            name="taskDate"
+            class="form-control required datepicker cursor-pointer"
+            id="taskDate"
+            aria-describedby="taskDateHelp"
+            placeholder="Fecha"
+            error-msg="Seleccione una fecha y hora"
+            value=""
+            readonly
+        >
+    </div>
+    {# <div class="form-group">
+        <select id="category-select" class="form-control">
+            <option class="text-muted" value="0" hidden>Categoría</option>
+            {% for category in categories %}
+                <option class="text-muted" value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div> #}
+    {# <div class="form-group">
+        <select id="priority-select" class="form-control">
+            <option class="text-muted" value="0" hidden>Prioridad</option>
+            {% for priority in priorities %}
+                <option class="text-muted" value="{{ priority.id }}">{{ priority.name }}</option>
+            {% endfor %}
+        </select>
+    </div> #}
+    <div id="submit-btn" class="w-100 text-left">
+        <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
+    </div>
+</form>

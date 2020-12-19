@@ -88,7 +88,11 @@ export const Routes = {
         view: {
             month: 'schedule_month',
             week: 'schedule_week',
-            day: 'schedule_day'
+            day: 'schedule_day',
+            form: 'schedule_form'
+        },
+        api: {
+            add: 'schedule_add'
         }
     },
     scheduleCategory: {

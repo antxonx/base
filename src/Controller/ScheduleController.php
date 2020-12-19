@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleRepository;
+use App\Repository\ScheduleCategoryRepository;
+use App\Repository\SchedulePriorityRepository;
 use Exception;
 use Antxony\Util;
 use DateTime;
@@ -28,10 +30,22 @@ class ScheduleController extends AbstractController
     */
     protected $rep;
 
-    public function __construct(Util $util, ScheduleRepository $rep)
+    /**
+    * @var ScheduleCategoryRepository
+    */
+    protected $scRep;
+
+    /**
+    * @var SchedulePriorityRepository
+    */
+    protected $spRep;
+
+    public function __construct(Util $util, ScheduleRepository $rep, ScheduleCategoryRepository $scRep, SchedulePriorityRepository $spRep)
     {
         $this->util = $util;
         $this->rep = $rep;
+        $this->scRep = $scRep;
+        $this->spRep = $spRep;
     }
     /**
      * @Route("", name="schedule_index", methods={"GET"})
@@ -168,6 +182,35 @@ class ScheduleController extends AbstractController
                 'monthName' => $monthName,
                 'day' => $day,
             ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/form", name="schedule_form", methods={"GET"}, options={"expose" = true})
+    */
+    public function form() : Response
+    {
+        try {
+            $categories = $this->scRep->findAll();
+            $priorities = $this->spRep->findAll();
+            return $this->render("view/schedule/form.html.twig", [
+                'categories' => $categories,
+                'priorities' => $priorities
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
+    */
+    public function add() : Response
+    {
+        try {
+            return new Response("ok");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
