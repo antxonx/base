@@ -101,5 +101,19 @@ export const Routes = {
             delete: 'schedule_category_delete',
             color: 'schedule_category_color_edit'
         }
-    }
+    },
+    schedulePriority: {
+        view: {
+            list: 'schedule_priority_list',
+            form: 'schedule_priority_add_form',
+            show: 'schedule_priority_show',
+            changeForm: 'schedule_priority_change_form',
+        },
+        api: {
+            add: 'schedule_priority_add',
+            update: 'schedule_priority_change',
+            delete: 'schedule_priority_delete',
+            color: 'schedule_priority_color_edit'
+        }
+    },
 }

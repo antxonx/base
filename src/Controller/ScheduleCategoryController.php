@@ -178,7 +178,6 @@ class ScheduleCategoryController extends AbstractController
     {
         try {
             $content = json_decode($request->getContent());
-            /** @var ScheduleCategory */
             $category = $this->rep->find($content->id);
             if($category == null) {
                 throw new Exception("No se encontró la categoría");

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SchedulePriorityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -88,9 +89,15 @@ class SchedulePriority
     /**
      * @return Collection|Schedule[]
      */
-    public function getSchedules(): Collection
+    public function getSchedules(bool $full = false): Collection
     {
-        return $this->schedules;
+        if($full) {
+            return $this->schedules;
+        } else {
+            $criteria = new Criteria();
+            $criteria->where(Criteria::expr()->eq('done', '0'));
+            return $this->schedules->matching($criteria);
+        }
     }
 
     public function addSchedule(Schedule $schedule): self
