@@ -165,6 +165,28 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
+    * @Route("/color", name="client_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function updateColor(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $category = $this->rep->find($content->id);
+            if($category == null) {
+                throw new Exception("No se encontró la categoría");
+            }
+            $category->setColor($content->newColor);
+            $message = "Se ha actualizado el color";
+            $this->rep->update();
+            $this->util->info($message . " de la categoria <b>{$category->getId()}</b> (<em>{$category->getName()}</em>)");
+            return new Response($message);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
      * Add category
      *
      * @Route("/", name="client_category_add", methods={"POST"}, options={"expose" = true})

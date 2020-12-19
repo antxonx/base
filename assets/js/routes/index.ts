@@ -57,7 +57,8 @@ export const Routes = {
         api: {
             add: 'client_category_add',
             update: 'client_category_change',
-            delete: 'client_category_delete'
+            delete: 'client_category_delete',
+            color: 'client_category_color_edit'
         }
     },
     user: {
