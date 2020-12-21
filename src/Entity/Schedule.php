@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ScheduleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
+use DateTimeZone;
 
 /**
  * @ORM\Entity(repositoryClass=ScheduleRepository::class)
@@ -122,8 +124,8 @@ class Schedule
     {
         $this->createdAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
         $this->createdBy = $user;
-        $this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
-        $this->updatedBy = $user;
+        //$this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
+        //$this->updatedBy = $user;
         return $this;
     }
 

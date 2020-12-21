@@ -9,6 +9,8 @@ import Axios from 'axios';
 import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
+import DropdownSelect from '@scripts/plugins/DropdownSelect';
+import moment from 'moment';
 
 /**
  * Add a new task
@@ -25,13 +27,19 @@ export default class Add {
 
     protected date: string;
 
+    protected categorySelect: DropdownSelect;
+
+    protected prioritySelect: DropdownSelect;
+
     public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = (new Modal({
             title: "Nueva tarea",
-            size: 50
+            size: 30
         }));
         this.date = '';
+        this.categorySelect = new DropdownSelect();
+        this.prioritySelect = new DropdownSelect();
     }
 
     public load = () => {
@@ -41,6 +49,12 @@ export default class Add {
                 this.modal.updateBody(res.data);
                 document.getElementById("scheduleForm")!.addEventListener("submit", this.validate);
                 const TASK_DATE = document.getElementById("taskDate") as HTMLInputElement;
+                this.categorySelect = (new DropdownSelect({
+                    element: document.getElementById("taskCategory")!
+                })).load();
+                this.prioritySelect = (new DropdownSelect({
+                    element: document.getElementById("taskPriority")!
+                })).load();
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
                     showDropdowns: true,
@@ -82,11 +96,13 @@ export default class Add {
                     buttonClasses: ["btn btn-sm round"],
                     cancelButtonClasses: "btn-secondary",
                     applyButtonClasses: "btn-antxony",
+                    startDate: moment(),
                     parentEl: TASK_DATE.parentElement as Element
                 }, (start) => {
-                  this.date = start.format('x');
+                  this.date = start.format('DD-MM-YYYY kk:mm:ss');
                 });
-                TASK_DATE.value = "";
+                this.date = moment().format('DD-MM-YYYY kk:mm:ss');
+                TASK_DATE.value = moment().format('DD/MM/YYYY LT');
             })
             .catch(err => {
                 console.error(err);
@@ -104,28 +120,36 @@ export default class Add {
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;
-            // BTN.innerHTML = SPINNER_LOADER;
             const DATA = {
                 name: (document.getElementById("title") as HTMLInputElement).value,
                 date: this.date,
-                category: (document.getElementById("category-select") as HTMLInputElement).value,
-                priority: (document.getElementById("priority-select") as HTMLInputElement).value,
+                category: this.categorySelect.getValue(),
+                priority: this.prioritySelect.getValue(),
             }
-            if(DATA.date == '') {
-
+            if(!DATA.date) {
+                insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");
+                return;
             }
-            console.log(DATA);
-            // Axios.post(Router.generate(ROUTES.schedule.api.add), DATA)
-            //     .then(res => {
-            //         Toast.success(res.data);
-            //         this.modal.hide();
-            //         this.callback();
-            //     })
-            //     .catch(err => {
-            //         insertAlertAfter(BTN, err.response.data);
-            //         console.error(err.response.data);
-            //         BTN.innerHTML = BEF;
-            //     });
+            if(!DATA.category) {
+                insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la categoría");
+                return;
+            }
+            if(!DATA.priority) {
+                insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la prioridad");
+                return;
+            }
+            BTN.innerHTML = SPINNER_LOADER;
+            Axios.post(Router.generate(ROUTES.schedule.api.add), DATA)
+                .then(res => {
+                    Toast.success(res.data);
+                    this.modal.hide();
+                    this.callback();
+                })
+                .catch(err => {
+                    insertAlertAfter(BTN, err.response.data);
+                    console.error(err.response.data);
+                    BTN.innerHTML = BEF;
+                });
         }
     }
 }
