@@ -1,0 +1,11 @@
+{% if ((index) >= 0) and ((index) < month|length) %}
+    {% if month[index].events|length > 0 %}
+    {% for event in month[index].events %}
+        {% include 'view/schedule/event.html.twig' %}
+    {% endfor %}
+    {% else %}
+        <div class="schedule-sumary nothing">
+            No hay eventos registrados para este día.
+        </div>
+    {% endif %}
+{% endif %}

@@ -13,6 +13,7 @@ import ClientCategoryDelete from "@scripts/clientCategory/delete";
 import Show from "@scripts/clientCategory/show";
 import {SortColumnOrder} from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
+import Color from "./color";
 
 /**
  * Client category main view and table
@@ -69,6 +70,13 @@ export default class ClientCategory {
                 onClose: () => {
                     this.update();
                 }
+            })).load();
+        }));
+        [...document.getElementsByClassName("category-color")].forEach(el => el.addEventListener("click", (e: Event) => {
+            (new Color({
+                id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,
+                callback: this.update
             })).load();
         }));
         return this;

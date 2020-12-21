@@ -4,8 +4,8 @@
  * @module Routes
  * @preferred
  */
- 
-export const Routes : any = {
+
+export const Routes = {
     client: {
         view: {
             list: 'client_list',
@@ -57,7 +57,8 @@ export const Routes : any = {
         api: {
             add: 'client_category_add',
             update: 'client_category_change',
-            delete: 'client_category_delete'
+            delete: 'client_category_delete',
+            color: 'client_category_color_edit'
         }
     },
     user: {
@@ -82,5 +83,42 @@ export const Routes : any = {
             info: 'logger_info_list',
             error: 'logger_error_list'
         }
-    }
+    },
+    schedule: {
+        view: {
+            month: 'schedule_month',
+            week: 'schedule_week',
+            day: 'schedule_day',
+            form: 'schedule_form'
+        },
+        api: {
+            add: 'schedule_add'
+        }
+    },
+    scheduleCategory: {
+        view: {
+            list: 'schedule_category_list',
+            form: 'schedule_category_form',
+            show: 'schedule_category_show'
+        },
+        api: {
+            add: 'schedule_category_add',
+            delete: 'schedule_category_delete',
+            color: 'schedule_category_color_edit'
+        }
+    },
+    schedulePriority: {
+        view: {
+            list: 'schedule_priority_list',
+            form: 'schedule_priority_add_form',
+            show: 'schedule_priority_show',
+            changeForm: 'schedule_priority_change_form',
+        },
+        api: {
+            add: 'schedule_priority_add',
+            update: 'schedule_priority_change',
+            delete: 'schedule_priority_delete',
+            color: 'schedule_priority_color_edit'
+        }
+    },
 }

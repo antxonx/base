@@ -24,7 +24,7 @@ export default class ClientCategoryAdd {
     public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = (new Modal({
-            title: "Nuevo cliente",
+            title: "Nueva categoría",
             size: 30
         }));
     }

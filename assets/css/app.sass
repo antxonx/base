@@ -11,6 +11,7 @@
 @import './logger'
 @import './checkbox'
 @import './table'
+@import './dropdownSelect'
 
 $success-color: #28a745
 $info-color: #17a2b8
@@ -18,7 +19,7 @@ $info-color: #17a2b8
 html
   font-size: 12pt !important
 
-.material-icons-outlined, .material-icons
+.material-icons-outlined, .material-icons, .material-icons-round
   vertical-align: middle !important
 
   &.s-2
@@ -47,6 +48,8 @@ html
       border-color: $success-color
       text-decoration: none
 
+.text-antxony
+    color: #6060cd
 
 .btn-info
   &.no-hover
@@ -91,7 +94,7 @@ html
   border-radius: 1.25rem
 
 b, h5
-  color: #191734 !important
+  color: #191734
 
 .divide
   border-top: 2px solid #395ba6
@@ -238,3 +241,9 @@ b, h5
     background-color: #dcd0ff
     border: 1px solid #dcd0ff
     color: black
+
+.datepicker[readonly]
+    background-color: inherit
+
+.readonly-click[readonly]
+    background-color: inherit

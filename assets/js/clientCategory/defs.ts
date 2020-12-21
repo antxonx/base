@@ -48,3 +48,19 @@ export const DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS: ClientCategoryShowOptions = {
     onClose: () => {
     },
 }
+
+export interface ClientCategoryColorOptions {
+    id?: number;
+    type?: 'background'|'text';
+    actualColor?: string;
+    newColor?: string;
+    callback?: () => void;
+}
+
+export const DEFAULT_CLIENT_CATEGORY_COLOR_OPTIONS: ClientCategoryColorOptions = {
+    id: 0,
+    type: 'background',
+    actualColor: '#ffffff',
+    newColor: '',
+    callback: () => {}
+}
