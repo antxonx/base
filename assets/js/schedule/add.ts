@@ -31,6 +31,8 @@ export default class Add {
 
     protected prioritySelect: DropdownSelect;
 
+    protected userSelect: DropdownSelect;
+
     public constructor(callback: () => void = () => {}) {
         this.callback = callback;
         this.modal = (new Modal({
@@ -40,6 +42,7 @@ export default class Add {
         this.date = '';
         this.categorySelect = new DropdownSelect();
         this.prioritySelect = new DropdownSelect();
+        this.userSelect = new DropdownSelect();
     }
 
     public load = () => {
@@ -54,6 +57,9 @@ export default class Add {
                 })).load();
                 this.prioritySelect = (new DropdownSelect({
                     element: document.getElementById("taskPriority")!
+                })).load();
+                this.userSelect = (new DropdownSelect({
+                    element: document.getElementById("taskUser")!
                 })).load();
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
@@ -125,6 +131,7 @@ export default class Add {
                 date: this.date,
                 category: this.categorySelect.getValue(),
                 priority: this.prioritySelect.getValue(),
+                user: this.userSelect.getValue(),
             }
             if(!DATA.date) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");

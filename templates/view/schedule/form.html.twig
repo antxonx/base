@@ -75,6 +75,11 @@
             <input id="taskPriority" value="" placeholder="Prioridad" class="form-control readonly-click cursor-pointer" options="{{ priorities|json_encode }}" readonly>
         </div>
     </div>
+    <div class="form-group" style="position: relative;">
+        <div class="dropdow-arrow">
+            <input id="taskUser" value="" placeholder="Asignar" class="form-control readonly-click cursor-pointer" options="{{ users|json_encode }}" readonly>
+        </div>
+    </div>
     <div id="submit-btn" class="w-100 text-left mt-2">
         <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
     </div>
