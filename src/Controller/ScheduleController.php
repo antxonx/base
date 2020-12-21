@@ -272,8 +272,10 @@ class ScheduleController extends AbstractController
             $category = $this->scRep->find($content->category);
             $priority = $this->spRep->find($content->priority);
             $user = null;
+            $extra = "";
             if($content->user != 0) {
                 $user = $this->uRep->find($content->user);
+                $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
             }
             $task = (new Schedule())
                 ->setTitle($content->name)
@@ -284,7 +286,7 @@ class ScheduleController extends AbstractController
                 ->setAssigned($user)
                 ->created($this->security->getUser());
             $this->rep->add($task);
-            $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+            $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)" . $extra);
             return new Response("Se ha agregado la tarea");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
