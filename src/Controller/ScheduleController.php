@@ -260,6 +260,23 @@ class ScheduleController extends AbstractController
         }
     }
 
+
+    /**
+    * @Route("/show/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function show(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            return $this->render("view/schedule/show.html.twig", [
+                'task' => $task
+            ]);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
     /**
     * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")

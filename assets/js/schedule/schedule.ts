@@ -8,7 +8,8 @@ import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { ScheduleType } from './defs';
-import Add from './add';
+import Add from '@scripts/schedule/add';
+import Show from '@scripts/schedule/show';
 
 export default class Schedule {
 
@@ -50,6 +51,12 @@ export default class Schedule {
             this.update();
         }
         [...document.getElementsByClassName("schedule-day")].forEach(el => el.addEventListener("click", this.openDay));
+        [...document.getElementsByClassName("event")].forEach(el => el.addEventListener("click", (e: Event) => {
+            const ELEMENT = (e.currentTarget as HTMLElement);
+            (new Show({
+                element: ELEMENT
+            })).load();
+        }));
     }
 
     private update = () => {

@@ -1,8 +1,8 @@
-<h5 class="text-center">{{ monthName }}</h5>
+<h5 class="text-center">{{ monthName|capitalize }}</h5>
 <div class="calendar">
     <div class="days">
         {% for day in week %}
-            <div><b>{{ day.name }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
+    <div><b>{{ day.name|slice(0, 1)|upper }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
         {% endfor %}
     </div>
     <div class="days-list">
