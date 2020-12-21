@@ -1,4 +1,9 @@
-<h5 class="text-center">{{ monthName|capitalize }}</h5>
+<h5 class="text-center">
+    {{ monthName|capitalize }}
+    {% if monthName != lastDayMonth %}
+        - {{ lastDayMonth|capitalize }}
+    {% endif %}
+</h5>
 <div class="calendar">
     <div class="days">
         {% for day in week %}

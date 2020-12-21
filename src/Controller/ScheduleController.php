@@ -152,19 +152,24 @@ class ScheduleController extends AbstractController
         try {
             $params = json_decode(json_encode($request->query->all()));
             $offset = $params->offset;
-            $monthName = strftime("%B %Y", strtotime("today {$offset} week"));
+            // $monthName = strftime("%B %Y", strtotime("today {$offset} week"));
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
+            $dif = 0 - $actual;
+            $monthName = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
+            $lastDayMonth = $monthName;
             $eventsS = $this->rep->getBy("week", $params);
             for ($i=0; $i < 7; $i++) {
                 $dif = $i - $actual;
                 $evDay = strftime("%d-%m-%Y", strtotime("{$dif} day {$offset} week"));
+                // $monthName = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $events = [];
                 foreach ($eventsS as $event) {
                     if($evDay == $event->getDate()->format("d-m-Y")) {
                         $events[] = $event;
                     }
                 }
+                $lastDayMonth = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $week[] = [
                     "name" => strftime("%A", strtotime("{$dif} day {$offset} week")),
                     "day" => strftime("%d", strtotime("{$dif} day {$offset} week")),
@@ -174,6 +179,7 @@ class ScheduleController extends AbstractController
             }
             return $this->render("view/schedule/types/week.html.twig", [
                 'monthName' => $monthName,
+                'lastDayMonth' => $lastDayMonth,
                 'week' => $week,
             ]);
         } catch (Exception $e) {
