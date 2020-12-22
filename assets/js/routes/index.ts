@@ -89,10 +89,12 @@ export const Routes = {
             month: 'schedule_month',
             week: 'schedule_week',
             day: 'schedule_day',
-            form: 'schedule_form'
+            form: 'schedule_form',
+            show: 'schedule_show',
         },
         api: {
-            add: 'schedule_add'
+            add: 'schedule_add',
+            done: 'schedule_done'
         }
     },
     scheduleCategory: {

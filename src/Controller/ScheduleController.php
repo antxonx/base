@@ -152,9 +152,11 @@ class ScheduleController extends AbstractController
         try {
             $params = json_decode(json_encode($request->query->all()));
             $offset = $params->offset;
-            $monthName = strftime("%B %Y", strtotime("today {$offset} week"));
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
+            $dif = 0 - $actual;
+            $monthName = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
+            $lastDayMonth = $monthName;
             $eventsS = $this->rep->getBy("week", $params);
             for ($i=0; $i < 7; $i++) {
                 $dif = $i - $actual;
@@ -165,6 +167,7 @@ class ScheduleController extends AbstractController
                         $events[] = $event;
                     }
                 }
+                $lastDayMonth = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $week[] = [
                     "name" => strftime("%A", strtotime("{$dif} day {$offset} week")),
                     "day" => strftime("%d", strtotime("{$dif} day {$offset} week")),
@@ -174,6 +177,7 @@ class ScheduleController extends AbstractController
             }
             return $this->render("view/schedule/types/week.html.twig", [
                 'monthName' => $monthName,
+                'lastDayMonth' => $lastDayMonth,
                 'week' => $week,
             ]);
         } catch (Exception $e) {
@@ -228,14 +232,14 @@ class ScheduleController extends AbstractController
                 $categories[] = [
                     'value' => $category->getId(),
                     'name' => $category->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $category->getBackgroundColor() .'; color: '. $category->getBackgroundColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10">'. $category->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $category->getBackgroundColor() .'; color: '. $category->getBackgroundColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $category->getName() .'</div></div>'
                 ];
             }
             foreach ($prioritiesC as $priority) {
                 $priorities[] = [
                     'value' => $priority->getId(),
                     'name' => $priority->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $priority->getColor() .'; color: '. $priority->getColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10">'. $priority->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $priority->getColor() .'; color: '. $priority->getColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $priority->getName() .'</div></div>'
                 ];
             }
             $users[] = [
@@ -260,6 +264,53 @@ class ScheduleController extends AbstractController
         }
     }
 
+
+    /**
+    * @Route("/show/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function show(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            return $this->render("view/schedule/show.html.twig", [
+                'task' => $task
+            ]);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function done(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $task = $this->rep->find($content->id);
+            if($task == null) {
+                throw new Exception("No se encontró la tarea");
+            }
+            $task
+                ->setDone($content->done)
+                ->updated($this->security->getUser());
+            $message = "Se ha <b>";
+            if($content->done) {
+                $message .= "finalizado";
+            } else {
+                $message .= "reactivado";
+            }
+            $this->rep->update();
+            $message .= "</b> la tarea";
+            $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
     /**
     * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -273,12 +324,13 @@ class ScheduleController extends AbstractController
             $priority = $this->spRep->find($content->priority);
             $user = null;
             $extra = "";
-            if($content->user != 0) {
+            if((int)$content->user != 0) {
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
             }
             $task = (new Schedule())
                 ->setTitle($content->name)
+                ->setDetail($content->detail)
                 ->setDate($time)
                 ->setCategory($category)
                 ->setPriority($priority)

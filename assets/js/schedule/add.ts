@@ -128,6 +128,7 @@ export default class Add {
             const BEF = BTN.innerHTML;
             const DATA = {
                 name: (document.getElementById("title") as HTMLInputElement).value,
+                detail: (document.getElementById("taskDetail") as HTMLInputElement).value,
                 date: this.date,
                 category: this.categorySelect.getValue(),
                 priority: this.prioritySelect.getValue(),

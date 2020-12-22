@@ -41,6 +41,17 @@ class Schedule
     private $createdBy;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $updatedBy;
+
+    /**
      * @ORM\ManyToOne(targetEntity=ScheduleCategory::class, inversedBy="schedules")
      */
     private $category;
@@ -59,6 +70,11 @@ class Schedule
      * @ORM\ManyToOne(targetEntity=SchedulePriority::class, inversedBy="schedules")
      */
     private $priority;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $detail;
 
     public function getId(): ?int
     {
@@ -113,6 +129,30 @@ class Schedule
         return $this;
     }
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
     /**
      * Establecer usuario creador
      *
@@ -124,8 +164,8 @@ class Schedule
     {
         $this->createdAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
         $this->createdBy = $user;
-        //$this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
-        //$this->updatedBy = $user;
+        $this->updatedAt = new DateTime("now", new DateTimeZone("America/Mexico_city"));
+        $this->updatedBy = $user;
         return $this;
     }
 
@@ -187,6 +227,18 @@ class Schedule
     public function setPriority(?SchedulePriority $priority): self
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getDetail(): ?string
+    {
+        return $this->detail;
+    }
+
+    public function setDetail(string $detail): self
+    {
+        $this->detail = $detail;
 
         return $this;
     }
