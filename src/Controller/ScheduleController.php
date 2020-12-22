@@ -282,6 +282,36 @@ class ScheduleController extends AbstractController
     }
 
     /**
+    * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function done(Request $request) : Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $task = $this->rep->find($content->id);
+            if($task == null) {
+                throw new Exception("No se encontró la tarea");
+            }
+            $task
+                ->setDone($content->done)
+                ->updated($this->security->getUser());
+            $message = "Se ha <b>";
+            if($content->done) {
+                $message .= "finalizado";
+            } else {
+                $message .= "reactivado";
+            }
+            $this->rep->update();
+            $message .= "</b> la tarea";
+            $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
     * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")
     */
@@ -312,7 +342,6 @@ class ScheduleController extends AbstractController
             return new Response("Se ha agregado la tarea");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
-            // return new Response($e->getMessage());
         }
     }
 }

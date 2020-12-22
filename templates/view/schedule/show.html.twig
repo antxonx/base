@@ -41,6 +41,19 @@
             </p>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            {% if task.done %}
+                <button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
+            {% endif %}
+        </div>
+        <div class="col-md-6 text-right">
+            {% if not task.done %}
+                <button type="button" id="taskFinish" class="btn btn-antxony round">Finalizar</button>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% include "view/footer/datetimes.html.twig" with {
     created : {

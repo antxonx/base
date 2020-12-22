@@ -54,7 +54,8 @@ export default class Schedule {
         [...document.getElementsByClassName("event")].forEach(el => el.addEventListener("click", (e: Event) => {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
-                element: ELEMENT
+                element: ELEMENT,
+                callback: this.update
             })).load();
         }));
     }

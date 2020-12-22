@@ -93,7 +93,8 @@ export const Routes = {
             show: 'schedule_show',
         },
         api: {
-            add: 'schedule_add'
+            add: 'schedule_add',
+            done: 'schedule_done'
         }
     },
     scheduleCategory: {
