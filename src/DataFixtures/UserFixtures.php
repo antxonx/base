@@ -41,8 +41,8 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = (new User)
-            ->setUsername("admin")
-            ->setName("Administrador")
+            ->setUsername("develop")
+            ->setName("Developer")
             ->setRoles([
                 "ROLE_ADMIN",
                 "ROLE_GOD",
@@ -51,7 +51,7 @@ class UserFixtures extends Fixture
                 "ROLE_SUPERVISOR"
             ])
             ->setSuspended(false)
-            ->setMail("admin@admin.com");
+            ->setMail("dev@dev.dev");
             $user->setPassword($this->passwordEncoder->encodePassword(
                         $user,
                         'password'
