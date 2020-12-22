@@ -30,6 +30,12 @@ class ScheduleRepository extends ServiceEntityRepository
         $offset = ((isset($params->offset)) ? $params->offset : 0);
         $query = $this->createQueryBuilder('p')
             ->orderBy("p.date", "ASC");
+            if(!$params->actualUser->hasRole("ROLE_SUPERVISOR")) {
+                $userCriteria = new Criteria();
+                $userCriteria->where(Criteria::expr()->eq('p.createdBy', $params->actualUser->getId()));
+                $userCriteria->orWhere(Criteria::expr()->eq('p.assigned', $params->actualUser->getId()));
+                $query->addCriteria($userCriteria);
+            }
         switch ($type) {
             case 'month':
                 $start = new DateTime("first day of {$offset} month", new DateTimeZone("America/Mexico_city"));

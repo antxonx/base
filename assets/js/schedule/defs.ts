@@ -30,3 +30,25 @@ export const DEFAULT_SCHEDULE_FINISH_OPTIONS : ScheduleFinishOptions = {
     id: 0,
     callback: () => {},
 }
+
+export interface ScheduleAsignOptions {
+    id?: number;
+    callback?: () => void;
+}
+
+export const DEFAULT_SCHEDULE_ASIGN_OPTIONS : ScheduleAsignOptions = {
+    id: 0,
+    callback: () => {}
+}
+
+export interface ScheduleDeleteOptions {
+    id?: number;
+    callback?: () => void;
+    onError?: () => void;
+}
+
+export const DEFAULT_SCHEDULE_DELETE_OPTIONS : ScheduleDeleteOptions = {
+    id: 0,
+    callback: () => {},
+    onError: () => {}
+}

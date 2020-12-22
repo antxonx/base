@@ -72,6 +72,7 @@ class ScheduleController extends AbstractController
     }
     /**
      * @Route("", name="schedule_index", methods={"GET"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index(): Response
     {
@@ -88,6 +89,7 @@ class ScheduleController extends AbstractController
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $monthOffset = $params->offset;
             $month = [];
             $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
@@ -151,6 +153,7 @@ class ScheduleController extends AbstractController
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $offset = $params->offset;
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
@@ -194,6 +197,7 @@ class ScheduleController extends AbstractController
         try {
             $day = [];
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $offset = $params->offset;
             $monthName = strftime("%B %Y", strtotime("today {$offset} day"));
             $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];
@@ -264,23 +268,6 @@ class ScheduleController extends AbstractController
         }
     }
 
-
-    /**
-    * @Route("/show/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function show(int $id) : Response
-    {
-        try {
-            $task = $this->rep->find($id);
-            return $this->render("view/schedule/show.html.twig", [
-                'task' => $task
-            ]);
-        } catch(Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
     /**
     * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -292,6 +279,18 @@ class ScheduleController extends AbstractController
             $task = $this->rep->find($content->id);
             if($task == null) {
                 throw new Exception("No se encontró la tarea");
+            }
+            if(
+                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
+                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+            ) {
+                if(($task->getAssigned() != null)) {
+                    if($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
+                        throw new Exception("No tienes permiso para realizar esta acción");
+                    }
+                } else {
+                    throw new Exception("No tienes permiso para realizar esta acción");
+                }
             }
             $task
                 ->setDone($content->done)
@@ -305,6 +304,97 @@ class ScheduleController extends AbstractController
             $this->rep->update();
             $message .= "</b> la tarea";
             $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/asign", name="schedule_asign_form", methods={"GET"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function asignForm() : Response
+    {
+        try {
+            $users = $this->uRep->findAll();
+            return $this->render("view/schedule/asign.html.twig", [
+                'users' => $users
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function asign(Request $request): Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $task = $this->rep->find($content->taskId);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            $user = $this->uRep->find($content->userId);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar al usuario");
+            }
+            $task
+                ->setAssigned($user)
+                ->updated($this->security->getUser());
+            $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
+            $this->util->info($message);
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function show(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            return $this->render("view/schedule/show.html.twig", [
+                'task' => $task
+            ]);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/{id}", name="schedule_delete", methods={"DELETE"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function delete(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            if(
+                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
+                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+            ) {
+                throw new Exception("No tienes permiso para realizar esta acción");
+            }
+            $oldId = $task->getId();
+            $oldTitle = $task->getTitle();
+            $this->rep->delete($task);
+            $this->rep->update();
+            $message = "Se ha eliminado la tarea";
+            $this->util->info("{$message} <b>{$oldId}</b> (<em>{$oldTitle}</em>)");
             return new Response($message);
         } catch(Exception $e) {
             return $this->util->errorResponse($e);

@@ -8,6 +8,8 @@ import { DEFAULT_SCHEDULE_SHOW_OPTIONS, ScheduleShowOptions } from "./defs";
 import { Router, ROUTES } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import Finish from "@scripts/schedule/finish";
+import Assign from "@scripts/schedule/assign";
+import Delete from "@scripts/schedule/delete";
 
 export default class Show {
 
@@ -39,6 +41,7 @@ export default class Show {
             this.modal.show();
             this.update();
         }
+        $('[data-toggle="tooltip"]').tooltip();
         document.getElementById("taskFinish")?.addEventListener("click", () => {
             (new Finish({
                 id: this.options.id!,
@@ -56,6 +59,37 @@ export default class Show {
                     this.options.callback!();
                 }
             })).finish(true);
+        });
+        document.getElementById("taskAssign")?.addEventListener("click", () => {
+            this.modal.hide();
+            (new Assign({
+                id: this.options.id,
+                callback: () => {
+                    this.control = true;
+                    this.load();
+                    this.options.callback!();
+                }
+            })).asign();
+        });
+        document.getElementById("taskReassign")?.addEventListener("click", () => {
+            this.modal.hide();
+            (new Assign({
+                id: this.options.id,
+                callback: () => {
+                    this.control = true;
+                    this.load();
+                    this.options.callback!();
+                }
+            })).asign(true);
+        });
+        document.getElementById("taskDelete")?.addEventListener("click", () => {
+            (new Delete({
+                id: this.options.id,
+                callback: () => {
+                    this.modal.hide();
+                    this.options.callback!();
+                },
+            })).delete();
         });
     }
 

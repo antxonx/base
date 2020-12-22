@@ -109,13 +109,22 @@ export default class Modal {
     }
 
     /**
-     *Actualizar el body
+     * update body
      *
      * @param {string} content
      * @memberof Modal
      */
     public updateBody(content: string) {
         document.getElementById(ModalIds.BODY + this.id)!.innerHTML = content;
+    }
+
+    /**
+     * get body
+     *
+     * @memberof Modal
+     */
+    public getBody() {
+        return document.getElementById(ModalIds.BODY + this.id)!.innerHTML;
     }
 
     /**

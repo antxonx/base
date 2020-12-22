@@ -91,10 +91,13 @@ export const Routes = {
             day: 'schedule_day',
             form: 'schedule_form',
             show: 'schedule_show',
+            asign: 'schedule_asign_form'
         },
         api: {
             add: 'schedule_add',
-            done: 'schedule_done'
+            done: 'schedule_done',
+            asign: 'schedule_asign_update',
+            delete: 'schedule_delete'
         }
     },
     scheduleCategory: {

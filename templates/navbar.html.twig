@@ -39,7 +39,7 @@
                     <a class="nav-link" href="{{ path("schedule_index") }}">Tareas</a>
                 </li>
 
-            {% if is_granted("ROLE_TEST") %}
+            {% if is_granted("ROLE_COMMON") %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path("client_index") }}">Clientes</a>
                 </li>

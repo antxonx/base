@@ -127,7 +127,7 @@ class ClientController extends AbstractController
     /**
      * Inicio
      * @Route("", name="client_index", methods={"GET"})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      */
     public function index(): Response
     {
@@ -141,7 +141,7 @@ class ClientController extends AbstractController
     /**
      * Conseguir todos los usuarios
      * @Route("/list", name="client_list", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param Request $request
      * @return Response
@@ -168,7 +168,7 @@ class ClientController extends AbstractController
     /**
      * Cargar formulario
      * @Route("/form", name="client_form", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @return Response
      */
@@ -193,7 +193,7 @@ class ClientController extends AbstractController
     /**
      * Cargar formulario de dirección
      * @Route("/address/form/{id}", name="client_address_form", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @return Response
@@ -212,7 +212,7 @@ class ClientController extends AbstractController
     /**
      * Agregar dirección a cliente
      * @Route("/address", name="client_address_add", methods={"POST"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param Request $request
      * @return Response
@@ -244,7 +244,7 @@ class ClientController extends AbstractController
     /**
      * Actualizar dirección con x-editable
      * @Route("/address/{id}", name="client_address_update", methods={"PUT", "PATCH"})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @param Request $request
@@ -306,7 +306,7 @@ class ClientController extends AbstractController
     /**
      * Agregar teléfono
      * @Route("/extras/{id}", name="client_extra_add", methods={"POST"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @param Request $request
@@ -336,7 +336,7 @@ class ClientController extends AbstractController
     /**
      * Eliminar dato extra
      * @Route("/extras/{id}", name="client_extra_delete", methods={"DELETE"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @return Response
@@ -366,7 +366,7 @@ class ClientController extends AbstractController
     /**
      * formulario de contacto (Es el mismo del cliente)
      * @Route("/contact/form", name="client_contact_form", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @return Response
      */
@@ -385,7 +385,7 @@ class ClientController extends AbstractController
     /**
      * Agregar contacto
      * @Route("/contact/{id}", name="client_contact_add", methods={"POST"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @param Request $request
@@ -538,7 +538,7 @@ class ClientController extends AbstractController
     /**
      * Agregar teléfono
      * @Route("/contacto/extras/{id}", name="client_contact_extra_add", methods={"POST"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @param Request $request
@@ -567,7 +567,7 @@ class ClientController extends AbstractController
     /**
      * Eliminar dato extra
      * @Route("/contacto/extras/{id}", name="client_contact_extra_delete", methods={"DELETE"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @return Response
@@ -594,7 +594,7 @@ class ClientController extends AbstractController
     /**
      * Agregar cliente
      * @Route("", name="client_add", methods={"POST"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      *
      * @param Request $request
@@ -668,7 +668,7 @@ class ClientController extends AbstractController
     /**
      * Mostrar cliente
      * @Route("/{id}", name="client_show", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @return Response
@@ -693,7 +693,7 @@ class ClientController extends AbstractController
     /**
      * Actualizar Cliente (Con x-editable)
      * @Route("/{id}", name="client_update", methods={"PUT", "PATCH"})
-     * @IsGranted("ROLE_TEST")
+     * @IsGranted("ROLE_COMMON")
      *
      * @param integer $id
      * @param Request $request

@@ -29,7 +29,7 @@ export default class Finish {
         }
         const ALERT = new Alert({
             type: 'info',
-            typeText: 'Atención'
+            typeText: msgText.charAt(0).toUpperCase() + msgText.slice(1)
         });
         let res = await ALERT.updateBody(`¿Desea <b>${msgText}</b> la tarea?`).show();
         if (res) {
