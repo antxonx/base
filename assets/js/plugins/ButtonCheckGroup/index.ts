@@ -86,9 +86,16 @@ export default class ButtonCheckGroup {
         const ID = BUTTON.getAttribute(checkAttributes.ID);
         const STATUS = !!(+BUTTON.getAttribute(checkAttributes.STATUS)!);
         if (STATUS) {
-            if(this.options.multiple && !this.options.oneActive) {
-                this.unmarkActive(BUTTON);
+            if(this.options.multiple) {
+                if(!this.options.oneActive) {
+                    this.unmarkActive(BUTTON);
+                }
+            } else {
+                if(!this.options.oneActive) {
+                    this.unmarkActive(BUTTON);
+                }
             }
+
         } else {
             this.markActive(BUTTON);
         }
