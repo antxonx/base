@@ -297,6 +297,18 @@ class ScheduleController extends AbstractController
             if($task == null) {
                 throw new Exception("No se encontró la tarea");
             }
+            if(
+                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
+                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+            ) {
+                if(($task->getAssigned() != null)) {
+                    if($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
+                        throw new Exception("No tienes permiso para realizar esta acción");
+                    }
+                } else {
+                    throw new Exception("No tienes permiso para realizar esta acción");
+                }
+            }
             $task
                 ->setDone($content->done)
                 ->updated($this->security->getUser());
