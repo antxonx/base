@@ -31,14 +31,9 @@
                     {% endfor %}
                     <b>Puesto</b> <br>
                     {% set rolesToSelect = [
-                        {
-                            value: 'ROLE_ADMIN',
-                            text: 'admin'
-                        },
-                        {
-                            value: 'ROLE_TEST',
-                            text: 'test'
-                        }
+                        {value: 'ROLE_ADMIN',text: 'admin'},
+                        {value: 'ROLE_COMMON',text: 'común'},
+                        {value: 'ROLE_SUPERVISOR',text: 'supervisor'}
                     ] %}
                     <a class="editable-field" href="#" data-name="roles" data-type="checklist" data-pk="{{ user.id }}"
                        data-url="{{ path('user_update', {'id' : user.id }) }}" data-title="Ingresa los roles"

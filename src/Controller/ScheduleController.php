@@ -72,6 +72,7 @@ class ScheduleController extends AbstractController
     }
     /**
      * @Route("", name="schedule_index", methods={"GET"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index(): Response
     {
@@ -88,6 +89,7 @@ class ScheduleController extends AbstractController
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $monthOffset = $params->offset;
             $month = [];
             $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
@@ -151,6 +153,7 @@ class ScheduleController extends AbstractController
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $offset = $params->offset;
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
@@ -194,6 +197,7 @@ class ScheduleController extends AbstractController
         try {
             $day = [];
             $params = json_decode(json_encode($request->query->all()));
+            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
             $offset = $params->offset;
             $monthName = strftime("%B %Y", strtotime("today {$offset} day"));
             $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];

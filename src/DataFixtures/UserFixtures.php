@@ -47,7 +47,8 @@ class UserFixtures extends Fixture
                 "ROLE_ADMIN",
                 "ROLE_GOD",
                 "ROLE_ALLOWED_TO_SWITCH",
-                "ROLE_TEST"
+                "ROLE_COMMON",
+                "ROLE_SUPERVISOR"
             ])
             ->setSuspended(false)
             ->setMail("admin@admin.com");
