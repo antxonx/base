@@ -5,14 +5,17 @@
     {% endif %}
 </h5>
 <div class="calendar">
-    <div class="days">
+    <div class="days hide-on-mobile">
         {% for day in week %}
-    <div><b>{{ day.name|slice(0, 1)|upper }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
+    <div><b>{{ day.name|capitalize }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
         {% endfor %}
     </div>
     <div class="days-list">
     {% for day in week %}
     <div class="day">
+    <div class="days">
+<div class="hide-on-desktop"><b>{{ day.name|capitalize }}</b><br><small {% if ("now"|date("d-m-Y")) == day.date %}class="today"{% endif %}>{{ day.day }}</small></div>
+    </div>
         {% for event in day.events %}
                 {% include 'view/schedule/event.html.twig' %}
         {% endfor %}

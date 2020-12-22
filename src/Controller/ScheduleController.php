@@ -152,7 +152,6 @@ class ScheduleController extends AbstractController
         try {
             $params = json_decode(json_encode($request->query->all()));
             $offset = $params->offset;
-            // $monthName = strftime("%B %Y", strtotime("today {$offset} week"));
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
             $dif = 0 - $actual;
@@ -162,7 +161,6 @@ class ScheduleController extends AbstractController
             for ($i=0; $i < 7; $i++) {
                 $dif = $i - $actual;
                 $evDay = strftime("%d-%m-%Y", strtotime("{$dif} day {$offset} week"));
-                // $monthName = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $events = [];
                 foreach ($eventsS as $event) {
                     if($evDay == $event->getDate()->format("d-m-Y")) {
@@ -234,14 +232,14 @@ class ScheduleController extends AbstractController
                 $categories[] = [
                     'value' => $category->getId(),
                     'name' => $category->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $category->getBackgroundColor() .'; color: '. $category->getBackgroundColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10">'. $category->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $category->getBackgroundColor() .'; color: '. $category->getBackgroundColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $category->getName() .'</div></div>'
                 ];
             }
             foreach ($prioritiesC as $priority) {
                 $priorities[] = [
                     'value' => $priority->getId(),
                     'name' => $priority->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $priority->getColor() .'; color: '. $priority->getColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10">'. $priority->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $priority->getColor() .'; color: '. $priority->getColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $priority->getName() .'</div></div>'
                 ];
             }
             $users[] = [
@@ -296,12 +294,13 @@ class ScheduleController extends AbstractController
             $priority = $this->spRep->find($content->priority);
             $user = null;
             $extra = "";
-            if($content->user != 0) {
+            if((int)$content->user != 0) {
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
             }
             $task = (new Schedule())
                 ->setTitle($content->name)
+                ->setDetail($content->detail)
                 ->setDate($time)
                 ->setCategory($category)
                 ->setPriority($priority)
@@ -313,6 +312,7 @@ class ScheduleController extends AbstractController
             return new Response("Se ha agregado la tarea");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
+            // return new Response($e->getMessage());
         }
     }
 }

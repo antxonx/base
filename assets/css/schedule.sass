@@ -3,7 +3,7 @@
     margin-left: auto
     margin-right: auto
     border: 1px solid #e6e6fa
-    border-radius: 1rem
+    // border-radius: 1rem
     .days
         width: 100%
         display: flex
@@ -25,10 +25,10 @@
                 &.today
                     background-color: #8181eb
                     color: white
-        div:last-child
-            border-top-right-radius: 0.9rem
-        div:first-child
-            border-top-left-radius: 0.9rem
+        // div:last-child
+        //     border-top-right-radius: 0.9rem
+        // div:first-child
+        //     border-top-left-radius: 0.9rem
     .days-list
         width: 100%
         display: flex
@@ -39,10 +39,10 @@
             text-align: center
             border: 1px solid #e6e6fa
             overflow-x: hidden
-        .day:last-child
-            border-bottom-right-radius: 0.9rem
-        .day:first-child
-            border-bottom-left-radius: 0.9rem
+        // .day:last-child
+        //     border-bottom-right-radius: 0.9rem
+        // .day:first-child
+        //     border-bottom-left-radius: 0.9rem
     .schedule
         width: 100%
         .schedule-row
@@ -146,11 +146,11 @@
                             position: absolute
                             right: 0
                             top: 0
-            &:last-child
-                .schedule-day:last-child
-                    border-bottom-right-radius: 0.9rem
-                .schedule-day:first-child
-                    border-bottom-left-radius: 0.9rem
+            // &:last-child
+            //     .schedule-day:last-child
+            //         border-bottom-right-radius: 0.9rem
+            //     .schedule-day:first-child
+            //         border-bottom-left-radius: 0.9rem
         .schedule-info
             height: 0
             overflow-y: auto
@@ -230,11 +230,8 @@
                 .schedule-day
                     .schedule-day-number
                         width: 66%
-    .calendar
-        .schedule
-            .schedule-row
-                .schedule-day
-                    .schedule-day-number
                         .total
                             .events-length
                                 opacity: 0
+        .days-list
+            display: block
