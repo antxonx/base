@@ -53,6 +53,7 @@ export default class Schedule {
                 checkClass: 'btn-info',
                 extraClass: 'round',
                 activeValue: active,
+                oneActive: true
             });
             this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
             this.update();
