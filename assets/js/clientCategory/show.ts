@@ -33,7 +33,6 @@ export default class Show {
 
     public load = () => {
         this.modal.show();
-        console.log(Router);
         Axios.get(Router.generate(ROUTES.clientCategory.view.show, {'id': this.options.idCategory.toString()}))
             .then(res => {
                 this.modal.updateBody(res.data);

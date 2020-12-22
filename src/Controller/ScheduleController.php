@@ -312,6 +312,49 @@ class ScheduleController extends AbstractController
     }
 
     /**
+    * @Route("/asign", name="schedule_asign_form", methods={"GET"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function asignForm() : Response
+    {
+        try {
+            $users = $this->uRep->findAll();
+            return $this->render("view/schedule/asign.html.twig", [
+                'users' => $users
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function asign(Request $request): Response
+    {
+        try {
+            $content = json_decode($request->getContent());
+            $task = $this->rep->find($content->taskId);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            $user = $this->uRep->find($content->userId);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar al usuario");
+            }
+            $task
+                ->setAssigned($user)
+                ->updated($this->security->getUser());
+            $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
+            $this->util->info($message);
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
     * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")
     */

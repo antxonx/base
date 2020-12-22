@@ -60,8 +60,8 @@ export default class Logger {
             });
             new ButtonCheckGroup(document.getElementById('logSwitch') as HTMLElement, {
                 onChange: this.changeType,
-                unCheckClass: 'btn-outline-success',
-                checkClass: 'btn-success',
+                unCheckClass: 'btn-outline-info',
+                checkClass: 'btn-info',
                 extraClass: 'round'
             });
         }
