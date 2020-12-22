@@ -12,7 +12,7 @@
         <div class="col-md-4">
 
         </div>
-        <div class="col-md-3 btn-group my-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
+        {# <div class="col-md-3 btn-group my-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
             <button type="button" value="month" class="btn">Mes</button>
             <button type="button" value="week" class="btn">Semana</button>
             <button type="button" value="day" class="btn">Día</button>
@@ -23,9 +23,26 @@
                 <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
                 <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
             </div>
-        </div>
+        </div> #}
 </div>
-<div id="CalendarView">
+<div class="row" style="z-index: 15;position: relative;">
+    <div class="col-md-3 btn-group mb-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
+        <button type="button" value="month" class="btn">Mes</button>
+        <button type="button" value="week" class="btn">Semana</button>
+        <button type="button" value="day" class="btn">Día</button>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-3 mb-1">
+        <div class="btn-group w-100">
+            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Anterior" id="calendarBefore"><i class="fas fa-arrow-alt-circle-left"></i></button>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
+            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
+        </div>
+    </div>
+</div>
+<div id="CalendarView" class="scheluder-view">
 
 </div>
 {% endblock %}
