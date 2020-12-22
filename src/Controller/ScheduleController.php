@@ -268,23 +268,6 @@ class ScheduleController extends AbstractController
         }
     }
 
-
-    /**
-    * @Route("/show/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function show(int $id) : Response
-    {
-        try {
-            $task = $this->rep->find($id);
-            return $this->render("view/schedule/show.html.twig", [
-                'task' => $task
-            ]);
-        } catch(Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
     /**
     * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
     * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -364,6 +347,54 @@ class ScheduleController extends AbstractController
                 ->updated($this->security->getUser());
             $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
             $this->util->info($message);
+            return new Response($message);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function show(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            return $this->render("view/schedule/show.html.twig", [
+                'task' => $task
+            ]);
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+    * @Route("/{id}", name="schedule_delete", methods={"DELETE"}, options={"expose"=true})
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    */
+    public function delete(int $id) : Response
+    {
+        try {
+            $task = $this->rep->find($id);
+            if($task == null) {
+                throw new Exception("No se pudo encontrar la tarea");
+            }
+            if(
+                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
+                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+            ) {
+                throw new Exception("No tienes permiso para realizar esta acción");
+            }
+            $oldId = $task->getId();
+            $oldTitle = $task->getTitle();
+            $this->rep->delete($task);
+            $this->rep->update();
+            $message = "Se ha eliminado la tarea";
+            $this->util->info("{$message} <b>{$oldId}</b> (<em>{$oldTitle}</em>)");
             return new Response($message);
         } catch(Exception $e) {
             return $this->util->errorResponse($e);

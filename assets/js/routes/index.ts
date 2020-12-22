@@ -96,7 +96,8 @@ export const Routes = {
         api: {
             add: 'schedule_add',
             done: 'schedule_done',
-            asign: 'schedule_asign_update'
+            asign: 'schedule_asign_update',
+            delete: 'schedule_delete'
         }
     },
     scheduleCategory: {

@@ -9,6 +9,7 @@ import { Router, ROUTES } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import Finish from "@scripts/schedule/finish";
 import Assign from "@scripts/schedule/assign";
+import Delete from "@scripts/schedule/delete";
 
 export default class Show {
 
@@ -80,6 +81,15 @@ export default class Show {
                     this.options.callback!();
                 }
             })).asign(true);
+        });
+        document.getElementById("taskDelete")?.addEventListener("click", () => {
+            (new Delete({
+                id: this.options.id,
+                callback: () => {
+                    this.modal.hide();
+                    this.options.callback!();
+                },
+            })).delete();
         });
     }
 
