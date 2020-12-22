@@ -10,6 +10,7 @@ import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { ScheduleType } from './defs';
 import Add from '@scripts/schedule/add';
 import Show from '@scripts/schedule/show';
+import { isMobile } from "@scripts/plugins/Required";
 
 export default class Schedule {
 
@@ -34,18 +35,24 @@ export default class Schedule {
     public load = () => {
         if(this.control) {
             this.control = false;
+            let active: string;
             document.getElementById("calendarBefore")?.addEventListener('click', () => {this.addOffset(-1)});
             document.getElementById("calendarToday")?.addEventListener('click', () => {this.addOffset(0, true)});
             document.getElementById("calendarAfter")?.addEventListener('click', () => {this.addOffset(1)});
             document.getElementById("schedule-add")?.addEventListener('click', () => {
                 (new Add(this.update)).load();
             })
+            if(isMobile()){
+                active = 'day';
+            } else {
+                active = 'week';
+            }
             const check = new ButtonCheckGroup(document.getElementById('scheduleTypeSwitch') as HTMLElement, {
                 onChange: this.changeType,
                 unCheckClass: 'btn-outline-info',
                 checkClass: 'btn-info',
                 extraClass: 'round',
-                activeValue: 'week',
+                activeValue: active,
             });
             this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
             this.update();
