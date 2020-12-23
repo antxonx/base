@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Logger controller
  */
@@ -20,56 +21,23 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * LoggerController class
+ * @package App\Controller
  * @Route("/logger")
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class LoggerController extends AbstractController
 {
-    /**
-     * Repositorio de usuarios
-     *
-     * @var ErrorLogRepository
-     */
-    protected $eRep;
 
-    /**
-     * Repositorio de usuarios
-     *
-     * @var UserRepository
-     */
-    protected $uRep;
+    protected ErrorLogRepository $eRep;
 
-    /**
-     * Repositorio de usuarios
-     *
-     * @var InfoLogRepository
-     */
-    protected $iRep;
+    protected UserRepository $uRep;
 
-    /**
-     * Usuario actual
-     *
-     * @var User
-     */
-    protected $actualUser;
+    protected InfoLogRepository $iRep;
 
-    /**
-     * herramientas útiles
-     *
-     * @var Util
-     */
-    protected $util;
+    protected User $actualUser;
 
+    protected Util $util;
 
-    /**
-     * Constructor
-     *
-     * @param ErrorLogRepository $eRep
-     * @param InfoLogRepository $iRep
-     * @param UserRepository $uRep
-     * @param Util $util
-     * @param Security $security
-     */
     public function __construct(ErrorLogRepository $eRep, InfoLogRepository $iRep, UserRepository $uRep, Util $util, Security $security)
     {
         $this->util = $util;
@@ -80,12 +48,10 @@ class LoggerController extends AbstractController
     }
 
     /**
-     * Conseguir todos los registros de información
+     * get all info logs
+     * 
      * @Route("/info", name="logger_info_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function indexInfo(Request $request): Response
     {
@@ -107,12 +73,10 @@ class LoggerController extends AbstractController
     }
 
     /**
-     * Conseguir todos los registros de error
+     * get all error logs
+     * 
      * @Route("/error", name="logger_error_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function indexError(Request $request): Response
     {
@@ -135,17 +99,15 @@ class LoggerController extends AbstractController
 
     /**
      * Index
+     * *  
      * @Route("/{user}", name="logger_index", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_GOD")
-     *
-     * @param int $user
-     * @return Response
      */
     public function index(int $user = 0): Response
     {
         try {
             $userEntity = null;
-            if($user > 0){
+            if ($user > 0) {
                 $userEntity = $this->uRep->find($user);
             }
             return $this->render('view/logger/index.html.twig', [

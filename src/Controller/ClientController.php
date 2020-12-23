@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Controlador para la clientes
- */
+ * client controller
+                                 */
 
 namespace App\Controller;
 
 use Antxony\Def\Contact\Level;
 use Antxony\Def\Contact\Type;
 use Antxony\Def\Editable\Editable;
+
+
 use App\Entity\Client;
 use App\Entity\ClientAddress;
 use App\Entity\ClientExtra;
@@ -31,79 +34,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * ClientController class
+ * @package App\Controller
  * @Route("/client")
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ClientController extends AbstractController
 {
-    /**
-     * Repositorio de usuarios
-     *
-     * @var ClientRepository
-     */
-    protected $cRep;
 
-    /**
-     * Repositorio de usuarios
-     *
-     * @var ClientCategoryRepository
-     */
-    protected $ccRep;
+    protected ClientRepository $cRep;
 
-    /**
-     * Repositorio de extras para usuarios
-     *
-     * @var ClientExtraRepository
-     */
-    protected $ceRep;
+    protected ClientCategoryRepository $ccRep;
 
-    /**
-     * Repositorio de contactos
-     *
-     * @var ContactRepository
-     */
-    protected $coRep;
+    protected ClientExtraRepository $ceRep;
 
-    /**
-     * RRepositorio de extras para contactos
-     *
-     * @var ContactExtraRepository
-     */
-    protected $coeRep;
+    protected ContactRepository $coRep;
 
-    /**
-     * Repositorio de direcciones
-     *
-     * @var ClientAddressRepository
-     */
-    protected $caRep;
+    protected ContactExtraRepository $coeRep;
 
-    /**
-     * Usuario actual
-     *
-     * @var User
-     */
-    protected $actualUser;
+    protected ClientAddressRepository $caRep;
 
-    /**
-     * herramientas útiles
-     *
-     * @var Util
-     */
-    protected $util;
+    protected User $actualUser;
 
-    /**
-     * Constructor
-     *
-     * @param ClientRepository $cRep
-     * @param ClientCategoryRepository $ccRep
-     * @param ClientExtraRepository $ceRep
-     * @param ClientAddressRepository $caRep
-     * @param ContactRepository $coRep
-     * @param ContactExtraRepository $coeRep
-     * @param Util $util
-     * @param Security $security
-     */
+    protected Util $util;
+
     public function __construct(
         ClientRepository $cRep,
         ClientCategoryRepository $ccRep,
@@ -112,8 +65,8 @@ class ClientController extends AbstractController
         ContactRepository $coRep,
         ContactExtraRepository $coeRep,
         Util $util,
-        Security $security)
-    {
+        Security $security
+    ) {
         $this->util = $util;
         $this->cRep = $cRep;
         $this->ccRep = $ccRep;
@@ -125,7 +78,8 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Inicio
+     * index
+     * 
      * @Route("", name="client_index", methods={"GET"})
      * @IsGranted("ROLE_COMMON")
      */
@@ -139,12 +93,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Conseguir todos los usuarios
+     * get all clients
+     * 
      * @Route("/list", name="client_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function indexA(Request $request): Response
     {
@@ -166,11 +118,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Cargar formulario
+     * add form
+     * 
      * @Route("/form", name="client_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @return Response
      */
     public function form(): Response
     {
@@ -186,17 +137,10 @@ class ClientController extends AbstractController
         }
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                  Dirección                                 */
-    /* -------------------------------------------------------------------------- */
-
     /**
-     * Cargar formulario de dirección
+     * add address form
      * @Route("/address/form/{id}", name="client_address_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function addressForm(int $id): Response
     {
@@ -210,12 +154,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Agregar dirección a cliente
+     * add address
+     * 
      * @Route("/address", name="client_address_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function addAddress(Request $request): Response
     {
@@ -242,13 +184,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Actualizar dirección con x-editable
+     * update address with x-editable
+     * 
      * @Route("/address/{id}", name="client_address_update", methods={"PUT", "PATCH"})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function updateAddress(int $id, Request $request): Response
     {
@@ -295,22 +234,10 @@ class ClientController extends AbstractController
         }
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                      .                                     */
-    /* -------------------------------------------------------------------------- */
-
-    /* -------------------------------------------------------------------------- */
-    /*                               extras cliente                               */
-    /* -------------------------------------------------------------------------- */
-
     /**
-     * Agregar teléfono
+     * add extra
      * @Route("/extras/{id}", name="client_extra_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function addExtra(int $id, Request $request): Response
     {
@@ -334,12 +261,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Eliminar dato extra
+     * delete extra
+     * 
      * @Route("/extras/{id}", name="client_extra_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function deleteExtra(int $id): Response
     {
@@ -355,20 +280,10 @@ class ClientController extends AbstractController
         }
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                      .                                     */
-    /* -------------------------------------------------------------------------- */
-
-    /* -------------------------------------------------------------------------- */
-    /*                                  Contactos                                 */
-    /* -------------------------------------------------------------------------- */
-
     /**
-     * formulario de contacto (Es el mismo del cliente)
+     * add contact form
      * @Route("/contact/form", name="client_contact_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @return Response
      */
     public function addContactForm(): Response
     {
@@ -383,13 +298,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Agregar contacto
+     * add contact
+     * 
      * @Route("/contact/{id}", name="client_contact_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function addContact(int $id, Request $request): Response
     {
@@ -401,14 +313,13 @@ class ClientController extends AbstractController
                 ->setRole($content->role)
                 ->created($this->actualUser)
                 ->setSuspended(false);
-            //Agregaos su correo
+            //email
             $contactExtra = (new ContactExtra)
                 ->setContact($contact)
                 ->setType(Type::EMAIL)
-                ->setLevel(Level::WORK) //Irrelevante
+                ->setLevel(Level::WORK) //Irrelevant
                 ->setValue($content->email);
-            //.
-            //Agregamos su teléfono
+            //phone
             $contactExtra2 = (new ContactExtra)
                 ->setContact($contact)
                 ->setType(Type::PHONE)
@@ -420,7 +331,6 @@ class ClientController extends AbstractController
                  */
                 ->setLevel($content->phone->type)
                 ->setValue($content->phone->phone);
-            //.
             $this->cRep->find($id)->updated($this->actualUser);
             $this->coRep->add($contact);
             $this->coeRep->add($contactExtra);
@@ -434,11 +344,8 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Mostrar contacto
+     * show contact
      * @Route("/contact/{id}", name="client_contact_show", methods={"GET"}, options={"expose" = true})
-     *
-     * @param integer $id
-     * @return Response
      */
     public function showContact(int $id): Response
     {
@@ -458,12 +365,8 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Actualizar contacto con x-editable
+     * update contact with x-editable
      * @Route("/conatct/{id}", name="client_contact_update", methods={"PUT", "PATCH"})
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function updateContact(int $id, Request $request): Response
     {
@@ -506,12 +409,9 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Eliminar cliente
+     * delete client
      * @Route("/contact/{id}", name="client_contact_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function deleteContact(int $id): Response
     {
@@ -528,21 +428,11 @@ class ClientController extends AbstractController
         }
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                      .                                     */
-    /* -------------------------------------------------------------------------- */
-    /* -------------------------------------------------------------------------- */
-    /*                              extras contacto                               */
-    /* -------------------------------------------------------------------------- */
-
     /**
-     * Agregar teléfono
+     * add phone
+     * 
      * @Route("/contacto/extras/{id}", name="client_contact_extra_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function addContactExtra(int $id, Request $request): Response
     {
@@ -565,12 +455,9 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Eliminar dato extra
+     * delete extra
      * @Route("/contacto/extras/{id}", name="client_contact_extra_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function deleteContactExtra(int $id): Response
     {
@@ -587,39 +474,29 @@ class ClientController extends AbstractController
         }
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                      .                                     */
-    /* -------------------------------------------------------------------------- */
-
     /**
-     * Agregar cliente
+     * add client
+     * 
      * @Route("", name="client_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     *
-     * @param Request $request
-     * @return Response
      */
     public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $category = $this->ccRep->find($content->category);
-            // Damos de alta al cliente
             $client = (new Client)
                 ->setName($content->name)
                 ->setSuspended(false)
                 ->setCategory($category)
                 ->created($this->actualUser);
-            //.
-            //Agregaos su correo
+            //email
             $clientExtra = (new ClientExtra)
                 ->setClient($client)
                 ->setType(Type::EMAIL)
                 ->setLevel(Level::WORK) //irrelevante
                 ->setValue($content->email);
-            //.
-            //Agregamos su teléfono
+            //phone
             $clientExtra2 = (new ClientExtra)
                 ->setClient($client)
                 ->setType(Type::PHONE)
@@ -631,7 +508,6 @@ class ClientController extends AbstractController
                  */
                 ->setLevel($content->phone->type)
                 ->setValue($content->phone->phone);
-            //.
             $this->cRep->add($client);
             $this->ceRep->add($clientExtra);
             $this->ceRep->add($clientExtra2);
@@ -643,12 +519,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Eliminar cliente
+     * Delete client
+     * 
      * @Route("/{id}", name="client_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function delete(int $id): Response
     {
@@ -666,12 +540,10 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Mostrar cliente
+     * show client
+     * 
      * @Route("/{id}", name="client_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function show(int $id): Response
     {
@@ -691,13 +563,9 @@ class ClientController extends AbstractController
     }
 
     /**
-     * Actualizar Cliente (Con x-editable)
+     * update client with (Con x-editable)
      * @Route("/{id}", name="client_update", methods={"PUT", "PATCH"})
      * @IsGranted("ROLE_COMMON")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function update(int $id, Request $request): Response
     {

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Controlador de inicio
+ * Home controller
  */
 
 namespace App\Controller;
@@ -17,23 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * HomeController class
+ * @package App\Controller
  * @Route("/")
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class HomeController extends AbstractController
 {
-    /**
-     * util
-     *
-     * @var Util
-     */
-    protected $util;
 
-    /**
-     * construct
-     *
-     * @param Util $util
-     */
+    protected Util $util;
+
     public function __construct(Util $util)
     {
         $this->util = $util;
@@ -42,8 +35,6 @@ class HomeController extends AbstractController
     /**
      * @Route("", name="home_index", methods={"GET"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     *
-     * @return Response
      */
     public function index(): Response
     {

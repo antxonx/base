@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Scheduler controller
+ */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,42 +21,28 @@ use DateTime;
 use DateTimeZone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
 
 /**
+ * ScheduleController class
+ * @package App\Controller
  * @Route("/schedule")
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ScheduleController extends AbstractController
 {
 
-    /**
-     * @var Util
-     */
-    protected $util;
+    protected Util $util;
 
-    /**
-     * @var ScheduleRepository
-     */
-    protected $rep;
+    protected ScheduleRepository $rep;
 
-    /**
-     * @var ScheduleCategoryRepository
-     */
-    protected $scRep;
+    protected ScheduleCategoryRepository $scRep;
 
-    /**
-     * @var SchedulePriorityRepository
-     */
-    protected $spRep;
+    protected SchedulePriorityRepository $spRep;
 
-    /**
-     * @var UserRepository
-     */
-    protected $uRep;
+    protected UserRepository $uRep;
 
-    /**
-     * @var Security
-     */
-    protected $security;
+    protected Security $security;
 
     public function __construct(
         Util $util,
@@ -294,17 +284,21 @@ class ScheduleController extends AbstractController
     public function done(Request $request): Response
     {
         try {
+            /**
+             * @var User
+             */
+            $user = $this->security->getUser();
             $content = json_decode($request->getContent());
             $task = $this->rep->find($content->id);
             if ($task == null) {
                 throw new Exception("No se encontró la tarea");
             }
             if (
-                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
-                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+                !$user->hasRole("ROLE_SUPERVISOR") &&
+                ($user->getId() != $task->getCreatedBy()->getId())
             ) {
                 if (($task->getAssigned() != null)) {
-                    if ($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
+                    if ($user->getId() != $task->getAssigned()->getId()) {
                         throw new Exception("No tienes permiso para realizar esta acción");
                     }
                 } else {
@@ -398,13 +392,17 @@ class ScheduleController extends AbstractController
     public function delete(int $id): Response
     {
         try {
+            /**
+             * @var User
+             */
+            $user = $this->security->getUser();
             $task = $this->rep->find($id);
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
             if (
-                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
-                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+                !$user->hasRole("ROLE_SUPERVISOR") &&
+                ($user->getId() != $task->getCreatedBy()->getId())
             ) {
                 throw new Exception("No tienes permiso para realizar esta acción");
             }

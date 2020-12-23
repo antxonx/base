@@ -1,6 +1,6 @@
 <?php
 /**
- * Restablecer contraseña
+ * Restart password
  */
 
 namespace App\Controller;

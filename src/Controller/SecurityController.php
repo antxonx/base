@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador de seguridad
+ * Security controller
  */
 
 namespace App\Controller;

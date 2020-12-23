@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Scheduler priorities controller
+ */
+
 namespace App\Controller;
 
 use Antxony\Def\Editable\Editable;
@@ -18,32 +22,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * Class SchedulePriorityController
  * @package App\Controller
  * @Route("/schedulePriority")
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class SchedulePriorityController extends AbstractController
 {
-    /**
-     * @var SchedulePriorityRepository;
-     */
-    protected $rep;
+    protected SchedulePriorityRepository $rep;
 
-    /**
-     * @var ScheduleRepository;
-     */
-    protected $sRep;
+    protected ScheduleRepository $sRep;
 
-    /**
-     * herramientas útiles
-     *
-     * @var Util
-     */
-    protected $util;
+    protected Util $util;
 
-    /**
-     * SchedulePriorityController constructor.
-     * @param SchedulePriorityRepository $rep
-     * @param SchedulePriority $sRep
-     * @param Util $util
-     */
     public function __construct(SchedulePriorityRepository $rep, ScheduleRepository $sRep, Util $util)
     {
         $this->rep = $rep;
@@ -52,6 +40,8 @@ class SchedulePriorityController extends AbstractController
     }
 
     /**
+     * index
+     * 
      * @Route("", name="schedule_priority_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
@@ -67,11 +57,8 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/list", name="schedule_priority_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function list(Request  $request) : Response
+    public function list(Request  $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
@@ -95,14 +82,12 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/form", name="schedule_priority_add_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @return Response
      */
-    public function form() : Response
+    public function form(): Response
     {
         try {
             return $this->render("view/schedule_priority/form.html.twig");
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
@@ -112,11 +97,8 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/changeForm/{id}", name="schedule_priority_change_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function changeForm(int $id) : Response
+    public function changeForm(int $id): Response
     {
         try {
             $task = $this->sRep->find($id);
@@ -135,25 +117,22 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/change", name="schedule_priority_change", methods={"PUT", "PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function changeTaskPriority(Request $request) : Response
+    public function changeTaskPriority(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $task = $this->sRep->find($content->scheduleId);
             $priority = $this->rep->find($content->priorityId);
-            if($task == null)
+            if ($task == null)
                 throw new Exception("No se pudo localizar la tarea");
-            if($priority == null)
+            if ($priority == null)
                 throw new Exception("No se pudo localizar la prioridad");
             $oldCat = $task->getPriority();
             $task->setPriority($priority);
             $this->sRep->update();
             $message = "Se ha cambiado la prioridad de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)";
-            if($oldCat != null){
+            if ($oldCat != null) {
                 $message .= " de <b>{$oldCat->getName()}</b>";
             }
             $message .= " a <b>{$priority->getName()}</b>";
@@ -169,11 +148,8 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/", name="schedule_priority_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function add(Request $request) : Response
+    public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -195,11 +171,8 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/{id}", name="schedule_priority_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function delete(int $id) : Response
+    public function delete(int $id): Response
     {
         try {
             $priority = $this->rep->find($id);
@@ -217,11 +190,8 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/{id}", name="schedule_priority_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function show(int $id) : Response
+    public function show(int $id): Response
     {
         try {
             $priority = $this->rep->find($id);
@@ -234,15 +204,17 @@ class SchedulePriorityController extends AbstractController
     }
 
     /**
-    * @Route("/color", name="schedule_priority_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function updateColor(Request $request) : Response
+     * update color
+     * 
+     * @Route("/color", name="schedule_priority_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function updateColor(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $category = $this->rep->find($content->id);
-            if($category == null) {
+            if ($category == null) {
                 throw new Exception("No se encontró la prioridad");
             }
             $category->setColor($content->newColor);
@@ -260,18 +232,14 @@ class SchedulePriorityController extends AbstractController
      *
      * @Route("/{id}", name="schedule_priority_edit", methods={"PUT", "PATCH"})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @param Request $request
-     * @return Response
      */
-    public function update(int $id, Request $request) : Response
+    public function update(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
             $editable = new Editable($content);
             $priority = $this->rep->find($id);
-            if($priority == null){
+            if ($priority == null) {
                 throw new Exception("No se pudo localizar la prioridad");
             }
             $message = "se ha actualizado";

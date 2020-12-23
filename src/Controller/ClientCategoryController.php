@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Client Category controller
+ */
+
 namespace App\Controller;
 
 use Antxony\Def\Editable\Editable;
@@ -18,32 +22,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * Class ClientCategoryController
  * @package App\Controller
  * @Route("/client_category")
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ClientCategoryController extends AbstractController
 {
-    /**
-     * @var ClientCategoryRepository;
-     */
-    protected $rep;
 
-    /**
-     * @var ClientRepository;
-     */
-    protected $cRep;
+    protected ClientCategoryRepository $rep;
 
-    /**
-     * herramientas útiles
-     *
-     * @var Util
-     */
-    protected $util;
+    protected ClientRepository $cRep;
 
-    /**
-     * ClientCategoryController constructor.
-     * @param ClientCategoryRepository $rep
-     * @param ClientRepository $cRep
-     * @param Util $util
-     */
+    protected Util $util;
+
     public function __construct(ClientCategoryRepository $rep, ClientRepository $cRep, Util $util)
     {
         $this->rep = $rep;
@@ -52,6 +41,8 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
+     * Category index
+     * 
      * @Route("", name="client_category_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
@@ -67,11 +58,8 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/list", name="client_category_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function list(Request  $request) : Response
+    public function list(Request  $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
@@ -95,28 +83,23 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/form", name="client_category_add_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @return Response
      */
-    public function form() : Response
+    public function form(): Response
     {
         try {
             return $this->render("view/client_category/form.html.twig");
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-     * Cargar formulario de cambio de categorpia
+     * change category form
      *
      * @Route("/changeForm/{id}", name="client_category_change_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function changeForm(int $id) : Response
+    public function changeForm(int $id): Response
     {
         try {
             $client = $this->cRep->find($id);
@@ -135,25 +118,22 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/change", name="client_category_change", methods={"PUT", "PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function changeClientCategory(Request $request) : Response
+    public function changeClientCategory(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $client = $this->cRep->find($content->clientId);
             $category = $this->rep->find($content->categoryId);
-            if($client == null)
+            if ($client == null)
                 throw new Exception("No se pudo localizar al cliente");
-            if($category == null)
+            if ($category == null)
                 throw new Exception("No se pudo localizar la categoría");
             $oldCat = $client->getCategory();
             $client->setCategory($category);
             $this->cRep->update();
             $message = "Se ha cambiado la categoría del cliente <b>{$client->getId()}</b> (<em>{$client->getName()}</em>)";
-            if($oldCat != null){
+            if ($oldCat != null) {
                 $message .= " de <b>{$oldCat->getName()}</b>";
             }
             $message .= " a <b>{$category->getName()}</b>";
@@ -165,15 +145,15 @@ class ClientCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/color", name="client_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function updateColor(Request $request) : Response
+     * @Route("/color", name="client_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function updateColor(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $category = $this->rep->find($content->id);
-            if($category == null) {
+            if ($category == null) {
                 throw new Exception("No se encontró la categoría");
             }
             $category->setColor($content->newColor);
@@ -191,11 +171,8 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/", name="client_category_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
-    public function add(Request $request) : Response
+    public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -217,11 +194,8 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/{id}", name="client_category_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function delete(int $id) : Response
+    public function delete(int $id): Response
     {
         try {
             $category = $this->rep->find($id);
@@ -239,11 +213,8 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/{id}", name="client_category_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @return Response
      */
-    public function show(int $id) : Response
+    public function show(int $id): Response
     {
         try {
             $category = $this->rep->find($id);
@@ -260,18 +231,14 @@ class ClientCategoryController extends AbstractController
      *
      * @Route("/{id}", name="client_category_edit", methods={"PUT", "PATCH"})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int $id
-     * @param Request $request
-     * @return Response
      */
-    public function update(int $id, Request $request) : Response
+    public function update(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
             $editable = new Editable($content);
             $category = $this->rep->find($id);
-            if($category == null){
+            if ($category == null) {
                 throw new Exception("No se pudo localizar la categoría");
             }
             $message = "se ha actualizado";
