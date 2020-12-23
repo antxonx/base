@@ -19,39 +19,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 
 /**
-* @Route("/schedule")
-*/
+ * @Route("/schedule")
+ */
 class ScheduleController extends AbstractController
 {
 
     /**
-    * @var Util
-    */
+     * @var Util
+     */
     protected $util;
 
     /**
-    * @var ScheduleRepository
-    */
+     * @var ScheduleRepository
+     */
     protected $rep;
 
     /**
-    * @var ScheduleCategoryRepository
-    */
+     * @var ScheduleCategoryRepository
+     */
     protected $scRep;
 
     /**
-    * @var SchedulePriorityRepository
-    */
+     * @var SchedulePriorityRepository
+     */
     protected $spRep;
 
     /**
-    * @var UserRepository
-    */
+     * @var UserRepository
+     */
     protected $uRep;
 
     /**
-    * @var Security
-    */
+     * @var Security
+     */
     protected $security;
 
     public function __construct(
@@ -61,8 +61,7 @@ class ScheduleController extends AbstractController
         SchedulePriorityRepository $spRep,
         Security $security,
         UserRepository $uRep
-        )
-    {
+    ) {
         $this->util = $util;
         $this->rep = $rep;
         $this->scRep = $scRep;
@@ -76,20 +75,40 @@ class ScheduleController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('view/schedule/index.html.twig', [
-            'controller_name' => 'CalendarController',
-        ]);
+        try {
+            $users = $this->uRep->findAll();
+            $categoriesC = $this->scRep->findAll();
+            $categories = [];
+            $categories[] = [
+                'value' => '0',
+                'name' => 'TODAS',
+                'view' => '<div class="text-center">TODAS</div>'
+            ];
+            foreach ($categoriesC as $category) {
+                $categories[] = [
+                    'value' => $category->getId(),
+                    'name' => $category->getName(),
+                    'view' => '<div class="row"><div class="col-md-2 p-0"><div class="badge round color-shadow w-100"style="background-color: ' . $category->getBackgroundColor() . '; color: ' . $category->getBackgroundColor() . ';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center text-truncate">' . $category->getName() . '</div></div>'
+                ];
+            }
+            return $this->render('view/schedule/index.html.twig', [
+                'users' => $users,
+                'categories' => $categories
+            ]);
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
     }
 
     /**
-    * @Route("/month", name="schedule_month", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
+     * @Route("/month", name="schedule_month", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
     public function month(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
-            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
+            $params = (object) array_merge((array)$params, array('actualUser' => $this->security->getUser()));
             $monthOffset = $params->offset;
             $month = [];
             $first = (int)strftime("%w", strtotime("first day of {$monthOffset} month"));
@@ -98,13 +117,13 @@ class ScheduleController extends AbstractController
             $monthName = strftime("%B %Y", strtotime("today {$monthOffset} month"));
             $week = [];
             $eventsS = $this->rep->getBy("month", $params);
-            for ($i=0; $i < 7; $i++) {
+            for ($i = 0; $i < 7; $i++) {
                 $dif = $i - $actual;
                 $week[] = strftime("%A", strtotime("{$dif} day"));
             }
-            for ($i=0; $i < $last+$first; $i++) {
+            for ($i = 0; $i < $last + $first; $i++) {
                 $day = ($i - $first + 1);
-                if($i < $first) {
+                if ($i < $first) {
                     $month[] = [
                         'day' => null,
                         'date' => '',
@@ -114,7 +133,7 @@ class ScheduleController extends AbstractController
                     $events = [];
                     foreach ($eventsS as $event) {
                         $eventDay = (int)$event->getDate()->format('d');
-                        if($eventDay == $day) {
+                        if ($eventDay == $day) {
                             $events[] = $event;
                         }
                     }
@@ -127,7 +146,7 @@ class ScheduleController extends AbstractController
                     ];
                 }
             }
-            while(count($month) % 7 != 0) {
+            while (count($month) % 7 != 0) {
                 $month[] = [
                     'day' => null,
                     'date' => '',
@@ -146,14 +165,14 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/week", name="schedule_week", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function week(Request $request) : Response
+     * @Route("/week", name="schedule_week", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function week(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
-            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
+            $params = (object) array_merge((array)$params, array('actualUser' => $this->security->getUser()));
             $offset = $params->offset;
             $week = [];
             $actual = (int)strftime("%w", strtotime("0 day"));
@@ -161,12 +180,12 @@ class ScheduleController extends AbstractController
             $monthName = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
             $lastDayMonth = $monthName;
             $eventsS = $this->rep->getBy("week", $params);
-            for ($i=0; $i < 7; $i++) {
+            for ($i = 0; $i < 7; $i++) {
                 $dif = $i - $actual;
                 $evDay = strftime("%d-%m-%Y", strtotime("{$dif} day {$offset} week"));
                 $events = [];
                 foreach ($eventsS as $event) {
-                    if($evDay == $event->getDate()->format("d-m-Y")) {
+                    if ($evDay == $event->getDate()->format("d-m-Y")) {
                         $events[] = $event;
                     }
                 }
@@ -189,15 +208,15 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/day", name="schedule_day", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function day(Request $request) : Response
+     * @Route("/day", name="schedule_day", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function day(Request $request): Response
     {
         try {
             $day = [];
             $params = json_decode(json_encode($request->query->all()));
-            $params = (object) array_merge( (array)$params, array( 'actualUser' => $this->security->getUser() ) );
+            $params = (object) array_merge((array)$params, array('actualUser' => $this->security->getUser()));
             $offset = $params->offset;
             $monthName = strftime("%B %Y", strtotime("today {$offset} day"));
             $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];
@@ -207,11 +226,11 @@ class ScheduleController extends AbstractController
             $events = [];
             $evDay = strftime("%d-%m-%Y", strtotime("today {$offset} day"));
             foreach ($eventsS as $event) {
-                if($evDay == $event->getDate()->format("d-m-Y")) {
+                if ($evDay == $event->getDate()->format("d-m-Y")) {
                     $events[] = $event;
                 }
             }
-            $day += ["events" => $events ];
+            $day += ["events" => $events];
             return $this->render("view/schedule/types/day.html.twig", [
                 'monthName' => $monthName,
                 'day' => $day,
@@ -222,10 +241,10 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/form", name="schedule_form", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function form() : Response
+     * @Route("/form", name="schedule_form", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function form(): Response
     {
         try {
             $categoriesC = $this->scRep->findAll();
@@ -236,14 +255,14 @@ class ScheduleController extends AbstractController
                 $categories[] = [
                     'value' => $category->getId(),
                     'name' => $category->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $category->getBackgroundColor() .'; color: '. $category->getBackgroundColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $category->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: ' . $category->getBackgroundColor() . '; color: ' . $category->getBackgroundColor() . ';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">' . $category->getName() . '</div></div>'
                 ];
             }
             foreach ($prioritiesC as $priority) {
                 $priorities[] = [
                     'value' => $priority->getId(),
                     'name' => $priority->getName(),
-                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: '. $priority->getColor() .'; color: '. $priority->getColor() .';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">'. $priority->getName() .'</div></div>'
+                    'view' => '<div class="row"><div class="col-md-2"><div class="badge round color-shadow w-100"style="background-color: ' . $priority->getColor() . '; color: ' . $priority->getColor() . ';"><i class="fas fa-palette"></i></div></div><div class="col-md-10 text-center">' . $priority->getName() . '</div></div>'
                 ];
             }
             $users[] = [
@@ -269,23 +288,23 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function done(Request $request) : Response
+     * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function done(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $task = $this->rep->find($content->id);
-            if($task == null) {
+            if ($task == null) {
                 throw new Exception("No se encontró la tarea");
             }
-            if(
+            if (
                 !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
                 ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
             ) {
-                if(($task->getAssigned() != null)) {
-                    if($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
+                if (($task->getAssigned() != null)) {
+                    if ($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
                         throw new Exception("No tienes permiso para realizar esta acción");
                     }
                 } else {
@@ -296,7 +315,7 @@ class ScheduleController extends AbstractController
                 ->setDone($content->done)
                 ->updated($this->security->getUser());
             $message = "Se ha <b>";
-            if($content->done) {
+            if ($content->done) {
                 $message .= "finalizado";
             } else {
                 $message .= "reactivado";
@@ -305,16 +324,16 @@ class ScheduleController extends AbstractController
             $message .= "</b> la tarea";
             $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
             return new Response($message);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * @Route("/asign", name="schedule_asign_form", methods={"GET"}, options={"expose"=true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function asignForm() : Response
+     * @Route("/asign", name="schedule_asign_form", methods={"GET"}, options={"expose"=true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function asignForm(): Response
     {
         try {
             $users = $this->uRep->findAll();
@@ -327,19 +346,19 @@ class ScheduleController extends AbstractController
     }
 
     /**
-    * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
+     * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
     public function asign(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $task = $this->rep->find($content->taskId);
-            if($task == null) {
+            if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
             $user = $this->uRep->find($content->userId);
-            if($task == null) {
+            if ($task == null) {
                 throw new Exception("No se pudo encontrar al usuario");
             }
             $task
@@ -348,42 +367,42 @@ class ScheduleController extends AbstractController
             $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
             $this->util->info($message);
             return new Response($message);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function show(int $id) : Response
+     * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function show(int $id): Response
     {
         try {
             $task = $this->rep->find($id);
-            if($task == null) {
+            if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
             return $this->render("view/schedule/show.html.twig", [
                 'task' => $task
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * @Route("/{id}", name="schedule_delete", methods={"DELETE"}, options={"expose"=true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function delete(int $id) : Response
+     * @Route("/{id}", name="schedule_delete", methods={"DELETE"}, options={"expose"=true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function delete(int $id): Response
     {
         try {
             $task = $this->rep->find($id);
-            if($task == null) {
+            if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
-            if(
+            if (
                 !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
                 ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
             ) {
@@ -396,16 +415,16 @@ class ScheduleController extends AbstractController
             $message = "Se ha eliminado la tarea";
             $this->util->info("{$message} <b>{$oldId}</b> (<em>{$oldTitle}</em>)");
             return new Response($message);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
-    * @IsGranted("IS_AUTHENTICATED_FULLY")
-    */
-    public function add(Request $request) : Response
+     * @Route("/", name="schedule_add", methods={"POST"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -414,7 +433,7 @@ class ScheduleController extends AbstractController
             $priority = $this->spRep->find($content->priority);
             $user = null;
             $extra = "";
-            if((int)$content->user != 0) {
+            if ((int)$content->user != 0) {
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
             }

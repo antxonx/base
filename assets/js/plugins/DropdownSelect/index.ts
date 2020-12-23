@@ -87,6 +87,7 @@ export default class DropdownSelect {
         this.options.element.setAttribute('value', OPT.getAttribute("name")!);
         this.options.element.setAttribute('option', this.value);
         this.toggle();
+        this.options.callback!(this.value);
     }
 
     public getValue = () => {

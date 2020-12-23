@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Schedule;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -11,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\Criteria;
 use DateTime;
 use DateTimeZone;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Schedule|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,17 +27,34 @@ class ScheduleRepository extends ServiceEntityRepository
         parent::__construct($registry, Schedule::class);
     }
 
-    public function getBy(string $type, $params) : array
+    public function getBy(string $type, $params): array
     {
         $offset = ((isset($params->offset)) ? $params->offset : 0);
         $query = $this->createQueryBuilder('p')
             ->orderBy("p.date", "ASC");
-            if(!$params->actualUser->hasRole("ROLE_SUPERVISOR")) {
-                $userCriteria = new Criteria();
-                $userCriteria->where(Criteria::expr()->eq('p.createdBy', $params->actualUser->getId()));
-                $userCriteria->orWhere(Criteria::expr()->eq('p.assigned', $params->actualUser->getId()));
-                $query->addCriteria($userCriteria);
-            }
+        if (!$params->actualUser->hasRole("ROLE_SUPERVISOR") || $params->me) {
+            $userCriteria = new Criteria();
+            $userCriteria->where(Criteria::expr()->eq('p.createdBy', $params->actualUser->getId()));
+            $userCriteria->orWhere(Criteria::expr()->eq('p.assigned', $params->actualUser->getId()));
+            $query->addCriteria($userCriteria);
+        }
+        if ($params->search != '') {
+            $query->leftJoin('p.assigned', "a");
+            $searchCriteria = new Criteria();
+            $searchCriteria->where(Criteria::expr()->contains('p.title', $params->search));
+            $searchCriteria->orWhere(Criteria::expr()->contains('a.name', $params->search));
+            $query->addCriteria($searchCriteria);
+        }
+        if (!$params->finished) {
+            $finishedCriteria = new Criteria();
+            $finishedCriteria->where(Criteria::expr()->eq('p.done', $params->finished));
+            $query->addCriteria($finishedCriteria);
+        }
+        if($params->category != 0) {
+            $categoryCriteria = new Criteria();
+            $categoryCriteria->where(Criteria::expr()->eq('p.category', $params->category));
+            $query->addCriteria($categoryCriteria);
+        }
         switch ($type) {
             case 'month':
                 $start = new DateTime("first day of {$offset} month", new DateTimeZone("America/Mexico_city"));

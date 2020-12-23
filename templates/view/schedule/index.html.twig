@@ -9,36 +9,58 @@
         <div class="col-md-3 my-1">
             <button class="btn btn-primary w-100 round" id="schedule-add">Agregar tarea</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 search-input my-1">
+            <label class="sr-only" for="searchTaskInput">Tarea...</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text round">Buscar</div>
+                </div>
+                <input list="preloadList" autocomplete="off" type="text" class="form-control round" id="searchTaskInput" placeholder="">
+            </div><span class="erase-search cursor-pointer text-muted">&times;</span>
+            <datalist id="preloadList">
+                {% for user in users %}    
+                <option>{{ user.name }}</option>
+                {% endfor %}
+            </datalist>
+        </div>
+        {% if is_granted("ROLE_SUPERVISOR") %}
+        <div class="col-md-1 my-1">
 
         </div>
-        {# <div class="col-md-3 btn-group my-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
-            <button type="button" value="month" class="btn">Mes</button>
-            <button type="button" value="week" class="btn">Semana</button>
-            <button type="button" value="day" class="btn">Día</button>
-        </div>
-        <div class="col-md-2 my-1">
-            <div class="btn-group w-100">
-                <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Anterior" id="calendarBefore"><i class="fas fa-arrow-alt-circle-left"></i></button>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
-                <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
+        <div class="col-md-3 my-1">
+            <div style="position: relative;">
+                <div class="dropdow-arrow">
+                    <input id="taskCategory" value="" placeholder="Categoría" class="form-control readonly-click cursor-pointer" options="{{ categories|json_encode }}" readonly>
+                </div>
             </div>
-        </div> #}
+        </div>
+        <div class="col-md-1 btn-group my-1" id="superCheck" role="group" aria-label="me check">
+            <button type="button" value="finished" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="finalizados"><i class="fas fa-check-circle"></i></button>
+            <button type="button" value="me" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="Míos"><i class="fas fa-user-alt"></i></button>
+        </div>
+        {% else %}
+        <div class="col-md-4 my-1">
+
+        </div>
+        <div class="col-md-1 btn-group my-1" id="noSuperCheck" role="group" aria-label="finished check">
+            <button type="button" value="finished" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="finalizados"><i class="fas fa-check-circle"></i></button>
+        </div>
+        {% endif %}
 </div>
-<div class="row" style="z-index: 15;position: relative;">
+<div class="row" style="z-index: 3;position: relative;">
     <div class="col-md-3 btn-group mb-1" id="scheduleTypeSwitch" role="group" aria-label="log type">
-        <button type="button" value="month" class="btn">Mes</button>
-        <button type="button" value="week" class="btn">Semana</button>
-        <button type="button" value="day" class="btn">Día</button>
+        <button type="button" value="month" class="btn no-hover">Mes</button>
+        <button type="button" value="week" class="btn no-hover">Semana</button>
+        <button type="button" value="day" class="btn no-hover">Día</button>
     </div>
     <div class="col-md-6">
 
     </div>
     <div class="col-md-3 mb-1">
         <div class="btn-group w-100">
-            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Anterior" id="calendarBefore"><i class="fas fa-arrow-alt-circle-left"></i></button>
-            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="top" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
-            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="top" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
+            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="bottom" title="Anterior" id="calendarBefore"><i class="fas fa-arrow-alt-circle-left"></i></button>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Actual" id="calendarToday"><i class="fas fa-dot-circle"></i></button>
+            <button type="button" class="btn btn-outline-secondary round" data-toggle="tooltip" data-placement="bottom" title="Siguiente" id="calendarAfter"><i class="fas fa-arrow-alt-circle-right"></i></button>
         </div>
     </div>
 </div>
