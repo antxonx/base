@@ -53,7 +53,6 @@ export default class Assign {
     }
 
     private listAsign = async (data: string[]) => {
-        console.log(data);
         if (Array.isArray(data) && data.length) {
             let msgText: string;
             if(this.reasign) {

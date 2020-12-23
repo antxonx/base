@@ -32,7 +32,6 @@ export default class Show {
 
     public load = () => {
         this.modal.show();
-        console.log(Router);
         Axios.get(Router.generate(ROUTES.scheduleCategory.view.show, {'id': this.options.idCategory.toString()}))
             .then(res => {
                 this.modal.updateBody(res.data);

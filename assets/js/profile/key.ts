@@ -45,7 +45,6 @@ export default class Key {
         const BTN = document.getElementById("submit-btn")!;
         const INPUTS = [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>];
         clearErrorMsg();
-        INPUTS.forEach(el => console.log(el.value));
         if (evaluateInputs(INPUTS, 5)) {
             if (INPUTS[PASSWORD_INPUT.NEW].value === INPUTS[PASSWORD_INPUT.CONF].value) {
                 const BEF = BTN.innerHTML;
@@ -66,7 +65,6 @@ export default class Key {
                         BTN.innerHTML = BEF;
                     });
             } else {
-                console.log("invaid");
                 clearValidState(INPUTS[PASSWORD_INPUT.NEW]);
                 clearValidState(INPUTS[PASSWORD_INPUT.CONF]);
                 insertAlertAfter(BTN, "Las contraseñas no coinciden");

@@ -143,7 +143,6 @@ export default class Modal {
      * @memberof Modal
      */
     public show(loading = true) {
-        //console.log(this);
         this.createModal();
         this.setTitle();
         this.setSize();

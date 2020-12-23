@@ -28,7 +28,6 @@ export default class Show {
         if(this.options.id == 0) {
             throw new Error("No se pudo determinar la tarea");
         }
-        console.log(this.options);
         this.modal = new Modal({
             title: "Tarea",
             size: 50,
