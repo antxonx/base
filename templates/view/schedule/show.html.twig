@@ -67,12 +67,12 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             {% if task.createdBy.id == app.user.id or is_granted("ROLE_SUPERVISOR") %}
                 <button type="button" id="taskDelete" class="btn btn-danger round">Eliminar</button>
             {% endif %}
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col text-right">
             {% if task.done %}
                 <button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
             {% else %}

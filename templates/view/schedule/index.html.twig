@@ -6,7 +6,7 @@
 {% block body %}
 {{ encore_entry_link_tags('schedule') }}
 <div class="row m-1">
-        <div class="col-md-3 my-1">
+        <div class="col-md-3">
             <button class="btn btn-primary w-100 round" id="schedule-add">Agregar tarea</button>
         </div>
         <div class="col-md-4 search-input my-1">
@@ -24,7 +24,7 @@
             </datalist>
         </div>
         {% if is_granted("ROLE_SUPERVISOR") %}
-        <div class="col-md-1 my-1">
+        <div class="col-md-1">
 
         </div>
         <div class="col-md-3 my-1">
