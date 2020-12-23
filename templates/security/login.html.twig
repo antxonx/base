@@ -1,45 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
-    {% if app.user %}
-        <script>
-            window.location.href = "{{ path('home_index') }}"
-        </script>
-    {% else %}
-        <div class="container">
-            <div class="card mx-auto w-50-c mt-5 round shadow-lg">
-                <div class="card-body">
-                    <form method="post">
-                        {% if error %}
-                            <div class="alert alert-danger round">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-                        <h5 class="h3 mb-3 font-weight-normal text-center">Inicia sesión</h5>
-                        <hr class="divide">
-                        <div class="form-group">
-                            <input type="text" onkeypress="return event.charCode !== 32" value="{{ last_username }}"
-                                   name="username"
-                                   id="inputUsername" class="form-control round" placeholder="Nombre de usuario"
-                                   required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" id="inputPassword" class="form-control round"
-                                   placeholder="**********" required>
-                        </div>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                        <button class="btn btn-antxony mt-2 round w-100" type="submit">
-                            Iniciar sesión
-                        </button>
-                        <br>
-                    </form>
-                    <hr>
-                    <div class="text-center">
-                        <small><a href="{{ path('app_forgot_password_request') }}">Olvidé mi
-                                contraseña</a></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+	{% if app.user %}
+		<script>
+			window.location.href = "{{ path('home_index') }}"
+		</script>
+	{% else %}
+		<div class="container">
+			<div class="card mx-auto w-50-c mt-5 round shadow-lg">
+				<div class="card-body">
+					<form method="post">
+						{% if error %}
+							<div class="alert alert-danger round">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+						<h5 class="h3 mb-3 font-weight-normal text-center">Inicia sesión</h5>
+						<hr class="divide">
+						<div class="form-group">
+							<input type="text" onkeypress="return event.charCode !== 32" value="{{ last_username }}" name="username" id="inputUsername" class="form-control round" placeholder="Nombre de usuario" required autofocus>
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" id="inputPassword" class="form-control round" placeholder="**********" required>
+						</div>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<button class="btn btn-antxony mt-2 round w-100" type="submit">
+							Iniciar sesión
+						</button>
+						<br>
+					</form>
+					<hr>
+					<div class="text-center">
+						<small>
+							<a href="{{ path('app_forgot_password_request') }}">Olvidé mi
+								                                contraseña</a>
+						</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}

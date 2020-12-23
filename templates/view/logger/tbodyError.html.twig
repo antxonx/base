@@ -1,59 +1,60 @@
 {% set tr = {} %}
 {% for entity in entities %}
-    {# tipo de petición #}
-    {% set badge %}
-        <span class="btn btn-sm2 w-100
-{% if entity.method == "GET" %}
-alert-success
-{% elseif entity.method == "POST" %}
-alert-primary
-{% elseif entity.method == "PUT" %}
-alert-warning
-{% elseif entity.method == "PATCH" %}
-alert-warning
-{% elseif entity.method == "DELETE" %}
-alert-danger
-{% else %}
-alert-light
-{% endif %}">{{ entity.method }}</span>
-    {% endset %}
-    {# . #}
-    {% if entity.file|split('\\')|length == 1 %}
-        {% set fileSplit = entity.file|split('/') %}
-    {% else %}
-        {% set fileSplit = entity.file|split('\\') %}
-    {% endif %}
-    {# Error completo #}
-    {% set errorFull %}
-        {% include "view/logger/full/error.html.twig" %}
-    {% endset %}
-    {# . #}
-    {# verificar si es de sistema #}
-    {% set dateClass %}
-        {% if entity.system %}
-            {% if entity.level == "WARNING" or entity.level == "API" %}
-                alert-warning
-            {% else %}
-                alert-danger
-            {% endif %}
-        {% else %}
-            alert-light
-        {% endif %}
-    {% endset %}
-    {# . #}
-    {# formato de nivel #}
-    {% set level %}
-        {% if entity.level != null %}
-            {% if entity.level == "WARNING" or entity.level == "API" %}
-                <button class="btn btn-warning btn-sm w-100 no-hover"> {{ entity.level }}</button>
-            {% else %}
-                <button class="btn btn-danger btn-sm w-100 no-hover"> {{ entity.level }}</button>
-            {% endif %}
+	{# tipo de petición #}
+	{% set badge %}
+	<span class="btn btn-sm2 w-100
+		{% if entity.method == " GET" %}
+		alert-success
+		{% elseif entity.method == " POST" %}
+		alert-primary
+		{% elseif entity.method == " PUT" %}
+		alert-warning
+		{% elseif entity.method == " PATCH" %}
+		alert-warning
+		{% elseif entity.method == " delete" %}
+		alert-danger
+		{% else %}
+		alert-light
+		{% endif %}">{{ entity.method }}</span>
+	{% endset %}
+	{# . #}
+	{% if entity.file|split('\\')|length == 1 %}
+		{% set fileSplit = entity.file|split('/') %}
+	{% else %}
+		{% set fileSplit = entity.file|split('\\') %}
+	{% endif %}
+	{# Error completo #}
+	{% set errorFull %}
+	{% include "view/logger/full/error.html.twig" %}
+	{% endset %}
+	{# . #}
+	{# verificar si es de sistema #}
+	{% set dateClass %}
+		{% if entity.system %}
+			{% if entity.level == "WARNING" or entity.level == "API" %}
+			alert-warning
+		{% else %}
+			alert-danger
+		{% endif %}
+	{% else %}
+		alert-light
+	{% endif %}
+	{% endset %}
+	{# . #}
+	{# formato de nivel #}
+	{% set level %}
+		{% if entity.level != null %}
+			{% if entity.level == "WARNING" or entity.level == "API" %}
+				<button class="btn btn-warning btn-sm w-100 no-hover"> {{ entity.level }}</button>
+		{% else %}
+			<button class="btn btn-danger btn-sm w-100 no-hover">
+				{{ entity.level }}</button>
+		{% endif %}
 
-        {% endif %}
-    {% endset %}
-    {# . #}
-    {% set tr = {
+	{% endif %}
+	{% endset %}
+	{# . #}
+	{% set tr = {
         values : {
             id : {
                 value : entity.id,
@@ -92,10 +93,10 @@ alert-light
             'aria-controls': '#error-' ~ entity.id
         }
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : tr
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : {
             values : {
                 info : {
@@ -114,7 +115,7 @@ alert-light
     } %}
 {% endfor %}
 {% if tr.values is defined %}
-    {% include "paginatorTable.html.twig" with {
+	{% include "paginatorTable.html.twig" with {
         items: entities,
         cols : tr.values|length
     } %}

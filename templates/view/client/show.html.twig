@@ -1,58 +1,58 @@
 <div class="row">
-    <div class="col-md-6 mt-2">
-        <div class="card-2">
-            <div class="card-body">
-                <h5 class="text-center">
-                    Datos generales
-                    {% if is_granted("ROLE_ADMIN") %}
-                        {% if client.category != null %}
-                            <div class="badge round color-shadow float-right cursor-pointer"
-                                 style="background-color: {{ client.category.color }}; color: {{ client.category.color }};"
-                                 data-toggle="tooltip" data-placement="top" data-html="true" id="changeClientCategory"
-                                 title="<em>{{ client.category.name }}</em>"><i class="fas fa-palette"></i></div>
-                        {% else %}
-                            <div class="badge round color-shadow float-right cursor-pointer" style="color: #ffffff;"
-                                 data-toggle="tooltip" data-placement="top" data-html="true" id="changeClientCategory"
-                                 title="<em>Sin categoría</em>"><i class="fas fa-palette"></i></div>
-                        {% endif %}
-                    {% else %}
-                        {% if client.category != null %}
-                            <div class="badge round color-shadow float-right"
-                                 style="background-color: {{ client.category.color }}; color: {{ client.category.color }};"
-                                 data-toggle="tooltip" data-placement="top" data-html="true"
-                                 title="<em>{{ client.category.name }}</em>"><i class="fas fa-palette"></i></div>
-                        {% endif %}
-                    {% endif %}
-                </h5>
-                <hr class="divide-2">
-                {% include "view/client/parts/client.html.twig" %}
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mt-2">
-        <div class="card-2">
-            <div class="card-body">
-                <h5 class="text-center">Dirección</h5>
-                <hr class="divide-2">
-                {% include "view/client/parts/address.html.twig" %}
-            </div>
-        </div>
-    </div>
+	<div class="col-md-6 mt-2">
+		<div class="card-2">
+			<div class="card-body">
+				<h5 class="text-center">
+					Datos generales
+					{% if is_granted("ROLE_ADMIN") %}
+						{% if client.category != null %}
+							<div class="badge round color-shadow float-right cursor-pointer" style="background-color: {{ client.category.color }}; color: {{ client.category.color }};" data-toggle="tooltip" data-placement="top" data-html="true" id="changeClientCategory" title="<em>{{ client.category.name }}</em>">
+								<i class="fas fa-palette"></i>
+							</div>
+						{% else %}
+							<div class="badge round color-shadow float-right cursor-pointer" style="color: #ffffff;" data-toggle="tooltip" data-placement="top" data-html="true" id="changeClientCategory" title="<em>Sin categoría</em>">
+								<i class="fas fa-palette"></i>
+							</div>
+						{% endif %}
+					{% else %}
+						{% if client.category != null %}
+							<div class="badge round color-shadow float-right" style="background-color: {{ client.category.color }}; color: {{ client.category.color }};" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>{{ client.category.name }}</em>">
+								<i class="fas fa-palette"></i>
+							</div>
+						{% endif %}
+					{% endif %}
+				</h5>
+				<hr class="divide-2">
+				{% include "view/client/parts/client.html.twig" %}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 mt-2">
+		<div class="card-2">
+			<div class="card-body">
+				<h5 class="text-center">Dirección</h5>
+				<hr class="divide-2">
+				{% include "view/client/parts/address.html.twig" %}
+			</div>
+		</div>
+	</div>
 </div>
 <div class="row">
-    <div class="col mt-2">
-        <div class="card-2">
-            <div class="card-body">
-                <div class="mb-2">
-                    <h5 class="text-center">Contacto<small>(s)</small></h5>
-                    <button class="btn btn-sm btn-primary float-right round" id="contact-add"
-                            style="transform: translateY(-2.5rem);"><i class="fa fa-plus"></i></button>
-                </div>
-                <hr class="divide-2">
-                {% include "view/client/parts/contacts.html.twig" %}
-            </div>
-        </div>
-    </div>
+	<div class="col mt-2">
+		<div class="card-2">
+			<div class="card-body">
+				<div class="mb-2">
+					<h5 class="text-center">Contacto<small>(s)</small>
+					</h5>
+					<button class="btn btn-sm btn-primary float-right round" id="contact-add" style="transform: translateY(-2.5rem);">
+						<i class="fa fa-plus"></i>
+					</button>
+				</div>
+				<hr class="divide-2">
+				{% include "view/client/parts/contacts.html.twig" %}
+			</div>
+		</div>
+	</div>
 </div>
 
 {% include "view/footer/datetimes.html.twig" with {

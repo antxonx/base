@@ -1,14 +1,14 @@
 {% if client.contacts|length < 1 %}
-    <div class="alert alert-info round text-center">
-        Este cliente no tiene contactos.
-    </div>
+	<div class="alert alert-info round text-center">
+		Este cliente no tiene contactos.
+	</div>
 {% else %}
 
-    <table class="table w-99 mb-0 mobile" style="transform: translateY(-1rem);">
-        <tbody>
-        {% for contact in client.contacts %}
+	<table class="table w-99 mb-0 mobile" style="transform: translateY(-1rem);">
+		<tbody>
+			{% for contact in client.contacts %}
 
-            {% include "table/tr.html.twig" with {
+				{% include "table/tr.html.twig" with {
                 tr : {
                     values : {
                         name : {
@@ -52,7 +52,7 @@
                     }
                 }
             } %}
-        {% endfor %}
-        </tbody>
-    </table>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endif %}

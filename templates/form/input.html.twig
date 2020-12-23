@@ -1,16 +1,11 @@
-<div class="form-group">
-    {#
-    {% if label is defined %}
-        <label for="{{ id }}" id="{{ id }}Label">
-            {{ label }}{% if required %}*{% endif %}
-        </label>
-    {% endif %}
-    #}
-    <input type="{{ type }}" t-type="{% if ttype is defined %}{{ ttype }}{% else %}{{ type }}{% endif %}"
-           name="{% if name is defined %}{{ name }}{% else %}{{ id }}{% endif %}"
-           class="form-control {% if required %}required{% endif %}{% if class is defined %} {{ class }}{% endif %}"
-           id="{{ id }}" aria-describedby="{{ id }}Help" placeholder="{{ placeholder }}"
-           {% if error is defined %}error-msg="{{ error }}" {% endif %} {% if pattern is defined %} pattern="{{ pattern }}"
-    {% endif %} {% if maxlength is defined %} maxlength="{{ maxlength }}" {% endif %}
-            {% if min is defined %}min="{{ min }}" {% endif %} {% if value is defined %}value="{{ value }}" {% endif %}>
+<div
+	class="form-group">
+	{#
+	    {% if label is defined %}
+	        <label for="{{ id }}" id="{{ id }}Label">
+	            {{ label }}{% if required %}*{% endif %}
+	        </label>
+	    {% endif %}
+	    #}
+	<input type="{{ type }}" t-type="{% if ttype is defined %}{{ ttype }}{% else %}{{ type }}{% endif %}" name="{% if name is defined %}{{ name }}{% else %}{{ id }}{% endif %}" class="form-control {% if required %}required{% endif %}{% if class is defined %} {{ class }}{% endif %}" id="{{ id }}" aria-describedby="{{ id }}Help" placeholder="{{ placeholder }}" {% if error is defined %} error-msg="{{ error }}" {% endif %} {% if pattern is defined %} pattern="{{ pattern }}" {% endif %} {% if maxlength is defined %} maxlength="{{ maxlength }}" {% endif %} {% if min is defined %} min="{{ min }}" {% endif %} {% if value is defined %} value="{{ value }}" {% endif %}>
 </div>

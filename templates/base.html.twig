@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Sistema">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta property="og:image" content="{{ asset('build/logo.jpg') }}"/>
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-    {{ encore_entry_link_tags('app') }}
-    <link rel="shortcut icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet" />
-</head>
-<body>
-{# Ver si es teléfono o no #}
-{% set agent = app.request.headers.get('User-Agent')|split(';') %}
-{% set isMobile = false %}
-{% if agent[1] is defined %}
-    {% if "Android" in agent[1] or "iPhone" in agent[1] %}
-        {% set isMobile = true %}
-    {% else %}
-        {% set isMobile = false %}
-    {% endif %}
-{% else %}
-    {% set isMobile = false %}
-{% endif %}
-{# . #}
-{% if app.user and app.user.suspended %}
-    <script>
-        fetch('{{ path('user_resuspend', {'id' : app.user.id}) }}', {
-            method: 'POST'
-        })
-        .finally(() => {
-            window.location.href = "{{ path('app_logout') }}";
-        })
-    </script>
-{% else %}
-    {% include "navbar.html.twig" %}
-    <div class="position-absolute mx-auto pt-3 w-100" style="top: 0; width: available;">
-        <h5 class="text-center">{% block contTitle %}{% endblock %}</h5>
-    </div>
-    <div id="toastCont">
-    </div>
-    {% block body %}{% endblock %}
-<input type="hidden" id="baseURL" value="{{ app.request.baseUrl }}">
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-{% endif %}
-<div style="height: 200px !important;">
-
-</div>
-</body>
-</html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Sistema">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta property="og:image" content="{{ asset('build/logo.jpg') }}"/>
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{% block stylesheets %}{% endblock %}
+		{{ encore_entry_link_tags('app') }}
+		<link rel="shortcut icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
+		<link rel="icon" href="{{ asset('build/favicon.ico') }}" type="image/x-icon">
+		<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+	</head>
+	<body>
+		{# Ver si es teléfono o no #}
+		{% set agent = app.request.headers.get('User-Agent')|split(';') %}
+		{% set isMobile = false %}
+		{% if agent[1] is defined %}
+			{% if "Android" in agent[1] or "iPhone" in agent[1] %}
+				{% set isMobile = true %}
+			{% else %}
+				{% set isMobile = false %}
+			{% endif %}
+		{% else %}
+			{% set isMobile = false %}
+		{% endif %}
+		{# . #}
+		{% if app.user and app.user.suspended %}
+			<script>
+				fetch('{{ path('user_resuspend', {'id' : app.user.id}) }}', {method: 'POST'}). finally(() => {
+                    window.location.href = "{{ path('app_logout') }}";
+                })
+			</script>
+		{% else %}
+			{% include "navbar.html.twig" %}
+			<div class="position-absolute mx-auto pt-3 w-100" style="top: 0; width: available;">
+				<h5 class="text-center"> {% block contTitle %}{% endblock %}
+					</h5>
+				</div>
+				<div id="toastCont"></div>
+				{% block body %}{% endblock %}
+				<input type="hidden" id="baseURL" value="{{ app.request.baseUrl }}">
+				{% block javascripts %}
+					{{ encore_entry_script_tags('app') }}
+				{% endblock %}
+			{% endif %}
+			<div style="height: 200px !important;"></div>
+		</body>
+	</html>

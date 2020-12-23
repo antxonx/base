@@ -1,11 +1,10 @@
 <form id="userForm">
-    <div class="form-group">
-        <div class="fomr-group">
-            <input type="text" t-type="text" id="username" class="form-control required" placeholder="Usuario"
-                   error-msg="Ingrese un nombre de usuario de más de 5 letras" onkeypress="return event.charCode !== 32">
-        </div>
-    </div>
-    {% include 'form/input.html.twig' with {
+	<div class="form-group">
+		<div class="fomr-group">
+			<input type="text" t-type="text" id="username" class="form-control required" placeholder="Usuario" error-msg="Ingrese un nombre de usuario de más de 5 letras" onkeypress="return event.charCode !== 32">
+		</div>
+	</div>
+	{% include 'form/input.html.twig' with {
         type : 'text',
         id: 'name',
         label: 'Nombre',
@@ -13,7 +12,7 @@
         required : true,
         error : 'Ingrese un nombre de más de 5 letras'
     } %}
-    {% include 'form/input.html.twig' with {
+	{% include 'form/input.html.twig' with {
         type : 'password',
         id: 'password',
         label: 'Contraseña',
@@ -21,7 +20,7 @@
         required : true,
         error : 'Ingrese una contraseña de más de 5 caracteres'
     } %}
-    {% include 'form/input.html.twig' with {
+	{% include 'form/input.html.twig' with {
         type : 'text',
         ttype : 'email',
         id: 'email',
@@ -30,21 +29,22 @@
         required : true,
         error : 'Ingrese un correo válido'
     } %}
-    <b class="text-muted font-italic">Puesto:</b> <br>
-<div class="row">
-        {% set roles = [
+	<b class="text-muted font-italic">Puesto:</b>
+	<br>
+	<div class="row">
+		{% set roles = [
             {nombre: 'admin', real: 'ROLE_ADMIN'},
             {nombre: 'común', real: 'ROLE_COMMON'},
             {nombre: 'supervisor', real: 'ROLE_SUPERVISOR'},
         ] %}
-        {% for role in roles %}
-        <div class="col-md-5 ml-3 checkbox-lg">
-                <input type="checkbox" class="custom-control-input check-roles" value="{{ role.real }}" id="roleCheckBox{{ loop.index }}">
-                <label for="roleCheckBox{{ loop.index }}" class="custom-control-label">{{ role.nombre }}</label>
-        </div>
-        {% endfor %}
-</div>
-    <div id="submit-btn" class="w-100 text-left mt-3">
-        <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
-    </div>
+		{% for role in roles %}
+			<div class="col-md-5 ml-3 checkbox-lg">
+				<input type="checkbox" class="custom-control-input check-roles" value="{{ role.real }}" id="roleCheckBox{{ loop.index }}">
+				<label for="roleCheckBox{{ loop.index }}" class="custom-control-label">{{ role.nombre }}</label>
+			</div>
+		{% endfor %}
+	</div>
+	<div id="submit-btn" class="w-100 text-left mt-3">
+		<button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
+	</div>
 </form>

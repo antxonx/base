@@ -1,18 +1,14 @@
 <div class="card-2">
-    <div class="card-body">
-        <p class="editable-container">
-            <b>Nombre</b> <br>
-            <a class="editable-field" href="#" data-name="priorityName" data-type="text"
-               data-pk="{{ priority.id }}"
-               data-url="{{ path('schedule_priority_edit', {'id' : priority.id }) }}"
-               data-title="Ingresa el nombre">{{ priority.name }}</a>
-        </p>
-        <p class="editable-container text-justify">
-            <b>Descripción</b> <br>
-            <a class="editable-field" href="#" data-name="priorityDescription" data-type="textarea"
-               data-pk="{{ priority.id }}"
-               data-url="{{ path('schedule_priority_edit', {'id' : priority.id }) }}"
-               data-title="Ingresa la descripción">{{ priority.description }}</a>
-        </p>
-    </div>
+	<div class="card-body">
+		<p class="editable-container">
+			<b>Nombre</b>
+			<br>
+			<a class="editable-field" href="#" data-name="priorityName" data-type="text" data-pk="{{ priority.id }}" data-url="{{ path('schedule_priority_edit', {'id' : priority.id }) }}" data-title="Ingresa el nombre">{{ priority.name }}</a>
+		</p>
+		<p class="editable-container text-justify">
+			<b>Descripción</b>
+			<br>
+			<a class="editable-field" href="#" data-name="priorityDescription" data-type="textarea" data-pk="{{ priority.id }}" data-url="{{ path('schedule_priority_edit', {'id' : priority.id }) }}" data-title="Ingresa la descripción">{{ priority.description }}</a>
+		</p>
+	</div>
 </div>

@@ -1,15 +1,19 @@
 {% set tr = {} %}
 {% for client in clients %}
-    {# suspneder o reactivar #}
-    {% set trashSusp %}
-        {% if client.suspended %}
-            <button class="btn btn-sm round btn-outline-dark border-0 w-100 client-reactivate mobile-2-desktop-1"><i class="fas fa-redo-alt"></i></button>
-        {% else %}
-            <button class="btn btn-sm round btn-outline-dark border-0 w-100 client-delete mobile-2-desktop-1"><i class="fas fa-trash-alt"></i></button>
-        {% endif %}
-    {% endset %}
-    {# . #}
-    {% set tr = {
+	{# suspneder o reactivar #}
+	{% set trashSusp %}
+	{% if client.suspended %}
+		<button class="btn btn-sm round btn-outline-dark border-0 w-100 client-reactivate mobile-2-desktop-1">
+			<i class="fas fa-redo-alt"></i>
+		</button>
+	{% else %}
+		<button class="btn btn-sm round btn-outline-dark border-0 w-100 client-delete mobile-2-desktop-1">
+			<i class="fas fa-trash-alt"></i>
+		</button>
+	{% endif %}
+	{% endset %}
+	{# . #}
+	{% set tr = {
         values : {
             color : {
                 value : ((client.category != null)?'<div class="badge ww-100 round color-shadow" style="background-color: ' ~ client.category.color ~ '; color: ' ~ client.category.color ~ ';" data-toggle="tooltip" data-placement="right" title="' ~ client.category.name ~ '"><i class="fas fa-palette"></i></div>':''),
@@ -54,12 +58,12 @@
             name: client.name
         }
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : tr
     } %}
 {% endfor %}
 {% if tr.values is defined %}
-    {% include "paginatorTable.html.twig" with {
+	{% include "paginatorTable.html.twig" with {
         items: clients,
         cols : tr.values|length
     } %}

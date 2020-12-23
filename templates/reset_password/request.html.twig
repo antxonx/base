@@ -1,27 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Restablecer contraseña{% endblock %}
+{% block title %}Restablecer contraseña
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="card mx-auto w-50-c mt-5 round shadow-lg">
-            <div class="card-body">
-                {% for flashError in app.flashes('reset_password_error') %}
-                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-                {% endfor %}
-                <h5 class="h3 text-center">Restablecer contraseña</h5>
-                <hr class="divide">
-                {{ form_start(requestForm) }}
-                <div class="form-group">
-                    {{ form_widget(requestForm.mail) }}
-                </div>
-                <button class="btn btn-antxony round w-100">Enviar correo de recuperación</button>
-                {{ form_end(requestForm) }}
-                <hr>
-                <div class="text-center">
-                    <small><a href="{{ path('app_login') }}">Iniciar sesión</a></small>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="card mx-auto w-50-c mt-5 round shadow-lg">
+			<div class="card-body">
+				{% for flashError in app.flashes('reset_password_error') %}
+					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+				{% endfor %}
+				<h5 class="h3 text-center">Restablecer contraseña</h5>
+				<hr class="divide">
+				{{ form_start(requestForm) }}
+				<div class="form-group">
+					{{ form_widget(requestForm.mail) }}
+				</div>
+				<button class="btn btn-antxony round w-100">Enviar correo de recuperación</button>
+				{{ form_end(requestForm) }}
+				<hr>
+				<div class="text-center">
+					<small>
+						<a href="{{ path('app_login') }}">Iniciar sesión</a>
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -1,22 +1,28 @@
 <div class="row mt-1">
-    <div class="{% if date(created.time) == date(updated.time) %}col-md-12 text-center{% else %}col-md-6 text-right-mb-center{% endif %}">
-        <small class="font-italic text-muted">
-            Creado por <b>{{ created.name }}</b> <br>
-            <span class="hide-on-mobile">
-            <b>{{ created.time|format_datetime("long", "none", locale="es") }}</b> a las
-            <b>{{ created.time|format_datetime("none", "short", locale="es") }}</b>
-            </span>
-        </small>
-    </div>
-    <div class="col-md-6 text-left-mb-center border-left">
-        {% if date(created.time) != date(updated.time) %}
-            <small class="font-italic text-muted">
-                Actualizado por <b>{{ updated.name }}</b> <br>
-                <span class="hide-on-mobile">
-                <b>{{ updated.time|format_datetime("long", "none", locale="es") }}</b> a las
-                <b>{{ updated.time|format_datetime("none", "short", locale="es") }}</b>
-                </span>
-            </small>
-        {% endif %}
-    </div>
+	<div class="{% if date(created.time) == date(updated.time) %}col-md-12 text-center{% else %}col-md-6 text-right-mb-center{% endif %}">
+		<small class="font-italic text-muted">
+			Creado por
+			<b>{{ created.name }}</b>
+			<br>
+			<span class="hide-on-mobile">
+				<b>{{ created.time|format_datetime("long", "none", locale="es") }}</b>
+				a las
+				<b>{{ created.time|format_datetime("none", "short", locale="es") }}</b>
+			</span>
+		</small>
+	</div>
+	<div class="col-md-6 text-left-mb-center border-left">
+		{% if date(created.time) != date(updated.time) %}
+			<small class="font-italic text-muted">
+				Actualizado por
+				<b>{{ updated.name }}</b>
+				<br>
+				<span class="hide-on-mobile">
+					<b>{{ updated.time|format_datetime("long", "none", locale="es") }}</b>
+					a las
+					<b>{{ updated.time|format_datetime("none", "short", locale="es") }}</b>
+				</span>
+			</small>
+		{% endif %}
+	</div>
 </div>

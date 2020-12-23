@@ -1,9 +1,9 @@
-<tr {% if tr.attr is defined %}{% for attr, val in tr.attr %} {{ attr }}="{{ val }}" {% endfor %} {% endif %}>
-{% for td in tr.values %}
-    {% if loop.first %}
-        <th {% if td.attr is defined %} {% for attr, value in td.attr %} {{ attr }}="{{ value }}" {% endfor %} {% endif %}>{{ td.value|raw }}</th>
-    {% else %}
-        <td {% if td.attr is defined %} {% for attr, value in td.attr %} {{ attr }}="{{ value }}" {% endfor %} {% endif %}>{{ td.value|raw }}</td>
-    {% endif %}
-{% endfor %}
+<tr {% if tr.attr is defined %} {% for attr, val in tr.attr %} {{ attr }}="{{ val }}" {% endfor %} {% endif %}>
+	{% for td in tr.values %}
+		{% if loop.first %}
+			<th {% if td.attr is defined %} {% for attr, value in td.attr %} {{ attr }}="{{ value }}" {% endfor %} {% endif %}>{{ td.value|raw }}</th>
+		{% else %}
+			<td {% if td.attr is defined %} {% for attr, value in td.attr %} {{ attr }}="{{ value }}" {% endfor %} {% endif %}>{{ td.value|raw }}</td>
+		{% endif %}
+	{% endfor %}
 </tr>
