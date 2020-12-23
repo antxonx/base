@@ -15,8 +15,8 @@ export const DEFAULT_SCHEDULE_CATEGORY_OPTIONS: ScheduleCategoryOptions = {
 
 export interface ScheduleCategoryDeleteOptions {
     element: HTMLElement;
-    onError?: () => void
-    onSuccess?: () => void
+    onError?: () => void;
+    onSuccess?: () => void;
 }
 
 export const DEFAULT_SCHEDULE_CATEGORY_DELETE_OPTIONS: ScheduleCategoryDeleteOptions = {
@@ -25,7 +25,7 @@ export const DEFAULT_SCHEDULE_CATEGORY_DELETE_OPTIONS: ScheduleCategoryDeleteOpt
     },
     onSuccess: () => {
     },
-}
+};
 
 export interface ScheduleCategoryShowOptions {
     idCategory: number;
@@ -36,11 +36,11 @@ export const DEFAULT_SCHEDULE_CATEGORY_SHOW_OPTIONS: ScheduleCategoryShowOptions
     idCategory: 0,
     onClose: () => {
     },
-}
+};
 
 export interface ScheduleCategoryColorOptions {
     id?: number;
-    type?: 'background'|'text';
+    type?: 'background' | 'text';
     actualColor?: string;
     newColor?: string;
     callback?: () => void;
@@ -51,5 +51,5 @@ export const DEFAULT_SCHEDULE_CATEGORY_COLOR_OPTIONS: ScheduleCategoryColorOptio
     type: 'background',
     actualColor: '#ffffff',
     newColor: '',
-    callback: () => {}
-}
+    callback: () => { }
+};

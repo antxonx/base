@@ -26,10 +26,10 @@ export default class DropdownSelect {
 
     protected choosing: boolean;
 
-    public constructor(options?: DropdownSelectOptions) {
-        this.options = {...DEFAULT_DROPDOWN_SELECT_OPTIONS, ...options};
-        if(options) {
-            if(!this.options.element.getAttribute('options')) {
+    public constructor (options?: DropdownSelectOptions) {
+        this.options = { ...DEFAULT_DROPDOWN_SELECT_OPTIONS, ...options };
+        if (options) {
+            if (!this.options.element.getAttribute('options')) {
                 throw new Error("No se pudo inciar el select: No hay opciones");
             }
             this.values = JSON.parse(this.options.element.getAttribute('options')!) as ReadonlyArray<DropdownSelectValue>;
@@ -57,18 +57,18 @@ export default class DropdownSelect {
         this.select.addEventListener("mouseenter", () => { this.choosing = true; });
         this.select.addEventListener("mouseleave", () => { this.choosing = false; });
         return this;
-    }
+    };
 
     private focusout = () => {
-        if(!this.choosing) {
+        if (!this.choosing) {
             this.select.classList.remove("show");
             this.select.classList.add("hide");
             this.options.element.classList.remove("open");
         }
-    }
+    };
 
     private toggle = () => {
-        if(this.options.element.classList.contains("open")) {
+        if (this.options.element.classList.contains("open")) {
             this.select.classList.remove("show");
             this.select.classList.add("hide");
             this.options.element.classList.remove("open");
@@ -77,7 +77,7 @@ export default class DropdownSelect {
             this.select.classList.add("show");
             this.options.element.classList.add("open");
         }
-    }
+    };
 
     private selectOption = (e: Event) => {
         const OPT = (e.currentTarget as HTMLElement);
@@ -88,10 +88,10 @@ export default class DropdownSelect {
         this.options.element.setAttribute('option', this.value);
         this.toggle();
         this.options.callback!(this.value);
-    }
+    };
 
     public getValue = () => {
         return this.value;
-    }
+    };
 
 }

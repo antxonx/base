@@ -18,7 +18,7 @@ export interface PaginatorOptions {
 }
 
 export const DEFAULT_PAGINATOR_OPTIONS: PaginatorOptions = {
-    callback: () => {},
+    callback: () => { },
     classname: 'paginator',
     indexname: 'page-index',
 };

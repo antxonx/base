@@ -2,12 +2,12 @@
 * @packageDocumentation
 * @module User
 */
-import {DEFAULT_KEY_OPTIONS, keyOptions} from "@scripts/user/defs";
+import { DEFAULT_KEY_OPTIONS, keyOptions } from "@scripts/user/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
-import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
+import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
-import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
+import { clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput } from "@plugins/Required";
 
 /**
  * Change user password
@@ -22,8 +22,8 @@ export default class Key {
 
     protected modal: Modal;
 
-    public constructor(options: keyOptions) {
-        this.options = {...DEFAULT_KEY_OPTIONS, ...options};
+    public constructor (options: keyOptions) {
+        this.options = { ...DEFAULT_KEY_OPTIONS, ...options };
         this.options.id = this.options.id || +this.options.element!.getAttribute("id")!;
         this.options.name = this.options.name || this.options.element!.getAttribute("name")!;
         this.options.username = this.options.username || this.options.element!.getAttribute("username")!;
@@ -44,20 +44,20 @@ export default class Key {
                 console.error(err.response.data);
                 Toast.error(err.response.data);
             });
-    }
+    };
 
     private validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
-        const INPUTS = [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>];
+        const INPUTS = [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ];
         clearErrorMsg();
         if (evaluateInputs(INPUTS, 5)) {
-            if (INPUTS[0].value === INPUTS[1].value) {
+            if (INPUTS[ 0 ].value === INPUTS[ 1 ].value) {
                 INPUTS.forEach(el => setValidInput(el));
                 const BEF = BTN.innerHTML;
                 BTN.innerHTML = SPINNER_LOADER;
-                Axios.patch(Router.generate(ROUTES.user.api.key, {'id': this.options.id!.toString()}), {
-                    password: INPUTS[0].value
+                Axios.patch(Router.generate(ROUTES.user.api.key, { 'id': this.options.id!.toString() }), {
+                    password: INPUTS[ 0 ].value
                 })
                     .then(res => {
                         Toast.success(res.data);
@@ -72,5 +72,5 @@ export default class Key {
                 insertAlertAfter(BTN, "Las contraseñas no coinciden");
             }
         }
-    }
+    };
 }

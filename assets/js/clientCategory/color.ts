@@ -2,7 +2,7 @@
 * @packageDocumentation
 * @module Client/Category
 */
-import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
+import { ROUTES, Router, SPINNER_LOADER } from '@scripts/app';
 import { DEFAULT_CLIENT_CATEGORY_COLOR_OPTIONS, ClientCategoryColorOptions } from "./defs";
 import Modal from "@plugins/Modal";
 import Toast from '@scripts/plugins/AlertToast';
@@ -15,7 +15,7 @@ export default class Color {
     protected modal: Modal;
 
     public constructor (options: ClientCategoryColorOptions) {
-        this.options = {...DEFAULT_CLIENT_CATEGORY_COLOR_OPTIONS, ...options};
+        this.options = { ...DEFAULT_CLIENT_CATEGORY_COLOR_OPTIONS, ...options };
         this.modal = new Modal({
             title: 'cambiar color',
             size: 30,
@@ -35,7 +35,7 @@ export default class Color {
             </form>
         `);
         document.getElementById("colorForm")!.addEventListener("submit", this.validate);
-    }
+    };
 
     private validate = (e: Event) => {
         e.preventDefault();
@@ -45,15 +45,15 @@ export default class Color {
         const BEF_BTN = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
         Axios.put(Router.generate(ROUTES.clientCategory.api.color), this.options)
-        .then(res => {
-            Toast.success(res.data);
-            this.options.callback!();
-            this.modal.hide();
-        })
-        .catch(err => {
-            BTN.innerHTML = BEF_BTN;
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        });
-    }
+            .then(res => {
+                Toast.success(res.data);
+                this.options.callback!();
+                this.modal.hide();
+            })
+            .catch(err => {
+                BTN.innerHTML = BEF_BTN;
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+    };
 }

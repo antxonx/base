@@ -6,9 +6,9 @@ import Modal from '@scripts/plugins/Modal';
 import 'daterangepicker';
 import 'daterangepicker/daterangepicker.css';
 import Axios from 'axios';
-import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
+import { ROUTES, Router, SPINNER_LOADER } from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
-import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
+import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 import DropdownSelect from '@scripts/plugins/DropdownSelect';
 import moment from 'moment';
 
@@ -33,7 +33,7 @@ export default class Add {
 
     protected userSelect: DropdownSelect;
 
-    public constructor(callback: () => void = () => {}) {
+    public constructor (callback: () => void = () => { }) {
         this.callback = callback;
         this.modal = (new Modal({
             title: "Nueva tarea",
@@ -99,13 +99,13 @@ export default class Add {
                         ],
                         firstDay: 1
                     },
-                    buttonClasses: ["btn btn-sm round"],
+                    buttonClasses: [ "btn btn-sm round" ],
                     cancelButtonClasses: "btn-secondary",
                     applyButtonClasses: "btn-antxony",
                     startDate: moment(),
                     parentEl: TASK_DATE.parentElement as Element
                 }, (start) => {
-                  this.date = start.format('DD-MM-YYYY kk:mm:ss');
+                    this.date = start.format('DD-MM-YYYY kk:mm:ss');
                 });
                 this.date = moment().format('DD-MM-YYYY kk:mm:ss');
                 TASK_DATE.value = moment().format('DD/MM/YYYY LT');
@@ -116,12 +116,12 @@ export default class Add {
                 Toast.error(err.response.data);
                 this.modal.hide();
             });
-    }
+    };
 
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
-            [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>],
+            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
             0
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
@@ -133,16 +133,16 @@ export default class Add {
                 category: this.categorySelect.getValue(),
                 priority: this.prioritySelect.getValue(),
                 user: this.userSelect.getValue(),
-            }
-            if(!DATA.date) {
+            };
+            if (!DATA.date) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");
                 return;
             }
-            if(!DATA.category) {
+            if (!DATA.category) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la categoría");
                 return;
             }
-            if(!DATA.priority) {
+            if (!DATA.priority) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la prioridad");
                 return;
             }
@@ -159,5 +159,5 @@ export default class Add {
                     BTN.innerHTML = BEF;
                 });
         }
-    }
+    };
 }

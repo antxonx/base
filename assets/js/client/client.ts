@@ -3,15 +3,15 @@
 * @module Client
 */
 import Search from "@plugins/Search";
-import 'bootstrap'
-import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
+import 'bootstrap';
+import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import Add from "@scripts/client/add";
 import Delete from "@scripts/client/delete";
 import Show from "@scripts/client/show";
-import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
@@ -33,7 +33,7 @@ export default class Client {
 
     protected control: boolean;
 
-    public constructor() {
+    public constructor () {
         this.search = '';
         this.category = 0;
         this.mainView = (document.getElementById("clientsView") || document.createElement("div"));
@@ -59,9 +59,9 @@ export default class Client {
             this.update();
             this.control = false;
         }
-        [...document.getElementsByClassName("client-delete")].forEach(element => element.addEventListener("click", this.delete));
-        [...document.getElementsByClassName("client-show")].forEach(element => element.addEventListener("click", this.show));
-    }
+        [ ...document.getElementsByClassName("client-delete") ].forEach(element => element.addEventListener("click", this.delete));
+        [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", this.show));
+    };
 
     private update = (page: number = 1) => {
         this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
@@ -76,22 +76,22 @@ export default class Client {
                 this.mainView.innerHTML = res.data;
                 $('[data-toggle="tooltip"]').tooltip();
                 this.load();
-                new Paginator({callback: this.update});
+                new Paginator({ callback: this.update });
             })
             .catch(err => {
                 console.error(err.response.data);
                 Toast.error(err.response.data);
             });
-    }
+    };
 
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
-    }
+    };
 
     private add = () => {
         (new Add(this.load)).load();
-    }
+    };
 
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
@@ -99,7 +99,7 @@ export default class Client {
             element: ELEMENT,
             onError: this.load
         })).delete();
-    }
+    };
 
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
@@ -107,15 +107,15 @@ export default class Client {
             id: +ELEMENT.getAttribute("id")!,
             callback: this.update
         })).load();
-    }
+    };
 
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();
-    }
+    };
 
     private setCategory = (e: Event) => {
         this.category = +(e.currentTarget as HTMLInputElement).value;
         this.update();
-    }
+    };
 }

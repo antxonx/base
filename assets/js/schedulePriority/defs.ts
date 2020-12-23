@@ -15,8 +15,8 @@ export const DEFAULT_PRIORITY_OPTIONS: SchedulePriorityOptions = {
 
 export interface SchedulePriorityDeleteOptions {
     element: HTMLElement;
-    onError?: () => void
-    onSuccess?: () => void
+    onError?: () => void;
+    onSuccess?: () => void;
 }
 
 export const DEFAULT_PRIORITY_DELETE_OPTIONS: SchedulePriorityDeleteOptions = {
@@ -25,7 +25,7 @@ export const DEFAULT_PRIORITY_DELETE_OPTIONS: SchedulePriorityDeleteOptions = {
     },
     onSuccess: () => {
     },
-}
+};
 
 export interface SchedulePriorityChangeOptions {
     idSchedule: number;
@@ -36,7 +36,7 @@ export const DEFAULT_PRIORITY_CHANGE_OPTIONS: SchedulePriorityChangeOptions = {
     idSchedule: 0,
     onClose: () => {
     },
-}
+};
 
 export interface SchedulePriorityShowOptions {
     idPriority: number;
@@ -47,11 +47,11 @@ export const DEFAULT_PRIORITY_SHOW_OPTIONS: SchedulePriorityShowOptions = {
     idPriority: 0,
     onClose: () => {
     },
-}
+};
 
 export interface SchedulePriorityColorOptions {
     id?: number;
-    type?: 'background'|'text';
+    type?: 'background' | 'text';
     actualColor?: string;
     newColor?: string;
     callback?: () => void;
@@ -62,5 +62,5 @@ export const DEFAULT_SCHEDULE_PRIORITY_COLOR_OPTIONS: SchedulePriorityColorOptio
     type: 'background',
     actualColor: '#ffffff',
     newColor: '',
-    callback: () => {}
-}
+    callback: () => { }
+};

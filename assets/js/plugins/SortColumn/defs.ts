@@ -23,7 +23,7 @@ export interface SortColumOptions {
     callback?: (order: SortColumnOrder) => void;
 }
 
-export const DEFAULT_SORT_COLUMN_OPTIONS : SortColumOptions = {
+export const DEFAULT_SORT_COLUMN_OPTIONS: SortColumOptions = {
     table: document.createElement("table"),
-    callback: () => {},
+    callback: () => { },
 };

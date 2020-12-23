@@ -5,9 +5,9 @@
 import $ from 'jquery';
 import 'bootstrap';
 import Modal from "@plugins/Modal";
-import {ClientCategoryShowOptions, DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS} from "@scripts/clientCategory/defs";
+import { ClientCategoryShowOptions, DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS } from "@scripts/clientCategory/defs";
 import Axios from "axios";
-import {ROUTES, Router} from "@scripts/app";
+import { ROUTES, Router } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
@@ -19,12 +19,12 @@ import Toast from "@plugins/AlertToast";
  */
 export default class Show {
 
-    protected modal: Modal
+    protected modal: Modal;
 
     protected options: ClientCategoryShowOptions;
 
-    public constructor(options: ClientCategoryShowOptions) {
-        this.options = {...DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS, ...options};
+    public constructor (options: ClientCategoryShowOptions) {
+        this.options = { ...DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS, ...options };
         this.modal = new Modal({
             title: 'Categoría',
             size: 30
@@ -33,7 +33,7 @@ export default class Show {
 
     public load = () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.clientCategory.view.show, {'id': this.options.idCategory.toString()}))
+        Axios.get(Router.generate(ROUTES.clientCategory.view.show, { 'id': this.options.idCategory.toString() }))
             .then(res => {
                 this.modal.updateBody(res.data);
                 $('.editable-field').editable({
@@ -52,5 +52,5 @@ export default class Show {
                 console.error(err.response.data);
                 Toast.error(err.response.data);
             });
-    }
+    };
 }

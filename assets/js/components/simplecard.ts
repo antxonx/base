@@ -31,12 +31,12 @@ const _TITLE = `<div class="text-center">#title#<hr class="divide-2"></div>`;
 /* -------------------------------------------------------------------------- */
 
 (function () {
-    [...document.getElementsByTagName("simple-card")].forEach(el => {
+    [ ...document.getElementsByTagName("simple-card") ].forEach(el => {
 
         /* -------------------- Tomamos los parámetros definidos -------------------- */
 
-        const CONTENT = el.getElementsByTagName("simple-card-content")[0]?.innerHTML;
-        const TITLE = el.getElementsByTagName("simple-card-title")[0]?.innerHTML;
+        const CONTENT = el.getElementsByTagName("simple-card-content")[ 0 ]?.innerHTML;
+        const TITLE = el.getElementsByTagName("simple-card-title")[ 0 ]?.innerHTML;
         const CLASS = el.getAttribute("class");
 
         /* ------------------------------------ . ----------------------------------- */

@@ -21,11 +21,11 @@ export default class Assign {
 
     protected reasign: boolean;
 
-    public constructor(options: ScheduleAsignOptions) {
-        this.options = {...DEFAULT_SCHEDULE_ASIGN_OPTIONS, ...options};
+    public constructor (options: ScheduleAsignOptions) {
+        this.options = { ...DEFAULT_SCHEDULE_ASIGN_OPTIONS, ...options };
         this.list = document.createElement("div") as HTMLElement;
         this.reasign = false;
-        if(this.options.id == 0) {
+        if (this.options.id == 0) {
             throw new Error("No se pudo identificar la tarea");
         }
         this.modal = new Modal({
@@ -39,23 +39,23 @@ export default class Assign {
         this.reasign = reasign;
         this.modal.show();
         Axios.get(Router.generate(ROUTES.schedule.view.asign))
-        .then(res => {
-            this.modal.updateBody(res.data);
-            this.list = document.getElementById('userList') as HTMLElement;
-            this.startEvents();
-        })
-        .catch(err => {
-            this.modal.hide();
-            console.error(err);
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        })
-    }
+            .then(res => {
+                this.modal.updateBody(res.data);
+                this.list = document.getElementById('userList') as HTMLElement;
+                this.startEvents();
+            })
+            .catch(err => {
+                this.modal.hide();
+                console.error(err);
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+    };
 
     private listAsign = async (data: string[]) => {
         if (Array.isArray(data) && data.length) {
             let msgText: string;
-            if(this.reasign) {
+            if (this.reasign) {
                 msgText = "reasignar";
             } else {
                 msgText = "asignar";
@@ -71,7 +71,7 @@ export default class Assign {
             if (res) {
                 Axios.patch(Router.generate(ROUTES.schedule.api.asign), {
                     taskId: this.options.id,
-                    userId: data[0],
+                    userId: data[ 0 ],
                 })
                     .then(() => {
                         this.modal.hide();
@@ -84,13 +84,13 @@ export default class Assign {
                     .finally(() => {
                         this.list.innerHTML = LIST_BEF;
                         this.startEvents();
-                    })
+                    });
             } else {
                 this.list.innerHTML = LIST_BEF;
                 this.startEvents();
             }
         }
-    }
+    };
 
     private startEvents = () => {
         (new ListSelect({
@@ -99,5 +99,5 @@ export default class Assign {
             attribute: 'user-id',
             callback: this.listAsign
         })).load();
-    }
+    };
 }

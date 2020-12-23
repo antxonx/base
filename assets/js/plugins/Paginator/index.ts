@@ -4,7 +4,7 @@
  * @module Paginator
  * @preferred
  */
-import {DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions} from "./defs";
+import { DEFAULT_PAGINATOR_OPTIONS, PaginatorOptions } from "./defs";
 
 /**
  * trigger page buttons
@@ -21,11 +21,11 @@ export default class Paginator {
      * @param {PaginatorOptions} [options=DEFAULT_PAGINATOR_OPTIONS]
      * @memberof Paginator
      */
-    public constructor(options: PaginatorOptions = DEFAULT_PAGINATOR_OPTIONS) {
-        this.options = {...DEFAULT_PAGINATOR_OPTIONS, ...options};
-        let elements: HTMLCollectionOf<Element>
+    public constructor (options: PaginatorOptions = DEFAULT_PAGINATOR_OPTIONS) {
+        this.options = { ...DEFAULT_PAGINATOR_OPTIONS, ...options };
+        let elements: HTMLCollectionOf<Element>;
         elements = this.options.elements || document.getElementsByClassName(this.options.classname!);
-        [...elements].forEach(element => element.addEventListener("click", this.changePage));
+        [ ...elements ].forEach(element => element.addEventListener("click", this.changePage));
     }
 
     /**
@@ -36,5 +36,5 @@ export default class Paginator {
     public changePage = (e: Event) => {
         e.preventDefault();
         this.options.callback(+(e.currentTarget as HTMLElement).getAttribute(this.options.indexname!)!);
-    }
+    };
 }

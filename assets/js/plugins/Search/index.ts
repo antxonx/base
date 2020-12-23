@@ -4,7 +4,7 @@
  * @module Search
  * @preferred
  */
-import {DEFAULT_SEARCH_OPTIONS, SearchOptions} from './defs';
+import { DEFAULT_SEARCH_OPTIONS, SearchOptions } from './defs';
 
 /**
  * Manages input on search field
@@ -13,8 +13,7 @@ import {DEFAULT_SEARCH_OPTIONS, SearchOptions} from './defs';
  * @class Search
  * @author Antxony <dantonyofcarim@gmail.com>
  */
-export default class Search
-{
+export default class Search {
     /**
      * timer
      *
@@ -22,18 +21,18 @@ export default class Search
      * @type {(NodeJS.Timeout | undefined)}
      * @memberof Search
      */
-    private timer :  NodeJS.Timeout | undefined;
+    private timer: NodeJS.Timeout | undefined;
 
     /**
      * Creates an instance of Search.
      * @param {SearchOptions} [options=DEFAULT_SEARCH_OPTIONS]
      * @memberof Search
      */
-    public constructor(options: SearchOptions = DEFAULT_SEARCH_OPTIONS) {
+    public constructor (options: SearchOptions = DEFAULT_SEARCH_OPTIONS) {
         const COMPONENT = options.element || document.querySelector(options.selector!) as HTMLInputElement;
         const ERASE_COMPS = COMPONENT.closest('.search-input')!.getElementsByClassName('erase-search');
         COMPONENT.addEventListener("input", () => {
-            if(this.timer != undefined){
+            if (this.timer != undefined) {
                 clearTimeout(this.timer);
             }
             this.timer = setTimeout(() => {
@@ -42,13 +41,13 @@ export default class Search
                 options.callback(DATA);
             }, 500);
         });
-        if(ERASE_COMPS && ERASE_COMPS.length > 0) {
-            ERASE_COMPS[0].addEventListener('click', () => {
-                if(COMPONENT.value !== ""){
+        if (ERASE_COMPS && ERASE_COMPS.length > 0) {
+            ERASE_COMPS[ 0 ].addEventListener('click', () => {
+                if (COMPONENT.value !== "") {
                     COMPONENT.value = "";
                     options.callback("");
                 }
-            })
+            });
         }
     }
 }

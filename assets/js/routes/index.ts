@@ -31,16 +31,16 @@ export const Routes = {
             }
         },
         contact: {
-            view:{
+            view: {
                 form: 'client_contact_form',
                 show: 'client_contact_show'
             },
-            api:{
+            api: {
                 add: 'client_contact_add',
                 delete: 'client_contact_delete',
             },
-            extra:{
-                api:{
+            extra: {
+                api: {
                     add: 'client_contact_extra_add',
                     delete: 'client_contact_extra_delete'
                 }
@@ -126,4 +126,4 @@ export const Routes = {
             color: 'schedule_priority_color_edit'
         }
     },
-}
+};

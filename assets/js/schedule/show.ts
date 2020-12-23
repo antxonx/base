@@ -15,17 +15,17 @@ export default class Show {
 
     protected modal: Modal;
 
-    protected options: ScheduleShowOptions
+    protected options: ScheduleShowOptions;
 
     protected control: boolean;
 
-    public constructor(options: ScheduleShowOptions) {
-        this.options = {...DEFAULT_SCHEDULE_SHOW_OPTIONS, ...options};
+    public constructor (options: ScheduleShowOptions) {
+        this.options = { ...DEFAULT_SCHEDULE_SHOW_OPTIONS, ...options };
         this.control = true;
         this.options.id = this.options.id || +this.options.element!.getAttribute("event-id")!;
         this.options.bColor = this.options.bColor || this.options.element!.style.backgroundColor;
         this.options.tColor = this.options.tColor || this.options.element!.style.color;
-        if(this.options.id == 0) {
+        if (this.options.id == 0) {
             throw new Error("No se pudo determinar la tarea");
         }
         this.modal = new Modal({
@@ -35,7 +35,7 @@ export default class Show {
     }
 
     public load = () => {
-        if(this.control) {
+        if (this.control) {
             this.control = false;
             this.modal.show();
             this.update();
@@ -90,18 +90,18 @@ export default class Show {
                 },
             })).delete();
         });
-    }
+    };
 
     public update = () => {
         this.modal.loadingBody();
-        Axios.get(Router.generate(ROUTES.schedule.view.show, {'id': this.options.id}))
-        .then(res => {
-            this.modal.updateBody(res.data);
-            this.load();
-        })
-        .catch(err => {
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        })
-    }
+        Axios.get(Router.generate(ROUTES.schedule.view.show, { 'id': this.options.id }))
+            .then(res => {
+                this.modal.updateBody(res.data);
+                this.load();
+            })
+            .catch(err => {
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+    };
 }

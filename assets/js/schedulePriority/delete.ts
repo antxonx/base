@@ -2,11 +2,11 @@
 * @packageDocumentation
 * @module Schedule/Priority
 */
-import {SchedulePriorityDeleteOptions, DEFAULT_PRIORITY_DELETE_OPTIONS} from "@scripts/schedulePriority/defs";
+import { SchedulePriorityDeleteOptions, DEFAULT_PRIORITY_DELETE_OPTIONS } from "@scripts/schedulePriority/defs";
 import Alert from "@plugins/Alert";
-import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
+import { deleteElement, disableRow, restoreRow } from "@plugins/DeleteElement";
 import Axios from "axios";
-import {ROUTES, Router} from "@scripts/app";
+import { ROUTES, Router } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
@@ -20,8 +20,8 @@ export default class SchedulePriorityDelete {
 
     protected options: SchedulePriorityDeleteOptions;
 
-    public constructor(options: SchedulePriorityDeleteOptions) {
-        this.options = {...DEFAULT_PRIORITY_DELETE_OPTIONS, ...options};
+    public constructor (options: SchedulePriorityDeleteOptions) {
+        this.options = { ...DEFAULT_PRIORITY_DELETE_OPTIONS, ...options };
     }
 
     public delete = async () => {
@@ -34,7 +34,7 @@ export default class SchedulePriorityDelete {
         let res = await ALERT.updateBody(`¿Eliminar la categoría <b>${NAME}</b>?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.delete(Router.generate(ROUTES.schedulePriority.api.delete, {'id': ID.toString()}))
+            Axios.delete(Router.generate(ROUTES.schedulePriority.api.delete, { 'id': ID.toString() }))
                 .then(res => {
                     Toast.success(res.data);
                     deleteElement(this.options.element);
@@ -47,5 +47,5 @@ export default class SchedulePriorityDelete {
                     this.options.onError!();
                 });
         }
-    }
+    };
 }

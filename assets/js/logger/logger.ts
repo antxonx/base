@@ -6,9 +6,9 @@ import Axios from 'axios';
 import Paginator from '@scripts/plugins/Paginator';
 import Search from '@scripts/plugins/Search';
 import Toast from '@scripts/plugins/AlertToast';
-import {BIG_LOADER_TABLE, Router, ROUTES} from '@scripts/app';
+import { BIG_LOADER_TABLE, Router, ROUTES } from '@scripts/app';
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
-import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
@@ -20,7 +20,7 @@ import SortColumn from "@plugins/SortColumn";
  */
 export default class Logger {
 
-    protected control: boolean
+    protected control: boolean;
 
     protected view: HTMLElement;
 
@@ -28,13 +28,13 @@ export default class Logger {
 
     protected method: string;
 
-    protected route: string|null;
+    protected route: string | null;
 
     protected orderBy: SortColumnOrder;
 
     protected readonly defaultView = `<tr class="table-paginator"><td colspan="6"><div class="alert alert-info w-50-c mx-auto mt-lg-5 round text-center">Debe selecionar un tipo de regsitro</div></td></tr>`;
 
-    public constructor() {
+    public constructor () {
         this.control = true;
         this.searchInput = '';
         this.method = '';
@@ -51,7 +51,7 @@ export default class Logger {
     }
 
     public load = () => {
-        if(this.control) {
+        if (this.control) {
             this.control = false;
             this.updateView(this.defaultView);
             new Search({
@@ -88,7 +88,7 @@ export default class Logger {
                 .then(res => {
                     this.updateView(res.data);
                     this.load();
-                    new Paginator({callback: this.update});
+                    new Paginator({ callback: this.update });
                 })
                 .catch(err => {
                     console.error(err.response.data);
@@ -97,7 +97,7 @@ export default class Logger {
         } else {
             this.updateView(this.defaultView);
         }
-    }
+    };
 
     private changeType = (value: string[]) => {
         if (value.includes('info')) {
@@ -113,14 +113,14 @@ export default class Logger {
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();
-    }
+    };
 
     private changeMethod = (e: Event) => {
         this.method = (e.currentTarget as HTMLInputElement).value;
         this.update();
-    }
+    };
 
-    private updateView = (newView : string) => {
+    private updateView = (newView: string) => {
         this.view.innerHTML = newView;
-    }
+    };
 }

@@ -3,7 +3,7 @@
 * @module Schedule
 */
 
-export declare type ScheduleType = 'week'|'month'|'day'
+export declare type ScheduleType = 'week' | 'month' | 'day';
 
 export interface ScheduleShowOptions {
     element?: HTMLElement;
@@ -13,33 +13,33 @@ export interface ScheduleShowOptions {
     callback?: () => void;
 }
 
-export const DEFAULT_SCHEDULE_SHOW_OPTIONS : ScheduleShowOptions = {
+export const DEFAULT_SCHEDULE_SHOW_OPTIONS: ScheduleShowOptions = {
     element: document.createElement("div"),
     id: 0,
     bColor: '',
     tColor: '',
-    callback: () => {}
-}
+    callback: () => { }
+};
 
 export interface ScheduleFinishOptions {
     id: number;
     callback?: () => void;
 }
 
-export const DEFAULT_SCHEDULE_FINISH_OPTIONS : ScheduleFinishOptions = {
+export const DEFAULT_SCHEDULE_FINISH_OPTIONS: ScheduleFinishOptions = {
     id: 0,
-    callback: () => {},
-}
+    callback: () => { },
+};
 
 export interface ScheduleAsignOptions {
     id?: number;
     callback?: () => void;
 }
 
-export const DEFAULT_SCHEDULE_ASIGN_OPTIONS : ScheduleAsignOptions = {
+export const DEFAULT_SCHEDULE_ASIGN_OPTIONS: ScheduleAsignOptions = {
     id: 0,
-    callback: () => {}
-}
+    callback: () => { }
+};
 
 export interface ScheduleDeleteOptions {
     id?: number;
@@ -47,8 +47,8 @@ export interface ScheduleDeleteOptions {
     onError?: () => void;
 }
 
-export const DEFAULT_SCHEDULE_DELETE_OPTIONS : ScheduleDeleteOptions = {
+export const DEFAULT_SCHEDULE_DELETE_OPTIONS: ScheduleDeleteOptions = {
     id: 0,
-    callback: () => {},
-    onError: () => {}
-}
+    callback: () => { },
+    onError: () => { }
+};

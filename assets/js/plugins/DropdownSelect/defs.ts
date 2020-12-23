@@ -8,10 +8,10 @@ export interface DropdownSelectOptions {
     callback?: (value: string) => void;
 }
 
-export const DEFAULT_DROPDOWN_SELECT_OPTIONS : DropdownSelectOptions = {
+export const DEFAULT_DROPDOWN_SELECT_OPTIONS: DropdownSelectOptions = {
     element: document.createElement("div"),
-    callback: () => {}
-}
+    callback: () => { }
+};
 
 export interface DropdownSelectValue {
     value: string;

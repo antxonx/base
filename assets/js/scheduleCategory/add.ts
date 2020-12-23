@@ -4,9 +4,9 @@
 */
 import Modal from '@scripts/plugins/Modal';
 import Axios from 'axios';
-import {ROUTES, Router, SPINNER_LOADER} from '@scripts/app';
+import { ROUTES, Router, SPINNER_LOADER } from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
-import {evaluateInputs, insertAlertAfter} from '@scripts/plugins/Required';
+import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 
 /**
  * Add a new category for events on scheduler
@@ -21,7 +21,7 @@ export default class ScheduleCategoryAdd {
 
     protected callback: () => void;
 
-    public constructor(callback: () => void = () => {}) {
+    public constructor (callback: () => void = () => { }) {
         this.callback = callback;
         this.modal = (new Modal({
             title: "Nueva categoría",
@@ -41,12 +41,12 @@ export default class ScheduleCategoryAdd {
                 console.error(err.response.data);
                 this.modal.hide();
             });
-    }
+    };
 
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
-            [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>],
+            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
             0
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
@@ -57,7 +57,7 @@ export default class ScheduleCategoryAdd {
                 description: (document.getElementById("description") as HTMLInputElement).value,
                 bColor: (document.getElementById("bColor") as HTMLInputElement).value,
                 tColor: (document.getElementById("tColor") as HTMLInputElement).value,
-            }
+            };
             Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA)
                 .then(res => {
                     Toast.success(res.data);
@@ -70,5 +70,5 @@ export default class ScheduleCategoryAdd {
                     BTN.innerHTML = BEF;
                 });
         }
-    }
+    };
 }
