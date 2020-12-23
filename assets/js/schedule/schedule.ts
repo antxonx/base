@@ -90,10 +90,12 @@ export default class Schedule {
                 callback: this.searchField,
                 selector: "#searchTaskInput"
             });
-            (new DropdownSelect({
-                element: document.getElementById("taskCategory")!,
-                callback: this.setCategory
-            })).load();
+            if(document.getElementById("taskCategoryIndex")) {
+                (new DropdownSelect({
+                    element: document.getElementById("taskCategoryIndex")!,
+                    callback: this.setCategory
+                })).load();
+            }
             this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
             this.update();
         }
