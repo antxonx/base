@@ -11,6 +11,8 @@ import { ScheduleType } from './defs';
 import Add from '@scripts/schedule/add';
 import Show from '@scripts/schedule/show';
 import { isMobile } from "@scripts/plugins/Required";
+import Search from "@scripts/plugins/Search";
+import DropdownSelect from "@scripts/plugins/DropdownSelect";
 
 export default class Schedule {
 
@@ -22,12 +24,24 @@ export default class Schedule {
 
     protected opened: number;
 
+    protected searchInput: string;
+
+    protected me: number;
+
+    protected finished: number;
+
     protected route: string;
+
+    protected category: number;
 
     public constructor() {
         this.control = true;
         this.offset = 0;
         this.opened = 0;
+        this.category = 0;
+        this.searchInput = '';
+        this.me = 1;
+        this.finished = 0;
         this.mainView = document.getElementById("CalendarView") || document.createElement("div");
         this.route = '';
     }
@@ -55,6 +69,31 @@ export default class Schedule {
                 activeValue: active,
                 oneActive: true
             });
+            if(document.getElementById('superCheck')) {
+                (new ButtonCheckGroup(document.getElementById('superCheck') as HTMLElement, {
+                    onChange: this.superCheck,
+                    unCheckClass: 'btn-outline-info',
+                    checkClass: 'btn-info',
+                    extraClass: 'round',
+                    activeValue: 'me',
+                    multiple: true
+                }));
+            } else {
+                (new ButtonCheckGroup(document.getElementById('noSuperCheck') as HTMLElement, {
+                    onChange: this.noSuperCheck,
+                    unCheckClass: 'btn-outline-info',
+                    checkClass: 'btn-info',
+                    extraClass: 'round',
+                }));
+            }
+            new Search({
+                callback: this.searchField,
+                selector: "#searchTaskInput"
+            });
+            (new DropdownSelect({
+                element: document.getElementById("taskCategory")!,
+                callback: this.setCategory
+            })).load();
             this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
             this.update();
         }
@@ -71,7 +110,11 @@ export default class Schedule {
     private update = () => {
         this.mainView.innerHTML = BIG_LOADER;
         Axios.get(Router.generate(this.route, {
-            'offset': this.offset
+            'search': this.searchInput,
+            'offset': this.offset,
+            'me': this.me,
+            'finished': this.finished,
+            'category': this.category
         }))
         .then(res => {
             this.mainView.innerHTML = res.data;
@@ -82,6 +125,16 @@ export default class Schedule {
             Toast.error(err.response.data);
         })
     }
+
+    private setCategory = (value: string) => {
+        this.category = +value;
+        this.update();
+    }
+
+    private searchField = (data: string) => {
+        this.searchInput = data.replace(/\//g, "_");
+        this.update();
+    };
 
     private addOffset = (value: number, set: boolean = false) => {
         if(set) {
@@ -116,6 +169,29 @@ export default class Schedule {
     private changeType = (value: string[]) => {
         this.route = ROUTES.schedule.view[(value[0] as ScheduleType)];
         this.offset = 0;
+        this.update();
+    }
+
+    private superCheck = (value: string[]) => {
+        if(value.includes('me')){
+            this.me = 1;
+        } else {
+            this.me = 0;
+        }
+        if(value.includes('finished')){
+            this.finished = 1;
+        } else {
+            this.finished = 0;
+        }
+        this.update();
+    }
+
+    private noSuperCheck = (value: string[]) => {
+        if(value.includes('finished')){
+            this.finished = 1;
+        } else {
+            this.finished = 0;
+        }
         this.update();
     }
 }

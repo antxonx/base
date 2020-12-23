@@ -15,9 +15,8 @@
             </p>
         </div>
         <div class="col-md-6">
-            <p>
                 <b>Responsable</b> <br>
-                <div class="schedule-asigned">
+                <div class="task-hover-row">
                 {% if task.assigned != null %}
                     <em>{{ task.assigned.name }}</em>
                     {% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
@@ -48,8 +47,6 @@
                     {% endif %}
                 {% endif %}
                 </div>
-
-            </p>
             <p>
                 <b>Categoría</b> <br>
                 <span class="color-pill" style="background-color: {{ task.category.backgroundColor }}">&nbsp;</span> {{ task.category.name }}
@@ -70,12 +67,12 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             {% if task.createdBy.id == app.user.id or is_granted("ROLE_SUPERVISOR") %}
                 <button type="button" id="taskDelete" class="btn btn-danger round">Eliminar</button>
             {% endif %}
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col text-right">
             {% if task.done %}
                 <button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
             {% else %}

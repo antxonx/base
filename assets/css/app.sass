@@ -51,11 +51,17 @@ html
 .text-antxony
     color: #6060cd
 
-.btn-info
+// .btn-info
+//   &.no-hover
+//     &:hover
+//       background-color: $info-color
+//       text-decoration: none
+
+.btn[class*="btn-outline-"]
   &.no-hover
     &:hover
-      background-color: $info-color
-      text-decoration: none
+      background-color: inherit
+      color: inherit
 
 .board
   overflow-x: auto
