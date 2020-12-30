@@ -2,11 +2,11 @@
 	<div class="row">
 		<div class="col-md-6">
 			{% if task.client != null %}
-			<p>
-				<b>Cliente</b>
-				<br>
-				<button id="openClientInfo" class="btn btn-sm btn-link p-0 m-0" client-id="{{ task.client.id }}">{{ task.client.name }}</button>
-			</p>	
+				<p>
+					<b>Cliente</b>
+					<br>
+					<button id="openClientInfo" class="btn btn-sm btn-link p-0 m-0" client-id="{{ task.client.id }}">{{ task.client.name }}</button>
+				</p>
 			{% endif %}
 			<p>
 				<b>Tarea</b>
@@ -50,16 +50,14 @@
 				<span class="color-pill" style="background-color: {{ task.category.backgroundColor }}">&nbsp;</span>
 				{{ task.category.name }}
 			</p>
-			<p>
-				<b>Prioridad</b>
-				<br>
-				<span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span>
-				{{ task.priority.name }}
-			</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
+			{% if task.priority != null %}
+				<p>
+					<b>Prioridad</b>
+					<br>
+					<span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span>
+					{{ task.priority.name }}
+				</p>
+			{% endif  %}
 			<p>
 				<b>Detalle</b>
 				<br>

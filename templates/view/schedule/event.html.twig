@@ -2,8 +2,8 @@
 	<div style="width: 100%;">
 		<div class="header">
 			<span class="assigned">
-				{% if event.assigned != null %}
-					{{ event.assigned.name }}
+				{% if event.client != null %}
+					{{ event.client.name }}
 				{% else %}
 					&nbsp;
 				{% endif %}
