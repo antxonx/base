@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Criteria;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 
 /**
  * @method Schedule|null find($id, $lockMode = null, $lockVersion = null)
@@ -82,7 +83,7 @@ class ScheduleRepository extends ServiceEntityRepository
                 $query->addCriteria($dateCriteria);
                 break;
             default:
-                // code...
+                throw new Exception("Ocurrió un error con el calendario");
                 break;
         }
         return $query->getQuery()->getResult();
