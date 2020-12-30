@@ -217,7 +217,7 @@ class ScheduleController extends AbstractController
             $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];
             $day += ["day" => strftime("%d", strtotime("today {$offset} day"))];
             $day += ["date" => strftime("%d-%m-%Y", strtotime("today {$offset} day"))];
-            $eventsS = $this->rep->getBy("week", $params);
+            $eventsS = $this->rep->getBy("day", $params);
             $events = [];
             $evDay = strftime("%d-%m-%Y", strtotime("today {$offset} day"));
             foreach ($eventsS as $event) {
@@ -320,7 +320,7 @@ class ScheduleController extends AbstractController
                 $message .= "reactivado";
             }
             $this->rep->update();
-            $message .= "</b> la tarea";
+            $message .= "</br> la tarea";
             $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
             return new Response($message);
         } catch (Exception $e) {

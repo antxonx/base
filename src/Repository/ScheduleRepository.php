@@ -57,16 +57,16 @@ class ScheduleRepository extends ServiceEntityRepository
         }
         switch ($type) {
             case 'month':
-                $start = new DateTime("first day of {$offset} month", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("last day of {$offset} month", new DateTimeZone("America/Mexico_city"));
+                $start = new DateTime("first day of this month {$offset} month midnight", new DateTimeZone("America/Mexico_city"));
+                $finish = new DateTime("first day of next month {$offset} month midnight -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
                 $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
                 $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
             case 'week':
-                $start = new DateTime("first day of {$offset} week", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("last day of {$offset} week", new DateTimeZone("America/Mexico_city"));
+                $start = new DateTime("last sunday midnight {$offset} week", new DateTimeZone("America/Mexico_city"));
+                $finish = new DateTime("next sunday midnight {$offset} week -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
                 $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
                 $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
