@@ -11,6 +11,7 @@ import Finish from "@scripts/schedule/finish";
 import Assign from "@scripts/schedule/assign";
 import Delete from "@scripts/schedule/delete";
 import ShowClient from '@scripts/client/show';
+import ChangePriority from "./changePriority";
 
 export default class Show {
 
@@ -81,6 +82,17 @@ export default class Show {
                     this.options.callback!();
                 }
             })).asign(true);
+        });
+        document.getElementById("taskChangePriority")?.addEventListener("click", () => {
+            this.modal.hide();
+            (new ChangePriority({
+                id: this.options.id,
+                callback: () => {
+                    this.control = true;
+                    this.load();
+                    this.options.callback!();
+                }
+            })).load();
         });
         document.getElementById("taskDelete")?.addEventListener("click", () => {
             (new Delete({

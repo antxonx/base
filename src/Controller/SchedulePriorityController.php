@@ -95,8 +95,8 @@ class SchedulePriorityController extends AbstractController
     /**
      * Cargar formulario de cambio de prioridad
      *
-     * @Route("/changeForm/{id}", name="schedule_priority_change_form", methods={"GET"}, options={"expose" = true})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/changeform/{id}", name="schedule_priority_change_form", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function changeForm(int $id): Response
     {

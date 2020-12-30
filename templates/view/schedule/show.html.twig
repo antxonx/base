@@ -51,12 +51,19 @@
 				{{ task.category.name }}
 			</p>
 			{% if task.priority != null %}
-				<p>
+				{# <p> #}
 					<b>Prioridad</b>
 					<br>
+					<div class="task-hover-row">
 					<span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span>
 					{{ task.priority.name }}
-				</p>
+					{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+					<button class="btn btn-sm btn-outline-danger border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Cambiar prioridad" id="taskChangePriority">
+							<i class="fas fa-pen"></i>
+					</button>
+					{% endif %}
+					</div>
+				{# </p> #}
 			{% endif  %}
 			<p>
 				<b>Detalle</b>

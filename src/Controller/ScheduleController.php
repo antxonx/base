@@ -345,25 +345,42 @@ class ScheduleController extends AbstractController
     }
 
     /**
-     * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
+     * @Route("/update", name="schedule_update", methods={"PUT", "PATCH"}, options={"expose" = true})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function asign(Request $request): Response
+    public function update(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
-            $task = $this->rep->find($content->taskId);
+            $task = $this->rep->find($content->id);
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
-            $user = $this->uRep->find($content->userId);
-            if ($task == null) {
-                throw new Exception("No se pudo encontrar al usuario");
+            switch ($content->type) {
+                case 1: //Asignar
+                    $user = $this->uRep->find($content->value);
+                    if ($user == null) {
+                        throw new Exception("No se pudo encontrar al usuario");
+                    }
+                    $task
+                        ->setAssigned($user)
+                        ->updated($this->security->getUser());
+                    $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
+                    break;
+                case 2: //Prioridad
+                    $priority = $this->spRep->find($content->value);
+                    if ($priority == null) {
+                        throw new Exception("No se pudo encontrar la prioridad");
+                    }
+                    $task
+                        ->setPriority($priority)
+                        ->updated($this->security->getUser());
+                    $message = "Se ha cambiado la priordad de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) a <b>{$priority->getId()}</b> (<em>{$priority->getName()}</em>)";
+                    break;
+                default:
+                    $message = "No se pudo determinar la orden";
+                    break;
             }
-            $task
-                ->setAssigned($user)
-                ->updated($this->security->getUser());
-            $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
             $this->util->info($message);
             return new Response($message);
         } catch (Exception $e) {

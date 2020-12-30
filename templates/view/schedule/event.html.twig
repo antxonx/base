@@ -12,7 +12,7 @@
 				&#x2800;
 			</span>
 		</div>
-		<span class="time" {% if event.done %} style="color: #52525288" {% else %} style="color: {{ event.category.color ~ '88'}};" {% endif %}>
+		<span class="time{% if (event.date <= date("now +2 hour")) and not event.done %} blink{% endif %}" {% if event.done %} style="color: #52525288" {% else %} style="color: {{ event.category.color ~ '88'}};" {% endif %}>
 			{{ event.date|format_datetime("none", "short", locale="es") }}
 		</span>
 	</div>
