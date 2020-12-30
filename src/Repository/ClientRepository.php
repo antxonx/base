@@ -61,6 +61,11 @@ class ClientRepository extends ServiceEntityRepository
             $searchCriteria->orWhere(Criteria::expr()->contains("ce.value", $params->search));
             $query->addCriteria($searchCriteria);
         }
+        if (isset($params->searchName) && $params->searchName != "") {
+            $searchNameCriteria = new Criteria();
+            $searchNameCriteria->where(Criteria::expr()->contains("p.name", $params->searchName));
+            $query->addCriteria($searchNameCriteria);
+        }
         if($params->category != 0) {
             $categoryCriteria = new Criteria();
             $categoryCriteria->where(Criteria::expr()->eq("p.category", $params->category));

@@ -76,6 +76,11 @@ class Schedule
      */
     private $detail;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Client::class)
+     */
+    private $client;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -239,6 +244,18 @@ class Schedule
     public function setDetail(string $detail): self
     {
         $this->detail = $detail;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

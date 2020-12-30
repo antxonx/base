@@ -28,3 +28,8 @@ export const DEFAULT_SHOW_OPTIONS: ShowOptions = {
     id: 0,
     callback: () => { }
 };
+
+export interface ClientSearchInfo {
+    id: number;
+    name: string;
+}

@@ -11,6 +11,7 @@ import Toast from '@scripts/plugins/AlertToast';
 import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 import DropdownSelect from '@scripts/plugins/DropdownSelect';
 import moment from 'moment';
+import ClientSearch from '@scripts/client/searchClient';
 
 /**
  * Add a new task
@@ -33,11 +34,14 @@ export default class Add {
 
     protected userSelect: DropdownSelect;
 
+    protected selectedClient: ClientSearch|null;
+
     public constructor (callback: () => void = () => { }) {
         this.callback = callback;
+        this.selectedClient = null;
         this.modal = (new Modal({
             title: "Nueva tarea",
-            size: 30
+            size: 40
         }));
         this.date = '';
         this.categorySelect = new DropdownSelect();
@@ -61,6 +65,7 @@ export default class Add {
                 this.userSelect = (new DropdownSelect({
                     element: document.getElementById("taskUser")!
                 })).load();
+                this.selectedClient = new ClientSearch("#searchClientForm");
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
                     showDropdowns: true,
@@ -133,6 +138,7 @@ export default class Add {
                 category: this.categorySelect.getValue(),
                 priority: this.prioritySelect.getValue(),
                 user: this.userSelect.getValue(),
+                client: this.selectedClient!.getClientId(),
             };
             if (!DATA.date) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");

@@ -31,6 +31,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\All;
 
 /**
  * ClientController class
@@ -450,6 +451,36 @@ class ClientController extends AbstractController
             $this->util->info("Se ha agregado un nuevo {$type}(<em>{$content->value}</em>) al contacto <b>{$id}</b>(<em>{$extra->getContact()->getName()}</em>)");
             return new Response("Se ha agregado un nuevo ${type} al contacto");
         } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * Search cleint
+     * @Route("/search", name="client_search", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_COMMON")
+     */
+    public function search(Request $request): Response
+    {
+        try {
+            $params = json_decode(json_encode($request->query->all()));
+            $qParams = (Object) [
+                'ordercol' => 'name',
+                'orderorder' => 'ASC',
+                'searchName' => $params->client,
+                'category' => 0
+            ];
+            $result = $this->cRep->getBy($qParams);
+            $clients = $result['paginator'];
+            $ret = [];
+            foreach($clients as $client) {
+                $ret[] = [
+                    'id' => $client->getId(),
+                    'name' => $client->getName()
+                ];
+            }
+            return new Response(json_encode($ret));
+        } catch(Exception $e) {
             return $this->util->errorResponse($e);
         }
     }

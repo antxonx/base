@@ -14,7 +14,8 @@ export const Routes = {
         },
         api: {
             add: 'client_add',
-            delete: 'client_delete'
+            delete: 'client_delete',
+            search: 'client_search'
         },
         address: {
             view: {

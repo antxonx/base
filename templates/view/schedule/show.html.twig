@@ -1,6 +1,13 @@
 <div class="card-body">
 	<div class="row">
 		<div class="col-md-6">
+			{% if task.client != null %}
+			<p>
+				<b>Cliente</b>
+				<br>
+				<button id="openClientInfo" class="btn btn-sm btn-link p-0 m-0" client-id="{{ task.client.id }}">{{ task.client.name }}</button>
+			</p>	
+			{% endif %}
 			<p>
 				<b>Tarea</b>
 				<br>

@@ -39,13 +39,15 @@ export default class Show {
         }
         this.modal = new Modal({
             title: 'Cliente',
-            size: 90
+            size: 90,
+            onHide: this.options.callback
         });
     }
 
     public load = () => {
         if (this.control) {
             this.control = false;
+            this.modal.setAllowCallback(true);
             this.modal.show();
             this.update();
         }
@@ -252,6 +254,7 @@ export default class Show {
     };
 
     private showContact = (e: Event) => {
+        this.modal.setAllowCallback(false);
         this.modal.hide();
         this.control = true;
         (new ShowContact({

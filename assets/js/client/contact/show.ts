@@ -46,9 +46,9 @@ export default class Show {
             this.modal.show();
             this.update();
         }
-        document.getElementById("contact-edit-active")!.addEventListener("click", this.edit);
-        document.getElementById("contact-phone-extra-form")!.addEventListener("submit", this.addExtraPhone);
-        document.getElementById("contact-email-extra-form")!.addEventListener("submit", this.addExtraEmail);
+        document.getElementById("contact-edit-active")?.addEventListener("click", this.edit);
+        document.getElementById("contact-phone-extra-form")?.addEventListener("submit", this.addExtraPhone);
+        document.getElementById("contact-email-extra-form")?.addEventListener("submit", this.addExtraEmail);
         [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', this.deletePhone));
         [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', this.deleteEmail));
     };

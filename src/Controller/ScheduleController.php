@@ -22,6 +22,7 @@ use DateTimeZone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use App\Repository\ClientRepository;
 
 /**
  * ScheduleController class
@@ -42,6 +43,8 @@ class ScheduleController extends AbstractController
 
     protected UserRepository $uRep;
 
+    protected ClientRepository $cRep;
+
     protected Security $security;
 
     public function __construct(
@@ -50,7 +53,8 @@ class ScheduleController extends AbstractController
         ScheduleCategoryRepository $scRep,
         SchedulePriorityRepository $spRep,
         Security $security,
-        UserRepository $uRep
+        UserRepository $uRep,
+        ClientRepository $cRep
     ) {
         $this->util = $util;
         $this->rep = $rep;
@@ -58,6 +62,7 @@ class ScheduleController extends AbstractController
         $this->spRep = $spRep;
         $this->security = $security;
         $this->uRep = $uRep;
+        $this->cRep = $cRep;
     }
     /**
      * @Route("", name="schedule_index", methods={"GET"})
@@ -431,6 +436,7 @@ class ScheduleController extends AbstractController
             $priority = $this->spRep->find($content->priority);
             $user = null;
             $extra = "";
+            $client = $this->cRep->find($content->client);
             if ((int)$content->user != 0) {
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
@@ -443,6 +449,7 @@ class ScheduleController extends AbstractController
                 ->setPriority($priority)
                 ->setDone(false)
                 ->setAssigned($user)
+                ->setClient($client)
                 ->created($this->security->getUser());
             $this->rep->add($task);
             $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)" . $extra);

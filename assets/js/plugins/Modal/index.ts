@@ -42,6 +42,15 @@ export default class Modal {
     private modal: HTMLElement;
 
     /**
+     *allow or avoid callback
+     *
+     * @private
+     * @type {boolean}
+     * @memberof Modal
+     */
+    private allowCallback: boolean;
+
+    /**
      * Estruxtura principal del modal
      *
      * @private
@@ -58,6 +67,7 @@ export default class Modal {
         this.options = { ...DEFAULT_MODAL_OPTIONS, ...options };
         this.id = Modal.randomId();
         this.modal = Modal.htmlToElement("<div></div>");
+        this.allowCallback = true;
         //this.createModal();
     }
 
@@ -158,7 +168,8 @@ export default class Modal {
                     $('body').addClass('modal-open');
                 }
                 //.
-                this.options.onHide!();
+                if(this.allowCallback)
+                    this.options.onHide!();
             }, 200);
         });
         return this;
@@ -183,7 +194,8 @@ export default class Modal {
                     $('body').addClass('modal-open');
                 }
                 //.
-                this.options.onHide!();
+                if(this.allowCallback)
+                    this.options.onHide!();
             }, 200);
         });
         return this;
@@ -227,5 +239,9 @@ export default class Modal {
      */
     public getId(): string {
         return this.id;
+    }
+
+    public setAllowCallback = (val: boolean) => {
+        this.allowCallback = val;
     }
 }

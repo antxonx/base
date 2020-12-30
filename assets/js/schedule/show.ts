@@ -10,6 +10,7 @@ import Toast from "@scripts/plugins/AlertToast";
 import Finish from "@scripts/schedule/finish";
 import Assign from "@scripts/schedule/assign";
 import Delete from "@scripts/schedule/delete";
+import ShowClient from '@scripts/client/show';
 
 export default class Show {
 
@@ -89,6 +90,17 @@ export default class Show {
                     this.options.callback!();
                 },
             })).delete();
+        });
+
+        document.getElementById("openClientInfo")?.addEventListener("click", (e: Event) => {
+            this.modal.hide();
+            (new ShowClient({
+                id: +((e.currentTarget as HTMLElement).getAttribute("client-id")!),
+                callback: () => {
+                    this.control = true;
+                    this.load();
+                }
+            })).load();
         });
     };
 

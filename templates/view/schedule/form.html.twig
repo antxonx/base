@@ -7,6 +7,15 @@
         required : true,
         error : 'Ingrese un título para la tarea'
     } %}
+	<div class="form-group search-input" style="position: relative;">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text round dropdown-select-input">Cliente</div>
+				</div>
+				<input autocomplete="off" type="text" class="form-control round dropdown-select-input" id="searchClientForm" placeholder="">
+			</div>
+			<span class="erase-search cursor-pointer text-muted">&times;</span>
+	</div>
 	<div class="form-group" style="position: relative;">
 		<input type="text" t-type="text" name="taskDate" class="form-control required datepicker cursor-pointer" id="taskDate" aria-describedby="taskDateHelp" placeholder="Fecha" error-msg="Seleccione una fecha y hora" value="" readonly>
 	</div>
