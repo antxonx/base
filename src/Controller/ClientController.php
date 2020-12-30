@@ -471,12 +471,23 @@ class ClientController extends AbstractController
                 'category' => 0
             ];
             $result = $this->cRep->getBy($qParams);
+            /**
+             * @var Client[]
+             */
             $clients = $result['paginator'];
             $ret = [];
             foreach($clients as $client) {
+                $category = null;
+                if($client->getCategory()) {
+                    $category = [
+                        'color' => $client->getCategory()->getColor(),
+                        'name' => $client->getCategory()->getName()
+                    ];
+                }
                 $ret[] = [
                     'id' => $client->getId(),
-                    'name' => $client->getName()
+                    'name' => $client->getName(),
+                    'category' => $category,
                 ];
             }
             return new Response(json_encode($ret));

@@ -54,9 +54,27 @@ export default class SearchClient {
             .then(res => {
                 const clients = res.data as ClientSearchInfo[];
                 this.list.innerHTML = "";
+                let temp = "";
                 if(clients.length > 0) {
                     clients.forEach(client => {
-                        this.list.innerHTML += `<li class="list-group-item hover cursor-pointer client-select-list" client-id="${client.id}">${client.name}</li>` 
+                        temp += `<li class="list-group-item hover cursor-pointer client-select-list" client-id="${client.id}">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="badge round color-shadow w-100"`;
+                                if(client.category) {
+                                    temp += ` style="background-color: ${client.category.color}; color: ${client.category.color};" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>${client.category.name}</em>"`;
+                                } else {
+                                    temp += ` style="background-color: #ffffff; color: #ffffff;" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>Sin categoría</em>"`;
+                                }
+                                temp += `>
+                                <i class="fas fa-palette"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">${client.name}</div>
+                        </div>
+                    </li>`;
+                    this.list.innerHTML = temp;
+                    $('[data-toggle="tooltip"]').tooltip();
                     });
                     Array.from(document.getElementsByClassName("client-select-list")).forEach(el => el.addEventListener("click", this.select));
                 } else {

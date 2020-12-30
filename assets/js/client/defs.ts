@@ -32,4 +32,8 @@ export const DEFAULT_SHOW_OPTIONS: ShowOptions = {
 export interface ClientSearchInfo {
     id: number;
     name: string;
+    category: {
+        color: string,
+        name: string
+    }|null
 }
