@@ -61,11 +61,12 @@ export default class Show {
         [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', this.deletePhone));
         [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', this.deleteEmail));
         document.getElementById("changeClientCategory")?.addEventListener("click", () => {
+            this.modal.setAllowCallback(false)
             this.modal.hide();
             (new Change({
                 idClient: this.options.id,
                 onClose: () => {
-                    this.options.callback();
+                    // this.options.callback();
                     this.control = true;
                     this.load();
                 }
@@ -124,6 +125,7 @@ export default class Show {
     };
 
     private addAddress = () => {
+        this.modal.setAllowCallback(false)
         this.modal.hide();
         this.control = true;
         (new AddAddress({
@@ -133,6 +135,7 @@ export default class Show {
     };
 
     private addContact = () => {
+        this.modal.setAllowCallback(false)
         this.modal.hide();
         this.control = true;
         (new AddContact({

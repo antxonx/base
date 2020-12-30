@@ -33,11 +33,14 @@ export default class Client {
 
     protected control: boolean;
 
+    protected page: number;
+
     public constructor () {
         this.search = '';
         this.category = 0;
         this.mainView = (document.getElementById("clientsView") || document.createElement("div"));
         this.control = true;
+        this.page = 1;
         this.orderBy = {
             column: "name",
             order: "ASC"
@@ -63,11 +66,13 @@ export default class Client {
         [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", this.show));
     };
 
-    private update = (page: number = 1) => {
-        this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
+    private update = (page: number = 1, spinner = true) => {
+        this.page = page;
+        if(spinner)
+            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
         Axios.get(Router.generate(ROUTES.client.view.list, {
             'search': this.search,
-            'page': page,
+            'page': this.page,
             'ordercol': this.orderBy.column,
             'orderorder': this.orderBy.order,
             'category': this.category,
@@ -105,7 +110,9 @@ export default class Client {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
         (new Show({
             id: +ELEMENT.getAttribute("id")!,
-            callback: this.update
+            callback: () => {
+                this.update(this.page, false);
+            }
         })).load();
     };
 

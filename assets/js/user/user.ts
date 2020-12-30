@@ -34,10 +34,13 @@ export default class User {
 
     protected orderBy: SortColumnOrder;
 
+    protected page: number;
+
     public constructor () {
         this.mainView = ((document.getElementById("usersView") as HTMLElement) || document.createElement("div"));
         this.search = "";
         this.suspended = 0;
+        this.page = 1;
         this.orderBy = {
             column: "name",
             order: "ASC"
@@ -79,11 +82,13 @@ export default class User {
         );
     };
 
-    private update = (page: number = 1) => {
-        this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
+    private update = (page: number = 1, spinner = true) => {
+        this.page = 1;
+        if(spinner)
+            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
         Axios.get(Router.generate(ROUTES.user.view.list, {
             'search': this.search,
-            'page': page,
+            'page': this.page,
             'suspended': this.suspended,
             'ordercol': this.orderBy.column,
             'orderorder': this.orderBy.order,
@@ -131,7 +136,9 @@ export default class User {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Show({
             id: +ELEMENT.getAttribute("id")!,
-            callback: this.update
+            callback: () => {
+                this.update(this.page, false);
+            }
         })).load();
     };
 

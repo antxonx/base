@@ -104,13 +104,16 @@ export default class Schedule {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
                 element: ELEMENT,
-                callback: this.update
+                callback:() => {
+                    this.update(false);
+                }
             })).load();
         }));
     };
 
-    private update = () => {
-        this.mainView.innerHTML = BIG_LOADER;
+    private update = (spinner = true) => {
+        if(spinner)
+            this.mainView.innerHTML = BIG_LOADER;
         Axios.get(Router.generate(this.route, {
             'search': this.searchInput,
             'offset': this.offset,
