@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-// use Antxony\Entity\Obs;
 use App\Repository\ScheduleObsRepository;
 use Doctrine\ORM\Mapping as ORM;
 

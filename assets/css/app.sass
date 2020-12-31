@@ -253,3 +253,22 @@ b, h5
 
 .readonly-click[readonly]
   background-color: inherit
+
+.obs-nav
+  padding: 0.2rem
+  .nav-item
+    &:first-child
+      .nav-link
+        border-top-left-radius: 1.25rem
+        border-bottom-left-radius: 1.25rem
+    &:last-child
+      .nav-link
+        border-top-right-radius: 1.25rem
+        border-bottom-right-radius: 1.25rem
+  .nav-link
+    border: 1px solid #dcd0ff
+    border-radius: 0
+    &.active
+      background-color:  #dcd0ff
+      border: 1px solid #dcd0ff
+      color: #3b3b3b
