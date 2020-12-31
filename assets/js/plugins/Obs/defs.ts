@@ -10,7 +10,10 @@ export interface ObsOptions {
 }
 
 export interface ObsI {
-    createdAt: string;
+    createdAt: {
+        date: string;
+        time: string;
+    };
     createdBy: string;
     description: string;
     customClass: string;

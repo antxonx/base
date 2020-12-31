@@ -20,13 +20,15 @@ export default class Obs {
     public constructor(options: ObsOptions) {
         this.options = options;
         this.individualTemplate  = `
-        <div class="card py-1 px-3 m-1 round #customClass#">
-            <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
+        #fill-left#
+        <div class="card py-1 px-3 m-1 pb-2 round #customClass#">
+            <div class="text-left">
                 <span><em><b>#createdBy#</b></em></span>
-                <span><em>#createdAt#</em></span>
             </div>
             #description#
-        </div>`;
+            <span class="obs-time">#time#</span>
+        </div>#fill-right#</div>`;
         this.textBox = `
             <div class="add-obs-cont">
                 <div class="obs-text text-center">
@@ -50,13 +52,22 @@ export default class Obs {
             let obsCont = document.createElement("div");
             obsCont.classList.add("obs-scroll");
             let allObs = "";
+            let tempDate = "";
             reqObs.forEach(ob => {
-                let obTemp = this.individualTemplate.replace("#createdBy#", ob.createdBy).replace("#description#", ob.description).replace("#createdAt#", ob.createdAt).replace("#customClass#", ob.customClass);
+                if(ob.createdAt.date != tempDate) {
+                    allObs += `<div class="text-center text-muted"><small><em>${ob.createdAt.date}</em></small><hr class="mt-0 mb-0 ml-5 mr-5"></div>`;
+                    tempDate = ob.createdAt.date;
+                }
+                let obTemp = this.individualTemplate.replace("#createdBy#", ob.createdBy).replace("#description#", ob.description).replace("#time#", ob.createdAt.time).replace("#customClass#", ob.customClass);
+                if(ob.customClass == "obs-left") {
+                    obTemp = obTemp.replace("#fill-right#", '<div class="fill-space"></div>').replace("#fill-left#", "");
+                } else {
+                    obTemp = obTemp.replace("#fill-left#", '<div class="fill-space"></div>').replace("#fill-right#", "");
+                }
                 allObs += obTemp;
             });
             this.options.element.innerHTML = "";
             obsCont.appendChild(HtmlToElement("<div>" + allObs + "</div>"));
-            obsCont.scrollTop = obsCont.scrollHeight;
             this.options.element.appendChild(obsCont);
             this.options.element.appendChild(HtmlToElement(this.textBox));
             obsCont.scrollTop = obsCont.scrollHeight;

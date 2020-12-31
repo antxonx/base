@@ -78,7 +78,10 @@ class ObsController extends AbstractController
             $obsJson = [];
             foreach($obs as $ob) {
                 $obsJson[] = [
-                    'createdAt' => $ob->getCreatedAt()->format("d/m/Y H:i"),
+                    'createdAt' => [
+                        'date' => $ob->getCreatedAt()->format("d/m/Y"),
+                        'time' => $ob->getCreatedAt()->format("H:i"),
+                    ],
                     'createdBy' => $ob->getCreatedBy()->getName(),
                     'description' => $ob->getDescription(),
                     'customClass' => (($ob->getCreatedBy()->getUsername() == $this->security->getUser()->getUsername())?'obs-right':'obs-left')
