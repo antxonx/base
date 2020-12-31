@@ -73,14 +73,15 @@ class ObsController extends AbstractController
             $obs = $this->getDoctrine()->getRepository("App\\Entity\\$entity" . "Obs")->findBy([
                 'entity' => $id
             ], [
-                'createdAt' => 'DESC'
+                'createdAt' => 'ASC'
             ]);
             $obsJson = [];
             foreach($obs as $ob) {
                 $obsJson[] = [
-                    'createdAt' => $ob->getCreatedAt(),
+                    'createdAt' => $ob->getCreatedAt()->format("d/m/Y H:i"),
                     'createdBy' => $ob->getCreatedBy()->getName(),
-                    'description' => $ob->getDescription()
+                    'description' => $ob->getDescription(),
+                    'customClass' => (($ob->getCreatedBy()->getUsername() == $this->security->getUser()->getUsername())?'obs-right':'obs-left')
                 ];
             }
             return new Response(json_encode($obsJson));

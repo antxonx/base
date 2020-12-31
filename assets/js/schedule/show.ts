@@ -14,6 +14,7 @@ import ShowClient from '@scripts/client/show';
 import ChangePriority from "./changePriority";
 import { isThisTypeNode, textChangeRangeIsUnchanged } from "typescript";
 import moment from "moment";
+import Obs from "@scripts/plugins/Obs";
 
 export default class Show {
 
@@ -197,6 +198,11 @@ export default class Show {
             .then(res => {
                 this.modal.updateBody(res.data);
                 this.load();
+                (new Obs({
+                    element: document.getElementById("taskObsView")!,
+                    entity: "Schedule",
+                    id: this.options.id!
+                })).load();
             })
             .catch(err => {
                 console.error(err.response.data);
