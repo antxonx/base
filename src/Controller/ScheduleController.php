@@ -377,8 +377,16 @@ class ScheduleController extends AbstractController
                         ->updated($this->security->getUser());
                     $message = "Se ha cambiado la priordad de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) a <b>{$priority->getId()}</b> (<em>{$priority->getName()}</em>)";
                     break;
+                case 3: //Fecha
+                    $old = $task->getDate();
+                    $new = new DateTime($content->value, new DateTimeZone("America/Mexico_City"));
+                    $task
+                        ->setDate($new)
+                        ->updated($this->security->getUser());
+                        $message = "Se ha cambiado la fecha de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) de <b>{$old->format("d-m-Y H:i:s")}</b> a <b>{$new->format("d-m-Y H:i:s")}</b>";
+                    break;
                 default:
-                    $message = "No se pudo determinar la orden";
+                    throw new Exception("No se pudo determinar la orden");
                     break;
             }
             $this->util->info($message);

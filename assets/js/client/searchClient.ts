@@ -38,61 +38,61 @@ export default class SearchClient {
         this.list.style.display = "none";
     }
 
-    public getClientId = () : number => {
+    public getClientId = (): number => {
         return this.clientId;
-    }
+    };
 
     private searchClients = (data: string) => {
         this.list.innerHTML = `<li class="list-group-item text-center">${SPINNER_LOADER}</li>`;
-        if(data.trim() != "") {
+        if (data.trim() != "") {
             this.element.classList.add("open");
-            this.element.parentElement!.getElementsByClassName("input-group-text")[0].classList.add("open");
+            this.element.parentElement!.getElementsByClassName("input-group-text")[ 0 ].classList.add("open");
             this.list.style.display = "block";
             Axios.get(Router.generate(ROUTES.client.api.search, {
                 'client': data
             }))
-            .then(res => {
-                const clients = res.data as ClientSearchInfo[];
-                this.list.innerHTML = "";
-                let temp = "";
-                if(clients.length > 0) {
-                    clients.forEach(client => {
-                        temp += `<li class="list-group-item hover cursor-pointer client-select-list" client-id="${client.id}">
+                .then(res => {
+                    const clients = res.data as ClientSearchInfo[];
+                    this.list.innerHTML = "";
+                    let temp = "";
+                    if (clients.length > 0) {
+                        clients.forEach(client => {
+                            temp += `<li class="list-group-item hover cursor-pointer client-select-list" client-id="${client.id}">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="badge round color-shadow w-100"`;
-                                if(client.category) {
-                                    temp += ` style="background-color: ${client.category.color}; color: ${client.category.color};" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>${client.category.name}</em>"`;
-                                } else {
-                                    temp += ` style="background-color: #ffffff; color: #ffffff;" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>Sin categoría</em>"`;
-                                }
-                                temp += `>
+                            if (client.category) {
+                                temp += ` style="background-color: ${client.category.color}; color: ${client.category.color};" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>${client.category.name}</em>"`;
+                            } else {
+                                temp += ` style="background-color: #ffffff; color: #ffffff;" data-toggle="tooltip" data-placement="top" data-html="true" title="<em>Sin categoría</em>"`;
+                            }
+                            temp += `>
                                 <i class="fas fa-palette"></i>
                                 </div>
                             </div>
                             <div class="col-md-10">${client.name}</div>
                         </div>
                     </li>`;
-                    this.list.innerHTML = temp;
-                    $('[data-toggle="tooltip"]').tooltip();
-                    });
-                    Array.from(document.getElementsByClassName("client-select-list")).forEach(el => el.addEventListener("click", this.select));
-                } else {
-                    this.list.innerHTML = '<li class="list-group-item p-0"><div class="alert alert-info m-0"><em>No se encontró al cliente</em></div></li>'
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+                            this.list.innerHTML = temp;
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
+                        Array.from(document.getElementsByClassName("client-select-list")).forEach(el => el.addEventListener("click", this.select));
+                    } else {
+                        this.list.innerHTML = '<li class="list-group-item p-0"><div class="alert alert-info m-0"><em>No se encontró al cliente</em></div></li>';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    console.error(err.response.data);
+                    Toast.error(err.response.data);
+                });
         } else {
             this.clientId = 0;
             this.list.style.display = "none";
             this.element.classList.remove("open");
-            this.element.parentElement!.getElementsByClassName("input-group-text")[0].classList.remove("open");
+            this.element.parentElement!.getElementsByClassName("input-group-text")[ 0 ].classList.remove("open");
         }
-    }
+    };
 
     private select = (e: Event) => {
         const ELEMENT = e.currentTarget as HTMLElement;
@@ -100,7 +100,7 @@ export default class SearchClient {
         this.element.value = ELEMENT.innerText;
 
         this.list.style.display = "none";
-            this.element.classList.remove("open");
-            this.element.parentElement!.getElementsByClassName("input-group-text")[0].classList.remove("open");
-    }
+        this.element.classList.remove("open");
+        this.element.parentElement!.getElementsByClassName("input-group-text")[ 0 ].classList.remove("open");
+    };
 }

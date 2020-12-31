@@ -13,16 +13,25 @@
 				<br>
 				{{ task.title }}
 			</p>
-			<p>
-				<b>Fecha</b>
-				<br>
-				{{ task.date|format_datetime("full", "none", locale="es") }}
-			</p>
-			<p>
-				<b>Hora</b>
-				<br>
-				{{ task.date|format_datetime("none", "short", locale="es") }}
-			</p>
+			<div class="card position-relative">
+				<div id="actualDateContainer" date="{{ task.date|date("Y-m-d H:i:s") }}">
+					<p>
+						<b>Fecha</b>
+						<br>
+						{{ task.date|format_datetime("full", "none", locale="es") }}
+					</p>
+					<p>
+						<b>Hora</b>
+						<br>
+						{{ task.date|format_datetime("none", "short", locale="es") }}
+					</p>
+				</div>
+				{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+					<button class="btn btn-sm btn-outline-danger border-0 position-absolute round" id="scheduleChangeDate" style="right: 0; bottom: 0;" data-toggle="tooltip" data-placement="right" title="Cambiar fecha" status="0">
+						<i class="fas fa-calendar-times"></i>
+					</button>
+				{% endif %}
+			</div>
 		</div>
 		<div class="col-md-6">
 			<b>Responsable</b>
@@ -52,17 +61,17 @@
 			</p>
 			{% if task.priority != null %}
 				{# <p> #}
-					<b>Prioridad</b>
-					<br>
-					<div class="task-hover-row">
+				<b>Prioridad</b>
+				<br>
+				<div class="task-hover-row">
 					<span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span>
 					{{ task.priority.name }}
 					{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
-					<button class="btn btn-sm btn-outline-danger border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Cambiar prioridad" id="taskChangePriority">
+						<button class="btn btn-sm btn-outline-danger border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Cambiar prioridad" id="taskChangePriority">
 							<i class="fas fa-pen"></i>
-					</button>
+						</button>
 					{% endif %}
-					</div>
+				</div>
 				{# </p> #}
 			{% endif  %}
 			<p>
