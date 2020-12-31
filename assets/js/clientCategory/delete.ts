@@ -2,11 +2,11 @@
 * @packageDocumentation
 * @module Client/Category
 */
-import {ClientCategoryDeleteOptions, DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS} from "@scripts/clientCategory/defs";
+import { ClientCategoryDeleteOptions, DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS } from "@scripts/clientCategory/defs";
 import Alert from "@plugins/Alert";
-import {deleteElement, disableRow, restoreRow} from "@plugins/DeleteElement";
+import { deleteElement, disableRow, restoreRow } from "@plugins/DeleteElement";
 import Axios from "axios";
-import {ROUTES, Router} from "@scripts/app";
+import { ROUTES, Router } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 
 /**
@@ -20,8 +20,8 @@ export default class ClientCategoryDelete {
 
     protected options: ClientCategoryDeleteOptions;
 
-    public constructor(options: ClientCategoryDeleteOptions) {
-        this.options = {...DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS, ...options};
+    public constructor (options: ClientCategoryDeleteOptions) {
+        this.options = { ...DEFAULT_CLIENT_CATEGORY_DELETE_OPTIONS, ...options };
     }
 
     public delete = async () => {
@@ -34,7 +34,7 @@ export default class ClientCategoryDelete {
         let res = await ALERT.updateBody(`¿Eliminar la categoría <b>${NAME}</b>?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.delete(Router.generate(ROUTES.clientCategory.api.delete, {'id': ID.toString()}))
+            Axios.delete(Router.generate(ROUTES.clientCategory.api.delete, { 'id': ID.toString() }))
                 .then(res => {
                     Toast.success(res.data);
                     deleteElement(this.options.element);
@@ -47,5 +47,5 @@ export default class ClientCategoryDelete {
                     this.options.onError!();
                 });
         }
-    }
+    };
 }

@@ -1,39 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Registros{% endblock %}
-{% block contTitle %}Registros{% if userEntity != null %} de {{ userEntity.username }} {% endif %}{% endblock %}
+{% block title %}Registros
+{% endblock %}
+{% block contTitle %}Registros
+	{% if userEntity != null %}
+		de
+		{{ userEntity.username }}
+	{% endif %}
+{% endblock %}
 
 {% block body %}
-    <div class="w-99 mx-auto">
-        <div class="m-1 row">
-            <div class="col-md-3 btn-group my-1" id="logSwitch" role="group" aria-label="log type">
-                <button type="button" value="info" class="btn no-hover">Info</button>
-                <button type="button" value="error" class="btn no-hover">Error</button>
-            </div>
-            <div class="col-md-6 search-input my-1">
-                <label class="sr-only" for="searchLogInput">Registro...</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text round">Buscar</div>
-                    </div>
-                    <input type="text" class="form-control round" id="searchLogInput" placeholder="">
-                </div><span class="erase-search cursor-pointer text-muted">&times;</span>
-            </div>
-            <div class="col-md-3 my-1">
-                <select id="methodSelect" class="form-control round">
-                    <option value="" selected>TODOS</option>
-                    <option value="GET">GET</option>
-                    <option value="POST">POST</option>
-                    <option value="PUT">PUT</option>
-                    <option value="PATCH">PATCH</option>
-                    <option value="DELETE">DELETE</option>
-                </select>
-            </div>
-        </div>
-        {% include "view/logger/table.html.twig" %}
-    </div>
-    <input type="hidden" id="registerUser" value="{{ user }}">
+	<div class="w-99 mx-auto">
+		<div class="m-1 row">
+			<div class="col-md-3 btn-group my-1" id="logSwitch" role="group" aria-label="log type">
+				<button type="button" value="info" class="btn no-hover">Info</button>
+				<button type="button" value="error" class="btn no-hover">Error</button>
+			</div>
+			<div class="col-md-6 search-input my-1">
+				<label class="sr-only" for="searchLogInput">Registro...</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text round">Buscar</div>
+					</div>
+					<input type="text" class="form-control round" id="searchLogInput" placeholder="">
+				</div>
+				<span class="erase-search cursor-pointer text-muted">&times;</span>
+			</div>
+			<div class="col-md-3 my-1">
+				<select id="methodSelect" class="form-control round">
+					<option value="" selected>TODOS</option>
+					<option value="GET">GET</option>
+					<option value="POST">POST</option>
+					<option value="PUT">PUT</option>
+					<option value="PATCH">PATCH</option>
+					<option value="DELETE">DELETE</option>
+				</select>
+			</div>
+		</div>
+		{% include "view/logger/table.html.twig" %}
+	</div>
+	<input type="hidden" id="registerUser" value="{{ user }}">
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('logger') }}
+	{{ encore_entry_script_tags('logger') }}
 {% endblock %}

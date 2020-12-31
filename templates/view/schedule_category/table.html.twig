@@ -1,9 +1,11 @@
 <table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2 mobile" id="scheduleCategoryTable">
-{% set sort %}
-    <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
-{% endset %}
-{% set sortClass = 'cursor-pointer sort-column' %}
-{% include "table/thead.html.twig" with {
+	{% set sort %}
+	<span class="float-right sort-icon hide-on-mobile">
+		<i class="fas fa-sort"></i>
+	</span>
+	{% endset %}
+	{% set sortClass = 'cursor-pointer sort-column' %}
+	{% include "table/thead.html.twig" with {
     tr : {
         values : {
             name : {
@@ -37,5 +39,5 @@
         },
     }
 } %}
-<tbody id="scheduleCategoriesView"></tbody>
+	<tbody id="scheduleCategoriesView"></tbody>
 </table>

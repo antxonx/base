@@ -4,7 +4,7 @@
  * @module ButtonCehckGroup
  * @preferred
  */
-import {checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS} from "./defs";
+import { checkAttributes, checkOptions, DEFAULT_CHECK_OPTIONS } from "./defs";
 
 /**
  * ButtonCehckGroup class (button checkboxes or switch)
@@ -56,18 +56,18 @@ export default class ButtonCheckGroup {
      * @param {checkOptions} [options=DEFAULT_CHECK_OPTIONS]
      * @memberof ButtonCheckGroup
      */
-    public constructor(container: HTMLElement, options: checkOptions = DEFAULT_CHECK_OPTIONS) {
-        this.options = {...DEFAULT_CHECK_OPTIONS, ...options};
+    public constructor (container: HTMLElement, options: checkOptions = DEFAULT_CHECK_OPTIONS) {
+        this.options = { ...DEFAULT_CHECK_OPTIONS, ...options };
         this.container = container;
         this.id = this.container.getAttribute(checkAttributes.ID)!;
         this.value = [];
-        [...this.container.getElementsByTagName('button')].forEach((el) => {
+        [ ...this.container.getElementsByTagName('button') ].forEach((el) => {
             el.setAttribute(checkAttributes.ID, ButtonCheckGroup.randmonId().toString());
             if (this.options.extraClass && this.options.extraClass != '')
                 el.classList.add(this.options.extraClass);
-            if(el.getAttribute(checkAttributes.VALUE) == this.options.activeValue) {
+            if (el.getAttribute(checkAttributes.VALUE) == this.options.activeValue) {
                 this.markActive(el);
-                this.value = [this.options.activeValue];
+                this.value = [ this.options.activeValue ];
             } else {
                 this.unmarkActive(el);
             }
@@ -86,12 +86,12 @@ export default class ButtonCheckGroup {
         const ID = BUTTON.getAttribute(checkAttributes.ID);
         const STATUS = !!(+BUTTON.getAttribute(checkAttributes.STATUS)!);
         if (STATUS) {
-            if(this.options.multiple) {
-                if(!this.options.oneActive) {
+            if (this.options.multiple) {
+                if (!this.options.oneActive) {
                     this.unmarkActive(BUTTON);
                 }
             } else {
-                if(!this.options.oneActive) {
+                if (!this.options.oneActive) {
                     this.unmarkActive(BUTTON);
                 }
             }
@@ -100,17 +100,17 @@ export default class ButtonCheckGroup {
             this.markActive(BUTTON);
         }
         if (!this.options.multiple) {
-            [...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]')]
+            [ ...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]') ]
                 .forEach((el) => {
                     if (el.getAttribute(checkAttributes.ID) != ID) {
                         this.unmarkActive(el);
                     }
                 });
         }
-        this.value = [...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]')]
+        this.value = [ ...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]') ]
             .map<string>((el: HTMLButtonElement) => el.getAttribute(checkAttributes.VALUE)!);
         this.options.onChange!(this.value);
-    }
+    };
 
     /**
      * set active to a checkbox
@@ -151,9 +151,9 @@ export default class ButtonCheckGroup {
 
     public getId = () => {
         return this.id;
-    }
+    };
 
     public getValues = () => {
         return this.value;
-    }
+    };
 }

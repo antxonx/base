@@ -5,7 +5,7 @@
 
 export interface checkOptions {
     onChange?: (value: string[]) => void;
-    multiple?: boolean
+    multiple?: boolean;
     unCheckClass?: string;
     checkClass?: string;
     extraClass?: string;
@@ -20,11 +20,11 @@ export enum checkAttributes {
 }
 
 export const DEFAULT_CHECK_OPTIONS: checkOptions = {
-    onChange: () => {},
+    onChange: () => { },
     multiple: false,
     unCheckClass: 'button-check-unchecked',
     checkClass: 'button-check-checked',
     extraClass: '',
     oneActive: false,
     activeValue: '',
-}
+};

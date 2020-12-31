@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Criteria;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\Query\Expr\Join;
+use Exception;
 
 /**
  * @method Schedule|null find($id, $lockMode = null, $lockVersion = null)
@@ -57,16 +58,16 @@ class ScheduleRepository extends ServiceEntityRepository
         }
         switch ($type) {
             case 'month':
-                $start = new DateTime("first day of {$offset} month", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("last day of {$offset} month", new DateTimeZone("America/Mexico_city"));
+                $start = new DateTime("first day of this month {$offset} month midnight", new DateTimeZone("America/Mexico_city"));
+                $finish = new DateTime("first day of next month {$offset} month midnight -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
                 $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
                 $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
             case 'week':
-                $start = new DateTime("first day of {$offset} week", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("last day of {$offset} week", new DateTimeZone("America/Mexico_city"));
+                $start = new DateTime("last sunday midnight {$offset} week", new DateTimeZone("America/Mexico_city"));
+                $finish = new DateTime("next sunday midnight {$offset} week -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
                 $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
                 $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
@@ -82,7 +83,7 @@ class ScheduleRepository extends ServiceEntityRepository
                 $query->addCriteria($dateCriteria);
                 break;
             default:
-                // code...
+                throw new Exception("Ocurrió un error con el calendario");
                 break;
         }
         return $query->getQuery()->getResult();

@@ -196,6 +196,8 @@
             float: right
             font-weight: 700
             font-size: 0.8em
+            &.blink
+                animation: blinking-text 1.5s linear 0.5s infinite
         .header
             display: flex
             justify-content: space-between
@@ -246,3 +248,11 @@
                                 opacity: 0
         .days-list
             display: block
+
+@keyframes blinking-text
+    0%
+        filter: invert(0%)
+    50%
+        filter: invert(100%)
+    100%
+        filter: invert(0%)

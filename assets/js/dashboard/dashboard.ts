@@ -14,8 +14,8 @@ import ShowClient from "@scripts/client/show";
 export default class Dashboard {
 
     public load = () => {
-        [...document.getElementsByClassName("client-list")].forEach(el => el.addEventListener("click", this.client));
-    }
+        [ ...document.getElementsByClassName("client-list") ].forEach(el => el.addEventListener("click", this.client));
+    };
 
     /**
     * Opens a client view
@@ -25,7 +25,7 @@ export default class Dashboard {
         const ID = +(e.currentTarget as HTMLElement).getAttribute("id")!;
         (new ShowClient({
             id: ID,
-            callback: () => {}
+            callback: () => { }
         })).load();
-    }
+    };
 }

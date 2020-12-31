@@ -1,58 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Perfil{% endblock %}
-{% block contTitle %}Mi perfil{% endblock %}
+{% block title %}Perfil
+{% endblock %}
+{% block contTitle %}Mi perfil
+{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <div class="card round main-2">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <b class="field-title">Usuario:</b> <br>
-                        <a class="editable-field" href="#" data-name="username" data-type="text"
-                           data-pk="{{ app.user.id }}"
-                           data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el usuario">{{ app.user.username }}</a> <br>
-                        <b class="field-title">Correo:</b> <br>
-                        <a class="editable-field" href="#" data-name="email" data-type="text"
-                           data-pk="{{ app.user.id }}"
-                           data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el correo">{{ app.user.mail }}</a> <br>
+	<div class="container mt-5">
+		<div class="card round main-2">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6">
+						<b class="field-title">Usuario:</b>
+						<br>
+						<a class="editable-field" href="#" data-name="username" data-type="text" data-pk="{{ app.user.id }}" data-url="{{ path('user_update') }}" data-title="Ingresa el usuario">{{ app.user.username }}</a>
+						<br>
+						<b class="field-title">Correo:</b>
+						<br>
+						<a class="editable-field" href="#" data-name="email" data-type="text" data-pk="{{ app.user.id }}" data-url="{{ path('user_update') }}" data-title="Ingresa el correo">{{ app.user.mail }}</a>
+						<br>
 
-                    </div>
-                    <div class="col-md-6 border-left">
-                        <b class="field-title">Nombre:</b> <br>
-                        <a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}"
-                           data-url="{{ path('user_update') }}"
-                           data-title="Ingresa el nombre">{{ app.user.name }}</a> <br>
-                        <b class="field-title">roles:</b> <br>
-                        {% for role in app.user.roles %}
-                            {% if role != "ROLE_USER" %}
-                                <span class="btn btn-sm2 alert-info cursor-normal">{{ role|slice(5, role|length) }}</span>
-                            {% endif %}
-                        {% endfor %} <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <button class="btn btn-danger round mt-2 w-100" id="change-user-password">Cambiar
-                                    contraseña
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <button class="btn btn-warning round mt-2 w-100" id="profile-edit" active="0">Editar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+					<div class="col-md-6 border-left">
+						<b class="field-title">Nombre:</b>
+						<br>
+						<a class="editable-field" href="#" data-name="name" data-type="text" data-pk="{{ app.user.id }}" data-url="{{ path('user_update') }}" data-title="Ingresa el nombre">{{ app.user.name }}</a>
+						<br>
+						<b class="field-title">roles:</b>
+						<br>
+						{% for role in app.user.roles %}
+							{% if role != "ROLE_USER" %}
+								<span class="btn btn-sm2 alert-info cursor-normal">{{ role|slice(5, role|length) }}</span>
+							{% endif %}
+						{% endfor %}
+						<br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row mt-2">
+							<div class="col-md-6">
+								<button class="btn btn-danger round mt-2 w-100" id="change-user-password">Cambiar
+									                                    contraseña
+								</button>
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-warning round mt-2 w-100" id="profile-edit" active="0">Editar
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('profile') }}
+	{{ encore_entry_script_tags('profile') }}
 {% endblock %}

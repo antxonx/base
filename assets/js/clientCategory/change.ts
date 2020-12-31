@@ -3,10 +3,10 @@
 * @module Client/Category
 */
 import 'bootstrap';
-import {ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS} from "@scripts/clientCategory/defs";
+import { ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS } from "@scripts/clientCategory/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
-import {BIG_LOADER, Router, ROUTES} from "@scripts/app";
+import { BIG_LOADER, Router, ROUTES } from "@scripts/app";
 import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
@@ -26,8 +26,8 @@ export default class Change {
 
     protected list: HTMLElement;
 
-    public constructor(options: ClientCategoryChangeOptions) {
-        this.options = {...DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS, ...options};
+    public constructor (options: ClientCategoryChangeOptions) {
+        this.options = { ...DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS, ...options };
         this.list = document.createElement("div") as HTMLElement;
         this.modal = new Modal({
             title: "Cambiar de categoría",
@@ -41,7 +41,7 @@ export default class Change {
 
     public load() {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm, {'id': this.options.idClient}))
+        Axios.get(Router.generate(ROUTES.clientCategory.view.changeForm, { 'id': this.options.idClient }))
             .then(res => {
                 this.modal.updateBody(res.data);
                 this.list = document.getElementById('categoryList') as HTMLElement;
@@ -67,7 +67,7 @@ export default class Change {
             if (res) {
                 Axios.patch(Router.generate(ROUTES.clientCategory.api.update), {
                     clientId: this.options.idClient,
-                    categoryId: data[0],
+                    categoryId: data[ 0 ],
                 })
                     .then(() => {
                         this.modal.hide();
@@ -79,13 +79,13 @@ export default class Change {
                     .finally(() => {
                         this.list.innerHTML = LIST_BEF;
                         this.startEvents();
-                    })
+                    });
             } else {
                 this.list.innerHTML = LIST_BEF;
                 this.startEvents();
             }
         }
-    }
+    };
 
     private startEvents = () => {
         (new ListSelect({
@@ -94,5 +94,5 @@ export default class Change {
             attribute: 'category-id',
             callback: this.listchange
         })).load();
-    }
+    };
 }

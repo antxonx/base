@@ -1,12 +1,12 @@
 <div class="container">
-    <h5 class="text-center">Asignar usuario</h5>
-    <ul class="list-group mt-3" id="userList" style="max-height: 400px; overflow-y: auto;">
-        {% for user in users %}
-            <li class="list-group-item hover cursor-pointer" user-id="{{ user.id }}">
-                <div class="row">
-                    <div class="col-md-12">{{ user.name }}</div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+	<h5 class="text-center">Asignar usuario</h5>
+	<ul class="list-group mt-3" id="userList" style="max-height: 400px; overflow-y: auto;">
+		{% for user in users %}
+			<li class="list-group-item hover cursor-pointer" user-id="{{ user.id }}">
+				<div class="row">
+					<div class="col-md-12">{{ user.name }}</div>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 </div>

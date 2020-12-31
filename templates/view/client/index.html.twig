@@ -1,35 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Clientes{% endblock %}
-{% block contTitle %}Clientes{% endblock %}
+{% block title %}Clientes
+{% endblock %}
+{% block contTitle %}Clientes
+{% endblock %}
 
 {% block body %}
-    <div class="w-99 mx-auto">
-        <div class="m-1 row">
-            <div class="col-md-3 my-1">
-                <button class="btn btn-primary w-100 round" id="client-add">Agregar cliente</button>
-            </div>
-            <div class="col-md-6 search-input my-1">
-                <label class="sr-only" for="searchClientInput">Cliente...</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text round">Buscar</div>
-                    </div>
-                    <input type="text" class="form-control round" id="searchClientInput" placeholder="">
-                </div><span class="erase-search cursor-pointer text-muted">&times;</span>
-            </div>
-            <div class="col-md-3 my-1">
-                <select class="form-control" id="categorySelect">
-                    <option value="0">TODAS</option>
-                    {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        {% include "view/client/table.html.twig" %}
-    </div>
+	<div class="w-99 mx-auto">
+		<div class="m-1 row">
+			<div class="col-md-3 my-1">
+				<button class="btn btn-primary w-100 round" id="client-add">Agregar cliente</button>
+			</div>
+			<div class="col-md-6 search-input my-1">
+				<label class="sr-only" for="searchClientInput">Cliente...</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text round">Buscar</div>
+					</div>
+					<input type="text" class="form-control round" id="searchClientInput" placeholder="">
+				</div>
+				<span class="erase-search cursor-pointer text-muted">&times;</span>
+			</div>
+			<div class="col-md-3 my-1">
+				<select class="form-control" id="categorySelect">
+					<option value="0">TODAS</option>
+					{% for category in categories %}
+						<option value="{{ category.id }}">{{ category.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		{% include "view/client/table.html.twig" %}
+	</div>
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('client') }}
+	{{ encore_entry_script_tags('client') }}
 {% endblock %}

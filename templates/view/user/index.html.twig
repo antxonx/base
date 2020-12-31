@@ -1,30 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Usuarios{% endblock %}
-{% block contTitle %}Usuarios{% endblock %}
+{% block title %}Usuarios
+{% endblock %}
+{% block contTitle %}Usuarios
+{% endblock %}
 
 {% block body %}
-    <div class="w-99 mx-auto">
-        <div class="m-1 row">
-            <div class="col-md-3 my-1">
-                <button class="btn btn-primary round w-100" id="user-add">Agregar usuario</button>
-            </div>
-            <div class="col-md-6 search-input my-1">
-                <label class="sr-only" for="searchUserInput">Usuario...</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text round">Buscar</div>
-                    </div>
-                    <input type="text" class="form-control round" id="searchUserInput" placeholder="">
-                </div><span class="erase-search cursor-pointer text-muted">&times;</span>
-            </div>
-                <div class="col-md-3 btn-group my-1" id="suspendedFilter" role="group" aria-label="supended type">
-                    <button type="button" value="suspended" class="btn no-hover">Suspendidos</button>
-                </div>
-        </div>
-        {% include "view/user/table.html.twig" %}
-    </div>
+	<div class="w-99 mx-auto">
+		<div class="m-1 row">
+			<div class="col-md-3 my-1">
+				<button class="btn btn-primary round w-100" id="user-add">Agregar usuario</button>
+			</div>
+			<div class="col-md-6 search-input my-1">
+				<label class="sr-only" for="searchUserInput">Usuario...</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text round">Buscar</div>
+					</div>
+					<input type="text" class="form-control round" id="searchUserInput" placeholder="">
+				</div>
+				<span class="erase-search cursor-pointer text-muted">&times;</span>
+			</div>
+			<div class="col-md-3 btn-group my-1" id="suspendedFilter" role="group" aria-label="supended type">
+				<button type="button" value="suspended" class="btn no-hover">Suspendidos</button>
+			</div>
+		</div>
+		{% include "view/user/table.html.twig" %}
+	</div>
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('user') }}
+	{{ encore_entry_script_tags('user') }}
 {% endblock %}

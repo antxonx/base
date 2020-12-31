@@ -1,11 +1,13 @@
 {% set tr = {} %}
 {% for category in categories %}
-    {# suspneder o reactivar #}
-    {% set trashSusp %}
-            <button class="btn btn-sm round btn-outline-dark border-0 w-100 category-delete mobile-2-desktop-1"><i class="fas fa-trash-alt"></i></button>
-    {% endset %}
-    {# . #}
-    {% set tr = {
+	{# suspneder o reactivar #}
+	{% set trashSusp %}
+	<button class="btn btn-sm round btn-outline-dark border-0 w-100 category-delete mobile-2-desktop-1">
+		<i class="fas fa-trash-alt"></i>
+	</button>
+	{% endset %}
+	{# . #}
+	{% set tr = {
         values : {
             name : {
                 value : category.name,
@@ -48,12 +50,12 @@
             name: category.name
         }
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : tr
     } %}
 {% endfor %}
 {% if tr.values is defined %}
-    {% include "paginatorTable.html.twig" with {
+	{% include "paginatorTable.html.twig" with {
         items: categories,
         cols : tr.values|length
     } %}

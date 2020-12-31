@@ -1,12 +1,13 @@
 <form id="keyForm">
-    {% include 'form/input.html.twig' with {
+	{% include 'form/input.html.twig' with {
         type : 'password',
         id: 'password',
         label: 'Contraseña nueva',
         placeholder: 'Contraseña nueva',
         required : true,
         error : 'Ingrese una contraseña de más de 5 caracteres'
-    } %} {% include 'form/input.html.twig' with {
+    } %}
+	{% include 'form/input.html.twig' with {
         type : 'password',
         id: 'conf-password',
         label: 'Confirmar contraseña',
@@ -14,7 +15,7 @@
         required : true,
         error : 'Ingrese una contraseña de más de 5 caracteres'
     } %}
-    <div id="submit-btn" class="w-100 text-left">
-        <button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Actualizar</button>
-    </div>
+	<div id="submit-btn" class="w-100 text-left">
+		<button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Actualizar</button>
+	</div>
 </form>

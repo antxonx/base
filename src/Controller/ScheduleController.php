@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Scheduler controller
+ */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,42 +21,31 @@ use DateTime;
 use DateTimeZone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
+use App\Repository\ClientRepository;
 
 /**
+ * ScheduleController class
+ * @package App\Controller
  * @Route("/schedule")
+ * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ScheduleController extends AbstractController
 {
 
-    /**
-     * @var Util
-     */
-    protected $util;
+    protected Util $util;
 
-    /**
-     * @var ScheduleRepository
-     */
-    protected $rep;
+    protected ScheduleRepository $rep;
 
-    /**
-     * @var ScheduleCategoryRepository
-     */
-    protected $scRep;
+    protected ScheduleCategoryRepository $scRep;
 
-    /**
-     * @var SchedulePriorityRepository
-     */
-    protected $spRep;
+    protected SchedulePriorityRepository $spRep;
 
-    /**
-     * @var UserRepository
-     */
-    protected $uRep;
+    protected UserRepository $uRep;
 
-    /**
-     * @var Security
-     */
-    protected $security;
+    protected ClientRepository $cRep;
+
+    protected Security $security;
 
     public function __construct(
         Util $util,
@@ -60,7 +53,8 @@ class ScheduleController extends AbstractController
         ScheduleCategoryRepository $scRep,
         SchedulePriorityRepository $spRep,
         Security $security,
-        UserRepository $uRep
+        UserRepository $uRep,
+        ClientRepository $cRep
     ) {
         $this->util = $util;
         $this->rep = $rep;
@@ -68,6 +62,7 @@ class ScheduleController extends AbstractController
         $this->spRep = $spRep;
         $this->security = $security;
         $this->uRep = $uRep;
+        $this->cRep = $cRep;
     }
     /**
      * @Route("", name="schedule_index", methods={"GET"})
@@ -222,7 +217,7 @@ class ScheduleController extends AbstractController
             $day += ["name" => strftime("%A", strtotime("today {$offset} day"))];
             $day += ["day" => strftime("%d", strtotime("today {$offset} day"))];
             $day += ["date" => strftime("%d-%m-%Y", strtotime("today {$offset} day"))];
-            $eventsS = $this->rep->getBy("week", $params);
+            $eventsS = $this->rep->getBy("day", $params);
             $events = [];
             $evDay = strftime("%d-%m-%Y", strtotime("today {$offset} day"));
             foreach ($eventsS as $event) {
@@ -294,17 +289,21 @@ class ScheduleController extends AbstractController
     public function done(Request $request): Response
     {
         try {
+            /**
+             * @var User
+             */
+            $user = $this->security->getUser();
             $content = json_decode($request->getContent());
             $task = $this->rep->find($content->id);
             if ($task == null) {
                 throw new Exception("No se encontró la tarea");
             }
             if (
-                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
-                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+                !$user->hasRole("ROLE_SUPERVISOR") &&
+                ($user->getId() != $task->getCreatedBy()->getId())
             ) {
                 if (($task->getAssigned() != null)) {
-                    if ($this->security->getUser()->getId() != $task->getAssigned()->getId()) {
+                    if ($user->getId() != $task->getAssigned()->getId()) {
                         throw new Exception("No tienes permiso para realizar esta acción");
                     }
                 } else {
@@ -321,7 +320,7 @@ class ScheduleController extends AbstractController
                 $message .= "reactivado";
             }
             $this->rep->update();
-            $message .= "</b> la tarea";
+            $message .= "</br> la tarea";
             $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
             return new Response($message);
         } catch (Exception $e) {
@@ -346,25 +345,50 @@ class ScheduleController extends AbstractController
     }
 
     /**
-     * @Route("/asign", name="schedule_asign_update", methods={"PUT", "PATCH"}, options={"expose"=true})
+     * @Route("/update", name="schedule_update", methods={"PUT", "PATCH"}, options={"expose" = true})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function asign(Request $request): Response
+    public function update(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
-            $task = $this->rep->find($content->taskId);
+            $task = $this->rep->find($content->id);
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
-            $user = $this->uRep->find($content->userId);
-            if ($task == null) {
-                throw new Exception("No se pudo encontrar al usuario");
+            switch ($content->type) {
+                case 1: //Asignar
+                    $user = $this->uRep->find($content->value);
+                    if ($user == null) {
+                        throw new Exception("No se pudo encontrar al usuario");
+                    }
+                    $task
+                        ->setAssigned($user)
+                        ->updated($this->security->getUser());
+                    $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
+                    break;
+                case 2: //Prioridad
+                    $priority = $this->spRep->find($content->value);
+                    if ($priority == null) {
+                        throw new Exception("No se pudo encontrar la prioridad");
+                    }
+                    $task
+                        ->setPriority($priority)
+                        ->updated($this->security->getUser());
+                    $message = "Se ha cambiado la priordad de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) a <b>{$priority->getId()}</b> (<em>{$priority->getName()}</em>)";
+                    break;
+                case 3: //Fecha
+                    $old = $task->getDate();
+                    $new = new DateTime($content->value, new DateTimeZone("America/Mexico_City"));
+                    $task
+                        ->setDate($new)
+                        ->updated($this->security->getUser());
+                        $message = "Se ha cambiado la fecha de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) de <b>{$old->format("d-m-Y H:i:s")}</b> a <b>{$new->format("d-m-Y H:i:s")}</b>";
+                    break;
+                default:
+                    throw new Exception("No se pudo determinar la orden");
+                    break;
             }
-            $task
-                ->setAssigned($user)
-                ->updated($this->security->getUser());
-            $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
             $this->util->info($message);
             return new Response($message);
         } catch (Exception $e) {
@@ -398,13 +422,17 @@ class ScheduleController extends AbstractController
     public function delete(int $id): Response
     {
         try {
+            /**
+             * @var User
+             */
+            $user = $this->security->getUser();
             $task = $this->rep->find($id);
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
             if (
-                !$this->security->getUser()->hasRole("ROLE_SUPERVISOR") &&
-                ($this->security->getUser()->getId() != $task->getCreatedBy()->getId())
+                !$user->hasRole("ROLE_SUPERVISOR") &&
+                ($user->getId() != $task->getCreatedBy()->getId())
             ) {
                 throw new Exception("No tienes permiso para realizar esta acción");
             }
@@ -433,6 +461,7 @@ class ScheduleController extends AbstractController
             $priority = $this->spRep->find($content->priority);
             $user = null;
             $extra = "";
+            $client = $this->cRep->find($content->client);
             if ((int)$content->user != 0) {
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
@@ -445,6 +474,7 @@ class ScheduleController extends AbstractController
                 ->setPriority($priority)
                 ->setDone(false)
                 ->setAssigned($user)
+                ->setClient($client)
                 ->created($this->security->getUser());
             $this->rep->add($task);
             $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)" . $extra);

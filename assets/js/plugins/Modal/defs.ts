@@ -9,10 +9,10 @@ export interface ModalOptions {
     onHide?: () => void;
 }
 
-export const DEFAULT_MODAL_OPTIONS : ModalOptions = {
+export const DEFAULT_MODAL_OPTIONS: ModalOptions = {
     title: 'View',
     size: 70,
-    onHide: () => {},
+    onHide: () => { },
 };
 
 export const MODAL_LOADER = '<div class="loader"></div>';

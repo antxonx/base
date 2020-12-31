@@ -1,85 +1,80 @@
-<div id="contact-info">
-    {# Nombre #}
-    <p class="editable-container">
-        <b>Nombre</b> <br>
-        <a class="editable-field" href="#" data-name="contactName" data-type="text" data-pk="{{ contact.id }}"
-           data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
-           data-title="Ingresa el nombre">{{ contact.name }}</a>
-    </p>
-    {# . #}
-    {# Cleinte #}
-    <p class="editable-container">
-        <b>Cliente</b> <br>
-        <span>{{ contact.client.name }}</span>
-    </p>
-    {# . #}
-    {# Puesto #}
-    <p class="editable-container">
-        <b>Parentesco/referencia</b> <br>
-        <a class="editable-field" href="#" data-name="contactRole" data-type="text" data-pk="{{ contact.id }}"
-           data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
-           data-title="Ingresa el Puesto o referencia">{{ contact.role }}</a>
-    </p>
-    {# . #}
-    <b class="field-title">Teléfono<small>(s)</small></b>
-    {% for phone in contact.getContactExtras(TYPE_PHONE) %}
-        {# Teléfono #}
-        <p class="m-0 phone-container row round" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
+<div
+	id="contact-info">
+	{# Nombre #}
+	<p class="editable-container">
+		<b>Nombre</b>
+		<br>
+		<a class="editable-field" href="#" data-name="contactName" data-type="text" data-pk="{{ contact.id }}" data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa el nombre">{{ contact.name }}</a>
+	</p>
+	{# . #}
+	{# Cleinte #}
+	<p class="editable-container">
+		<b>Cliente</b>
+		<br>
+		<span>{{ contact.client.name }}</span>
+	</p>
+	{# . #}
+	{# Puesto #}
+	<p class="editable-container">
+		<b>Parentesco/referencia</b>
+		<br>
+		<a class="editable-field" href="#" data-name="contactRole" data-type="text" data-pk="{{ contact.id }}" data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa el Puesto o referencia">{{ contact.role }}</a>
+	</p>
+	{# . #}
+	<b class="field-title">Teléfono<small>(s)</small>
+	</b>
+	{% for phone in contact.getContactExtras(TYPE_PHONE) %}
+		{# Teléfono #}
+		<p
+			class="m-0 phone-container row round" phone-id="{{ phone.id }}" phone-phone="{{ phone.value }}">
 
-            {# Tipo de teléfono #}
-            <a class="editable-field font-weight-bold col-md-2" href="#" data-name="contactPhoneLevel"
-               data-type="select" data-pk="{{ phone.id }}"
-               data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa tipo"
-               data-source="[{'value':{{ LEVEL_WORK }}, 'text':'Trabajo'},{'value':{{ LEVEL_MOBILE }}, 'text':'Móvil'},{'value':{{ LEVEL_HOME }}, 'text':'Casa'}]"
-               data-value="{{ phone.level }}"></a>
-            {# . #}
-            |
-            {# número #}
-            <span class="col">
-                <a class="editable-field editable-clickable" href="tel:{{ phone.value }}" data-name="contactPhone"
-                   data-type="text" data-pk="{{ phone.id }}"
-                   data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
-                   data-title="Ingresa el teléfono">{{ phone.value }}</a>
-            </span>
-            {# . #}
-            {% if not loop.first %}
-                {# Eliminar #}
-                <span class="col-md-1 text-right p-0">
-                <button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-phone float-right round" style="display: none;"><i
-                            class="fas fa-trash-alt"></i></button>
-            </span>
-                {# . #}
-            {% endif %}
-        </p>
-        {# . #}
-    {% endfor %}
-    {# Teléfono extra #}
-    {% include "view/client/extras/phone.html.twig" with {
+			{# Tipo de teléfono #}
+			<a class="editable-field font-weight-bold col-md-2" href="#" data-name="contactPhoneLevel" data-type="select" data-pk="{{ phone.id }}" data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa tipo" data-source="[{'value':{{ LEVEL_WORK }}, 'text':'Trabajo'},{'value':{{ LEVEL_MOBILE }}, 'text':'Móvil'},{'value':{{ LEVEL_HOME }}, 'text':'Casa'}]" data-value="{{ phone.level }}"></a>
+			{# . #}
+			|
+			{# número #}
+			<span class="col">
+				<a class="editable-field editable-clickable" href="tel:{{ phone.value }}" data-name="contactPhone" data-type="text" data-pk="{{ phone.id }}" data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa el teléfono">{{ phone.value }}</a>
+			</span>
+			{# . #}
+			{% if not loop.first %}
+				{# Eliminar #}
+				<span class="col-md-1 text-right p-0">
+					<button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-phone float-right round" style="display: none;">
+						<i class="fas fa-trash-alt"></i>
+					</button>
+				</span>
+				{# . #}
+			{% endif %}
+		</p>
+		{# . #}
+	{% endfor %}
+	{# Teléfono extra #}
+	{% include "view/client/extras/phone.html.twig" with {
         id : 'contact-phone-extra-form'
     } %}
-    {# . #}
-    <b class="field-title">Correo<small>(s)</small></b>
-    {% for email in contact.getContactExtras(TYPE_MAIL) %}
-        {# Correo #}
-        <p class="m-0 email-container row round" email-id="{{ email.id }}" email-email="{{ email.value }}">
-            <span class="col-md-11">
-                <a class="editable-field editable-clickable" href="mailto:{{ email.value }}" data-name="contactEmail"
-                   data-type="text" data-pk="{{ email.id }}"
-                   data-url="{{ path('client_contact_update', {'id' : contact.id }) }}"
-                   data-title="Ingresa el correo">{{ email.value }}</a>
-            </span>
-            {% if not loop.first %}
-                {# Eliminar #}
-                <span class="col-md-1 text-right p-0">
-                    <button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-email float-right round" style="display: none;"><i
-                                class="fas fa-trash-alt"></i></button>
-                </span>
-                {# . #}
-            {% endif %}
-        </p>
-        {# . #}
-    {% endfor %}
-    {% include "view/client/extras/email.html.twig" with {
+	{# . #}
+	<b class="field-title">Correo<small>(s)</small>
+	</b>
+	{% for email in contact.getContactExtras(TYPE_MAIL) %}
+		{# Correo #}
+		<p class="m-0 email-container row round" email-id="{{ email.id }}" email-email="{{ email.value }}">
+			<span class="col-md-11">
+				<a class="editable-field editable-clickable" href="mailto:{{ email.value }}" data-name="contactEmail" data-type="text" data-pk="{{ email.id }}" data-url="{{ path('client_contact_update', {'id' : contact.id }) }}" data-title="Ingresa el correo">{{ email.value }}</a>
+			</span>
+			{% if not loop.first %}
+				{# Eliminar #}
+				<span class="col-md-1 text-right p-0">
+					<button class="btn btn-sm btn-outline-dark border-0 trash-btn trash-email float-right round" style="display: none;">
+						<i class="fas fa-trash-alt"></i>
+					</button>
+				</span>
+				{# . #}
+			{% endif %}
+		</p>
+		{# . #}
+	{% endfor %}
+	{% include "view/client/extras/email.html.twig" with {
         id : 'contact-email-extra-form'
     } %}
 </div>

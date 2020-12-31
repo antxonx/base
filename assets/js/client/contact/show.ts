@@ -27,7 +27,7 @@ export default class Show {
 
     protected control: boolean;
 
-    public constructor(options: showOptions) {
+    public constructor (options: showOptions) {
         this.options = { ...DEFAULT_SHOW_OPTIONS, ...options };
         this.control = true;
         if (this.options.id === 0) {
@@ -46,12 +46,12 @@ export default class Show {
             this.modal.show();
             this.update();
         }
-        document.getElementById("contact-edit-active")!.addEventListener("click", this.edit);
-        document.getElementById("contact-phone-extra-form")!.addEventListener("submit", this.addExtraPhone);
-        document.getElementById("contact-email-extra-form")!.addEventListener("submit", this.addExtraEmail);
-        [...document.getElementsByClassName("trash-phone")].forEach(el => el.addEventListener('click', this.deletePhone));
-        [...document.getElementsByClassName("trash-email")].forEach(el => el.addEventListener('click', this.deleteEmail));
-    }
+        document.getElementById("contact-edit-active")?.addEventListener("click", this.edit);
+        document.getElementById("contact-phone-extra-form")?.addEventListener("submit", this.addExtraPhone);
+        document.getElementById("contact-email-extra-form")?.addEventListener("submit", this.addExtraEmail);
+        [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', this.deletePhone));
+        [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', this.deleteEmail));
+    };
 
     private update = () => {
         Axios.get(Router.generate(ROUTES.client.contact.view.show, { 'id': this.options.id.toString() }))
@@ -73,7 +73,7 @@ export default class Show {
                 console.error(err.response.data);
                 Toast.error(err.response.data);
             });
-    }
+    };
 
     private edit = (e: Event) => {
         const BTN = (e.currentTarget as HTMLElement);
@@ -82,10 +82,10 @@ export default class Show {
             BTN.classList.remove("btn-danger");
             BTN.classList.add("btn-warning");
             BTN.innerHTML = "Editar Contacto";
-            [...document.getElementsByClassName("trash-email")].forEach(el => hideElement(el as HTMLElement));
-            [...document.getElementsByClassName("trash-phone")].forEach(el => hideElement(el as HTMLElement));
-            [...document.getElementsByClassName("trash-contact")].forEach(el => hideElement(el as HTMLElement));
-            [...document.getElementsByClassName("plus-btn")].forEach(el => hideElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-email") ].forEach(el => hideElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => hideElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => hideElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => hideElement(el as HTMLElement));
             $('#email-extra-container').collapse('hide');
             $('#phone-extra-container').collapse('hide');
         } else {
@@ -93,17 +93,17 @@ export default class Show {
             BTN.classList.remove("btn-warning");
             BTN.classList.add("btn-danger");
             BTN.innerHTML = "Cancelar";
-            [...document.getElementsByClassName("trash-email")].forEach(el => showElement(el as HTMLElement));
-            [...document.getElementsByClassName("trash-phone")].forEach(el => showElement(el as HTMLElement));
-            [...document.getElementsByClassName("trash-contact")].forEach(el => showElement(el as HTMLElement));
-            [...document.getElementsByClassName("plus-btn")].forEach(el => showElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-email") ].forEach(el => showElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => showElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => showElement(el as HTMLElement));
+            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => showElement(el as HTMLElement));
         }
         $('.editable-field').editable('toggleDisabled');
-    }
+    };
 
     private addExtraPhone = (e: Event) => {
         e.preventDefault();
-        if (evaluateInputs([document.getElementById("phone") as HTMLInputElement], 1, false)) {
+        if (evaluateInputs([ document.getElementById("phone") as HTMLInputElement ], 1, false)) {
             const BTN = document.getElementById("submit-phone-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
@@ -122,11 +122,11 @@ export default class Show {
                     BTN.innerHTML = BEF;
                 });
         }
-    }
+    };
 
     private addExtraEmail = (e: Event) => {
         e.preventDefault();
-        if (evaluateInputs([document.getElementById("email") as HTMLInputElement], 1, false)) {
+        if (evaluateInputs([ document.getElementById("email") as HTMLInputElement ], 1, false)) {
             const BTN = document.getElementById("submit-email-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
@@ -145,7 +145,7 @@ export default class Show {
                     BTN.innerHTML = BEF;
                 });
         }
-    }
+    };
 
     private deletePhone = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".phone-container") as HTMLElement;
@@ -167,7 +167,7 @@ export default class Show {
                     console.error(err.response.data);
                 });
         }
-    }
+    };
 
     private deleteEmail = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".email-container") as HTMLElement;
@@ -189,5 +189,5 @@ export default class Show {
                     console.error(err.response.data);
                 });
         }
-    }
+    };
 }

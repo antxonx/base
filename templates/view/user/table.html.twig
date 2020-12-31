@@ -1,44 +1,46 @@
 <table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2 mobile" id="userTable">
-    {% set sort %}
-        <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
-    {% endset %}
-    {# Developer-> #}
-    {% set extra = {
+	{% set sort %}
+	<span class="float-right sort-icon hide-on-mobile">
+		<i class="fas fa-sort"></i>
+	</span>
+	{% endset %}
+	{# Developer-> #}
+	{% set extra = {
         value : '',
         attr : {
             class: 'd-none'
         }
     } %}
-    {% set logger = {
+	{% set logger = {
         value : '',
         attr : {
             class: 'd-none'
         }
     } %}
-    {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
-        {% set extra = {
+	{% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
+		{% set extra = {
             value : '<i class="fas fa-user-tie mobile-2-desktop-1"></i>',
             attr : {
                 class : 'text-center border-right-0 border-left-0 icon-col',
             }
         } %}
-    {% endif %}
-    {% if is_granted("ROLE_GOD") %}
-        {% set logger = {
+	{% endif %}
+	{% if is_granted("ROLE_GOD") %}
+		{% set logger = {
             value : '<i class="fas fa-book mobile-2-desktop-1"></i>',
             attr : {
                 class: 'text-center border-right-0 border-left-0 icon-col',
             }
         } %}
-    {% endif %}
-    {# <-Developer #}
-    {# Sort column solo en desktop #}
-    {% set sortClass = 'cursor-pointer sort-column' %}
-    {% if isMobile %}
-        {% set sortClass = '' %}
-    {% endif %}
-    {# . #}
-    {% include "table/thead.html.twig" with {
+	{% endif %}
+	{# <-Developer #}
+	{# Sort column solo en desktop #}
+	{% set sortClass = 'cursor-pointer sort-column' %}
+	{% if isMobile %}
+		{% set sortClass = '' %}
+	{% endif %}
+	{# . #}
+	{% include "table/thead.html.twig" with {
         tr : {
             values : {
                 id : {
@@ -89,5 +91,5 @@
             },
         }
     } %}
-    <tbody id="usersView"></tbody>
+	<tbody id="usersView"></tbody>
 </table>

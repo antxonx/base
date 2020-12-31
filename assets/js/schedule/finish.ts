@@ -13,16 +13,16 @@ export default class Finish {
 
     protected options: ScheduleFinishOptions;
 
-    public constructor(options: ScheduleFinishOptions) {
-            this.options = {...DEFAULT_SCHEDULE_FINISH_OPTIONS, ...options};
-            if(this.options.id == 0) {
-                throw new Error("No se pudo determinar loa tarea");
-            }
+    public constructor (options: ScheduleFinishOptions) {
+        this.options = { ...DEFAULT_SCHEDULE_FINISH_OPTIONS, ...options };
+        if (this.options.id == 0) {
+            throw new Error("No se pudo determinar loa tarea");
+        }
     }
 
     public finish = async (reactivate = false) => {
         let msgText: string;
-        if(reactivate) {
+        if (reactivate) {
             msgText = 'reactivar';
         } else {
             msgText = 'finalizar';
@@ -46,5 +46,5 @@ export default class Finish {
                     Toast.error(err.response.data);
                 });
         }
-    }
+    };
 }

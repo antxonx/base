@@ -6,7 +6,7 @@
  */
 import $ from 'jquery';
 import 'bootstrap';
-import {AlertOptions, DEFAULT_ALERT_OPTIONS} from "./defs";
+import { AlertOptions, DEFAULT_ALERT_OPTIONS } from "./defs";
 
 /**
  * Shows alert to confirm or accept
@@ -145,9 +145,9 @@ export default class Alert {
      * @memberof Alert
      * @param options
      */
-    public constructor(options: AlertOptions = DEFAULT_ALERT_OPTIONS) {
+    public constructor (options: AlertOptions = DEFAULT_ALERT_OPTIONS) {
         this.modalId = Alert.randomId();
-        this.options = {...DEFAULT_ALERT_OPTIONS, ...options};
+        this.options = { ...DEFAULT_ALERT_OPTIONS, ...options };
         this.modalViewIdLabel = Alert.randomId();
         this.modalDialogId = Alert.randomId();
         this.modalBodyId = Alert.randomId();

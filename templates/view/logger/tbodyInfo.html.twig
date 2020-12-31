@@ -1,45 +1,45 @@
 {% set tr = {} %}
 {% for entity in entities %}
-    {# tipo de petición #}
-    {% set badge %}
-        <span class="btn btn-sm2 w-100
-        {% if entity.method == "GET" %}
-        alert-success
-        {% elseif entity.method == "POST" %}
-        alert-primary
-        {% elseif entity.method == "PUT" %}
-        alert-warning
-        {% elseif entity.method == "PATCH" %}
-        alert-warning
-        {% elseif entity.method == "DELETE" %}
-        alert-danger
-        {% else %}
-        alert-light
-        {% endif %}">{{ entity.method }}</span>
-    {% endset %}
-    {# . #}
-    {# Info completa #}
-    {% set infoFull %}
-        {% include "view/logger/full/info.html.twig" %}
-    {% endset %}
-    {# . #}
-    {# verificar si es de sistema #}
-    {% set dateClass %}
-        {% if entity.system %}
-            alert-info
-        {% else %}
-            alert-light
-        {% endif %}
-    {% endset %}
-    {# . #}
-    {# formato de nivel #}
-    {% set level %}
-        {% if entity.level != null %}
-            <button class="btn btn-info btn-sm w-100 no-hover"> {{ entity.level }}</button>
-        {% endif %}
-    {% endset %}
-    {# . #}
-    {% set tr = {
+	{# tipo de petición #}
+	{% set badge %}
+	<span class="btn btn-sm2 w-100
+		        {% if entity.method == " GET" %}
+		        alert-success
+		        {% elseif entity.method == " POST" %}
+		        alert-primary
+		        {% elseif entity.method == " PUT" %}
+		        alert-warning
+		        {% elseif entity.method == " PATCH" %}
+		        alert-warning
+		        {% elseif entity.method == " delete" %}
+		        alert-danger
+		        {% else %}
+		        alert-light
+		        {% endif %}">{{ entity.method }}</span>
+	{% endset %}
+	{# . #}
+	{# Info completa #}
+	{% set infoFull %}
+	{% include "view/logger/full/info.html.twig" %}
+	{% endset %}
+	{# . #}
+	{# verificar si es de sistema #}
+	{% set dateClass %}
+		{% if entity.system %}
+		alert-info
+	{% else %}
+		alert-light
+	{% endif %}
+	{% endset %}
+	{# . #}
+	{# formato de nivel #}
+	{% set level %}
+		{% if entity.level != null %}
+			<button class="btn btn-info btn-sm w-100 no-hover"> {{ entity.level }}</button>
+	{% endif %}
+	{% endset %}
+	{# . #}
+	{% set tr = {
         values : {
             id : {
                 value : entity.id,
@@ -78,10 +78,10 @@
             'aria-controls': '#info-' ~ entity.id
         }
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : tr
     } %}
-    {% include "table/tr.html.twig" with {
+	{% include "table/tr.html.twig" with {
         tr : {
             values : {
                 info : {
@@ -99,7 +99,7 @@
     } %}
 {% endfor %}
 {% if tr.values is defined %}
-    {% include "paginatorTable.html.twig" with {
+	{% include "paginatorTable.html.twig" with {
         items: entities,
         cols : tr.values|length
     } %}

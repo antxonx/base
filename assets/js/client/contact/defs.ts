@@ -8,9 +8,9 @@ export interface AddOptions {
     callback: () => void;
 }
 
-export const DEFAULT_ADD_OPTIONS : AddOptions = {
+export const DEFAULT_ADD_OPTIONS: AddOptions = {
     id: 0,
-    callback: () => {}
+    callback: () => { }
 };
 
 export interface showOptions {
@@ -18,7 +18,7 @@ export interface showOptions {
     callback: () => void;
 }
 
-export const DEFAULT_SHOW_OPTIONS : showOptions = {
+export const DEFAULT_SHOW_OPTIONS: showOptions = {
     id: 0,
-    callback: () => {}
+    callback: () => { }
 };

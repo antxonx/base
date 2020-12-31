@@ -13,9 +13,9 @@ export default class Delete {
 
     protected options: ScheduleDeleteOptions;
 
-    public constructor(options: ScheduleDeleteOptions) {
-        this.options = {...DEFAULT_SCHEDULE_DELETE_OPTIONS, ...options};
-        if(this.options.id == 0) {
+    public constructor (options: ScheduleDeleteOptions) {
+        this.options = { ...DEFAULT_SCHEDULE_DELETE_OPTIONS, ...options };
+        if (this.options.id == 0) {
             throw new Error("No se ha podido encontrar la tarea");
         }
     }
@@ -27,7 +27,7 @@ export default class Delete {
         });
         let res = await ALERT.updateBody(`¿Eliminar la tarea?`).show();
         if (res) {
-            Axios.delete(Router.generate(ROUTES.schedule.api.delete, {'id': this.options.id!.toString()}))
+            Axios.delete(Router.generate(ROUTES.schedule.api.delete, { 'id': this.options.id!.toString() }))
                 .then(res => {
                     Toast.success(res.data);
                     this.options.callback!();
@@ -37,5 +37,5 @@ export default class Delete {
                     Toast.error(err.response.data);
                 });
         }
-    }
+    };
 }

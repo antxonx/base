@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Rutas para usuarios
+ * User controller
  */
 
 namespace App\Controller;
@@ -22,47 +23,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Usuarios
+ * @package App\Controller
  * @Route("/user")
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class UserController extends AbstractController
 {
-    /**
-     * Repositorio de usuarios
-     *
-     * @var UserRepository
-     */
-    protected $rep;
 
-    /**
-     * Usuario actual
-     *
-     * @var User
-     */
-    protected $actualUser;
+    protected UserRepository $rep;
 
-    /**
-     * password encoder
-     *
-     * @var UserPasswordEncoderInterface
-     */
-    protected $passwordEncoder;
+    protected User $actualUser;
 
-    /**
-     * herramientas útiles
-     *
-     * @var Util
-     */
-    protected $util;
+    protected UserPasswordEncoderInterface $passwordEncoder;
 
-    /**
-     * Constructor
-     *
-     * @param UserRepository $rep
-     * @param Security $security
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param Util $util
-     */
+    protected Util $util;
+
     public function __construct(UserRepository $rep, Security $security, UserPasswordEncoderInterface $passwordEncoder, Util $util)
     {
         $this->actualUser = $security->getUser();
@@ -72,11 +47,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Inicio
-     * @Route("/", name="user_index", methods={"GET"})
+     * index
+     * 
+     * @Route("", name="user_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -86,12 +60,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Conseguir todos los usuarios
+     * get all users
+     * 
      * @Route("/list", name="user_list", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function indexA(Request $request): Response
     {
@@ -113,11 +85,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Cargar formulario de usuarios
+     * add form
+     * 
      * @Route("/form", name="user_form", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @return Response
      */
     public function form(): Response
     {
@@ -129,11 +100,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Formulario de cambio de contraseña
+     * password form
+     * 
      * @Route("/key", name="user_key", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @return Response
      */
     public function key(): Response
     {
@@ -145,13 +115,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Cambiar contraseña
+     * change password
+     * 
      * @Route("/key/{id}", name="user_key_update", methods={"PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function keyUpdate(int $id, Request $request): Response
     {
@@ -168,12 +135,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Formulario de cambio de contraseña
+     * reactive user
+     * 
      * @Route("/reactivate/{id}", name="user_reactivate", methods={"PATCH"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function reactivate(int $id): Response
     {
@@ -189,10 +154,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Cargar formulario de cambio de contraseña
+     * change password form
+     * 
      * @Route("/profile/pass", name="user_profile_pass_form", methods={"GET"}, options={"expose" = true})
-     *
-     * @return Response
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function passform(): Response
     {
@@ -204,11 +169,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * Cambiar contraseña del usuario
+     * change user password
      * @Route("/profile/pass", name="user_profile_pass_change", methods={"PUT"}, options={"expose" = true})
-     * @param Request $request
-     *
-     * @return Response
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function passchange(Request $request): Response
     {
@@ -234,10 +197,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Mostrar perfil de usuario
+     * show user profile
+     * 
      * @Route("/profile", name="user_profile", methods={"GET"})
-     *
-     * @return Response
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function profile(): Response
     {
@@ -251,12 +214,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Mostrar a un usuario
+     * show an user
+     * 
      * @Route("/{id}", name="user_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function edit(int $id): Response
     {
@@ -274,12 +235,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Agregar a un usuario
+     * add user
+     * 
      * @Route("/", name="user_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request $request
-     * @return Response
      */
     public function add(Request $request): Response
     {
@@ -300,7 +259,7 @@ class UserController extends AbstractController
             $this->rep->add($user);
             $this->util->info("Se ha agregado al usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Usuario agregado");
-        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
+        } catch (UniqueConstraintViolationException $e) {
 
             if ($this->util->containsString($e->getMessage(), User::FK_USERNAME)) {
                 $message = "El usuario <b>{$content->username}</b> ya existe.";
@@ -310,6 +269,7 @@ class UserController extends AbstractController
                 $message = $e->getMessage();
             }
             //$this->util->errorException($e);
+            //unknown error, user not recognized to generate error log
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -317,13 +277,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Actualizar usuario con x-editable
+     * update user with x-editable
+     * 
      * @Route("/{id}", name="user_update", methods={"PUT", "PATCH"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     *
-     * @param integer $id
-     * @param Request $request
-     * @return Response
      */
     public function update(Request $request, int $id = 0): Response
     {
@@ -361,7 +318,7 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info($message . " del usuario <b>{$user->getId()}</b>(<em>{$user->getUsername()}</em>)");
             return new response($message);
-        } /** @noinspection PhpRedundantCatchClauseInspection */ catch (UniqueConstraintViolationException $e) {
+        } catch (UniqueConstraintViolationException $e) {
             if ($this->util->containsString($e->getMessage(), User::FK_USERNAME)) {
                 $message = "El usuario <b>{$content->value}</b> ya existe.";
             } elseif ($this->util->containsString($e->getMessage(), User::FK_MAIL)) {
@@ -370,6 +327,7 @@ class UserController extends AbstractController
                 $message = $e->getMessage();
             }
             //$this->util->errorException($e);
+            //unknown error, user not recognized to generate error log
             return new Response($message, Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
@@ -377,12 +335,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * Eliminar/Suspender a un usuario
+     * suspend user
+     * 
      * @Route("/{id}", name="user_delete", methods={"DELETE"}, options={"expose" = true})
      * @IsGranted("ROLE_ADMIN")
-     *
-     * @param integer $id
-     * @return Response
      */
     public function delete(int $id): Response
     {
@@ -408,25 +364,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * Cambiar contraseña de usuario suspendido
+     * Change suspended user password
+     * 
      * @Route("/reSuspend/{id}", name="user_resuspend", methods={"POST"})
-     *
-     * @param int $id
-     * @return Response
      */
     public function changeSuspendedPassword(int $id)
     {
         try {
             $user = $this->rep->find($id);
-            if(!$user->getSuspended()){
+            if (!$user->getSuspended()) {
                 throw new Exception("Este usuario no ha sido suspendido.");
             }
             $user->setPassword(
-                    $this->passwordEncoder->encodePassword(
-                        $user,
-                        $this->util->generateRandomString(10)
-                    )
-                );
+                $this->passwordEncoder->encodePassword(
+                    $user,
+                    $this->util->generateRandomString(10)
+                )
+            );
             $this->rep->update();
             $this->util->info("Se ha <b>re</b>-suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("ok");

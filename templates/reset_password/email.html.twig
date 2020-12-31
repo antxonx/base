@@ -1,42 +1,45 @@
 <style>
-    .mx-auto {
-        margin-left: auto !important;
-    }
+	.mx-auto {
+		margin-left: auto !important;
+	}
 
-    .mx-auto {
-        margin-right: auto !important;
-    }
+	.mx-auto {
+		margin-right: auto !important;
+	}
 
-    .mt-5 {
-        margin-top: 3rem !important;
-    }
+	.mt-5 {
+		margin-top: 3rem !important;
+	}
 
-    .card {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        border-radius: 0.25rem;
-    }
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		word-wrap: break-word;
+		background-color: #fff;
+		background-clip: border-box;
+		border: 1px solid rgba(0, 0, 0, 0.125);
+		border-radius: 0.25rem;
+	}
 
-    .card-body {
-        flex: 1 1 auto;
-        min-height: 1px;
-        padding: 1.25rem;
-    }
+	.card-body {
+		flex: 1 1 auto;
+		min-height: 1px;
+		padding: 1.25rem;
+	}
 </style>
 
 <div class="card mx-auto mt-5">
-    <div class="card-body">
-        <h1>Hola, {{ name }}</h1>
-        <p>
-            Para restablecer tu contraseña por favor has click
-            <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">aquí</a>
-            Este enlace caduca en {{ tokenLifetime|date('g') }} hora(s)..
-        </p>
-    </div>
+	<div class="card-body">
+		<h1>Hola,
+			{{ name }}</h1>
+		<p>
+			Para restablecer tu contraseña por favor has click
+			<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">aquí</a>
+			Este enlace caduca en
+			{{ tokenLifetime|date('g') }}
+			hora(s)..
+		</p>
+	</div>
 </div>

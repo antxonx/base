@@ -44,5 +44,5 @@ export default class Profile {
             }
             $('.editable-field').editable('toggleDisabled');
         });
-    }
+    };
 }

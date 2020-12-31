@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Schedule categories controller
+ */
+
 namespace App\Controller;
 
 use Antxony\Util;
@@ -11,23 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleCategoryRepository;
 use App\Entity\ScheduleCategory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Exception;
 
 /**
  * ScheduleCategoryController class
+ * @package App\Controller
  * @Route("/scheduleCategory")
  * @author Antxony <dantonyofcarim@gmail.com>
  */
 class ScheduleCategoryController extends AbstractController
 {
-    /**
-    * @var ScheduleCategoryRepository
-    */
-    protected $rep;
 
-    /**
-     * @var Util
-     */
-    protected $util;
+    protected ScheduleCategoryRepository $rep;
+
+    protected Util $util;
 
     public function __construct(ScheduleCategoryRepository $rep, Util $util)
     {
@@ -47,10 +48,10 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/list", name="schedule_category_list", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function list(Request $request) : Response
+     * @Route("/list", name="schedule_category_list", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function list(Request $request): Response
     {
         try {
             $params = json_decode(json_encode($request->query->all()));
@@ -64,16 +65,16 @@ class ScheduleCategoryController extends AbstractController
                 'thisPage' => ((isset($params->page)) ? $params->page : 1),
                 'showed' => (($showed > $categories->count()) ? $categories->count() : $showed),
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
     }
 
     /**
-    * @Route("/form", name="schedule_category_form", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function form() : Response
+     * @Route("/form", name="schedule_category_form", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function form(): Response
     {
         try {
             return $this->render("view/schedule_category/form.html.twig");
@@ -83,10 +84,10 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/add", name="schedule_category_add", methods={"POST"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function add(Request $request) : Response
+     * @Route("/add", name="schedule_category_add", methods={"POST"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function add(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
@@ -105,14 +106,14 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/delete/{id}", name="schedule_category_delete", methods={"DELETE"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function delete(int $id) : Response
+     * @Route("/delete/{id}", name="schedule_category_delete", methods={"DELETE"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function delete(int $id): Response
     {
         try {
             $category = $this->rep->find($id);
-            if($category == null) {
+            if ($category == null) {
                 throw new Exception("No se encontró la categoría");
             }
             $this->rep->delete($category);
@@ -125,10 +126,10 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/show/{id}", name="schedule_category_show", methods={"GET"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function show(int $id) : Response
+     * @Route("/show/{id}", name="schedule_category_show", methods={"GET"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function show(int $id): Response
     {
         try {
             $category = $this->rep->find($id);
@@ -141,16 +142,16 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/update/{id}", name="schedule_category_edit", methods={"PUT", "PATCH"})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function update(int $id, Request $request) : Response
+     * @Route("/update/{id}", name="schedule_category_edit", methods={"PUT", "PATCH"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function update(int $id, Request $request): Response
     {
         try {
             parse_str($request->getContent(), $content);
             $editable = new Editable($content);
             $category = $this->rep->find($id);
-            if($category == null){
+            if ($category == null) {
                 throw new Exception("No se pudo localizar la categoría");
             }
             $message = "se ha actualizado";
@@ -171,19 +172,19 @@ class ScheduleCategoryController extends AbstractController
     }
 
     /**
-    * @Route("/color", name="schedule_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
-    * @IsGranted("ROLE_ADMIN")
-    */
-    public function updateColor(Request $request) : Response
+     * @Route("/color", name="schedule_category_color_edit", methods={"PUT", "PATCH"}, options={"expose" = true})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function updateColor(Request $request): Response
     {
         try {
             $content = json_decode($request->getContent());
             $category = $this->rep->find($content->id);
-            if($category == null) {
+            if ($category == null) {
                 throw new Exception("No se encontró la categoría");
             }
             $message = "Se ha actualizado el color del ";
-            if($content->type == "background") {
+            if ($content->type == "background") {
                 $category->setBackgroundColor($content->newColor);
                 $message .= "fondo";
             } else {
@@ -196,6 +197,5 @@ class ScheduleCategoryController extends AbstractController
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
-
     }
 }

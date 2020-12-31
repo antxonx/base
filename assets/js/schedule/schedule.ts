@@ -34,7 +34,7 @@ export default class Schedule {
 
     protected category: number;
 
-    public constructor() {
+    public constructor () {
         this.control = true;
         this.offset = 0;
         this.opened = 0;
@@ -47,16 +47,16 @@ export default class Schedule {
     }
 
     public load = () => {
-        if(this.control) {
+        if (this.control) {
             this.control = false;
             let active: string;
-            document.getElementById("calendarBefore")?.addEventListener('click', () => {this.addOffset(-1)});
-            document.getElementById("calendarToday")?.addEventListener('click', () => {this.addOffset(0, true)});
-            document.getElementById("calendarAfter")?.addEventListener('click', () => {this.addOffset(1)});
+            document.getElementById("calendarBefore")?.addEventListener('click', () => { this.addOffset(-1); });
+            document.getElementById("calendarToday")?.addEventListener('click', () => { this.addOffset(0, true); });
+            document.getElementById("calendarAfter")?.addEventListener('click', () => { this.addOffset(1); });
             document.getElementById("schedule-add")?.addEventListener('click', () => {
                 (new Add(this.update)).load();
-            })
-            if(isMobile()){
+            });
+            if (isMobile()) {
                 active = 'day';
             } else {
                 active = 'week';
@@ -69,7 +69,7 @@ export default class Schedule {
                 activeValue: active,
                 oneActive: true
             });
-            if(document.getElementById('superCheck')) {
+            if (document.getElementById('superCheck')) {
                 (new ButtonCheckGroup(document.getElementById('superCheck') as HTMLElement, {
                     onChange: this.superCheck,
                     unCheckClass: 'btn-outline-info',
@@ -90,27 +90,30 @@ export default class Schedule {
                 callback: this.searchField,
                 selector: "#searchTaskInput"
             });
-            if(document.getElementById("taskCategoryIndex")) {
+            if (document.getElementById("taskCategoryIndex")) {
                 (new DropdownSelect({
                     element: document.getElementById("taskCategoryIndex")!,
                     callback: this.setCategory
                 })).load();
             }
-            this.route = ROUTES.schedule.view[(check.getValues()[0] as ScheduleType)];
+            this.route = ROUTES.schedule.view[ (check.getValues()[ 0 ] as ScheduleType) ];
             this.update();
         }
-        [...document.getElementsByClassName("schedule-day")].forEach(el => el.addEventListener("click", this.openDay));
-        [...document.getElementsByClassName("event")].forEach(el => el.addEventListener("click", (e: Event) => {
+        [ ...document.getElementsByClassName("schedule-day") ].forEach(el => el.addEventListener("click", this.openDay));
+        [ ...document.getElementsByClassName("event") ].forEach(el => el.addEventListener("click", (e: Event) => {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
                 element: ELEMENT,
-                callback: this.update
+                callback:() => {
+                    this.update(false);
+                }
             })).load();
         }));
-    }
+    };
 
-    private update = () => {
-        this.mainView.innerHTML = BIG_LOADER;
+    private update = (spinner = true) => {
+        if(spinner)
+            this.mainView.innerHTML = BIG_LOADER;
         Axios.get(Router.generate(this.route, {
             'search': this.searchInput,
             'offset': this.offset,
@@ -118,20 +121,20 @@ export default class Schedule {
             'finished': this.finished,
             'category': this.category
         }))
-        .then(res => {
-            this.mainView.innerHTML = res.data;
-            this.load();
-        })
-        .catch(err => {
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        })
-    }
+            .then(res => {
+                this.mainView.innerHTML = res.data;
+                this.load();
+            })
+            .catch(err => {
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+    };
 
     private setCategory = (value: string) => {
         this.category = +value;
         this.update();
-    }
+    };
 
     private searchField = (data: string) => {
         this.searchInput = data.replace(/\//g, "_");
@@ -139,25 +142,25 @@ export default class Schedule {
     };
 
     private addOffset = (value: number, set: boolean = false) => {
-        if(set) {
+        if (set) {
             this.offset = value;
         } else {
             this.offset += value;
         }
         this.update();
-    }
+    };
 
     private openDay = (e: Event) => {
         const ELEMENT = e.currentTarget as HTMLElement;
         const DAY = +ELEMENT.getAttribute("day")!;
-        if(DAY) {
+        if (DAY) {
             const INFO_CONT = document.querySelector(`.schedule-info[day="${DAY}"]`) as HTMLElement;
-            if(this.opened != 0) {
-                if(DAY == this.opened) {
+            if (this.opened != 0) {
+                if (DAY == this.opened) {
                     INFO_CONT.classList.remove("show");
                     this.opened = 0;
                 } else {
-                    [...document.getElementsByClassName("schedule-info")].forEach(el => el.classList.remove("show"));
+                    [ ...document.getElementsByClassName("schedule-info") ].forEach(el => el.classList.remove("show"));
                     INFO_CONT.classList.add("show");
                     this.opened = DAY;
                 }
@@ -166,34 +169,34 @@ export default class Schedule {
                 this.opened = DAY;
             }
         }
-    }
+    };
 
     private changeType = (value: string[]) => {
-        this.route = ROUTES.schedule.view[(value[0] as ScheduleType)];
+        this.route = ROUTES.schedule.view[ (value[ 0 ] as ScheduleType) ];
         this.offset = 0;
         this.update();
-    }
+    };
 
     private superCheck = (value: string[]) => {
-        if(value.includes('me')){
+        if (value.includes('me')) {
             this.me = 1;
         } else {
             this.me = 0;
         }
-        if(value.includes('finished')){
+        if (value.includes('finished')) {
             this.finished = 1;
         } else {
             this.finished = 0;
         }
         this.update();
-    }
+    };
 
     private noSuperCheck = (value: string[]) => {
-        if(value.includes('finished')){
+        if (value.includes('finished')) {
             this.finished = 1;
         } else {
             this.finished = 0;
         }
         this.update();
-    }
+    };
 }

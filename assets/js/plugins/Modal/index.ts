@@ -6,7 +6,7 @@
  */
 import $ from 'jquery';
 import 'bootstrap';
-import {DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions} from "./defs";
+import { DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions } from "./defs";
 
 /**
  * create modals
@@ -42,6 +42,15 @@ export default class Modal {
     private modal: HTMLElement;
 
     /**
+     *allow or avoid callback
+     *
+     * @private
+     * @type {boolean}
+     * @memberof Modal
+     */
+    private allowCallback: boolean;
+
+    /**
      * Estruxtura principal del modal
      *
      * @private
@@ -54,10 +63,11 @@ export default class Modal {
      * @memberof Modal
      * @param options
      */
-    public constructor(options: ModalOptions) {
-        this.options = {...DEFAULT_MODAL_OPTIONS, ...options};
+    public constructor (options: ModalOptions) {
+        this.options = { ...DEFAULT_MODAL_OPTIONS, ...options };
         this.id = Modal.randomId();
         this.modal = Modal.htmlToElement("<div></div>");
+        this.allowCallback = true;
         //this.createModal();
     }
 
@@ -143,11 +153,10 @@ export default class Modal {
      * @memberof Modal
      */
     public show(loading = true) {
-        //console.log(this);
         this.createModal();
         this.setTitle();
         this.setSize();
-        if(loading)
+        if (loading)
             this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
@@ -159,7 +168,8 @@ export default class Modal {
                     $('body').addClass('modal-open');
                 }
                 //.
-                this.options.onHide!();
+                if(this.allowCallback)
+                    this.options.onHide!();
             }, 200);
         });
         return this;
@@ -173,7 +183,7 @@ export default class Modal {
     public showNoDelete(loading = true) {
         this.setTitle();
         this.setSize();
-        if(loading)
+        if (loading)
             this.loadingBody();
         $(this.modal).modal("show");
         $(this.modal).on("hidden.bs.modal", () => {
@@ -184,7 +194,8 @@ export default class Modal {
                     $('body').addClass('modal-open');
                 }
                 //.
-                this.options.onHide!();
+                if(this.allowCallback)
+                    this.options.onHide!();
             }, 200);
         });
         return this;
@@ -228,5 +239,9 @@ export default class Modal {
      */
     public getId(): string {
         return this.id;
+    }
+
+    public setAllowCallback = (val: boolean) => {
+        this.allowCallback = val;
     }
 }

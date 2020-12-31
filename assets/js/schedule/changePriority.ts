@@ -11,7 +11,7 @@ import Axios from "axios";
 
 import { DEFAULT_SCHEDULE_ASIGN_OPTIONS, ScheduleAsignOptions } from "./defs";
 
-export default class Assign {
+export default class ChangePriority {
 
     protected options: ScheduleAsignOptions;
 
@@ -19,29 +19,27 @@ export default class Assign {
 
     protected list: HTMLElement;
 
-    protected reasign: boolean;
-
     public constructor (options: ScheduleAsignOptions) {
         this.options = { ...DEFAULT_SCHEDULE_ASIGN_OPTIONS, ...options };
         this.list = document.createElement("div") as HTMLElement;
-        this.reasign = false;
         if (this.options.id == 0) {
             throw new Error("No se pudo identificar la tarea");
         }
         this.modal = new Modal({
-            title: "Asignar tarea",
+            title: "cambiar prioridad",
             size: 40,
             onHide: this.options.callback
         });
     }
 
-    public asign = (reasign = false) => {
-        this.reasign = reasign;
+    public load = () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.schedule.view.asign))
+        Axios.get(Router.generate(ROUTES.schedulePriority.view.changeForm, {
+            'id': this.options.id!
+        }))
             .then(res => {
                 this.modal.updateBody(res.data);
-                this.list = document.getElementById('userList') as HTMLElement;
+                this.list = document.getElementById('priorityList') as HTMLElement;
                 this.startEvents();
             })
             .catch(err => {
@@ -52,27 +50,21 @@ export default class Assign {
             });
     };
 
-    private listAsign = async (data: string[]) => {
+    private listPriority = async (data: string[]) => {
         if (Array.isArray(data) && data.length) {
-            let msgText: string;
-            if (this.reasign) {
-                msgText = "reasignar";
-            } else {
-                msgText = "asignar";
-            }
             const LIST_BEF = this.list.innerHTML;
             this.list.innerHTML = BIG_LOADER;
             const res = await (new Alert({
-                typeText: msgText.charAt(0).toUpperCase() + msgText.slice(1),
+                typeText: "Cambiar prioridad",
                 type: "info",
             }))
-                .updateBody(`¿Seguro que desea <b>${msgText}</b> el usuario a la tarea?`)
+                .updateBody(`¿Seguro que desea cambiar la prioridad de la tarea?`)
                 .show();
             if (res) {
                 Axios.patch(Router.generate(ROUTES.schedule.api.update), {
                     id: this.options.id,
                     value: data[ 0 ],
-                    type: 1,
+                    type: 2,
                 })
                     .then(() => {
                         this.modal.hide();
@@ -97,8 +89,8 @@ export default class Assign {
         (new ListSelect({
             element: this.list,
             multiple: false,
-            attribute: 'user-id',
-            callback: this.listAsign
+            attribute: 'priority-id',
+            callback: this.listPriority
         })).load();
     };
 }

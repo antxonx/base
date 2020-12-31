@@ -11,12 +11,12 @@ export declare type SearchCallback = (data: string) => void;
  * @interface SearchOptions
  */
 export interface SearchOptions {
-    selector?: string;
-    element?: HTMLInputElement;
-    callback: SearchCallback;
+  selector?: string;
+  element?: HTMLInputElement;
+  callback: SearchCallback;
 }
 
 export const DEFAULT_SEARCH_OPTIONS = {
-  callback: () => {},
+  callback: () => { },
   selector: '#searchField',
 };

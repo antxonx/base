@@ -12,13 +12,13 @@ export enum ListSelectNames {
 export interface ListSelectOptions {
     element: HTMLElement;
     multiple?: boolean;
-    attribute?: string
+    attribute?: string;
     callback?: (data: string[]) => void;
 }
 
-export const DEFAULT_LIST_SELECT_OPTIONS : ListSelectOptions = {
+export const DEFAULT_LIST_SELECT_OPTIONS: ListSelectOptions = {
     element: document.createElement("div") as HTMLElement,
     multiple: false,
     attribute: ListSelectNames.READ_ATTRIBUTE,
-    callback: () => {},
-}
+    callback: () => { },
+};

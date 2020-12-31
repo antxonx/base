@@ -3,11 +3,11 @@
 * @module Profile
 */
 import Modal from "@plugins/Modal";
-import Axios, {AxiosError, AxiosResponse} from "axios";
-import {Router, ROUTES, SPINNER_LOADER} from "@scripts/app";
+import Axios, { AxiosError, AxiosResponse } from "axios";
+import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
-import {clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput} from "@plugins/Required";
-import {PASSWORD_INPUT} from "@scripts/profile/defs";
+import { clearErrorMsg, clearValidState, evaluateInputs, insertAlertAfter, setValidInput } from "@plugins/Required";
+import { PASSWORD_INPUT } from "@scripts/profile/defs";
 
 /**
  * Change user password with confirmation
@@ -20,7 +20,7 @@ export default class Key {
 
     protected modal: Modal;
 
-    public constructor() {
+    public constructor () {
         this.modal = new Modal({
             title: 'CAmbiar contraseña',
             size: 30
@@ -38,24 +38,23 @@ export default class Key {
                 console.error(err.response?.data);
                 Toast.error(err.response?.data);
             });
-    }
+    };
 
     public validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
-        const INPUTS = [...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>];
+        const INPUTS = [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ];
         clearErrorMsg();
-        INPUTS.forEach(el => console.log(el.value));
         if (evaluateInputs(INPUTS, 5)) {
-            if (INPUTS[PASSWORD_INPUT.NEW].value === INPUTS[PASSWORD_INPUT.CONF].value) {
+            if (INPUTS[ PASSWORD_INPUT.NEW ].value === INPUTS[ PASSWORD_INPUT.CONF ].value) {
                 const BEF = BTN.innerHTML;
                 BTN.innerHTML = SPINNER_LOADER;
-                setValidInput(INPUTS[PASSWORD_INPUT.NEW]);
-                setValidInput(INPUTS[PASSWORD_INPUT.CONF]);
+                setValidInput(INPUTS[ PASSWORD_INPUT.NEW ]);
+                setValidInput(INPUTS[ PASSWORD_INPUT.CONF ]);
                 Axios.put(Router.generate(ROUTES.user.api.passchange), {
-                    old: INPUTS[PASSWORD_INPUT.OLD].value,
-                    new: INPUTS[PASSWORD_INPUT.NEW].value,
-                    conf: INPUTS[PASSWORD_INPUT.CONF].value,
+                    old: INPUTS[ PASSWORD_INPUT.OLD ].value,
+                    new: INPUTS[ PASSWORD_INPUT.NEW ].value,
+                    conf: INPUTS[ PASSWORD_INPUT.CONF ].value,
                 })
                     .then((res: AxiosResponse) => {
                         Toast.success(res.data);
@@ -66,11 +65,10 @@ export default class Key {
                         BTN.innerHTML = BEF;
                     });
             } else {
-                console.log("invaid");
-                clearValidState(INPUTS[PASSWORD_INPUT.NEW]);
-                clearValidState(INPUTS[PASSWORD_INPUT.CONF]);
+                clearValidState(INPUTS[ PASSWORD_INPUT.NEW ]);
+                clearValidState(INPUTS[ PASSWORD_INPUT.CONF ]);
                 insertAlertAfter(BTN, "Las contraseñas no coinciden");
             }
         }
-    }
+    };
 }

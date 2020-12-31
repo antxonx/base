@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Inicio
+{% endblock %}
 
 {% block body %}
-    {% if app.user %}
-        <div class="container text-center">
-            <h5>Bienvenido, {{ app.user.name }}</h5>
-        </div>
-        {% include "view/home/dashboard.html.twig" %}
-    {% else %}
-        <script>
-            window.location.href = "{{ path('app_login') }}";
-        </script>
-    {% endif %}
+	{% if app.user %}
+		<div class="container text-center">
+			<h5>Bienvenido,
+				{{ app.user.name }}</h5>
+		</div>
+		{% include "view/home/dashboard.html.twig" %}
+	{% else %}
+		<script>
+			window.location.href = "{{ path('app_login') }}";
+		</script>
+	{% endif %}
 {% endblock %}
 {% block javascripts %}
-    {{ encore_entry_script_tags('dashboard') }}
+	{{ encore_entry_script_tags('dashboard') }}
 {% endblock %}

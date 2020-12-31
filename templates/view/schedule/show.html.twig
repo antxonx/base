@@ -1,85 +1,101 @@
 <div class="card-body">
-    <div class="row">
-        <div class="col-md-6">
-            <p>
-                <b>Tarea</b> <br>
-                {{ task.title }}
-            </p>
-            <p>
-                <b>Fecha</b> <br>
-                {{ task.date|format_datetime("full", "none", locale="es") }}
-            </p>
-            <p>
-                <b>Hora</b> <br>
-                {{ task.date|format_datetime("none", "short", locale="es") }}
-            </p>
-        </div>
-        <div class="col-md-6">
-                <b>Responsable</b> <br>
-                <div class="task-hover-row">
-                {% if task.assigned != null %}
-                    <em>{{ task.assigned.name }}</em>
-                    {% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
-                        <button
-                            class="btn btn-sm btn-outline-danger border-0 round float-right"
-                            style="transform: translate(2px, -2px);"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Reasignar"
-                            id="taskReassign"
-                        >
-                            <i class="fas fa-user"></i>
-                        </button>
-                    {% endif %}
-                {% else %}
-                    <em>Sin asignar</em>
-                    {% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
-                        <button
-                            class="btn btn-sm btn-outline-primary border-0 round float-right"
-                            style="transform: translate(2px, -2px);"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Asignar"
-                            id="taskAssign"
-                        >
-                            <i class="fas fa-user"></i>
-                        </button>
-                    {% endif %}
-                {% endif %}
-                </div>
-            <p>
-                <b>Categoría</b> <br>
-                <span class="color-pill" style="background-color: {{ task.category.backgroundColor }}">&nbsp;</span> {{ task.category.name }}
-            </p>
-            <p>
-                <b>Prioridad</b> <br>
-                <span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span> {{ task.priority.name }}
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>
-                <b>Detalle</b> <br>
-                {{ task.detail }}
-            </p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col">
-            {% if task.createdBy.id == app.user.id or is_granted("ROLE_SUPERVISOR") %}
-                <button type="button" id="taskDelete" class="btn btn-danger round">Eliminar</button>
-            {% endif %}
-        </div>
-        <div class="col text-right">
-            {% if task.done %}
-                <button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
-            {% else %}
-                <button type="button" id="taskFinish" class="btn btn-antxony round">Finalizar</button>
-            {% endif %}
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-6">
+			{% if task.client != null %}
+				<p>
+					<b>Cliente</b>
+					<br>
+					<button id="openClientInfo" class="btn btn-sm btn-link p-0 m-0" client-id="{{ task.client.id }}">{{ task.client.name }}</button>
+				</p>
+			{% endif %}
+			<p>
+				<b>Tarea</b>
+				<br>
+				{{ task.title }}
+			</p>
+			<div class="card position-relative">
+				<div id="actualDateContainer" date="{{ task.date|date("Y-m-d H:i:s") }}">
+					<p>
+						<b>Fecha</b>
+						<br>
+						{{ task.date|format_datetime("full", "none", locale="es") }}
+					</p>
+					<p>
+						<b>Hora</b>
+						<br>
+						{{ task.date|format_datetime("none", "short", locale="es") }}
+					</p>
+				</div>
+				{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+					<button class="btn btn-sm btn-outline-danger border-0 position-absolute round" id="scheduleChangeDate" style="right: 0; bottom: 0;" data-toggle="tooltip" data-placement="right" title="Cambiar fecha" status="0">
+						<i class="fas fa-calendar-times"></i>
+					</button>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<b>Responsable</b>
+			<br>
+			<div class="task-hover-row">
+				{% if task.assigned != null %}
+					<em>{{ task.assigned.name }}</em>
+					{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+						<button class="btn btn-sm btn-outline-danger border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Reasignar" id="taskReassign">
+							<i class="fas fa-user"></i>
+						</button>
+					{% endif %}
+				{% else %}
+					<em>Sin asignar</em>
+					{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+						<button class="btn btn-sm btn-outline-primary border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Asignar" id="taskAssign">
+							<i class="fas fa-user"></i>
+						</button>
+					{% endif %}
+				{% endif %}
+			</div>
+			<p>
+				<b>Categoría</b>
+				<br>
+				<span class="color-pill" style="background-color: {{ task.category.backgroundColor }}">&nbsp;</span>
+				{{ task.category.name }}
+			</p>
+			{% if task.priority != null %}
+				{# <p> #}
+				<b>Prioridad</b>
+				<br>
+				<div class="task-hover-row">
+					<span class="color-pill" style="background-color: {{ task.priority.color }}">&nbsp;</span>
+					{{ task.priority.name }}
+					{% if app.user.id == task.createdBy.id or is_granted("ROLE_SUPERVISOR") %}
+						<button class="btn btn-sm btn-outline-danger border-0 round float-right" style="transform: translate(2px, -2px);" data-toggle="tooltip" data-placement="top" title="Cambiar prioridad" id="taskChangePriority">
+							<i class="fas fa-pen"></i>
+						</button>
+					{% endif %}
+				</div>
+				{# </p> #}
+			{% endif  %}
+			<p>
+				<b>Detalle</b>
+				<br>
+				{{ task.detail }}
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col">
+			{% if task.createdBy.id == app.user.id or is_granted("ROLE_SUPERVISOR") %}
+				<button type="button" id="taskDelete" class="btn btn-danger round">Eliminar</button>
+			{% endif %}
+		</div>
+		<div class="col text-right">
+			{% if task.done %}
+				<button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
+			{% else %}
+				<button type="button" id="taskFinish" class="btn btn-antxony round">Finalizar</button>
+			{% endif %}
+		</div>
+	</div>
 </div>
 {% include "view/footer/datetimes.html.twig" with {
     created : {

@@ -1,14 +1,16 @@
 <table class="table table-sm table-striped2 w-100 table-hover2 table-bordered2 mobile" id="priorityTable">
-    {% set sort %}
-        <span class="float-right sort-icon hide-on-mobile"><i class="fas fa-sort"></i></span>
-    {% endset %}
-    {# Sort column solo en desktop #}
-    {% set sortClass = 'cursor-pointer sort-column' %}
-    {% if isMobile %}
-        {% set sortClass = '' %}
-    {% endif %}
-    {# . #}
-    {% include "table/thead.html.twig" with {
+	{% set sort %}
+	<span class="float-right sort-icon hide-on-mobile">
+		<i class="fas fa-sort"></i>
+	</span>
+	{% endset %}
+	{# Sort column solo en desktop #}
+	{% set sortClass = 'cursor-pointer sort-column' %}
+	{% if isMobile %}
+		{% set sortClass = '' %}
+	{% endif %}
+	{# . #}
+	{% include "table/thead.html.twig" with {
         tr : {
             values : {
                 color : {
@@ -43,5 +45,5 @@
             },
         }
     } %}
-    <tbody id="prioritiesView"></tbody>
+	<tbody id="prioritiesView"></tbody>
 </table>

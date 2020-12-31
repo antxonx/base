@@ -3,7 +3,7 @@
 * @module User
 */
 import ButtonCheck from "@plugins/ButtonCheckGroup";
-import {BIG_LOADER_TABLE, Router, ROUTES} from "@scripts/app";
+import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Search from "@plugins/Search";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
@@ -12,7 +12,7 @@ import Add from "@scripts/user/add";
 import Delete from "@scripts/user/delete";
 import Key from "@scripts/user/key";
 import Show from "@scripts/user/show";
-import {SortColumnOrder} from "@plugins/SortColumn/defs";
+import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
 /**
@@ -24,24 +24,27 @@ import SortColumn from "@plugins/SortColumn";
  */
 export default class User {
 
-    protected control: boolean
+    protected control: boolean;
 
     protected mainView: HTMLElement;
 
     protected search: string;
 
-    protected suspended: number
+    protected suspended: number;
 
     protected orderBy: SortColumnOrder;
 
-    public constructor() {
+    protected page: number;
+
+    public constructor () {
         this.mainView = ((document.getElementById("usersView") as HTMLElement) || document.createElement("div"));
         this.search = "";
         this.suspended = 0;
+        this.page = 1;
         this.orderBy = {
             column: "name",
             order: "ASC"
-        }
+        };
         this.control = true;
         (new SortColumn({
             table: document.getElementById('userTable') as HTMLElement,
@@ -65,25 +68,27 @@ export default class User {
             this.control = false;
             this.update();
         }
-        [...document.getElementsByClassName("user-delete")].forEach(
+        [ ...document.getElementsByClassName("user-delete") ].forEach(
             element => element.addEventListener("click", this.delete)
         );
-        [...document.getElementsByClassName("user-password")].forEach(
+        [ ...document.getElementsByClassName("user-password") ].forEach(
             element => element.addEventListener("click", this.key)
         );
-        [...document.getElementsByClassName("user-edit")].forEach(
+        [ ...document.getElementsByClassName("user-edit") ].forEach(
             element => element.addEventListener("click", this.show)
         );
-        [...document.getElementsByClassName("user-reactivate")].forEach(
+        [ ...document.getElementsByClassName("user-reactivate") ].forEach(
             element => element.addEventListener("click", this.reactive)
         );
-    }
+    };
 
-    private update = (page: number = 1) => {
-        this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
+    private update = (page: number = 1, spinner = true) => {
+        this.page = 1;
+        if(spinner)
+            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
         Axios.get(Router.generate(ROUTES.user.view.list, {
             'search': this.search,
-            'page': page,
+            'page': this.page,
             'suspended': this.suspended,
             'ordercol': this.orderBy.column,
             'orderorder': this.orderBy.order,
@@ -91,59 +96,61 @@ export default class User {
             .then(res => {
                 this.mainView.innerHTML = res.data;
                 this.load();
-                new Paginator({callback: this.update});
+                new Paginator({ callback: this.update });
             })
             .catch(err => {
                 console.error(err.response.data);
                 Toast.error(err.response.data);
             });
-    }
+    };
 
     private add = () => {
         (new Add(this.load)).load();
-    }
+    };
 
     private setSuspended = (value: string[]) => {
         this.suspended = +value.includes('suspended');
         this.update();
-    }
+    };
 
     private setSearch = (data: string) => {
         this.search = data;
         this.update();
-    }
+    };
 
     private delete = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
             element: ELEMENT,
         })).delete();
-    }
+    };
 
     private reactive = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Delete({
             element: ELEMENT,
         })).reactive();
-    }
+    };
 
     private show = (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
         (new Show({
             id: +ELEMENT.getAttribute("id")!,
-            callback: this.update
+            callback: () => {
+                this.update(this.page, false);
+            }
         })).load();
-    }
+    };
 
     private key = (e: Event) => {
         (new Key({
             element: (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement
         })).load();
 
-    }
+    };
 
     private sort = (order: SortColumnOrder) => {
         this.orderBy = order;
         this.update();
-    }
+    };
 }

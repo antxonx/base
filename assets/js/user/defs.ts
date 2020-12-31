@@ -9,7 +9,7 @@ export interface DeleteReactiveOptions {
     onError?: () => void;
     id?: number;
     name?: string;
-    username?: string
+    username?: string;
 }
 
 export const DEFAULT_DELETE_REACTIVE_OPTIONS: DeleteReactiveOptions = {
@@ -27,7 +27,7 @@ export interface keyOptions {
     element?: HTMLElement;
     id?: number;
     name?: string;
-    username?: string
+    username?: string;
 }
 
 export const DEFAULT_KEY_OPTIONS: keyOptions = {
@@ -46,4 +46,4 @@ export const DEFAULT_EDIT_OPTIONS: EditOptions = {
     id: 0,
     callback: () => {
     },
-}
+};

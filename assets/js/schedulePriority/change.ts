@@ -3,10 +3,10 @@
 * @module Schedule/Priority
 */
 import 'bootstrap';
-import {SchedulePriorityChangeOptions, DEFAULT_PRIORITY_CHANGE_OPTIONS} from "@scripts/schedulePriority/defs";
+import { SchedulePriorityChangeOptions, DEFAULT_PRIORITY_CHANGE_OPTIONS } from "@scripts/schedulePriority/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
-import {BIG_LOADER, Router, ROUTES} from "@scripts/app";
+import { BIG_LOADER, Router, ROUTES } from "@scripts/app";
 import ListSelect from "@plugins/ListSelect";
 import Alert from "@plugins/Alert";
 import Toast from "@plugins/AlertToast";
@@ -26,8 +26,8 @@ export default class Change {
 
     protected list: HTMLElement;
 
-    public constructor(options: SchedulePriorityChangeOptions) {
-        this.options = {...DEFAULT_PRIORITY_CHANGE_OPTIONS, ...options};
+    public constructor (options: SchedulePriorityChangeOptions) {
+        this.options = { ...DEFAULT_PRIORITY_CHANGE_OPTIONS, ...options };
         this.list = document.createElement("div") as HTMLElement;
         this.modal = new Modal({
             title: "Cambiar de prioridad",
@@ -41,7 +41,7 @@ export default class Change {
 
     public load() {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.schedulePriority.view.changeForm, {'id': this.options.idSchedule}))
+        Axios.get(Router.generate(ROUTES.schedulePriority.view.changeForm, { 'id': this.options.idSchedule }))
             .then(res => {
                 this.modal.updateBody(res.data);
                 this.list = document.getElementById('categoryList') as HTMLElement;
@@ -67,7 +67,7 @@ export default class Change {
             if (res) {
                 Axios.patch(Router.generate(ROUTES.schedulePriority.api.update), {
                     scheduleId: this.options.idSchedule,
-                    categoryId: data[0],
+                    categoryId: data[ 0 ],
                 })
                     .then(() => {
                         this.modal.hide();
@@ -79,13 +79,13 @@ export default class Change {
                     .finally(() => {
                         this.list.innerHTML = LIST_BEF;
                         this.startEvents();
-                    })
+                    });
             } else {
                 this.list.innerHTML = LIST_BEF;
                 this.startEvents();
             }
         }
-    }
+    };
 
     private startEvents = () => {
         (new ListSelect({
@@ -94,5 +94,5 @@ export default class Change {
             attribute: 'priority-id',
             callback: this.listchange
         })).load();
-    }
+    };
 }

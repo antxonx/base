@@ -1,7 +1,7 @@
 <form id="clientAddressForm">
-    <div class="row">
-        <div class="col-md-6">
-            {% include 'form/input.html.twig' with {
+	<div class="row">
+		<div class="col-md-6">
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'street',
                 label: 'Calle',
@@ -9,7 +9,7 @@
                 required : true,
                 error : 'Ingrese una calle'
             } %}
-            {% include 'form/input.html.twig' with {
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'extnum',
                 label: 'Número exterior',
@@ -17,14 +17,14 @@
                 required : true,
                 error : 'Ingrese un número'
             } %}
-            {% include 'form/input.html.twig' with {
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'intnum',
                 label: 'Número interior',
                 placeholder: 'Número interior',
                 required : false
             } %}
-            {% include 'form/input.html.twig' with {
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'city',
                 label: 'Ciudad',
@@ -32,9 +32,9 @@
                 required : true,
                 error : 'Ingrese una ciudad'
             } %}
-        </div>
-        <div class="col-md-6">
-            {% include 'form/input.html.twig' with {
+		</div>
+		<div class="col-md-6">
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'postal',
                 label: 'C.P.',
@@ -42,7 +42,7 @@
                 required : true,
                 error : 'Ingrese un código postal',
             } %}
-            {% include 'form/input.html.twig' with {
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'state',
                 label: 'Estado',
@@ -51,7 +51,7 @@
                 error : 'Ingrese un estado',
                 value: 'Jalisco'
             } %}
-            {% include 'form/input.html.twig' with {
+			{% include 'form/input.html.twig' with {
                 type : 'text',
                 id: 'country',
                 label: 'País',
@@ -61,11 +61,11 @@
                 value : 'México'
             } %}
 
-            <div id="submit-btn" class="w-100 text-left text-right">
-                <button type="submit" class="btn btn-large btn-antxony w-100 round" id="submit-real-btn">Agregar</button>
-            </div>
-        </div>
-    </div>
+			<div id="submit-btn" class="w-100 text-left text-right">
+				<button type="submit" class="btn btn-large btn-antxony w-100 round" id="submit-real-btn">Agregar</button>
+			</div>
+		</div>
+	</div>
 
 
 </form>
