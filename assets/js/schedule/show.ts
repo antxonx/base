@@ -4,7 +4,7 @@
 */
 import Modal from "@scripts/plugins/Modal";
 import Axios from "axios";
-import { DEFAULT_SCHEDULE_SHOW_OPTIONS, ScheduleShowOptions } from "./defs";
+import { DEFAULT_SCHEDULE_SHOW_OPTIONS, ScheduleShowOptions, TASK_EDIT_TYPE } from "./defs";
 import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@scripts/plugins/AlertToast";
 import Finish from "@scripts/schedule/finish";
@@ -209,7 +209,7 @@ export default class Show {
         Axios.patch(Router.generate(ROUTES.schedule.api.update), {
             id: this.options.id!,
             value: this.date,
-            type: 3
+            type: TASK_EDIT_TYPE.DATE
         })
         .then(res => {
             Toast.success(res.data);
