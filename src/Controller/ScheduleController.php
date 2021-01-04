@@ -321,7 +321,7 @@ class ScheduleController extends AbstractController
                 $message .= "reactivado";
             }
             $this->rep->update();
-            $message .= "</br> la tarea";
+            $message .= "</b> la tarea";
             $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
             return new Response($message);
         } catch (Exception $e) {
