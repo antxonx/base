@@ -163,6 +163,10 @@ class ScheduleCategoryController extends AbstractController
                 $category->setDescription($editable->value);
                 $message .= " la descripción";
             }
+            if ($editable->name == "categoryRoles") {
+                $category->setRoles($editable->value);
+                $message .= " los roles";
+            }
             $this->rep->update();
             $this->util->info($message . " para la categoría <b>{$category->getId()}</b> (<em>{$category->getName()}</em>)");
             return new Response($message);

@@ -91,6 +91,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return array('paginator' => $paginator, 'query' => $query);
     }
 
+    public function getByRoles(array $roles)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy("p.name", "ASC");
+        if(count($roles) > 0) {
+            $roleCriteria = new Criteria();
+            foreach($roles as $role) {
+                $roleCriteria->orWhere(Criteria::expr()->contains("p.roles", $role));
+            }
+            $query->addCriteria($roleCriteria);
+        } else {
+            return [];
+        }
+        return $query->getQuery()->getResult();
+    }
+
     /**
      * Agregar entidad
      *

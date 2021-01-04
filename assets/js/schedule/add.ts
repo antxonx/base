@@ -58,14 +58,15 @@ export default class Add {
                 document.getElementById("scheduleForm")!.addEventListener("submit", this.validate);
                 const TASK_DATE = document.getElementById("taskDate") as HTMLInputElement;
                 this.categorySelect = (new DropdownSelect({
-                    element: document.getElementById("taskCategory")!
+                    element: document.getElementById("taskCategory")!,
+                    callback: this.loadUsers
                 })).load();
                 this.prioritySelect = (new DropdownSelect({
                     element: document.getElementById("taskPriority")!
                 })).load();
-                this.userSelect = (new DropdownSelect({
-                    element: document.getElementById("taskUser")!
-                })).load();
+                // this.userSelect = (new DropdownSelect({
+                //     element: document.getElementById("taskUser")!
+                // })).load();
                 this.selectedClient = new ClientSearch("#searchClientForm");
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
@@ -178,5 +179,22 @@ export default class Add {
                     });
             }
         }
-    };
+    }
+
+    private loadUsers = (category: string) => {
+        document.getElementById("user-select-container")!.innerHTML = SPINNER_LOADER;
+        Axios.get(Router.generate(ROUTES.user.api.getByRole, {'id': category}))
+        .then(res => {
+            document.getElementById("user-select-container")!.innerHTML = '<div class="dropdow-arrow"><input id="taskUser" value="" placeholder="Asignar" class="form-control readonly-click cursor-pointer" options=[]" readonly></div>';
+            document.getElementById("taskUser")!.setAttribute("options", JSON.stringify(res.data));
+            this.userSelect = (new DropdownSelect({
+                element: document.getElementById("taskUser")!
+            })).load();
+        })
+        .catch(err => {
+            console.error(err);
+            console.error(err.response.data);
+            Toast.error(err.response.data);
+        });
+    }
 }
