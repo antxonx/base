@@ -13,6 +13,8 @@ import Delete from "@scripts/client/delete";
 import Show from "@scripts/client/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
+import Modal from "@scripts/plugins/Modal";
+import Obs from "@scripts/plugins/Obs";
 
 /**
  * Controls the main view and table actions of clients
@@ -64,6 +66,20 @@ export default class Client {
         }
         [ ...document.getElementsByClassName("client-delete") ].forEach(element => element.addEventListener("click", this.delete));
         [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", this.show));
+        [ ...document.getElementsByClassName("client-add-obs") ].forEach(element => element.addEventListener("click", (e: Event) => {
+            const OBS_MODAL = (new Modal({
+                size: 50,
+                title: "Observaciones",
+            })).show();
+            (new Obs({
+                element: OBS_MODAL.getBodyElement(),
+                entity: "Client",
+                id: +(e.currentTarget as HTMLElement).closest(".client-row")!.getAttribute("id")!,
+                callback: () => {
+                    this.update(this.page, false);
+                },
+            })).load();
+        }));
     };
 
     private update = (page: number = 1, spinner = true) => {

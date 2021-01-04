@@ -138,6 +138,15 @@ export default class Modal {
     }
 
     /**
+     * get body element
+     *
+     * @memberof Modal
+     */
+    public getBodyElement() {
+        return document.getElementById(ModalIds.BODY + this.id)!;
+    }
+
+    /**
      *Colocar un loader en el body
      *
      * @memberof Modal

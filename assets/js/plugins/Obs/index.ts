@@ -109,6 +109,8 @@ export default class Obs {
                 description: OBS.value,
             })
             .then(res => {
+                if(this.options.callback)
+                    this.options.callback!();
                 Toast.success(res.data);
                 this.load();
             })

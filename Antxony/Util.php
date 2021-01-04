@@ -138,4 +138,18 @@ class Util {
         }
         return ($result . $identifier);
     }
+
+    public function getObservationEntityName(string $entity) {
+        switch($entity) {
+            case "Schedule":
+                return "la tarea";
+                break;
+            case "Client":
+                return "el cliente";
+                break;
+            default:
+                return "indefinido";
+                break;
+        }
+    }
 }

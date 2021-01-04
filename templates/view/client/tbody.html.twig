@@ -45,6 +45,14 @@
                     class : 'text-center'
                 }
             },
+            obs : {
+                value : '<button class="btn btn-sm round ' ~ ((client.clientObs|length > 0)?'btn-outline-warning':'btn-outline-secondary') ~ ' border-0 w-100 client-add-obs mobile-2-desktop-1">
+			        <span class="material-icons">article</span>
+		        </button>',
+                attr : {
+                    class : 'text-center action-btn'
+                }
+            },
             trash : {
                 value : trashSusp,
                 attr : {

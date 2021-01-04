@@ -54,7 +54,8 @@ class ObsController extends AbstractController
                 ->setDescription($content->description)
                 ->created($this->security->getUser());
             $em->persist($obs);
-            $message = "Se ha agregar una observación a <b>{$entityF->getId()}</b> (<em>{$content->entity}</em>)";
+            $name = $this->util->getObservationEntityName($content->entity);
+            $message = "Se ha agregado una observación a <em>{$name}</em> <b>{$entityF->getId()}</b>.";
             $this->util->info($message);
             return new Response("Observación agregada");
         } catch (Exception $e) {

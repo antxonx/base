@@ -80,12 +80,18 @@ class Client
     private $category;
 
     /**
+     * @ORM\OneToMany(targetEntity=ClientObs::class, mappedBy="entity", orphanRemoval=true)
+     */
+    private $clientObs;
+
+    /**
      * construct
      */
     public function __construct()
     {
         $this->clientExtras = new ArrayCollection();
         $this->contacts = new ArrayCollection();
+        $this->clientObs = new ArrayCollection();
     }
 
     /**
@@ -393,6 +399,36 @@ class Client
     public function setCategory(?ClientCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientObs[]
+     */
+    public function getClientObs(): Collection
+    {
+        return $this->clientObs;
+    }
+
+    public function addClientOb(ClientObs $clientOb): self
+    {
+        if (!$this->clientObs->contains($clientOb)) {
+            $this->clientObs[] = $clientOb;
+            $clientOb->setEntity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientOb(ClientObs $clientOb): self
+    {
+        if ($this->clientObs->removeElement($clientOb)) {
+            // set the owning side to null (unless already changed)
+            if ($clientOb->getEntity() === $this) {
+                $clientOb->setEntity(null);
+            }
+        }
 
         return $this;
     }
