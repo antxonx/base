@@ -49,6 +49,7 @@ export default class ScheduleCategoryAdd {
             [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
             0
         )) {
+            const ROLE = document.querySelectorAll('.check-roles:checked');
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
@@ -57,6 +58,7 @@ export default class ScheduleCategoryAdd {
                 description: (document.getElementById("description") as HTMLInputElement).value,
                 bColor: (document.getElementById("bColor") as HTMLInputElement).value,
                 tColor: (document.getElementById("tColor") as HTMLInputElement).value,
+                roles: [ ...ROLE.values() ].map((el) => (el as HTMLInputElement).value),
             };
             Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA)
                 .then(res => {

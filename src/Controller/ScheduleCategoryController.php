@@ -95,6 +95,7 @@ class ScheduleCategoryController extends AbstractController
                 ->setName($content->name)
                 ->setDescription($content->description)
                 ->setBackgroundColor($content->bColor)
+                ->setRoles($content->roles)
                 ->setColor($content->tColor);
             $this->rep->add($category);
             $message = "Se ha agregado evento <b>{$content->name}</b>";
