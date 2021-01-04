@@ -12,6 +12,7 @@ import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 import DropdownSelect from '@scripts/plugins/DropdownSelect';
 import moment from 'moment';
 import ClientSearch from '@scripts/client/searchClient';
+import Alert from '@scripts/plugins/Alert';
 
 /**
  * Add a new task
@@ -123,7 +124,8 @@ export default class Add {
             });
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
+        let res: boolean;
         e.preventDefault();
         if (evaluateInputs(
             [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
@@ -152,18 +154,29 @@ export default class Add {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la prioridad");
                 return;
             }
-            BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.schedule.api.add), DATA)
-                .then(res => {
-                    Toast.success(res.data);
-                    this.modal.hide();
-                    this.callback();
-                })
-                .catch(err => {
-                    insertAlertAfter(BTN, err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
+            if(DATA.client == 0) {
+                const ALERT = new Alert({
+                    type: 'warning',
+                    typeText: 'Agregar tarea',
                 });
+                res = await ALERT.updateBody("¿Desea agregar esta tarea sin seleccionar a un cliente?").show();
+            } else {
+                res = true;
+            }
+            if(res) {
+                BTN.innerHTML = SPINNER_LOADER;
+                Axios.post(Router.generate(ROUTES.schedule.api.add), DATA)
+                    .then(res => {
+                        Toast.success(res.data);
+                        this.modal.hide();
+                        this.callback();
+                    })
+                    .catch(err => {
+                        insertAlertAfter(BTN, err.response.data);
+                        console.error(err.response.data);
+                        BTN.innerHTML = BEF;
+                    });
+            }
         }
     };
 }
