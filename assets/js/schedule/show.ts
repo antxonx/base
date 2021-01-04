@@ -201,7 +201,8 @@ export default class Show {
                 (new Obs({
                     element: document.getElementById("taskObsView")!,
                     entity: "Schedule",
-                    id: this.options.id!
+                    id: this.options.id!,
+                    callback: this.options.callback!
                 })).load();
             })
             .catch(err => {
