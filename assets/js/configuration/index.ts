@@ -58,8 +58,8 @@ export default class Config{
         let data = {};
         if(!this.options.restore) {
             data = {
-                "background-color": (document.getElementById("bColor") as HTMLInputElement).value,
-                color: (document.getElementById("tColor") as HTMLInputElement).value
+                "background-color": (document.getElementById("backColor") as HTMLInputElement).value,
+                color: (document.getElementById("textColor") as HTMLInputElement).value
             };
         }
         this.send(data);
