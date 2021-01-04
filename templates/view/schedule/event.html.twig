@@ -1,4 +1,4 @@
-<div class="event" {% if event.done %} style="background-color: #e8e8e8; color: #525252" {% else %} style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}" {% endif %} event-id="{{ event.id }}">
+<div class="event" style="{% if event.done %}background-color: #e8e8e8;color: #525252;{% else %}background-color: {{ event.category.backgroundColor ~ 'bb' }};color: {{ event.category.color }};{% endif %}{% if event.scheduleObs|length > 0 %}border: 2px dotted yellow;{% endif %}" event-id="{{ event.id }}">
 	<div style="width: 100%;">
 		<div class="header">
 			<span class="assigned">
