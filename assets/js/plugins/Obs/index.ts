@@ -4,7 +4,7 @@
  * @module Obs
  * @preferred
  */
-import { BIG_LOADER, Router, ROUTES } from "@scripts/app";
+import { BIG_LOADER, Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import HtmlToElement from "@scripts/components/HtmlToElement";
 import Axios from "axios";
 import Toast from "../AlertToast";
@@ -22,7 +22,7 @@ export default class Obs {
         this.individualTemplate  = `
         <div class="d-flex justify-content-between">
         #fill-left#
-        <div class="card py-1 px-3 m-1 pb-2 round #customClass#">
+        <div class="card py-1 px-3 m-1 pb-2 round text-justify #customClass#">
             <div class="text-left">
                 <span><em><b>#createdBy#</b></em></span>
             </div>
@@ -32,10 +32,11 @@ export default class Obs {
         this.textBox = `
             <div class="add-obs-cont">
                 <div class="obs-text text-center">
-                    <textarea class="form-control" rows="2"></textarea>
+                    <textarea class="form-control" id="add-obs-text" rows="1"></textarea>
                 </div>
                 <div class="obs-submit">
-                    <button class="btn btn-success round"><span class="hide-on-desktop">Agregar</span><span class="material-icons-round hide-on-mobile">send</span></button>
+                    <button class="btn btn-success round" id="add-obs-btn">
+                    <span class="material-icons-round">send</span></button>
                 </div>
             </div>
         `;
@@ -74,11 +75,50 @@ export default class Obs {
             $('#task-obs-view-tab').on('shown.bs.tab', () => {
                 obsCont.scrollTop = obsCont.scrollHeight;
             });
+            this.evs();
         })
         .catch(err => {
             console.error(err);
             console.error(err.response.data);
             Toast.error(err.response.data);
         })
+    }
+
+    private evs = () => {
+        const OBS_TA = document.getElementById("add-obs-text") as HTMLTextAreaElement;
+        OBS_TA.addEventListener("keyup", () => {
+            if(OBS_TA.value.trim() == "") {
+                OBS_TA.rows = 1;
+            }
+            if((OBS_TA.clientHeight < OBS_TA.scrollHeight) && (OBS_TA.rows < 4)) {
+                OBS_TA.rows++;
+            }
+        });
+        document.getElementById("add-obs-btn")!.addEventListener("click", this.addObs);
+    }
+
+    private addObs = () => {
+        const OBS = (document.getElementById("add-obs-text") as HTMLTextAreaElement);
+        const CONT = document.getElementsByClassName("add-obs-cont")![0];
+        const BEF = CONT.innerHTML;
+        CONT.innerHTML = SPINNER_LOADER;
+        if(OBS.value.trim() != ""){
+            Axios.post(Router.generate(ROUTES.obs.api.add), {
+                entity: this.options.entity,
+                id: this.options.id,
+                description: OBS.value,
+            })
+            .then(res => {
+                Toast.success(res.data);
+                this.load();
+            })
+            .catch(err => {
+                CONT.innerHTML = BEF;
+                this.evs();
+                console.error(err);
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+        }
     }
 }
