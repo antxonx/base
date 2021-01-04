@@ -9,6 +9,7 @@ namespace App\Controller;
 use Antxony\Def\Editable\Editable;
 use App\Entity\User;
 use Antxony\Util;
+use App\Repository\ScheduleCategoryRepository;
 use Exception;
 use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -214,6 +215,59 @@ class UserController extends AbstractController
     }
 
     /**
+     * Change suspended user password
+     * 
+     * @Route("/reSuspend/{id}", name="user_resuspend", methods={"POST"})
+     */
+    public function changeSuspendedPassword(int $id): Response
+    {
+        try {
+            $user = $this->rep->find($id);
+            if (!$user->getSuspended()) {
+                throw new Exception("Este usuario no ha sido suspendido.");
+            }
+            $user->setPassword(
+                $this->passwordEncoder->encodePassword(
+                    $user,
+                    $this->util->generateRandomString(10)
+                )
+            );
+            $this->rep->update();
+            $this->util->info("Se ha <b>re</b>-suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
+            return new Response("ok");
+        } catch (Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
+     * @Route("/byrole/{id}", name="user_get_by_roles", methods={"GET"}, options={"expose"=true})
+     * @IsGranted("ROLE_COMMON")
+     */
+    public function getUsersByRole(int $id, ScheduleCategoryRepository $scRep): Response
+    {
+        try{
+            $category = $scRep->find($id);
+            $usersC = $this->rep->getByRoles($category->getRoles());
+            $users[] = [
+                'value' => 0,
+                'name' => 'Sin asignar',
+                'view' => 'sin asignar'
+            ];
+            foreach ($usersC as $user) {
+                $users[] = [
+                    'value' => $user->getId(),
+                    'name' => $user->getName(),
+                    'view' => $user->getName()
+                ];
+            }
+            return new Response(json_encode($users));
+        } catch(Exception $e) {
+            return $this->util->errorResponse($e);
+        }
+    }
+
+    /**
      * show an user
      * 
      * @Route("/{id}", name="user_show", methods={"GET"}, options={"expose" = true})
@@ -358,32 +412,6 @@ class UserController extends AbstractController
             $this->rep->update();
             $this->util->info("Se ha suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
             return new Response("Usuario suspendido");
-        } catch (Exception $e) {
-            return $this->util->errorResponse($e);
-        }
-    }
-
-    /**
-     * Change suspended user password
-     * 
-     * @Route("/reSuspend/{id}", name="user_resuspend", methods={"POST"})
-     */
-    public function changeSuspendedPassword(int $id)
-    {
-        try {
-            $user = $this->rep->find($id);
-            if (!$user->getSuspended()) {
-                throw new Exception("Este usuario no ha sido suspendido.");
-            }
-            $user->setPassword(
-                $this->passwordEncoder->encodePassword(
-                    $user,
-                    $this->util->generateRandomString(10)
-                )
-            );
-            $this->rep->update();
-            $this->util->info("Se ha <b>re</b>-suspendido al usuario <b>{$id}</b>(<em>{$user->getUsername()}</em>)");
-            return new Response("ok");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

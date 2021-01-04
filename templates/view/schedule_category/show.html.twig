@@ -10,5 +10,19 @@
 			<br>
 			<a class="editable-field" href="#" data-name="categoryDescription" data-type="textarea" data-pk="{{ category.id }}" data-url="{{ path('schedule_category_edit', {'id' : category.id }) }}" data-title="Ingresa la descripción">{{ category.description }}</a>
 		</p>
+		<p class="editable-container">
+			{% set roles = "" %}
+			{% for role in category.roles %}
+				{% set roles = roles  ~ ',' ~ role %}
+			{% endfor %}
+			<b>Puestos</b>
+			<br>
+			{% set rolesToSelect = [
+                        {value: 'ROLE_ADMIN',text: 'admin'},
+                        {value: 'ROLE_COMMON',text: 'común'},
+                        {value: 'ROLE_SUPERVISOR',text: 'supervisor'}
+                    ] %}
+			<a class="editable-field" href="#" data-name="categoryRoles" data-type="checklist" data-pk="{{ category.id }}" data-url="{{ path('schedule_category_edit', {'id' : category.id }) }}" data-title="Ingresa los roles" data-source="{{ rolesToSelect|json_encode() }}" data-value="{{ roles }}"></a>
+		</p>
 	</div>
 </div>

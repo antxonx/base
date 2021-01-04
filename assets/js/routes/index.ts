@@ -75,7 +75,8 @@ export const Routes = {
             add: 'user_add',
             delete: 'user_delete',
             key: 'user_key_update',
-            reactive: 'user_reactivate'
+            reactive: 'user_reactivate',
+            getByRole: 'user_get_by_roles',
         }
     },
     logger: {
