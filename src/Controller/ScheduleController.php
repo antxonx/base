@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
 use App\Repository\ClientRepository;
+use Antxony\Def\Task\Task;
 
 /**
  * ScheduleController class
@@ -357,7 +358,7 @@ class ScheduleController extends AbstractController
                 throw new Exception("No se pudo encontrar la tarea");
             }
             switch ($content->type) {
-                case 1: //Asignar
+                case Task::ASIGN:
                     $user = $this->uRep->find($content->value);
                     if ($user == null) {
                         throw new Exception("No se pudo encontrar al usuario");
@@ -367,7 +368,7 @@ class ScheduleController extends AbstractController
                         ->updated($this->security->getUser());
                     $message = "Se ha asignado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) al usuario <b>{$user->getId()}</b> (<em>{$user->getName()}</em>)";
                     break;
-                case 2: //Prioridad
+                case Task::PRIORITY:
                     $priority = $this->spRep->find($content->value);
                     if ($priority == null) {
                         throw new Exception("No se pudo encontrar la prioridad");
@@ -377,7 +378,7 @@ class ScheduleController extends AbstractController
                         ->updated($this->security->getUser());
                     $message = "Se ha cambiado la priordad de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) a <b>{$priority->getId()}</b> (<em>{$priority->getName()}</em>)";
                     break;
-                case 3: //Fecha
+                case Task::DATE:
                     $old = $task->getDate();
                     $new = new DateTime($content->value, new DateTimeZone("America/Mexico_City"));
                     $task

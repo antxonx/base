@@ -127,4 +127,10 @@ export const Routes = {
             color: 'schedule_priority_color_edit'
         }
     },
+    obs: {
+        api: {
+            add: 'obs_add',
+            get: 'obs_get'
+        }
+    },
 };

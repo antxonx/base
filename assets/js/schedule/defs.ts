@@ -52,3 +52,9 @@ export const DEFAULT_SCHEDULE_DELETE_OPTIONS: ScheduleDeleteOptions = {
     callback: () => { },
     onError: () => { }
 };
+
+export enum TASK_EDIT_TYPE {
+    ASING = 1,
+    PRIORITY,
+    DATE
+};

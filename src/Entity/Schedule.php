@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ScheduleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use DateTimeZone;
@@ -80,6 +82,16 @@ class Schedule
      * @ORM\ManyToOne(targetEntity=Client::class)
      */
     private $client;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ScheduleObs::class, mappedBy="entity", orphanRemoval=true)
+     */
+    private $scheduleObs;
+
+    public function __construct()
+    {
+        $this->scheduleObs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -256,6 +268,36 @@ class Schedule
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScheduleObs[]
+     */
+    public function getScheduleObs(): Collection
+    {
+        return $this->scheduleObs;
+    }
+
+    public function addScheduleOb(ScheduleObs $scheduleOb): self
+    {
+        if (!$this->scheduleObs->contains($scheduleOb)) {
+            $this->scheduleObs[] = $scheduleOb;
+            $scheduleOb->setEntity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduleOb(ScheduleObs $scheduleOb): self
+    {
+        if ($this->scheduleObs->removeElement($scheduleOb)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduleOb->getEntity() === $this) {
+                $scheduleOb->setEntity(null);
+            }
+        }
 
         return $this;
     }

@@ -9,7 +9,7 @@ import ListSelect from "@scripts/plugins/ListSelect";
 import Modal from "@scripts/plugins/Modal";
 import Axios from "axios";
 
-import { DEFAULT_SCHEDULE_ASIGN_OPTIONS, ScheduleAsignOptions } from "./defs";
+import { DEFAULT_SCHEDULE_ASIGN_OPTIONS, ScheduleAsignOptions, TASK_EDIT_TYPE } from "./defs";
 
 export default class ChangePriority {
 
@@ -64,7 +64,7 @@ export default class ChangePriority {
                 Axios.patch(Router.generate(ROUTES.schedule.api.update), {
                     id: this.options.id,
                     value: data[ 0 ],
-                    type: 2,
+                    type: TASK_EDIT_TYPE.PRIORITY,
                 })
                     .then(() => {
                         this.modal.hide();
