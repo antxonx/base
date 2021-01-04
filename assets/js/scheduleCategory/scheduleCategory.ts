@@ -7,7 +7,7 @@ import { DEFAULT_SCHEDULE_CATEGORY_OPTIONS, ScheduleCategoryOptions } from "./de
 import { SortColumnOrder } from "@scripts/plugins/SortColumn/defs";
 import SortColumn from "@scripts/plugins/SortColumn";
 import Axios from "axios";
-import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
+import { BIG_LOADER_TABLE, ConfigTypes, Router, ROUTES } from "@scripts/app";
 import Paginator from "@scripts/plugins/Paginator";
 import Toast from "@scripts/plugins/AlertToast";
 import Search from "@scripts/plugins/Search";
@@ -15,6 +15,8 @@ import ScheduleCategoryAdd from "./add";
 import ScheduleCategoryDelete from "./delete";
 import Show from "./show";
 import Color from "./color";
+import ButtonCheckGroup from "@scripts/plugins/ButtonCheckGroup";
+import Config from "@scripts/configuration";
 
 export default class ScheduleCategory {
 
@@ -49,6 +51,40 @@ export default class ScheduleCategory {
             new Search({
                 callback: this.setSearch,
                 selector: "#searchScheduleCategoryInput"
+            });
+            new ButtonCheckGroup(document.getElementById('extraCheck') as HTMLElement, {
+                onChange: () => {},
+                unCheckClass: 'btn-outline-info',
+                checkClass: 'btn-info',
+                extraClass: 'round'
+            });
+            document.getElementById("obsBorderForm")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskCommentedBorder
+                })).load();
+            });
+            document.getElementById("doneTaskForm")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskDoneColors
+                })).load();
+            });
+            document.getElementById("obsBorderRestore")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskCommentedBorder,
+                    restore: true,
+                    callback: () => {
+                        window.location.reload();
+                    }
+                })).load();
+            });
+            document.getElementById("doneTaskRestore")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskDoneColors,
+                    restore: true,
+                    callback: () => {
+                        window.location.reload();
+                    }
+                })).load();
             });
             this.update();
         }

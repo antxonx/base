@@ -8,12 +8,14 @@ namespace App\Controller;
 
 use Antxony\Util;
 use Antxony\Def\Editable\Editable;
+use App\Entity\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleCategoryRepository;
 use App\Entity\ScheduleCategory;
+use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Exception;
 
@@ -40,10 +42,16 @@ class ScheduleCategoryController extends AbstractController
      * @Route("", name="schedule_category_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(): Response
+    public function index(ConfigurationRepository $cRep): Response
     {
+        $config = [];
+        foreach($cRep->findAll() as $val) {
+            $config += [
+                $val->getName() => $val->getConfig()
+            ];
+        }
         return $this->render('view/schedule_category/index.html.twig', [
-            'controller_name' => 'ScheduleCategoryController',
+            'config' => $config,
         ]);
     }
 
