@@ -23,6 +23,70 @@
 				</div>
 				<span class="erase-search cursor-pointer text-muted">&times;</span>
 			</div>
+			<div class="col-md-1 btn-group my-1" id="extraCheck" role="group" aria-label="extra check">
+				<button class="btn btn no-hover" value="extra" type="button" data-toggle="collapse" data-target="#extraConfig" aria-expanded="false" aria-controls="extraConfig">
+					Avanzado
+				</button>
+			</div>
+		</div>
+		<div class="row m-1">
+			<div id="extraConfig" class="collapse col-md-12">
+				<div class="card card-body round">
+					<div class="row">
+						<div class="col-md-1"></div>
+						<span class="text-muted col-md-3 text-right">
+							<em>Estilo css para tarea con comentarios:
+							</em>
+						</span>
+						<div class="col-md-1"></div>
+						<input type="text" class="form-control form-control-sm col-md-3" id="obsBorderInput" value="{{ configuration.getConfig.TaskCommentedBorder.config.style }}">
+						<div class="col-md-1"></div>
+						<button type="button" id="obsBorderForm" class="btn btn-sm btn-antxony round col-md-1">Actualizar</button>
+						<div class="col-md-1"></div>
+						<button type="button" id="obsBorderRestore" class="btn btn-sm btn-danger round col-md-1"><i class="fas fa-undo-alt"></i></button>
+					</div>
+					<div class="row my-1">
+						<div class="col-md-1"></div>
+						<span class="text-muted col-md-3 text-right">
+							<em>Colores de tareas finalizadas:
+							</em>
+						</span>
+						<div class="col-md-1"></div>
+						<div class="col-md-3">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-6 px-0">
+											<span class="text-muted">
+												<em>Fondo</em>
+											</span>
+										</div>
+										<div class="col-md-6">
+											<input type="color" id="backColor" value="{{ configuration.getConfig.TaskDoneColors.config['background-color'] }}">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-6 px-0">
+											<span class="text-muted">
+												<em>Texto</em>
+											</span>
+										</div>
+										<div class="col-md-6">
+											<input type="color" id="textColor" value="{{ configuration.getConfig.TaskDoneColors.config.color }}">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-1"></div>
+						<button type="submit" id="doneTaskForm" class="btn btn-sm btn-antxony round col-md-1">Actualizar</button>
+						<div class="col-md-1"></div>
+						<button type="button" id="doneTaskRestore" class="btn btn-sm btn-danger round col-md-1"><i class="fas fa-undo-alt"></i></button>
+					</div>
+				</div>
+			</div>
 		</div>
 		{% include "view/schedule_category/table.html.twig" %}
 	</div>

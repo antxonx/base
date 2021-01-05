@@ -3,6 +3,8 @@
 * @module Schedule/Category
 */
 
+import { ConfigTypes } from "@scripts/app";
+
 export interface ScheduleCategoryOptions {
     control?: boolean,
     extern?: boolean,

@@ -8,6 +8,7 @@ namespace App\Controller;
 
 use Antxony\Util;
 use Antxony\Def\Editable\Editable;
+use App\Entity\Configuration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,9 +43,7 @@ class ScheduleCategoryController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('view/schedule_category/index.html.twig', [
-            'controller_name' => 'ScheduleCategoryController',
-        ]);
+        return $this->render('view/schedule_category/index.html.twig');
     }
 
     /**
@@ -95,6 +94,7 @@ class ScheduleCategoryController extends AbstractController
                 ->setName($content->name)
                 ->setDescription($content->description)
                 ->setBackgroundColor($content->bColor)
+                ->setRoles($content->roles)
                 ->setColor($content->tColor);
             $this->rep->add($category);
             $message = "Se ha agregado evento <b>{$content->name}</b>";

@@ -134,4 +134,10 @@ export const Routes = {
             get: 'obs_get'
         }
     },
+    configuration: {
+        api: {
+            update: 'configuration_update',
+            restore: 'configuration_restore',
+        }
+    }
 };

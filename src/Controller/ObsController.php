@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use Antxony\Observation;
 use Antxony\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -38,25 +39,11 @@ class ObsController extends AbstractController
      * @Route("", name="obs_add", methods={"POST"}, options={"expose" = true})
      * @IsGranted("ROLE_COMMON")
      */
-    public function addObs(Request $request) : Response
+    public function addObs(Request $request, Observation $ob) : Response
     {
         try {
             $content = json_decode($request->getContent());
-            $entityF = $this->getDoctrine()->getRepository("App\\Entity\\$content->entity")->find($content->id);
-            if ($entityF == null) {
-                throw new Exception("No se pudo encontrar la entidad");
-            }
-            $em = $this->getDoctrine()->getManager();
-            $obsClassName = "App\\Entity\\" . $content->entity . "Obs";
-            $obs = new $obsClassName;
-            $obs
-                ->setEntity($entityF)
-                ->setDescription($content->description)
-                ->created($this->security->getUser());
-            $em->persist($obs);
-            $name = $this->util->getObservationEntityName($content->entity);
-            $message = "Se ha agregado una observación a <em>{$name}</em> <b>{$entityF->getId()}</b>.";
-            $this->util->info($message);
+            $ob->add($content->id, $content->entity, $content->description);
             return new Response("Observación agregada");
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
