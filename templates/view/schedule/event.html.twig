@@ -1,4 +1,4 @@
-<div class="event" style="{% if event.done %}background-color: {{ configuration.getConfig.TaskDoneColors.config['background-color'] }};color: {{ configuration.getConfig.TaskDoneColors.config.color }};{% else %}background-color: {{ event.category.backgroundColor ~ 'bb' }};color: {{ event.category.color }};{% endif %}{% if event.scheduleObs|length > 0 %}{{ configuration.getConfig.TaskCommentedBorder.config.style }};{% endif %}" event-id="{{ event.id }}">
+<div class="event color-shadow" style="{% if event.done %}background-color: {{ configuration.getConfig.TaskDoneColors.config['background-color'] }};color: {{ configuration.getConfig.TaskDoneColors.config.color }};{% else %}background-color: {{ event.category.backgroundColor ~ 'bb' }};color: {{ event.category.color }};{% endif %}{% if event.scheduleObs|length > 0 %}{{ configuration.getConfig.TaskCommentedBorder.config.style }};{% endif %}" event-id="{{ event.id }}">
 	<div style="width: 100%;">
 		<div class="header">
 			<span class="assigned">

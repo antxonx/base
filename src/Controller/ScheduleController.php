@@ -6,24 +6,26 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ScheduleRepository;
-use App\Entity\Schedule;
-use App\Repository\ScheduleCategoryRepository;
-use App\Repository\SchedulePriorityRepository;
-use App\Repository\UserRepository;
+use DateTime;
 use Exception;
 use Antxony\Util;
-use DateTime;
 use DateTimeZone;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
-use App\Repository\ClientRepository;
+use App\Entity\Schedule;
 use Antxony\Def\Task\Task;
+use Antxony\Observation;
+use App\Controller\ObsController;
+use App\Repository\UserRepository;
+use App\Repository\ClientRepository;
+use App\Repository\ScheduleRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use App\Repository\ScheduleCategoryRepository;
+use App\Repository\SchedulePriorityRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * ScheduleController class
@@ -287,7 +289,7 @@ class ScheduleController extends AbstractController
      * @Route("/done", name="schedule_done", methods={"POST"}, options={"expose"=true})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function done(Request $request): Response
+    public function done(Request $request, Observation $ob): Response
     {
         try {
             /**
@@ -314,16 +316,16 @@ class ScheduleController extends AbstractController
             $task
                 ->setDone($content->done)
                 ->updated($this->security->getUser());
-            $message = "Se ha <b>";
+            $message = "ha ";
             if ($content->done) {
                 $message .= "finalizado";
             } else {
                 $message .= "reactivado";
             }
-            $this->rep->update();
-            $message .= "</b> la tarea";
-            $this->util->info("{$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
-            return new Response($message);
+            $message .= " la tarea";
+            $ob->add($task->getId(), "Schedule", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
+            $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+            return new Response("Se " . $message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

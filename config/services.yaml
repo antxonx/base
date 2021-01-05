@@ -41,3 +41,7 @@ services:
         tags: ['Antxony.Configuration']
         arguments: ['@doctrine.orm.entity_manager']
 
+    Antxony\Observation:
+        tags: ['Antxony.Observation']
+        arguments: ['@doctrine.orm.entity_manager', '@security.helper']
+
