@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ScheduleCategoryRepository;
 use App\Entity\ScheduleCategory;
-use App\Repository\ConfigurationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Exception;
 
@@ -42,17 +41,9 @@ class ScheduleCategoryController extends AbstractController
      * @Route("", name="schedule_category_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(ConfigurationRepository $cRep): Response
+    public function index(): Response
     {
-        $config = [];
-        foreach($cRep->findAll() as $val) {
-            $config += [
-                $val->getName() => $val->getConfig()
-            ];
-        }
-        return $this->render('view/schedule_category/index.html.twig', [
-            'config' => $config,
-        ]);
+        return $this->render('view/schedule_category/index.html.twig');
     }
 
     /**

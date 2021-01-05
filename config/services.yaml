@@ -37,3 +37,7 @@ services:
     Antxony\Util:
         tags: ['Antxony.util']
 
+    Antxony\Configuration:
+        tags: ['Antxony.Configuration']
+        arguments: ['@doctrine.orm.entity_manager']
+

@@ -39,7 +39,7 @@
 							</em>
 						</span>
 						<div class="col-md-1"></div>
-						<input type="text" class="form-control form-control-sm col-md-3" id="obsBorderInput" value="{{ config.TaskCommentedBorder.style }}">
+						<input type="text" class="form-control form-control-sm col-md-3" id="obsBorderInput" value="{{ configuration.getConfig.TaskCommentedBorder.config.style }}">
 						<div class="col-md-1"></div>
 						<button type="button" id="obsBorderForm" class="btn btn-sm btn-antxony round col-md-1">Actualizar</button>
 						<div class="col-md-1"></div>
@@ -62,7 +62,7 @@
 											</span>
 										</div>
 										<div class="col-md-6">
-											<input type="color" id="backColor" value="{{ config.TaskDoneColors['background-color'] }}">
+											<input type="color" id="backColor" value="{{ configuration.getConfig.TaskDoneColors.config['background-color'] }}">
 										</div>
 									</div>
 								</div>
@@ -74,7 +74,7 @@
 											</span>
 										</div>
 										<div class="col-md-6">
-											<input type="color" id="textColor" value="{{ config.TaskDoneColors.color }}">
+											<input type="color" id="textColor" value="{{ configuration.getConfig.TaskDoneColors.config.color }}">
 										</div>
 									</div>
 								</div>
