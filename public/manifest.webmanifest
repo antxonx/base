@@ -3,7 +3,7 @@
     "name": "Sistema",
     "lang": "es",
     "description": "Sistema",
-    "start_url": "/base",
+    "start_url": "/base/",
     "background_color": "#3265c7",
     "theme_color": "#3265c7",
     "dir": "ltr",

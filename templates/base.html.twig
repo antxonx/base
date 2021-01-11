@@ -50,5 +50,11 @@
 				{% endblock %}
 			{% endif %}
 			<div style="height: 200px !important;"></div>
+			<script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate"></script>
+			<script type="text/javascript">
+
+		const el = document.createElement('pwa-update');
+		document.body.appendChild(el);
+		</script>
 		</body>
 	</html>
