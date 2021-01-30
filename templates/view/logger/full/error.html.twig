@@ -7,15 +7,15 @@
 {% endset %}
 {% set badgeFull %}
 <span class="badge badge-role
-	        {% if entity.method == " GET" %}
+	        {% if entity.method == "GET" %}
 	        badge-success
-	        {% elseif entity.method == " POST" %}
+	        {% elseif entity.method == "POST" %}
 	        badge-primary
-	        {% elseif entity.method == " PUT" %}
+	        {% elseif entity.method == "PUT" %}
 	        badge-warning
-	        {% elseif entity.method == " PATCH" %}
+	        {% elseif entity.method == "PATCH" %}
 	        badge-warning
-	        {% elseif entity.method == " delete" %}
+	        {% elseif entity.method == "DELETE" %}
 	        badge-danger
 	        {% else %}
 	        d-none

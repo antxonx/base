@@ -1,6 +1,3 @@
-/**
- * @type {Encore}
- */
 const Encore = require('@symfony/webpack-encore');
 const ENV = require('dotenv').config({path: '.env'});
 const path =require('path');
