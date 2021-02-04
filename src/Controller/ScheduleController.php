@@ -478,6 +478,7 @@ class ScheduleController extends AbstractController
                 ->setDone(false)
                 ->setAssigned($user)
                 ->setClient($client)
+                ->setRecurrent($content->recurrent)
                 ->created($this->security->getUser());
             $this->rep->add($task);
             $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)" . $extra);

@@ -64,9 +64,6 @@ export default class Add {
                 this.prioritySelect = (new DropdownSelect({
                     element: document.getElementById("taskPriority")!
                 })).load();
-                // this.userSelect = (new DropdownSelect({
-                //     element: document.getElementById("taskUser")!
-                // })).load();
                 this.selectedClient = new ClientSearch("#searchClientForm");
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
@@ -142,6 +139,7 @@ export default class Add {
                 priority: this.prioritySelect.getValue(),
                 user: this.userSelect.getValue(),
                 client: this.selectedClient!.getClientId(),
+                recurrent: (document.getElementById("recurrentSwitch") as HTMLInputElement).checked
             };
             if (!DATA.date) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");

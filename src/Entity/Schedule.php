@@ -88,6 +88,11 @@ class Schedule
      */
     private $scheduleObs;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $recurrent;
+
     public function __construct()
     {
         $this->scheduleObs = new ArrayCollection();
@@ -298,6 +303,18 @@ class Schedule
                 $scheduleOb->setEntity(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecurrent(): ?bool
+    {
+        return $this->recurrent;
+    }
+
+    public function setRecurrent(bool $recurrent): self
+    {
+        $this->recurrent = $recurrent;
 
         return $this;
     }
