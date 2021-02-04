@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/js/all.min.js';
 import 'bootstrap';
 import 'x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css';
 import 'x-editable/dist/bootstrap3-editable/js/bootstrap-editable';
-import '@styles/app.sass';
+import '@styles/app.scss';
 import { Router as Routing } from 'symfony-ts-router';
 import { Routes } from "@scripts/routes";
 const routes = require('@scripts/fos_js_routes.json');

@@ -84,8 +84,7 @@ export default class User {
 
     private update = (page: number = 1, spinner = true) => {
         this.page = 1;
-        if(spinner)
-            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9");
+        spinner && (this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "9"));
         Axios.get(Router.generate(ROUTES.user.view.list, {
             'search': this.search,
             'page': this.page,
