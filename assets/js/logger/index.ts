@@ -4,8 +4,8 @@
 * @module Logger
 * @preferred
 */
-import Logger from "./logger";
 
-(() => {
+(async () => {
+    const { default: Logger } = await import("./logger");
     (new Logger().load());
 })();

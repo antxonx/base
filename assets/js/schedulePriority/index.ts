@@ -4,8 +4,8 @@
 * @module Schedule/Priority
 * @preferred
 */
-import SchedulePriority from "@scripts/schedulePriority/schedulePriority";
 
-(() => {
+(async () => {
+    const { default: SchedulePriority } = await import("@scripts/schedulePriority/schedulePriority");
     (new SchedulePriority()).load();
 })();

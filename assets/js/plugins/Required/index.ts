@@ -164,7 +164,7 @@ export const setValidInput = (element: HTMLElement) => {
  *
  */
 export const clearErrorMsg = () => {
-    [ ...document.getElementsByClassName(ERROR_INPUT) ].forEach(n => n.remove());
+    Array.from(document.getElementsByClassName(ERROR_INPUT)).forEach(n => n.remove());
 };
 
 /**

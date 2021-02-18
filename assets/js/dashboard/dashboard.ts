@@ -2,7 +2,6 @@
 * @packageDocumentation
 * @module Dashboard
 */
-import ShowClient from "@scripts/client/show";
 
 /**
  * load events for the principal view boards
@@ -14,14 +13,15 @@ import ShowClient from "@scripts/client/show";
 export default class Dashboard {
 
     public load = () => {
-        [ ...document.getElementsByClassName("client-list") ].forEach(el => el.addEventListener("click", this.client));
+        Array.from(document.getElementsByClassName("client-list")).forEach(el => el.addEventListener("click", this.client));
     };
 
     /**
     * Opens a client view
     */
-    public client = (e: Event) => {
+    public client = async (e: Event) => {
         e.preventDefault();
+        const { default: ShowClient } = await import("@scripts/client/show");
         const ID = +(e.currentTarget as HTMLElement).getAttribute("id")!;
         (new ShowClient({
             id: ID,

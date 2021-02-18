@@ -8,12 +8,8 @@ import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import { ClientCategoryOptions, DEFAULT_CLIENT_CATEGORY_OPTIONS } from "@scripts/clientCategory/defs";
-import ClientCategoryAdd from "@scripts/clientCategory/add";
-import ClientCategoryDelete from "@scripts/clientCategory/delete";
-import Show from "@scripts/clientCategory/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
-import Color from "./color";
 
 /**
  * Client category main view and table
@@ -49,7 +45,8 @@ export default class ClientCategory {
     public load = () => {
         if (this.options.control) {
             this.options.control = false;
-            document.getElementById("client-category-add")!.addEventListener('click', () => {
+            document.getElementById("client-category-add")!.addEventListener('click', async () => {
+                const { default: ClientCategoryAdd } = await import("@scripts/clientCategory/add");
                 (new ClientCategoryAdd(this.update)).load();
             });
             new Search({
@@ -58,27 +55,36 @@ export default class ClientCategory {
             });
             this.update();
         }
-        [ ...document.getElementsByClassName("catgeory-delete") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("catgeory-delete")).forEach(element => element.addEventListener("click", async () => {
+            const { default: ClientCategoryDelete } = await import("@scripts/clientCategory/delete");
+            const ELEMENT = element.closest(".category-row") as HTMLElement;
             (new ClientCategoryDelete({
-                element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
+                element: ELEMENT,
                 onError: this.load
             })).delete();
         }));
-        [ ...document.getElementsByClassName("category-show") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-show")).forEach(element => element.addEventListener("click", async () => {
+            const { default: Show } = await import("@scripts/clientCategory/show");
+            const ID = +element.closest(".category-row")!.getAttribute('id')!;
             (new Show({
-                idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                idCategory: ID,
                 onClose: () => {
                     this.update();
                 }
             })).load();
         }));
-        [ ...document.getElementsByClassName("category-color") ].forEach(el => el.addEventListener("click", (e: Event) => {
-            (new Color({
-                id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
-                actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,
-                callback: this.update
-            })).load();
-        }));
+        Array.from(document.getElementsByClassName("category-color")).forEach(el => el.addEventListener("click",
+            async () => {
+                const { default: Color } = await import("./color");
+                const ID = +el.closest(".category-row")!.getAttribute('id')!;
+                const ACTUAL = el.getAttribute('actual')!;
+                (new Color({
+                    id: ID,
+                    actualColor: ACTUAL,
+                    callback: this.update
+                })).load();
+            }
+        ));
         return this;
     };
 

@@ -2,8 +2,7 @@
 * @packageDocumentation
 * @module Profile
 */
-import $ from "jquery";
-import Key from "@scripts/profile/key";
+import '@scripts/jquery';
 import Toast from "@plugins/AlertToast";
 
 /**
@@ -27,7 +26,8 @@ export default class Profile {
             },
             disabled: true
         });
-        document.getElementById('change-user-password')!.addEventListener('click', () => {
+        document.getElementById('change-user-password')!.addEventListener('click', async () => {
+            const { default: Key } = await import("@scripts/profile/key");
             (new Key()).load();
         });
         EDIT_BTN.addEventListener('click', () => {

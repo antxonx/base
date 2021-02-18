@@ -158,7 +158,7 @@ export default class Add {
         let res: boolean;
         e.preventDefault();
         if (evaluateInputs(
-            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
+            Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
             0
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;

@@ -4,8 +4,8 @@
 * @module Client
 * @preferred
 */
-import Client from "@scripts/client/client";
 
-(() => {
+(async () => {
+    const { default: Client } = await import("@scripts/client/client");
     (new Client()).load();
 })();

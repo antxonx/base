@@ -5,8 +5,7 @@
 * @preferred
 */
 
-import ScheduleCategory from "./scheduleCategory";
-
-(() => {
+(async () => {
+    const { default: ScheduleCategory } = await import("./scheduleCategory");
     (new ScheduleCategory()).load();
 })();

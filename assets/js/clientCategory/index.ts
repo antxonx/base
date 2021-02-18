@@ -4,8 +4,8 @@
 * @module Client/Category
 * @preferred
 */
-import ClientCategory from "@scripts/clientCategory/clientCategory";
 
-(() => {
+(async () => {
+    const { default: ClientCategory } = await import("@scripts/clientCategory/clientCategory");
     (new ClientCategory()).load();
 })();

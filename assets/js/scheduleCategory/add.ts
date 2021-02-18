@@ -46,10 +46,10 @@ export default class ScheduleCategoryAdd {
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
-            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
+            Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
             0
         )) {
-            const ROLE = document.querySelectorAll('.check-roles:checked');
+            const ROLE = Array.from(document.querySelectorAll('.check-roles:checked'));
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
@@ -58,7 +58,7 @@ export default class ScheduleCategoryAdd {
                 description: (document.getElementById("description") as HTMLInputElement).value,
                 bColor: (document.getElementById("bColor") as HTMLInputElement).value,
                 tColor: (document.getElementById("tColor") as HTMLInputElement).value,
-                roles: [ ...ROLE.values() ].map((el) => (el as HTMLInputElement).value),
+                roles: ROLE.map((el) => (el as HTMLInputElement).value),
             };
             Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA)
                 .then(res => {

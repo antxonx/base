@@ -52,7 +52,7 @@ export default class Add {
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
-            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
+            Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
             1
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
