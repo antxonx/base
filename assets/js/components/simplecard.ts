@@ -31,7 +31,7 @@ const _TITLE = `<div class="text-center">#title#<hr class="divide-2"></div>`;
 /* -------------------------------------------------------------------------- */
 
 (function () {
-    [ ...document.getElementsByTagName("simple-card") ].forEach(el => {
+    Array.from(document.getElementsByTagName("simple-card")).forEach(el => {
 
         /* -------------------- Tomamos los parámetros definidos -------------------- */
 

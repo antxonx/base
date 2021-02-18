@@ -23,8 +23,8 @@ export default class Paginator {
      */
     public constructor (options: PaginatorOptions = DEFAULT_PAGINATOR_OPTIONS) {
         this.options = { ...DEFAULT_PAGINATOR_OPTIONS, ...options };
-        let elements: HTMLCollectionOf<Element>;
-        elements = this.options.elements || document.getElementsByClassName(this.options.classname!);
+        let elements: Element[];
+        elements = this.options.elements || Array.from(document.getElementsByClassName(this.options.classname!));
         [ ...elements ].forEach(element => element.addEventListener("click", this.changePage));
     }
 

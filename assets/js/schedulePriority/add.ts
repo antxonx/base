@@ -46,7 +46,7 @@ export default class SchedulePriorityAdd {
     private validate = (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
-            [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ],
+            Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
             0
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;

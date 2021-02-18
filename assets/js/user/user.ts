@@ -8,10 +8,6 @@ import Search from "@plugins/Search";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
-import Add from "@scripts/user/add";
-import Delete from "@scripts/user/delete";
-import Key from "@scripts/user/key";
-import Show from "@scripts/user/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
@@ -68,16 +64,16 @@ export default class User {
             this.control = false;
             this.update();
         }
-        [ ...document.getElementsByClassName("user-delete") ].forEach(
+        Array.from(document.getElementsByClassName("user-delete")).forEach(
             element => element.addEventListener("click", this.delete)
         );
-        [ ...document.getElementsByClassName("user-password") ].forEach(
+        Array.from(document.getElementsByClassName("user-password")).forEach(
             element => element.addEventListener("click", this.key)
         );
-        [ ...document.getElementsByClassName("user-edit") ].forEach(
+        Array.from(document.getElementsByClassName("user-edit")).forEach(
             element => element.addEventListener("click", this.show)
         );
-        [ ...document.getElementsByClassName("user-reactivate") ].forEach(
+        Array.from(document.getElementsByClassName("user-reactivate")).forEach(
             element => element.addEventListener("click", this.reactive)
         );
     };
@@ -103,7 +99,8 @@ export default class User {
             });
     };
 
-    private add = () => {
+    private add = async () => {
+        const { default: Add } = await import("@scripts/user/add");
         (new Add(this.load)).load();
     };
 
@@ -117,33 +114,39 @@ export default class User {
         this.update();
     };
 
-    private delete = (e: Event) => {
+    private delete = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+        const { default: Delete } = await import("@scripts/user/delete");
         (new Delete({
             element: ELEMENT,
         })).delete();
     };
 
-    private reactive = (e: Event) => {
+    private reactive = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+        const { default: Delete } = await import("@scripts/user/delete");
         (new Delete({
             element: ELEMENT,
         })).reactive();
     };
 
-    private show = (e: Event) => {
+    private show = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+        const ID = +ELEMENT.getAttribute("id")!;
+        const { default: Show } = await import("@scripts/user/show");
         (new Show({
-            id: +ELEMENT.getAttribute("id")!,
+            id: ID,
             callback: () => {
                 this.update(this.page, false);
             }
         })).load();
     };
 
-    private key = (e: Event) => {
+    private key = async (e: Event) => {
+        const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+        const { default: Key } = await import("@scripts/user/key");
         (new Key({
-            element: (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement
+            element: ELEMENT
         })).load();
 
     };

@@ -8,13 +8,8 @@ import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import { SchedulePriorityOptions, DEFAULT_PRIORITY_OPTIONS } from "@scripts/schedulePriority/defs";
-import SchedulePriorityAdd from "@scripts/schedulePriority/add";
-import SchedulePriorityDelete from "@scripts/schedulePriority/delete";
-import Show from "@scripts/schedulePriority/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
-import Color from "./color";
-
 /**
  * Client category main view and table
  *
@@ -49,7 +44,8 @@ export default class SchedulePriority {
     public load = () => {
         if (this.options.control) {
             this.options.control = false;
-            document.getElementById("priority-add")!.addEventListener('click', () => {
+            document.getElementById("priority-add")!.addEventListener('click', async () => {
+                const { default: SchedulePriorityAdd } = await import("@scripts/schedulePriority/add");
                 (new SchedulePriorityAdd(this.update)).load();
             });
             new Search({
@@ -58,24 +54,31 @@ export default class SchedulePriority {
             });
             this.update();
         }
-        [ ...document.getElementsByClassName("priority-delete") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-delete")).forEach(element => element.addEventListener("click", async () => {
+            const { default: SchedulePriorityDelete } = await import("@scripts/schedulePriority/delete");
+            const ELEMENT = element.closest(".priority-row") as HTMLElement;
             (new SchedulePriorityDelete({
-                element: (e.currentTarget as HTMLElement).closest(".priority-row") as HTMLElement,
+                element: ELEMENT,
                 onError: this.load
             })).delete();
         }));
-        [ ...document.getElementsByClassName("priority-show") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-show")).forEach(element => element.addEventListener("click", async () => {
+            const { default: Show } = await import("@scripts/schedulePriority/show");
+            const ID = +element.closest(".priority-row")!.getAttribute('id')!;
             (new Show({
-                idPriority: +(e.currentTarget as HTMLElement).closest(".priority-row")!.getAttribute('id')!,
+                idPriority: ID,
                 onClose: () => {
                     this.update();
                 }
             })).load();
         }));
-        [ ...document.getElementsByClassName("priority-color") ].forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-color")).forEach(el => el.addEventListener("click", async (e: Event) => {
+            const { default: Color } = await import("./color");
+            const ID = +el.closest(".priority-row")!.getAttribute('id')!;
+            const ACTUAL = el.getAttribute('actual')!;
             (new Color({
-                id: +(e.currentTarget as HTMLElement).closest(".priority-row")!.getAttribute('id')!,
-                actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,
+                id: ID,
+                actualColor: ACTUAL,
                 callback: this.update
             })).load();
         }));

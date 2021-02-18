@@ -5,8 +5,8 @@
 * @preferred
 */
 import '@components/simplecard';
-import Dashboard from "@scripts/dashboard/dashboard";
 
-(() => {
+(async () => {
+    const { default: Dashboard } = await import("@scripts/dashboard/dashboard");
     (new Dashboard()).load();
 })();

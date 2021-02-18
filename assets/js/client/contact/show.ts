@@ -49,8 +49,8 @@ export default class Show {
         document.getElementById("contact-edit-active")?.addEventListener("click", this.edit);
         document.getElementById("contact-phone-extra-form")?.addEventListener("submit", this.addExtraPhone);
         document.getElementById("contact-email-extra-form")?.addEventListener("submit", this.addExtraEmail);
-        [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', this.deletePhone));
-        [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', this.deleteEmail));
+        Array.from(document.getElementsByClassName("trash-phone")).forEach(el => el.addEventListener('click', this.deletePhone));
+        Array.from(document.getElementsByClassName("trash-email")).forEach(el => el.addEventListener('click', this.deleteEmail));
     };
 
     private update = () => {
@@ -82,10 +82,10 @@ export default class Show {
             BTN.classList.remove("btn-danger");
             BTN.classList.add("btn-warning");
             BTN.innerHTML = "Editar Contacto";
-            [ ...document.getElementsByClassName("trash-email") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-email")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-phone")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-contact")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("plus-btn")).forEach(el => hideElement(el as HTMLElement));
             $('#email-extra-container').collapse('hide');
             $('#phone-extra-container').collapse('hide');
         } else {
@@ -93,10 +93,10 @@ export default class Show {
             BTN.classList.remove("btn-warning");
             BTN.classList.add("btn-danger");
             BTN.innerHTML = "Cancelar";
-            [ ...document.getElementsByClassName("trash-email") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-email")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-phone")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-contact")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("plus-btn")).forEach(el => showElement(el as HTMLElement));
         }
         $('.editable-field').editable('toggleDisabled');
     };

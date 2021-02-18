@@ -49,7 +49,7 @@ export default class Key {
     private validate = (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
-        const INPUTS = [ ...document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement> ];
+        const INPUTS = Array.from(document.getElementsByClassName("required")) as HTMLInputElement[];
         clearErrorMsg();
         if (evaluateInputs(INPUTS, 5)) {
             if (INPUTS[ 0 ].value === INPUTS[ 1 ].value) {

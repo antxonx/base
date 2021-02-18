@@ -8,11 +8,10 @@ import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { ScheduleType } from './defs';
-import Add from '@scripts/schedule/add';
-import Show from '@scripts/schedule/show';
 import { isMobile } from "@scripts/plugins/Required";
 import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
+import '@styles/schedule.scss';
 
 export default class Schedule {
 
@@ -56,7 +55,8 @@ export default class Schedule {
             document.getElementById("calendarBefore")?.addEventListener('click', () => { this.addOffset(-1); });
             document.getElementById("calendarToday")?.addEventListener('click', () => { this.addOffset(0, true); });
             document.getElementById("calendarAfter")?.addEventListener('click', () => { this.addOffset(1); });
-            document.getElementById("schedule-add")?.addEventListener('click', () => {
+            document.getElementById("schedule-add")?.addEventListener('click',  async () => {
+                const { default: Add } = await import('@scripts/schedule/add');
                 (new Add(this.update)).load();
             });
             if (isMobile()) {
@@ -102,14 +102,17 @@ export default class Schedule {
                 })).load();
             }
             this.route = ROUTES.schedule.view[ (check.getValues()[ 0 ] as ScheduleType) ];
+            $('[data-toggle="tooltip"]').tooltip();
             this.update();
         }
-        [ ...document.getElementsByClassName("schedule-day") ].forEach(el => el.addEventListener("click", this.openDay));
-        [ ...document.getElementsByClassName("event") ].forEach(el => el.addEventListener("click", (e: Event) => {
-            const ELEMENT = (e.currentTarget as HTMLElement);
+        Array.from(document.getElementsByClassName("schedule-day")).forEach(el => el.addEventListener("click", this.openDay));
+        Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", async () => {
+            const { default: Show } = await import('@scripts/schedule/show');
+            const RECURRENT = +el.getAttribute("recurrent")!;
+            console.log(RECURRENT);
             (new Show({
-                element: ELEMENT,
-                recurrent: +ELEMENT.getAttribute("recurrent")!,
+                element: el as HTMLElement,
+                recurrent: RECURRENT,
                 callback:() => {
                     this.update(false);
                 }
@@ -167,7 +170,7 @@ export default class Schedule {
                     INFO_CONT.classList.remove("show");
                     this.opened = 0;
                 } else {
-                    [ ...document.getElementsByClassName("schedule-info") ].forEach(el => el.classList.remove("show"));
+                    Array.from(document.getElementsByClassName("schedule-info")).forEach(el => el.classList.remove("show"));
                     INFO_CONT.classList.add("show");
                     this.opened = DAY;
                 }

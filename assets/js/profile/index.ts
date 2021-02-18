@@ -4,8 +4,8 @@
 * @module Profile
 * @preferred
 */
-import Profile from "@scripts/profile/profile";
 
-(() => {
+(async () => {
+    const { default: Profile } = await import("@scripts/profile/profile");
     (new Profile()).load();
 })();

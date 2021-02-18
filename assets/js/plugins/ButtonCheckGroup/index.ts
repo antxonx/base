@@ -61,7 +61,7 @@ export default class ButtonCheckGroup {
         this.container = container;
         this.id = this.container.getAttribute(checkAttributes.ID)!;
         this.value = [];
-        [ ...this.container.getElementsByTagName('button') ].forEach((el) => {
+        Array.from(this.container.getElementsByTagName('button')).forEach((el) => {
             el.setAttribute(checkAttributes.ID, ButtonCheckGroup.randmonId().toString());
             if (this.options.extraClass && this.options.extraClass != '')
                 el.classList.add(this.options.extraClass);
@@ -100,14 +100,14 @@ export default class ButtonCheckGroup {
             this.markActive(BUTTON);
         }
         if (!this.options.multiple) {
-            [ ...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]') ]
+            Array.from(this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]'))
                 .forEach((el) => {
                     if (el.getAttribute(checkAttributes.ID) != ID) {
                         this.unmarkActive(el);
                     }
                 });
         }
-        this.value = [ ...this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]') ]
+        this.value = Array.from(this.container.querySelectorAll<HTMLButtonElement>('button[status="1"]'))
             .map<string>((el: HTMLButtonElement) => el.getAttribute(checkAttributes.VALUE)!);
         this.options.onChange!(this.value);
     };

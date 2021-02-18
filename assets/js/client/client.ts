@@ -8,13 +8,8 @@ import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
-import Add from "@scripts/client/add";
-import Delete from "@scripts/client/delete";
-import Show from "@scripts/client/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
-import Modal from "@scripts/plugins/Modal";
-import Obs from "@scripts/plugins/Obs";
 
 /**
  * Controls the main view and table actions of clients
@@ -64,9 +59,12 @@ export default class Client {
             this.update();
             this.control = false;
         }
-        [ ...document.getElementsByClassName("client-delete") ].forEach(element => element.addEventListener("click", this.delete));
-        [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", this.show));
-        [ ...document.getElementsByClassName("client-add-obs") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("client-delete")).forEach(element => element.addEventListener("click", this.delete));
+        Array.from(document.getElementsByClassName("client-show")).forEach(element => element.addEventListener("click", this.show));
+        Array.from(document.getElementsByClassName("client-add-obs")).forEach(element => element.addEventListener("click", async () => {
+            const ID = +element.closest(".client-row")!.getAttribute("id")!;
+            const { default: Obs } = await import("@scripts/plugins/Obs");
+            const { default: Modal } = await import("@scripts/plugins/Modal");
             const OBS_MODAL = (new Modal({
                 size: 50,
                 title: "Observaciones",
@@ -74,7 +72,7 @@ export default class Client {
             (new Obs({
                 element: OBS_MODAL.getBodyElement(),
                 entity: "Client",
-                id: +(e.currentTarget as HTMLElement).closest(".client-row")!.getAttribute("id")!,
+                id: ID,
                 callback: () => {
                     this.update(this.page, false);
                 },
@@ -110,22 +108,26 @@ export default class Client {
         this.update();
     };
 
-    private add = () => {
+    private add = async () => {
+        const { default: Add } = await import("@scripts/client/add");
         (new Add(this.load)).load();
     };
 
-    private delete = (e: Event) => {
+    private delete = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row") as HTMLElement;
+        const { default: Delete } = await import("@scripts/client/delete");
         (new Delete({
             element: ELEMENT,
             onError: this.load
         })).delete();
     };
 
-    private show = (e: Event) => {
+    private show = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".client-row")!;
+        const ID = +ELEMENT.getAttribute("id")!;
+        const { default: Show } = await import("@scripts/client/show");
         (new Show({
-            id: +ELEMENT.getAttribute("id")!,
+            id: ID,
             callback: () => {
                 this.update(this.page, false);
             }

@@ -54,12 +54,12 @@ export default class Show {
         document.getElementById("client-edit-active")?.addEventListener("click", this.edit);
         document.getElementById("address-add")?.addEventListener("click", this.addAddress);
         document.getElementById("contact-add")?.addEventListener("click", this.addContact);
-        [ ...document.getElementsByClassName("contact-delete") ].forEach(el => el.addEventListener('click', this.deleteContact));
-        [ ...document.getElementsByClassName("contact-show") ].forEach(el => el.addEventListener('click', this.showContact));
+        Array.from(document.getElementsByClassName("contact-delete")).forEach(el => el.addEventListener('click', this.deleteContact));
+        Array.from(document.getElementsByClassName("contact-show")).forEach(el => el.addEventListener('click', this.showContact));
         document.getElementById("client-phone-extra-form")?.addEventListener("submit", this.addExtraPhone);
         document.getElementById("client-email-extra-form")?.addEventListener("submit", this.addExtraEmail);
-        [ ...document.getElementsByClassName("trash-phone") ].forEach(el => el.addEventListener('click', this.deletePhone));
-        [ ...document.getElementsByClassName("trash-email") ].forEach(el => el.addEventListener('click', this.deleteEmail));
+        Array.from(document.getElementsByClassName("trash-phone")).forEach(el => el.addEventListener('click', this.deletePhone));
+        Array.from(document.getElementsByClassName("trash-email")).forEach(el => el.addEventListener('click', this.deleteEmail));
         document.getElementById("changeClientCategory")?.addEventListener("click", () => {
             this.modal.setAllowCallback(false)
             this.modal.hide();
@@ -105,10 +105,10 @@ export default class Show {
             BTN.classList.remove("btn-danger");
             BTN.classList.add("btn-warning");
             BTN.innerHTML = "Editar Cliente";
-            [ ...document.getElementsByClassName("trash-email") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => hideElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-email")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-phone")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-contact")).forEach(el => hideElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("plus-btn")).forEach(el => hideElement(el as HTMLElement));
             $('#email-extra-container').collapse('hide');
             $('#phone-extra-container').collapse('hide');
         } else {
@@ -116,10 +116,10 @@ export default class Show {
             BTN.classList.remove("btn-warning");
             BTN.classList.add("btn-danger");
             BTN.innerHTML = "Cancelar";
-            [ ...document.getElementsByClassName("trash-email") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-phone") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("trash-contact") ].forEach(el => showElement(el as HTMLElement));
-            [ ...document.getElementsByClassName("plus-btn") ].forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-email")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-phone")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("trash-contact")).forEach(el => showElement(el as HTMLElement));
+            Array.from(document.getElementsByClassName("plus-btn")).forEach(el => showElement(el as HTMLElement));
         }
         $('.editable-field').editable('toggleDisabled');
     };
