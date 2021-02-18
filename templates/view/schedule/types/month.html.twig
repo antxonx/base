@@ -30,12 +30,15 @@
 					<div class="schedule-day-number">
 						<div class="number {% if day.day != null %}active{% endif %}{% if (" now"|date(" d-m-Y")) == day.date %} today{% endif %}">{{ day.day }}</div>
 						<div class="total">
-							{% if day.events|length > 0 %}
+							{% if day.events|length > 0 or day.eventrd|length > 0 %}
 								{% set activeEvents = 0 %}
 								{% for event in day.events %}
 									{% if not event.done %}
 										{% set activeEvents = activeEvents + 1 %}
 									{% endif %}
+								{% endfor %}
+								{% for event in day.eventrd %}
+										{% set activeEvents = activeEvents + 1 %}
 								{% endfor %}
 								{% if activeEvents > 0 %}
 									<span class="events-length">{{ activeEvents }}</span>
@@ -46,7 +49,7 @@
 						</div>
 					</div>
 					<div class="schedule-content">
-						{% if day.events|length > 0 %}
+						{% if day.events|length > 0 or day.eventrd|length > 0 %}
 							{% for event in day.events %}
 								<span {% if event.done %} style="background-color: #e8e8e8; color: #525252" {% else %} style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}" {% endif %}>
 									{{ event.title }}
@@ -57,6 +60,16 @@
 									{% endif %}
 								</span>
 							{% endfor %}
+							{% for event in day.eventrd %}
+									<span style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}">
+									{{ event.title }}
+									{% if event.priority != null %}
+										<span class="priority" style="background-color: {{ event.priority.color }};">
+											&#x2800;
+										</span>
+									{% endif %}
+								</span>
+								{% endfor %}
 						{% endif %}
 					</div>
 				</div>

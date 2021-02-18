@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\ScheduleRepository;
+use App\Repository\ScheduleRecurrentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +10,9 @@ use DateTime;
 use DateTimeZone;
 
 /**
- * @ORM\Entity(repositoryClass=ScheduleRepository::class)
+ * @ORM\Entity(repositoryClass=ScheduleRecurrentRepository::class)
  */
-class Schedule
+class ScheduleRecurrent
 {
     /**
      * @ORM\Id
@@ -29,15 +29,10 @@ class Schedule
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="schedules")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="schedulesRecurrent")
      * @ORM\JoinColumn(nullable=false)
      */
     private $createdBy;
@@ -54,22 +49,17 @@ class Schedule
     private $updatedBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ScheduleCategory::class, inversedBy="schedules")
+     * @ORM\ManyToOne(targetEntity=ScheduleCategory::class, inversedBy="schedulesRecurrent")
      */
     private $category;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $done;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="assignedSchedules")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="assignedSchedulesRecurrent")
      */
     private $assigned;
 
     /**
-     * @ORM\ManyToOne(targetEntity=SchedulePriority::class, inversedBy="schedules")
+     * @ORM\ManyToOne(targetEntity=SchedulePriority::class, inversedBy="schedulesRecurrent")
      */
     private $priority;
 
@@ -84,13 +74,23 @@ class Schedule
     private $client;
 
     /**
-     * @ORM\OneToMany(targetEntity=ScheduleObs::class, mappedBy="entity", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ScheduleRecurrentObs::class, mappedBy="entity", orphanRemoval=true)
      */
-    private $scheduleObs;
+    private $scheduleRecurrentObs;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $days = [];
 
     public function __construct()
     {
-        $this->scheduleObs = new ArrayCollection();
+        $this->scheduleRecurrentObs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,18 +106,6 @@ class Schedule
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }
@@ -273,31 +261,55 @@ class Schedule
     }
 
     /**
-     * @return Collection|ScheduleObs[]
+     * @return Collection|ScheduleRecurrentObs[]
      */
-    public function getScheduleObs(): Collection
+    public function getScheduleRecurrentObs(): Collection
     {
-        return $this->scheduleObs;
+        return $this->scheduleRecurrentObs;
     }
 
-    public function addScheduleOb(ScheduleObs $scheduleOb): self
+    public function addScheduleRecurrentOb(ScheduleRecurrentObs $scheduleRecurrentOb): self
     {
-        if (!$this->scheduleObs->contains($scheduleOb)) {
-            $this->scheduleObs[] = $scheduleOb;
-            $scheduleOb->setEntity($this);
+        if (!$this->scheduleRecurrentObs->contains($scheduleRecurrentOb)) {
+            $this->scheduleRecurrentObs[] = $scheduleRecurrentOb;
+            $scheduleRecurrentOb->setEntity($this);
         }
 
         return $this;
     }
 
-    public function removeScheduleOb(ScheduleObs $scheduleOb): self
+    public function removeScheduleRecurrentOb(ScheduleRecurrentObs $scheduleRecurrentOb): self
     {
-        if ($this->scheduleObs->removeElement($scheduleOb)) {
+        if ($this->scheduleRecurrentObs->removeElement($scheduleRecurrentOb)) {
             // set the owning side to null (unless already changed)
-            if ($scheduleOb->getEntity() === $this) {
-                $scheduleOb->setEntity(null);
+            if ($scheduleRecurrentOb->getEntity() === $this) {
+                $scheduleRecurrentOb->setEntity(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDays(): ?array
+    {
+        return $this->days;
+    }
+
+    public function setDays(array $days): self
+    {
+        $this->days = $days;
 
         return $this;
     }

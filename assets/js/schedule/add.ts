@@ -13,6 +13,7 @@ import DropdownSelect from '@scripts/plugins/DropdownSelect';
 import moment from 'moment';
 import ClientSearch from '@scripts/client/searchClient';
 import Alert from '@scripts/plugins/Alert';
+import ListSelect from '@scripts/plugins/ListSelect';
 
 /**
  * Add a new task
@@ -35,14 +36,19 @@ export default class Add {
 
     protected userSelect: DropdownSelect;
 
-    protected selectedClient: ClientSearch|null;
+    protected selectedClient: ClientSearch | null;
+
+    protected yearMonthList?: ListSelect;
+    protected yearDayList?: ListSelect;
+    protected monthDayList?: ListSelect;
+    protected weekDayList?: ListSelect;
 
     public constructor (callback: () => void = () => { }) {
         this.callback = callback;
         this.selectedClient = null;
         this.modal = (new Modal({
             title: "Nueva tarea",
-            size: 40
+            size: 60
         }));
         this.date = '';
         this.categorySelect = new DropdownSelect();
@@ -65,6 +71,32 @@ export default class Add {
                     element: document.getElementById("taskPriority")!
                 })).load();
                 this.selectedClient = new ClientSearch("#searchClientForm");
+                //List select
+                this.yearMonthList = new ListSelect({
+                    element: document.getElementById('yearlyMonthSelect') as HTMLElement,
+                    multiple: true,
+                    attribute: 'month-number',
+                });
+                this.yearDayList = new ListSelect({
+                    element: document.getElementById('yearlyDaySelect') as HTMLElement,
+                    multiple: true,
+                    attribute: 'month-day-number',
+                });
+                this.monthDayList = new ListSelect({
+                    element: document.getElementById('monthlyDaySelect') as HTMLElement,
+                    multiple: true,
+                    attribute: 'day-number',
+                });
+                this.weekDayList = new ListSelect({
+                    element: document.getElementById('weeklyDaySelect') as HTMLElement,
+                    multiple: true,
+                    attribute: 'week-day-number',
+                });
+                this.yearMonthList.load();
+                this.yearDayList.load();
+                this.monthDayList.load();
+                this.weekDayList.load();
+                // ----
                 $(TASK_DATE).daterangepicker({
                     singleDatePicker: true,
                     showDropdowns: true,
@@ -131,6 +163,44 @@ export default class Add {
         )) {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;
+            const recurrent = (this.getActiveTab("scheduleTab") === "recurrent-tab");
+            let recType = 0;
+            let recData: string[] | string[][] = [];
+            let recError = false;
+            let recErrorMsg = "";
+            if(recurrent) {
+                switch (this.getActiveTab("v-pills-tab")) {
+                    case "v-pills-yearly-tab":
+                        recType = 1;
+                        if(this.yearMonthList!.getValues()!.length == 0 || this.yearDayList!.getValues()!.length == 0) {
+                            recError = true;
+                            recErrorMsg = "Debe seleccionar al menos un mes y un día";
+                            break;
+                        }
+                        recData = [this.yearMonthList!.getValues()!, this.yearDayList!.getValues()!];
+                        break;
+                    case "v-pills-monthly-tab":
+                        recType = 2;
+                        if(this.monthDayList!.getValues()!.length == 0) {
+                            recError = true;
+                            recErrorMsg = "Debe seleccionar al menos un día";
+                            break;
+                        }
+                        recData = this.monthDayList!.getValues()!;
+                        break;
+                    case "v-pills-weekly-tab":
+                        recType = 3;
+                        if(this.weekDayList!.getValues()!.length == 0) {
+                            recError = true;
+                            recErrorMsg = "Debe seleccionar al menos un día";
+                            break;
+                        }
+                        recData = this.weekDayList!.getValues()!;
+                        break;
+                    default:
+                        break;
+                }
+            }
             const DATA = {
                 name: (document.getElementById("title") as HTMLInputElement).value,
                 detail: (document.getElementById("taskDetail") as HTMLInputElement).value,
@@ -139,8 +209,14 @@ export default class Add {
                 priority: this.prioritySelect.getValue(),
                 user: this.userSelect.getValue(),
                 client: this.selectedClient!.getClientId(),
-                recurrent: (document.getElementById("recurrentSwitch") as HTMLInputElement).checked
+                recurrent: recurrent,
+                recType: recType,
+                recData: recData,
             };
+            if(recError) {
+                insertAlertAfter(document.getElementById("scheduleForm")!, recErrorMsg);
+                return;
+            }
             if (!DATA.date) {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha ingresado la fecha");
                 return;
@@ -153,7 +229,7 @@ export default class Add {
                 insertAlertAfter(document.getElementById("scheduleForm")!, "No se ha seleccionado la prioridad");
                 return;
             }
-            if(DATA.client == 0) {
+            if (DATA.client == 0) {
                 const ALERT = new Alert({
                     type: 'warning',
                     typeText: 'Agregar tarea',
@@ -162,7 +238,7 @@ export default class Add {
             } else {
                 res = true;
             }
-            if(res) {
+            if (res) {
                 BTN.innerHTML = SPINNER_LOADER;
                 Axios.post(Router.generate(ROUTES.schedule.api.add), DATA)
                     .then(res => {
@@ -177,22 +253,27 @@ export default class Add {
                     });
             }
         }
-    }
+    };
 
     private loadUsers = (category: string) => {
         document.getElementById("user-select-container")!.innerHTML = SPINNER_LOADER;
-        Axios.get(Router.generate(ROUTES.user.api.getByRole, {'id': category}))
-        .then(res => {
-            document.getElementById("user-select-container")!.innerHTML = '<div class="dropdow-arrow"><input id="taskUser" value="" placeholder="Asignar" class="form-control readonly-click cursor-pointer" options=[]" readonly></div>';
-            document.getElementById("taskUser")!.setAttribute("options", JSON.stringify(res.data));
-            this.userSelect = (new DropdownSelect({
-                element: document.getElementById("taskUser")!
-            })).load();
-        })
-        .catch(err => {
-            console.error(err);
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        });
-    }
+        Axios.get(Router.generate(ROUTES.user.api.getByRole, { 'id': category }))
+            .then(res => {
+                document.getElementById("user-select-container")!.innerHTML = '<div class="dropdow-arrow"><input id="taskUser" value="" placeholder="Asignar" class="form-control readonly-click cursor-pointer" options=[]" readonly></div>';
+                document.getElementById("taskUser")!.setAttribute("options", JSON.stringify(res.data));
+                this.userSelect = (new DropdownSelect({
+                    element: document.getElementById("taskUser")!
+                })).load();
+            })
+            .catch(err => {
+                console.error(err);
+                console.error(err.response.data);
+                Toast.error(err.response.data);
+            });
+    };
+
+    private getActiveTab = (id: string): string => {
+        const TAB = document.getElementById(id) as HTMLElement;
+        return TAB.querySelector(".nav-link.active")!.getAttribute("id")!;
+    };
 }

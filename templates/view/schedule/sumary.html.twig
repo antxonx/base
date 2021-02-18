@@ -3,6 +3,11 @@
 		{% for event in month[index].events %}
 			{% include 'view/schedule/event.html.twig' %}
 		{% endfor %}
+	{% endif %}
+	{% if month[index].eventrd|length > 0 %}
+		{% for event in month[index].eventrd %}
+			{% include 'view/schedule/eventr.html.twig' %}
+		{% endfor %}
 	{% else %}
 		<div class="schedule-sumary nothing">
 			No hay eventos registrados para este día.

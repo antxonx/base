@@ -1,0 +1,15 @@
+{% set days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"] %}
+<div class="row">
+	<div class="col-md-6">
+		<h5 class="text-center">Día(s)</h5>
+	</div>
+</div>
+<div class="row">
+	<ul class="list-group mt-3 col-md-6" id="weeklyDaySelect" style="max-height: 400px; overflow-y: auto;">
+		{% for day in days %}
+			<li class="list-group-item hover cursor-pointer" week-day-number="{{ loop.index }}">
+				{{ day }}
+			</li>
+		{% endfor %}
+	</ul>
+</div>

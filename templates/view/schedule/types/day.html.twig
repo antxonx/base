@@ -12,6 +12,9 @@
 			{% for event in day.events %}
 				{% include 'view/schedule/event.html.twig' %}
 			{% endfor %}
+			{% for event in day.eventrd %}
+				{% include 'view/schedule/eventr.html.twig' %}
+			{% endfor %}
 		</div>
 	</div>
 </div>
