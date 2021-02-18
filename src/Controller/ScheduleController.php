@@ -508,16 +508,27 @@ class ScheduleController extends AbstractController
      * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function show(int $id): Response
+    public function show(int $id, Request $request): Response
     {
         try {
-            $task = $this->rep->find($id);
+            $params = json_decode(json_encode($request->query->all()));
+            if ($params->recurrent) {
+                $task = $this->srRep->find($id);
+            } else {
+                $task = $this->rep->find($id);
+            }
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
-            return $this->render("view/schedule/show.html.twig", [
-                'task' => $task
-            ]);
+            if ($params->recurrent) {
+                return $this->render("view/schedule/showR.html.twig", [
+                    'task' => $task
+                ]);
+            } else {
+                return $this->render("view/schedule/show.html.twig", [
+                    'task' => $task
+                ]);
+            }
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

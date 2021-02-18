@@ -11,6 +11,7 @@ export interface ScheduleShowOptions {
     bColor?: string;
     tColor?: string;
     callback?: () => void;
+    recurrent: number;
 }
 
 export const DEFAULT_SCHEDULE_SHOW_OPTIONS: ScheduleShowOptions = {
@@ -18,7 +19,8 @@ export const DEFAULT_SCHEDULE_SHOW_OPTIONS: ScheduleShowOptions = {
     id: 0,
     bColor: '',
     tColor: '',
-    callback: () => { }
+    callback: () => { },
+    recurrent: 0,
 };
 
 export interface ScheduleFinishOptions {

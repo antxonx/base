@@ -109,6 +109,7 @@ export default class Schedule {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
                 element: ELEMENT,
+                recurrent: +ELEMENT.getAttribute("recurrent")!,
                 callback:() => {
                     this.update(false);
                 }
