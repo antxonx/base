@@ -40,9 +40,15 @@ class SchedulePriority
      */
     private $schedules;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ScheduleRecurrent::class, mappedBy="priority")
+     */
+    private $schedulesRecurrent;
+
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
+        $this->schedulesRecurrent = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +122,42 @@ class SchedulePriority
             // set the owning side to null (unless already changed)
             if ($schedule->getPriority() === $this) {
                 $schedule->setPriority(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScheduleRecurrent[]
+     */
+    public function getSchedulesRecurrent(bool $full = false): Collection
+    {
+        if($full) {
+            return $this->schedulesRecurrent;
+        } else {
+            $criteria = new Criteria();
+            $criteria->where(Criteria::expr()->eq('done', '0'));
+            return $this->schedulesRecurrent->matching($criteria);
+        }
+    }
+
+    public function addScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if (!$this->schedulesRecurrent->contains($scheduleRecurrent)) {
+            $this->schedulesRecurrent[] = $scheduleRecurrent;
+            $scheduleRecurrent->setPriority($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if ($this->schedulesRecurrent->removeElement($scheduleRecurrent)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduleRecurrent->getPriority() === $this) {
+                $scheduleRecurrent->setPriority(null);
             }
         }
 

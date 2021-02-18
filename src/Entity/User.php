@@ -89,12 +89,24 @@ class User implements UserInterface
      */
     private $assignedSchedules;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ScheduleRecurrent::class, mappedBy="createdBy")
+     */
+    private $schedulesRecurrent;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ScheduleRecurrent::class, mappedBy="assigned")
+     */
+    private $assignedSchedulesRecurrent;
+
     public function __construct()
     {
         $this->infoLogs = new ArrayCollection();
         $this->errorLogs = new ArrayCollection();
         $this->schedules = new ArrayCollection();
         $this->assignedSchedules = new ArrayCollection();
+        $this->schedulesRecurrent = new ArrayCollection();
+        $this->assignedSchedulesRecurrent = new ArrayCollection();
     }
 
     /**
@@ -372,6 +384,36 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|ScheduleRecurrent[]
+     */
+    public function getSchedulesRecurrent(): Collection
+    {
+        return $this->schedulesRecurrent;
+    }
+
+    public function addScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if (!$this->schedulesRecurrent->contains($scheduleRecurrent)) {
+            $this->schedulesRecurrent[] = $scheduleRecurrent;
+            $scheduleRecurrent->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if ($this->schedulesRecurrent->removeElement($scheduleRecurrent)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduleRecurrent->getCreatedBy() === $this) {
+                $scheduleRecurrent->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Schedule[]
      */
     public function getAssignedSchedules(): Collection
@@ -395,6 +437,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($assignedSchedule->getAssigned() === $this) {
                 $assignedSchedule->setAssigned(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScheduleRecurrent[]
+     */
+    public function getAssignedSchedulesRecurrent(): Collection
+    {
+        return $this->assignedSchedulesRecurrent;
+    }
+
+    public function addAssignedScheduleRecurrent(ScheduleRecurrent $assignedScheduleRecurrent): self
+    {
+        if (!$this->assignedSchedulesRecurrent->contains($assignedScheduleRecurrent)) {
+            $this->assignedSchedulesRecurrent[] = $assignedScheduleRecurrent;
+            $assignedScheduleRecurrent->setAssigned($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssignedScheduleRecurrent(ScheduleRecurrent $assignedScheduleRecurrent): self
+    {
+        if ($this->assignedSchedulesRecurrent->removeElement($assignedScheduleRecurrent)) {
+            // set the owning side to null (unless already changed)
+            if ($assignedScheduleRecurrent->getAssigned() === $this) {
+                $assignedScheduleRecurrent->setAssigned(null);
             }
         }
 

@@ -22,4 +22,11 @@ class Configuration {
      * @var int
      */
     public const TaskDoneColors = 1;
+
+    /**
+     * TaskRecurrentBorder config
+     * 
+     * @var int
+     */
+    public const TaskRecurrentBorder = 2;
 }

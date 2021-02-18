@@ -42,6 +42,8 @@
 								{% else %}
 									<span>&nbsp;</span>
 								{% endif %}
+							{% else %}
+							<span>&nbsp;</span>
 							{% endif %}
 						</div>
 					</div>
@@ -51,6 +53,42 @@
 								<span {% if event.done %} style="background-color: #e8e8e8; color: #525252" {% else %} style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}" {% endif %}>
 									{{ event.title }}
 									{% if not event.done and event.priority != null %}
+										<span class="priority" style="background-color: {{ event.priority.color }};">
+											&#x2800;
+										</span>
+									{% endif %}
+								</span>
+							{% endfor %}
+						{% endif %}
+						{% if day.eventrd|length > 0 %}
+							{% for event in day.eventrd %}
+								<span style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}">
+									{{ event.title }}
+									{% if event.priority != null %}
+										<span class="priority" style="background-color: {{ event.priority.color }};">
+											&#x2800;
+										</span>
+									{% endif %}
+								</span>
+							{% endfor %}
+						{% endif %}
+						{% if day.eventrm|length > 0 %}
+							{% for event in day.eventrm %}
+								<span style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}">
+									{{ event.title }}
+									{% if event.priority != null %}
+										<span class="priority" style="background-color: {{ event.priority.color }};">
+											&#x2800;
+										</span>
+									{% endif %}
+								</span>
+							{% endfor %}
+						{% endif %}
+						{% if day.eventry|length > 0 %}
+							{% for event in day.eventry %}
+								<span style="background-color: {{ event.category.backgroundColor ~ 'bb' }}; color: {{ event.category.color }}">
+									{{ event.title }}
+									{% if event.priority != null %}
 										<span class="priority" style="background-color: {{ event.priority.color }};">
 											&#x2800;
 										</span>

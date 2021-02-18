@@ -1,0 +1,22 @@
+<div class="event color-shadow" recurrent="1" style="background-color: {{ event.category.backgroundColor ~ 'bb' }};color: {{ event.category.color }}; {{ configuration.getConfig.TaskRecurrentBorder.config.style }}" event-id="{{ event.id }}">
+	<div style="width: 100%;">
+		<div class="header">
+			<span class="assigned">
+				{% if event.client != null %}
+					{{ event.client.name }}
+				{% else %}
+					&nbsp;
+				{% endif %}
+			</span>
+			<span {% if event.priority != null %} class="priority" style="background-color: {{ event.priority.color }};" {% endif %}>
+				&#x2800;
+			</span>
+		</div>
+		<span class="time" style="color: {{ event.category.color ~ '88'}};">
+            <i class="fas fa-retweet"></i>
+		</span>
+	</div>
+	<span>
+		<em>{{ event.title }}</em>
+	</span>
+</div>

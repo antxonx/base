@@ -15,9 +15,11 @@ use App\Entity\Schedule;
 use Antxony\Def\Task\Task;
 use Antxony\Observation;
 use App\Controller\ObsController;
+use App\Entity\ScheduleRecurrent;
 use App\Repository\UserRepository;
 use App\Repository\ClientRepository;
 use App\Repository\ScheduleRepository;
+use App\Repository\ScheduleRecurrentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use App\Repository\ScheduleCategoryRepository;
@@ -40,6 +42,8 @@ class ScheduleController extends AbstractController
 
     protected ScheduleRepository $rep;
 
+    protected ScheduleRecurrentRepository $srRep;
+
     protected ScheduleCategoryRepository $scRep;
 
     protected SchedulePriorityRepository $spRep;
@@ -53,6 +57,7 @@ class ScheduleController extends AbstractController
     public function __construct(
         Util $util,
         ScheduleRepository $rep,
+        ScheduleRecurrentRepository $srRep,
         ScheduleCategoryRepository $scRep,
         SchedulePriorityRepository $spRep,
         Security $security,
@@ -61,6 +66,7 @@ class ScheduleController extends AbstractController
     ) {
         $this->util = $util;
         $this->rep = $rep;
+        $this->srRep = $srRep;
         $this->scRep = $scRep;
         $this->spRep = $spRep;
         $this->security = $security;
@@ -125,7 +131,10 @@ class ScheduleController extends AbstractController
                     $month[] = [
                         'day' => null,
                         'date' => '',
-                        'events' => []
+                        'events' => [],
+                        'eventrd' => [],
+                        'eventrm' => [],
+                        'eventry' => [],
                     ];
                 } else {
                     $events = [];
@@ -137,10 +146,20 @@ class ScheduleController extends AbstractController
                     }
                     $today = strftime("%d", strtotime("today"));
                     $diff = $day - $today;
+                    $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$diff} day {$monthOffset} month")));
+                    $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$diff} day {$monthOffset} month")));
+                    $eventry = $this->getRecurrentYear(
+                        $params,
+                        strftime("%m", strtotime("{$diff} day {$monthOffset} month")),
+                        strftime("%d", strtotime("{$diff} day {$monthOffset} month"))
+                    );
                     $month[] = [
                         'day' => $day,
                         'date' => strftime("%d-%m-%Y", strtotime("{$diff} day {$monthOffset} month")),
-                        'events' => $events
+                        'events' => $events,
+                        'eventrd' => $eventrd,
+                        'eventrm' => $eventrm,
+                        'eventry' => $eventry,
                     ];
                 }
             }
@@ -148,7 +167,10 @@ class ScheduleController extends AbstractController
                 $month[] = [
                     'day' => null,
                     'date' => '',
-                    'events' => []
+                    'events' => [],
+                    'eventrd' => [],
+                    'eventrm' => [],
+                    'eventry' => [],
                 ];
             }
             return $this->render("view/schedule/types/month.html.twig", [
@@ -187,12 +209,22 @@ class ScheduleController extends AbstractController
                         $events[] = $event;
                     }
                 }
+                $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$dif} day {$offset} week")));
+                $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$dif} day {$offset} week")));
+                $eventry = $this->getRecurrentYear(
+                    $params,
+                    strftime("%m", strtotime("{$dif} day {$offset} week")),
+                    strftime("%d", strtotime("{$dif} day {$offset} week"))
+                );
                 $lastDayMonth = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $week[] = [
                     "name" => strftime("%A", strtotime("{$dif} day {$offset} week")),
                     "day" => strftime("%d", strtotime("{$dif} day {$offset} week")),
                     "date" => strftime("%d-%m-%Y", strtotime("{$dif} day {$offset} week")),
-                    "events" => $events
+                    "events" => $events,
+                    "eventrd" => $eventrd,
+                    "eventrm" => $eventrm,
+                    "eventry" => $eventry,
                 ];
             }
             return $this->render("view/schedule/types/week.html.twig", [
@@ -222,6 +254,7 @@ class ScheduleController extends AbstractController
             $day += ["date" => strftime("%d-%m-%Y", strtotime("today {$offset} day"))];
             $eventsS = $this->rep->getBy("day", $params);
             $events = [];
+            // $eventrd = [];
             $evDay = strftime("%d-%m-%Y", strtotime("today {$offset} day"));
             foreach ($eventsS as $event) {
                 if ($evDay == $event->getDate()->format("d-m-Y")) {
@@ -229,6 +262,8 @@ class ScheduleController extends AbstractController
                 }
             }
             $day += ["events" => $events];
+            $day += ["eventrd" => $this->getRecurrentDays($params, strftime("%u", strtotime("today {$offset} day")))];
+            $day += ["eventrm" => $this->getRecurrentMonth($params, strftime("%d", strtotime("today {$offset} day")))];
             return $this->render("view/schedule/types/day.html.twig", [
                 'monthName' => $monthName,
                 'day' => $day,
@@ -236,6 +271,76 @@ class ScheduleController extends AbstractController
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
+    }
+
+    public function getRecurrentDays($params, $day): array
+    {
+        if (!$params->showRecurrents) {
+            return [];
+        }
+        $events = [];
+        $eventsR = $this->srRep->getBy("day", $params);
+        foreach ($eventsR as $event) {
+            $yes = false;
+            foreach ($event->getDays() as $dday) {
+                if ($dday == $day) {
+                    $yes = true;
+                    break;
+                }
+            }
+            if ($yes) {
+                $events[] = $event;
+            }
+        }
+        return $events;
+    }
+
+    public function getRecurrentMonth($params, $day): array
+    {
+        if (!$params->showRecurrents) {
+            return [];
+        }
+        $events = [];
+        $eventsR = $this->srRep->getBy("month", $params);
+        foreach ($eventsR as $event) {
+            $yes = false;
+            foreach ($event->getDays() as $dday) {
+                if ($dday == $day) {
+                    $yes = true;
+                    break;
+                }
+            }
+            if ($yes) {
+                $events[] = $event;
+            }
+        }
+        return $events;
+    }
+
+    public function getRecurrentYear($params, $month, $day): array
+    {
+        if (!$params->showRecurrents) {
+            return [];
+        }
+        $events = [];
+        $eventsR = $this->srRep->getBy("year", $params);
+        foreach ($eventsR as $event) {
+            $yes = false;
+            foreach ($event->getDays()[0] as $mmonth) {
+                if ($mmonth == $month) {
+                    foreach ($event->getDays()[1] as $dday) {
+                        if ($dday == $day) {
+                            $yes = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if ($yes) {
+                $events[] = $event;
+            }
+        }
+        return $events;
     }
 
     /**
@@ -386,7 +491,7 @@ class ScheduleController extends AbstractController
                     $task
                         ->setDate($new)
                         ->updated($this->security->getUser());
-                        $message = "Se ha cambiado la fecha de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) de <b>{$old->format("d-m-Y H:i:s")}</b> a <b>{$new->format("d-m-Y H:i:s")}</b>";
+                    $message = "Se ha cambiado la fecha de la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>) de <b>{$old->format("d-m-Y H:i:s")}</b> a <b>{$new->format("d-m-Y H:i:s")}</b>";
                     break;
                 default:
                     throw new Exception("No se pudo determinar la orden");
@@ -403,16 +508,27 @@ class ScheduleController extends AbstractController
      * @Route("/{id}", name="schedule_show", methods={"GET"}, options={"expose" = true})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function show(int $id): Response
+    public function show(int $id, Request $request): Response
     {
         try {
-            $task = $this->rep->find($id);
+            $params = json_decode(json_encode($request->query->all()));
+            if ($params->recurrent) {
+                $task = $this->srRep->find($id);
+            } else {
+                $task = $this->rep->find($id);
+            }
             if ($task == null) {
                 throw new Exception("No se pudo encontrar la tarea");
             }
-            return $this->render("view/schedule/show.html.twig", [
-                'task' => $task
-            ]);
+            if ($params->recurrent) {
+                return $this->render("view/schedule/showR.html.twig", [
+                    'task' => $task
+                ]);
+            } else {
+                return $this->render("view/schedule/show.html.twig", [
+                    'task' => $task
+                ]);
+            }
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }
@@ -469,17 +585,32 @@ class ScheduleController extends AbstractController
                 $user = $this->uRep->find($content->user);
                 $extra = ". Se le ha asignado a <b>{$user->getName()}<b>";
             }
-            $task = (new Schedule())
-                ->setTitle($content->name)
-                ->setDetail($content->detail)
-                ->setDate($time)
-                ->setCategory($category)
-                ->setPriority($priority)
-                ->setDone(false)
-                ->setAssigned($user)
-                ->setClient($client)
-                ->created($this->security->getUser());
-            $this->rep->add($task);
+            if ($content->recurrent) {
+                $task = (new ScheduleRecurrent())
+                    ->setTitle($content->name)
+                    ->setDetail($content->detail)
+                    ->setCategory($category)
+                    ->setPriority($priority)
+                    ->setDone(false)
+                    ->setAssigned($user)
+                    ->setClient($client)
+                    ->setType($content->recType)
+                    ->setDays($content->recData)
+                    ->created($this->security->getUser());
+                $this->srRep->add($task);
+            } else {
+                $task = (new Schedule())
+                    ->setTitle($content->name)
+                    ->setDetail($content->detail)
+                    ->setDate($time)
+                    ->setCategory($category)
+                    ->setPriority($priority)
+                    ->setDone(false)
+                    ->setAssigned($user)
+                    ->setClient($client)
+                    ->created($this->security->getUser());
+                $this->rep->add($task);
+            }
             $this->util->info("Se ha agregado la tarea <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)" . $extra);
             return new Response("Se ha agregado la tarea");
         } catch (Exception $e) {

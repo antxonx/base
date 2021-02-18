@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="nav flex-column nav-pills col-md-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+		<a class="nav-link active" id="v-pills-yearly-tab" data-toggle="pill" href="#v-pills-yearly" role="tab" aria-controls="v-pills-yearly" aria-selected="true">Anual</a>
+		<a class="nav-link" id="v-pills-monthly-tab" data-toggle="pill" href="#v-pills-monthly" role="tab" aria-controls="v-pills-monthly" aria-selected="false">Mensual</a>
+		<a class="nav-link" id="v-pills-weekly-tab" data-toggle="pill" href="#v-pills-weekly" role="tab" aria-controls="v-pills-weekly" aria-selected="false">Semanal</a>
+	</div>
+	<div class="tab-content col-md-10" id="v-pills-tabContent">
+		<div class="tab-pane fade show active" id="v-pills-yearly" role="tabpanel" aria-labelledby="v-pills-yearly-tab">
+			{% include 'view/schedule/recurrent/yearly.html.twig' %}
+		</div>
+		<div class="tab-pane fade" id="v-pills-monthly" role="tabpanel" aria-labelledby="v-pills-monthly-tab">
+            {% include 'view/schedule/recurrent/monthly.html.twig' %}
+        </div>
+		<div class="tab-pane fade" id="v-pills-weekly" role="tabpanel" aria-labelledby="v-pills-weekly-tab">
+            {% include 'view/schedule/recurrent/weekly.html.twig' %}
+        </div>
+	</div>
+</div>

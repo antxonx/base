@@ -34,6 +34,8 @@ export default class Schedule {
 
     protected category: number;
 
+    protected showRecurrents: number;
+
     public constructor () {
         this.control = true;
         this.offset = 0;
@@ -42,6 +44,7 @@ export default class Schedule {
         this.searchInput = '';
         this.me = 1;
         this.finished = 0;
+        this.showRecurrents = 1;
         this.mainView = document.getElementById("CalendarView") || document.createElement("div");
         this.route = '';
     }
@@ -66,7 +69,7 @@ export default class Schedule {
                 unCheckClass: 'btn-outline-info',
                 checkClass: 'btn-info',
                 extraClass: 'round',
-                activeValue: active,
+                activeValue: [active],
                 oneActive: true
             });
             if (document.getElementById('superCheck')) {
@@ -75,7 +78,7 @@ export default class Schedule {
                     unCheckClass: 'btn-outline-info',
                     checkClass: 'btn-info',
                     extraClass: 'round',
-                    activeValue: 'me',
+                    activeValue: ['me', 'recurrent'],
                     multiple: true
                 }));
             } else {
@@ -84,6 +87,8 @@ export default class Schedule {
                     unCheckClass: 'btn-outline-info',
                     checkClass: 'btn-info',
                     extraClass: 'round',
+                    activeValue: ['recurrent'],
+                    multiple: true
                 }));
             }
             new Search({
@@ -104,6 +109,7 @@ export default class Schedule {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
                 element: ELEMENT,
+                recurrent: +ELEMENT.getAttribute("recurrent")!,
                 callback:() => {
                     this.update(false);
                 }
@@ -119,7 +125,8 @@ export default class Schedule {
             'offset': this.offset,
             'me': this.me,
             'finished': this.finished,
-            'category': this.category
+            'category': this.category,
+            'showRecurrents': this.showRecurrents,
         }))
             .then(res => {
                 this.mainView.innerHTML = res.data;
@@ -178,25 +185,15 @@ export default class Schedule {
     };
 
     private superCheck = (value: string[]) => {
-        if (value.includes('me')) {
-            this.me = 1;
-        } else {
-            this.me = 0;
-        }
-        if (value.includes('finished')) {
-            this.finished = 1;
-        } else {
-            this.finished = 0;
-        }
-        this.update();
+        this.me = +value.includes('me');
+        this.finished = +value.includes('finished');
+        this.showRecurrents = +value.includes('recurrent');
+        this.update(false);
     };
 
     private noSuperCheck = (value: string[]) => {
-        if (value.includes('finished')) {
-            this.finished = 1;
-        } else {
-            this.finished = 0;
-        }
-        this.update();
+        this.finished = +value.includes('finished');
+        this.showRecurrents = +value.includes('recurrent');
+        this.update(false);
     };
 }

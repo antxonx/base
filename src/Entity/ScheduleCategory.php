@@ -45,6 +45,11 @@ class ScheduleCategory
     private $schedules;
 
     /**
+     * @ORM\OneToMany(targetEntity=ScheduleRecurrent::class, mappedBy="category")
+     */
+    private $schedulesRecurrent;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -52,6 +57,7 @@ class ScheduleCategory
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
+        $this->schedulesRecurrent = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +137,36 @@ class ScheduleCategory
             // set the owning side to null (unless already changed)
             if ($schedule->getCategory() === $this) {
                 $schedule->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScheduleRecurrent[]
+     */
+    public function getSchedulesRecurrent(): Collection
+    {
+        return $this->schedulesRecurrent;
+    }
+
+    public function addScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if (!$this->schedulesRecurrent->contains($scheduleRecurrent)) {
+            $this->schedulesRecurrent[] = $scheduleRecurrent;
+            $scheduleRecurrent->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScheduleRecurrent(ScheduleRecurrent $scheduleRecurrent): self
+    {
+        if ($this->schedulesRecurrent->removeElement($scheduleRecurrent)) {
+            // set the owning side to null (unless already changed)
+            if ($scheduleRecurrent->getCategory() === $this) {
+                $scheduleRecurrent->setCategory(null);
             }
         }
 

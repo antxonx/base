@@ -1,0 +1,27 @@
+{% set months = [
+"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+] %}
+<div class="row">
+	<div class="col-md-6">
+		<h5 class="text-center">Mes(es)</h5>
+	</div>
+	<div class="col-md-6">
+		<h5 class="text-center">Día(s)</h5>
+	</div>
+</div>
+<div class="row">
+	<ul class="list-group mt-3 col-md-6" id="yearlyMonthSelect" style="max-height: 400px; overflow-y: auto;">
+		{% for month in months %}
+			<li class="list-group-item hover cursor-pointer" month-number="{{ loop.index }}">
+				{{ month }}
+			</li>
+		{% endfor %}
+	</ul>
+	<ul class="list-group mt-3 col-md-6" id="yearlyDaySelect" style="max-height: 400px; overflow-y: auto;">
+		{% for i in 1..31 %}
+			<li class="list-group-item hover cursor-pointer" month-day-number="{{ i }}">
+				{{ i }}
+			</li>
+		{% endfor %}
+	</ul>
+</div>

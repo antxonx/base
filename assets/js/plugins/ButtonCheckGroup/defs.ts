@@ -10,7 +10,7 @@ export interface checkOptions {
     checkClass?: string;
     extraClass?: string;
     oneActive?: boolean;
-    activeValue?: string;
+    activeValue?: string[];
 }
 
 export enum checkAttributes {
@@ -26,5 +26,5 @@ export const DEFAULT_CHECK_OPTIONS: checkOptions = {
     checkClass: 'button-check-checked',
     extraClass: '',
     oneActive: false,
-    activeValue: '',
+    activeValue: [],
 };

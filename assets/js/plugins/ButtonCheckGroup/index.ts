@@ -65,9 +65,9 @@ export default class ButtonCheckGroup {
             el.setAttribute(checkAttributes.ID, ButtonCheckGroup.randmonId().toString());
             if (this.options.extraClass && this.options.extraClass != '')
                 el.classList.add(this.options.extraClass);
-            if (el.getAttribute(checkAttributes.VALUE) == this.options.activeValue) {
+            if ( this.options.activeValue?.includes(el.getAttribute(checkAttributes.VALUE) as string)) {
                 this.markActive(el);
-                this.value = [ this.options.activeValue ];
+                this.value.push(el.getAttribute(checkAttributes.VALUE) as string);
             } else {
                 this.unmarkActive(el);
             }

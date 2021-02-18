@@ -1,4 +1,21 @@
-<form id="scheduleForm" style="position: relative;">
+<ul class="nav nav-tabs" id="scheduleTab" role="tablist">
+	<li class="nav-item">
+		<a class="nav-link active" id="normal-tab" data-toggle="tab" href="#normal" role="tab" aria-controls="normal" aria-selected="true">Normal</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="recurrent-tab" data-toggle="tab" href="#recurrent" role="tab" aria-controls="recurrent" aria-selected="false">Recurrente</a>
+	</li>
+</ul>
+
+<form id="scheduleForm" class="mt-3" style="position: relative;">
+	<div class="tab-content mb-3" id="formsTabs">
+		<div class="tab-pane fade show active" id="normal" role="tabpanel" aria-labelledby="normal-tab">
+			{% include "view/schedule/forms/normal.html.twig" %}
+		</div>
+		<div class="tab-pane fade" id="recurrent" role="tabpanel" aria-labelledby="recurrent-tab">
+			{% include "view/schedule/forms/recurrent.html.twig" %}
+		</div>
+	</div>
 	{% include 'form/input.html.twig' with {
         type : 'text',
         id: 'title',
@@ -8,9 +25,6 @@
         error : 'Ingrese un título para la tarea'
     } %}
 	{% include 'view/client/search.html.twig' %}
-	<div class="form-group" style="position: relative;">
-		<input type="text" t-type="text" name="taskDate" class="form-control required datepicker cursor-pointer" id="taskDate" aria-describedby="taskDateHelp" placeholder="Fecha" error-msg="Seleccione una fecha y hora" value="" readonly>
-	</div>
 	<div class="form-group">
 		<textarea type="text" t-type="text" class="form-control required" id="taskDetail" rows="5" aria-describedby="taskDetailHelp" placeholder="Detalle" error-msg="Agregue el detalle de la tarea"></textarea>
 	</div>
@@ -24,9 +38,7 @@
 			<input id="taskPriority" value="" placeholder="Prioridad" class="form-control readonly-click cursor-pointer" options="{{ priorities|json_encode }}" readonly>
 		</div>
 	</div>
-	<div class="form-group" style="position: relative;" id="user-select-container">
-		
-	</div>
+	<div class="form-group" style="position: relative;" id="user-select-container"></div>
 	<div id="submit-btn" class="w-100 text-left mt-2">
 		<button type="submit" class="btn btn-large btn-antxony round w-100" id="submit-real-btn">Agregar</button>
 	</div>

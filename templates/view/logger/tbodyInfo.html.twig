@@ -3,15 +3,15 @@
 	{# tipo de petición #}
 	{% set badge %}
 	<span class="btn btn-sm2 w-100
-		        {% if entity.method == " GET" %}
+		        {% if entity.method == "GET" %}
 		        alert-success
-		        {% elseif entity.method == " POST" %}
+		        {% elseif entity.method == "POST" %}
 		        alert-primary
-		        {% elseif entity.method == " PUT" %}
+		        {% elseif entity.method == "PUT" %}
 		        alert-warning
-		        {% elseif entity.method == " PATCH" %}
+		        {% elseif entity.method == "PATCH" %}
 		        alert-warning
-		        {% elseif entity.method == " delete" %}
+		        {% elseif entity.method == "DEELTE" %}
 		        alert-danger
 		        {% else %}
 		        alert-light
