@@ -40,5 +40,6 @@ export const BIG_LOADER_TABLE: string = '<tr class="table-paginator"><td colspan
 export const SPINNER_LOADER: string = '<div class="w-100 d-flex justify-content-center"><div class="spinner"></div></div>';
 export enum ConfigTypes {
     TaskCommentedBorder,
-    TaskDoneColors
+    TaskDoneColors,
+    TaskRecurrentBorder,
 }

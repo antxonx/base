@@ -38,6 +38,9 @@ export default class Config{
             case ConfigTypes.TaskDoneColors:
                 this.taskDoneColors();
                 break;
+            case ConfigTypes.TaskRecurrentBorder:
+                this.taskrecurrentBorder();
+                break;
             default:
                 throw new Error("no se encontró la configuración");
                 break;
@@ -49,6 +52,16 @@ export default class Config{
         if(!this.options.restore) {
             data = {
                 style: (document.getElementById("obsBorderInput") as HTMLInputElement).value
+            };
+        }
+        this.send(data);
+    }
+
+    private taskrecurrentBorder = () => {
+        let data = {};
+        if(!this.options.restore) {
+            data = {
+                style: (document.getElementById("recBorderInput") as HTMLInputElement).value
             };
         }
         this.send(data);

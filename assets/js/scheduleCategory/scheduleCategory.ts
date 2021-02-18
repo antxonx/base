@@ -63,6 +63,11 @@ export default class ScheduleCategory {
                     type: ConfigTypes.TaskCommentedBorder
                 })).load();
             });
+            document.getElementById("recBorderForm")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskRecurrentBorder
+                })).load();
+            });
             document.getElementById("doneTaskForm")!.addEventListener("click", () => {
                 (new Config({
                     type: ConfigTypes.TaskDoneColors
@@ -71,6 +76,15 @@ export default class ScheduleCategory {
             document.getElementById("obsBorderRestore")!.addEventListener("click", () => {
                 (new Config({
                     type: ConfigTypes.TaskCommentedBorder,
+                    restore: true,
+                    callback: () => {
+                        window.location.reload();
+                    }
+                })).load();
+            });
+            document.getElementById("recBorderRestore")!.addEventListener("click", () => {
+                (new Config({
+                    type: ConfigTypes.TaskRecurrentBorder,
                     restore: true,
                     callback: () => {
                         window.location.reload();
