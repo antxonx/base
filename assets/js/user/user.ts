@@ -132,9 +132,10 @@ export default class User {
 
     private show = async (e: Event) => {
         const ELEMENT = (e.currentTarget as HTMLElement).closest(".user-row") as HTMLElement;
+        const ID = +ELEMENT.getAttribute("id")!;
         const { default: Show } = await import("@scripts/user/show");
         (new Show({
-            id: +ELEMENT.getAttribute("id")!,
+            id: ID,
             callback: () => {
                 this.update(this.page, false);
             }

@@ -2,7 +2,6 @@
 * @packageDocumentation
 * @module Dashboard
 */
-import ShowClient from "@scripts/client/show";
 
 /**
  * load events for the principal view boards
@@ -20,8 +19,9 @@ export default class Dashboard {
     /**
     * Opens a client view
     */
-    public client = (e: Event) => {
+    public client = async (e: Event) => {
         e.preventDefault();
+        const { default: ShowClient } = await import("@scripts/client/show");
         const ID = +(e.currentTarget as HTMLElement).getAttribute("id")!;
         (new ShowClient({
             id: ID,

@@ -8,8 +8,6 @@ import Toast from "@scripts/plugins/AlertToast";
 import Axios from "axios";
 import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { ScheduleType } from './defs';
-import Add from '@scripts/schedule/add';
-import Show from '@scripts/schedule/show';
 import { isMobile } from "@scripts/plugins/Required";
 import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
@@ -57,7 +55,8 @@ export default class Schedule {
             document.getElementById("calendarBefore")?.addEventListener('click', () => { this.addOffset(-1); });
             document.getElementById("calendarToday")?.addEventListener('click', () => { this.addOffset(0, true); });
             document.getElementById("calendarAfter")?.addEventListener('click', () => { this.addOffset(1); });
-            document.getElementById("schedule-add")?.addEventListener('click', () => {
+            document.getElementById("schedule-add")?.addEventListener('click',  async () => {
+                const { default: Add } = await import('@scripts/schedule/add');
                 (new Add(this.update)).load();
             });
             if (isMobile()) {
@@ -107,11 +106,13 @@ export default class Schedule {
             this.update();
         }
         Array.from(document.getElementsByClassName("schedule-day")).forEach(el => el.addEventListener("click", this.openDay));
-        Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", (e: Event) => {
-            const ELEMENT = (e.currentTarget as HTMLElement);
+        Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", async () => {
+            const { default: Show } = await import('@scripts/schedule/show');
+            const RECURRENT = +el.getAttribute("recurrent")!;
+            console.log(RECURRENT);
             (new Show({
-                element: ELEMENT,
-                recurrent: +ELEMENT.getAttribute("recurrent")!,
+                element: el as HTMLElement,
+                recurrent: RECURRENT,
                 callback:() => {
                     this.update(false);
                 }

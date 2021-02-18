@@ -11,10 +11,6 @@ import { BIG_LOADER_TABLE, ConfigTypes, Router, ROUTES } from "@scripts/app";
 import Paginator from "@scripts/plugins/Paginator";
 import Toast from "@scripts/plugins/AlertToast";
 import Search from "@scripts/plugins/Search";
-import ScheduleCategoryAdd from "./add";
-import ScheduleCategoryDelete from "./delete";
-import Show from "./show";
-import Color from "./color";
 import ButtonCheckGroup from "@scripts/plugins/ButtonCheckGroup";
 import Config from "@scripts/configuration";
 
@@ -45,7 +41,8 @@ export default class ScheduleCategory {
     public load = () => {
         if (this.options.control) {
             this.options.control = false;
-            document.getElementById("schedule-category-add")!.addEventListener('click', () => {
+            document.getElementById("schedule-category-add")!.addEventListener('click', async () => {
+                const { default: ScheduleCategoryAdd } = await import("./add");
                 (new ScheduleCategoryAdd(this.update)).load();
             });
             new Search({
@@ -53,7 +50,7 @@ export default class ScheduleCategory {
                 selector: "#searchScheduleCategoryInput"
             });
             new ButtonCheckGroup(document.getElementById('extraCheck') as HTMLElement, {
-                onChange: () => {},
+                onChange: () => { },
                 unCheckClass: 'btn-outline-info',
                 checkClass: 'btn-info',
                 extraClass: 'round'
@@ -102,25 +99,33 @@ export default class ScheduleCategory {
             });
             this.update();
         }
-        Array.from(document.getElementsByClassName("category-delete")).forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-delete")).forEach(element => element.addEventListener("click", async () => {
+            const { default: ScheduleCategoryDelete } = await import("./delete");
+            const ELEMENT = element.closest(".category-row") as HTMLElement;
             (new ScheduleCategoryDelete({
-                element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
+                element: ELEMENT,
                 onError: this.load
             })).delete();
         }));
-        Array.from(document.getElementsByClassName("category-show")).forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-show")).forEach(element => element.addEventListener("click", async () => {
+            const { default: Show } = await import("./show");
+            const ID = +element.closest(".category-row")!.getAttribute('id')!;
             (new Show({
-                idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
+                idCategory: ID,
                 onClose: () => {
                     this.update();
                 }
             })).load();
         }));
-        Array.from(document.getElementsByClassName("category-color")).forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-color")).forEach(el => el.addEventListener("click", async (e: Event) => {
+            const { default: Color } = await import("./color");
+            const ID = +el.closest(".category-row")!.getAttribute('id')!;
+            const TYPE = (el.getAttribute('type')! as 'background' | 'text');
+            const ACTUAL = el.getAttribute('actual')!;
             (new Color({
-                id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
-                type: ((e.currentTarget as HTMLElement).getAttribute('type')! as 'background' | 'text'),
-                actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,
+                id: ID,
+                type: TYPE,
+                actualColor: ACTUAL,
                 callback: this.update
             })).load();
         }));
