@@ -275,6 +275,9 @@ class ScheduleController extends AbstractController
 
     public function getRecurrentDays($params, $day): array
     {
+        if (!$params->showRecurrents) {
+            return [];
+        }
         $events = [];
         $eventsR = $this->srRep->getBy("day", $params);
         foreach ($eventsR as $event) {
@@ -294,6 +297,9 @@ class ScheduleController extends AbstractController
 
     public function getRecurrentMonth($params, $day): array
     {
+        if (!$params->showRecurrents) {
+            return [];
+        }
         $events = [];
         $eventsR = $this->srRep->getBy("month", $params);
         foreach ($eventsR as $event) {
@@ -313,6 +319,9 @@ class ScheduleController extends AbstractController
 
     public function getRecurrentYear($params, $month, $day): array
     {
+        if (!$params->showRecurrents) {
+            return [];
+        }
         $events = [];
         $eventsR = $this->srRep->getBy("year", $params);
         foreach ($eventsR as $event) {

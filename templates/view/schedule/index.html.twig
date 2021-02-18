@@ -27,7 +27,7 @@
 			</datalist>
 		</div>
 		{% if is_granted("ROLE_SUPERVISOR") %}
-			<div class="col-md-1"></div>
+			{# <div class="col-md-1"></div> #}
 			<div class="col-md-3 my-1">
 				<div style="position: relative;">
 					<div class="dropdow-arrow">
@@ -35,9 +35,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-1 btn-group my-1" id="superCheck" role="group" aria-label="me check">
+			<div class="col-md-2 btn-group my-1" id="superCheck" role="group" aria-label="me check">
 				<button type="button" value="finished" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="finalizados">
 					<i class="fas fa-check-circle"></i>
+				</button>
+				<button type="button" value="recurrent" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="recurrentes">
+					<i class="fas fa-retweet"></i>
 				</button>
 				<button type="button" value="me" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="Míos">
 					<i class="fas fa-user-alt"></i>
@@ -48,6 +51,9 @@
 			<div class="col-md-1 btn-group my-1" id="noSuperCheck" role="group" aria-label="finished check">
 				<button type="button" value="finished" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="finalizados">
 					<i class="fas fa-check-circle"></i>
+				</button>
+				<button type="button" value="recurrent" class="btn no-hover" data-toggle="tooltip" data-placement="top" title="recurrentes">
+					<i class="fas fa-retweet"></i>
 				</button>
 			</div>
 		{% endif %}
