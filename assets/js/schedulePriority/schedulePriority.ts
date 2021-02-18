@@ -14,9 +14,6 @@ import Show from "@scripts/schedulePriority/show";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 import Color from "./color";
-
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fortawesome/fontawesome-free/js/all.min.js';
 /**
  * Client category main view and table
  *

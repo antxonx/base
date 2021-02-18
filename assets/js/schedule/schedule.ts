@@ -15,9 +15,6 @@ import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
 import '@styles/schedule.scss';
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fortawesome/fontawesome-free/js/all.min.js';
-
 export default class Schedule {
 
     protected control: boolean;

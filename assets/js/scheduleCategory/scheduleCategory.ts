@@ -18,9 +18,6 @@ import Color from "./color";
 import ButtonCheckGroup from "@scripts/plugins/ButtonCheckGroup";
 import Config from "@scripts/configuration";
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fortawesome/fontawesome-free/js/all.min.js';
-
 export default class ScheduleCategory {
 
     protected options: ScheduleCategoryOptions;
