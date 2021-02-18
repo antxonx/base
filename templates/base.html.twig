@@ -46,8 +46,9 @@ window.location.href = "{{ path('app_logout') }}";
 				<div id="toastCont"></div>
 				{% block body %}{% endblock %}
 				<input type="hidden" id="baseURL" value="{{ app.request.baseUrl }}">
+				{{ encore_entry_script_tags('app') }}
 				{% block javascripts %}
-					{{ encore_entry_script_tags('app') }}
+					
 				{% endblock %}
 			{% endif %}
 			<div style="height: 200px !important;"></div>
