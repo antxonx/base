@@ -15,6 +15,8 @@ import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 import Color from "./color";
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
 /**
  * Client category main view and table
  *
@@ -58,13 +60,13 @@ export default class SchedulePriority {
             });
             this.update();
         }
-        [ ...document.getElementsByClassName("priority-delete") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-delete")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new SchedulePriorityDelete({
                 element: (e.currentTarget as HTMLElement).closest(".priority-row") as HTMLElement,
                 onError: this.load
             })).delete();
         }));
-        [ ...document.getElementsByClassName("priority-show") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-show")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new Show({
                 idPriority: +(e.currentTarget as HTMLElement).closest(".priority-row")!.getAttribute('id')!,
                 onClose: () => {
@@ -72,7 +74,7 @@ export default class SchedulePriority {
                 }
             })).load();
         }));
-        [ ...document.getElementsByClassName("priority-color") ].forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("priority-color")).forEach(el => el.addEventListener("click", (e: Event) => {
             (new Color({
                 id: +(e.currentTarget as HTMLElement).closest(".priority-row")!.getAttribute('id')!,
                 actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,

@@ -46,10 +46,10 @@ export default class Add {
         e.preventDefault();
         clearErrorMsg();
         if (evaluateInputs(
-            [ ...(document.getElementsByClassName("required") as HTMLCollectionOf<HTMLInputElement>) ],
+            Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
             5
         )) {
-            const ROLE = document.querySelectorAll('.check-roles:checked');
+            const ROLE = Array.from(document.querySelectorAll('.check-roles:checked'));
             const BTN = document.getElementById("submit-btn")!;
             if (ROLE.length > 0) {
                 const BTN_BEF = BTN.innerHTML;
@@ -59,7 +59,7 @@ export default class Add {
                     password: (document.getElementById("password") as HTMLInputElement).value,
                     email: (document.getElementById("email") as HTMLInputElement).value,
                     name: (document.getElementById("name") as HTMLInputElement).value,
-                    roles: [ ...ROLE.values() ].map((el) => (el as HTMLInputElement).value),
+                    roles: ROLE.map((el) => (el as HTMLInputElement).value),
                 })
                     .then(() => {
                         this.callback();

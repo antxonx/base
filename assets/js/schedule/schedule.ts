@@ -13,6 +13,10 @@ import Show from '@scripts/schedule/show';
 import { isMobile } from "@scripts/plugins/Required";
 import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
+import '@styles/schedule.scss';
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
 
 export default class Schedule {
 
@@ -102,10 +106,11 @@ export default class Schedule {
                 })).load();
             }
             this.route = ROUTES.schedule.view[ (check.getValues()[ 0 ] as ScheduleType) ];
+            $('[data-toggle="tooltip"]').tooltip();
             this.update();
         }
-        [ ...document.getElementsByClassName("schedule-day") ].forEach(el => el.addEventListener("click", this.openDay));
-        [ ...document.getElementsByClassName("event") ].forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("schedule-day")).forEach(el => el.addEventListener("click", this.openDay));
+        Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", (e: Event) => {
             const ELEMENT = (e.currentTarget as HTMLElement);
             (new Show({
                 element: ELEMENT,
@@ -167,7 +172,7 @@ export default class Schedule {
                     INFO_CONT.classList.remove("show");
                     this.opened = 0;
                 } else {
-                    [ ...document.getElementsByClassName("schedule-info") ].forEach(el => el.classList.remove("show"));
+                    Array.from(document.getElementsByClassName("schedule-info")).forEach(el => el.classList.remove("show"));
                     INFO_CONT.classList.add("show");
                     this.opened = DAY;
                 }

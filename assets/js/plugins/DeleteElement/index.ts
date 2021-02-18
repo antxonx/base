@@ -22,12 +22,12 @@ export const deleteElement = (element: HTMLElement) => {
  * @returns {string[]}
  */
 export const disableRow = (element: HTMLElement): string[] => {
-    const BTNS = element.getElementsByClassName("action-btn");
+    const BTNS = Array.from(element.getElementsByClassName("action-btn"));
     const BTNS_BEF = [ ...BTNS ].map(el => el.innerHTML);
     element.style.cssText = "opacity: 0.5;";
-    [ ...element.getElementsByTagName("td") ].forEach(el => el.classList.remove("cursor-pointer"));
-    [ ...element.getElementsByTagName("th") ].forEach(el => el.classList.remove("cursor-pointer"));
-    [ ...BTNS ].forEach(el => el.innerHTML = SPINNER_LOADER);
+    Array.from(element.getElementsByTagName("td")).forEach(el => el.classList.remove("cursor-pointer"));
+    Array.from(element.getElementsByTagName("th")).forEach(el => el.classList.remove("cursor-pointer"));
+    BTNS.forEach(el => el.innerHTML = SPINNER_LOADER);
     return BTNS_BEF;
 };
 
@@ -39,9 +39,9 @@ export const disableRow = (element: HTMLElement): string[] => {
  * @param {string[]} btnBef
  */
 export const restoreRow = (element: HTMLElement, btnBef: string[]) => {
-    const BTNS = element.getElementsByClassName("action-btn");
+    const BTNS = Array.from(element.getElementsByClassName("action-btn"));
     element.style.cssText = "opacity: 1;";
-    [ ...element.getElementsByTagName("td") ].forEach(el => el.classList.add("cursor-pointer"));
-    [ ...element.getElementsByTagName("th") ].forEach(el => el.classList.add("cursor-pointer"));
-    [ ...BTNS ].forEach((el, index) => el.innerHTML = btnBef[ index ]);
+    Array.from(element.getElementsByTagName("td")).forEach(el => el.classList.add("cursor-pointer"));
+    Array.from(element.getElementsByTagName("th")).forEach(el => el.classList.add("cursor-pointer"));
+    BTNS.forEach((el, index) => el.innerHTML = btnBef[ index ]);
 };

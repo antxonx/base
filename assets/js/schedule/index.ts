@@ -5,10 +5,8 @@
 * @preferred
 */
 
-import Schedule from "./schedule";
-import '@styles/schedule.scss';
-
-(() => {
+(async () => {
+    const { default: Schedule } = await import("./schedule");
     (new Schedule()).load();
-    $('[data-toggle="tooltip"]').tooltip();
+    
 })();

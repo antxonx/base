@@ -13,7 +13,7 @@ export declare type PaginatorCallback = (page: number) => void;
 export interface PaginatorOptions {
     callback: PaginatorCallback;
     classname?: string;
-    elements?: HTMLCollectionOf<Element>;
+    elements?: Element[];
     indexname?: string;
 }
 

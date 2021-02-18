@@ -15,6 +15,9 @@ import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 import Color from "./color";
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
+
 /**
  * Client category main view and table
  *
@@ -58,13 +61,13 @@ export default class ClientCategory {
             });
             this.update();
         }
-        [ ...document.getElementsByClassName("catgeory-delete") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("catgeory-delete")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new ClientCategoryDelete({
                 element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
                 onError: this.load
             })).delete();
         }));
-        [ ...document.getElementsByClassName("category-show") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-show")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new Show({
                 idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
                 onClose: () => {
@@ -72,7 +75,7 @@ export default class ClientCategory {
                 }
             })).load();
         }));
-        [ ...document.getElementsByClassName("category-color") ].forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-color")).forEach(el => el.addEventListener("click", (e: Event) => {
             (new Color({
                 id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
                 actualColor: (e.currentTarget as HTMLElement).getAttribute('actual')!,

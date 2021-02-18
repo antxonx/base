@@ -16,6 +16,9 @@ import SortColumn from "@plugins/SortColumn";
 import Modal from "@scripts/plugins/Modal";
 import Obs from "@scripts/plugins/Obs";
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
+
 /**
  * Controls the main view and table actions of clients
  *
@@ -64,9 +67,9 @@ export default class Client {
             this.update();
             this.control = false;
         }
-        [ ...document.getElementsByClassName("client-delete") ].forEach(element => element.addEventListener("click", this.delete));
-        [ ...document.getElementsByClassName("client-show") ].forEach(element => element.addEventListener("click", this.show));
-        [ ...document.getElementsByClassName("client-add-obs") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("client-delete")).forEach(element => element.addEventListener("click", this.delete));
+        Array.from(document.getElementsByClassName("client-show")).forEach(element => element.addEventListener("click", this.show));
+        Array.from(document.getElementsByClassName("client-add-obs")).forEach(element => element.addEventListener("click", (e: Event) => {
             const OBS_MODAL = (new Modal({
                 size: 50,
                 title: "Observaciones",

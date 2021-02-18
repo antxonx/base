@@ -14,7 +14,7 @@ import ShowClient from "@scripts/client/show";
 export default class Dashboard {
 
     public load = () => {
-        [ ...document.getElementsByClassName("client-list") ].forEach(el => el.addEventListener("click", this.client));
+        Array.from(document.getElementsByClassName("client-list")).forEach(el => el.addEventListener("click", this.client));
     };
 
     /**

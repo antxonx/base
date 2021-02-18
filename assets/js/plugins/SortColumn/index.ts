@@ -57,10 +57,10 @@ export default class SortColumn {
     };
 
     private restart = () => {
-        [ ...document.getElementsByClassName(SortIcons.SORT_COL_CLASS) ].forEach(el => {
+        Array.from(document.getElementsByClassName(SortIcons.SORT_COL_CLASS)).forEach(el => {
             deleteElement(el.getElementsByClassName(SortIcons.SORT_ICON_ATTR)[ 0 ] as HTMLElement);
         });
-        [ ...document.getElementsByClassName(SortIcons.SORT_COL_CLASS) ].forEach(el => {
+        Array.from(document.getElementsByClassName(SortIcons.SORT_COL_CLASS)).forEach(el => {
             el.appendChild<HTMLElement>(htmlToElement(SortIcons.SORT_NORMAL));
         });
     };

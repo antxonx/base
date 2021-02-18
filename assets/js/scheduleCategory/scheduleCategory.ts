@@ -18,6 +18,9 @@ import Color from "./color";
 import ButtonCheckGroup from "@scripts/plugins/ButtonCheckGroup";
 import Config from "@scripts/configuration";
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
+
 export default class ScheduleCategory {
 
     protected options: ScheduleCategoryOptions;
@@ -102,13 +105,13 @@ export default class ScheduleCategory {
             });
             this.update();
         }
-        [ ...document.getElementsByClassName("category-delete") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-delete")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new ScheduleCategoryDelete({
                 element: (e.currentTarget as HTMLElement).closest(".category-row") as HTMLElement,
                 onError: this.load
             })).delete();
         }));
-        [ ...document.getElementsByClassName("category-show") ].forEach(element => element.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-show")).forEach(element => element.addEventListener("click", (e: Event) => {
             (new Show({
                 idCategory: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
                 onClose: () => {
@@ -116,7 +119,7 @@ export default class ScheduleCategory {
                 }
             })).load();
         }));
-        [ ...document.getElementsByClassName("category-color") ].forEach(el => el.addEventListener("click", (e: Event) => {
+        Array.from(document.getElementsByClassName("category-color")).forEach(el => el.addEventListener("click", (e: Event) => {
             (new Color({
                 id: +(e.currentTarget as HTMLElement).closest(".category-row")!.getAttribute('id')!,
                 type: ((e.currentTarget as HTMLElement).getAttribute('type')! as 'background' | 'text'),

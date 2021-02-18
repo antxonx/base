@@ -4,8 +4,8 @@
 * @module User
 * @preferred
 */
-import User from '@scripts/user/user';
 
-(() => {
+( async () => {
+    const { default: User } = await import('@scripts/user/user');
     (new User).load();
 })();
