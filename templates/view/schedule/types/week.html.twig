@@ -27,6 +27,12 @@
 				{% for event in day.eventrd %}
 					{% include 'view/schedule/eventr.html.twig' %}
 				{% endfor %}
+				{% for event in day.eventrm %}
+					{% include 'view/schedule/eventr.html.twig' %}
+				{% endfor %}
+				{% for event in day.eventry %}
+					{% include 'view/schedule/eventr.html.twig' %}
+				{% endfor %}
 			</div>
 		{% endfor %}
 	</div>

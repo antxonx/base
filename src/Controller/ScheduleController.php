@@ -132,7 +132,9 @@ class ScheduleController extends AbstractController
                         'day' => null,
                         'date' => '',
                         'events' => [],
-                        'eventrd' => []
+                        'eventrd' => [],
+                        'eventrm' => [],
+                        'eventry' => [],
                     ];
                 } else {
                     $events = [];
@@ -145,11 +147,19 @@ class ScheduleController extends AbstractController
                     $today = strftime("%d", strtotime("today"));
                     $diff = $day - $today;
                     $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$diff} day {$monthOffset} month")));
+                    $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$diff} day {$monthOffset} month")));
+                    $eventry = $this->getRecurrentYear(
+                        $params,
+                        strftime("%m", strtotime("{$diff} day {$monthOffset} month")),
+                        strftime("%d", strtotime("{$diff} day {$monthOffset} month"))
+                    );
                     $month[] = [
                         'day' => $day,
                         'date' => strftime("%d-%m-%Y", strtotime("{$diff} day {$monthOffset} month")),
                         'events' => $events,
-                        'eventrd' => $eventrd
+                        'eventrd' => $eventrd,
+                        'eventrm' => $eventrm,
+                        'eventry' => $eventry,
                     ];
                 }
             }
@@ -158,7 +168,9 @@ class ScheduleController extends AbstractController
                     'day' => null,
                     'date' => '',
                     'events' => [],
-                    'eventrd' => []
+                    'eventrd' => [],
+                    'eventrm' => [],
+                    'eventry' => [],
                 ];
             }
             return $this->render("view/schedule/types/month.html.twig", [
@@ -198,13 +210,21 @@ class ScheduleController extends AbstractController
                     }
                 }
                 $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$dif} day {$offset} week")));
+                $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$dif} day {$offset} week")));
+                $eventry = $this->getRecurrentYear(
+                    $params,
+                    strftime("%m", strtotime("{$dif} day {$offset} week")),
+                    strftime("%d", strtotime("{$dif} day {$offset} week"))
+                );
                 $lastDayMonth = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $week[] = [
                     "name" => strftime("%A", strtotime("{$dif} day {$offset} week")),
                     "day" => strftime("%d", strtotime("{$dif} day {$offset} week")),
                     "date" => strftime("%d-%m-%Y", strtotime("{$dif} day {$offset} week")),
                     "events" => $events,
-                    "eventrd" => $eventrd
+                    "eventrd" => $eventrd,
+                    "eventrm" => $eventrm,
+                    "eventry" => $eventry,
                 ];
             }
             return $this->render("view/schedule/types/week.html.twig", [
@@ -243,6 +263,7 @@ class ScheduleController extends AbstractController
             }
             $day += ["events" => $events];
             $day += ["eventrd" => $this->getRecurrentDays($params, strftime("%u", strtotime("today {$offset} day")))];
+            $day += ["eventrm" => $this->getRecurrentMonth($params, strftime("%d", strtotime("today {$offset} day")))];
             return $this->render("view/schedule/types/day.html.twig", [
                 'monthName' => $monthName,
                 'day' => $day,
@@ -252,18 +273,61 @@ class ScheduleController extends AbstractController
         }
     }
 
-    public function getRecurrentDays($params, $day) : array
+    public function getRecurrentDays($params, $day): array
     {
         $events = [];
         $eventsR = $this->srRep->getBy("day", $params);
         foreach ($eventsR as $event) {
             $yes = false;
-            foreach($event->getDays() as $dday) {
-                if($dday == $day) {
+            foreach ($event->getDays() as $dday) {
+                if ($dday == $day) {
                     $yes = true;
+                    break;
                 }
             }
-            if($yes) {
+            if ($yes) {
+                $events[] = $event;
+            }
+        }
+        return $events;
+    }
+
+    public function getRecurrentMonth($params, $day): array
+    {
+        $events = [];
+        $eventsR = $this->srRep->getBy("month", $params);
+        foreach ($eventsR as $event) {
+            $yes = false;
+            foreach ($event->getDays() as $dday) {
+                if ($dday == $day) {
+                    $yes = true;
+                    break;
+                }
+            }
+            if ($yes) {
+                $events[] = $event;
+            }
+        }
+        return $events;
+    }
+
+    public function getRecurrentYear($params, $month, $day): array
+    {
+        $events = [];
+        $eventsR = $this->srRep->getBy("year", $params);
+        foreach ($eventsR as $event) {
+            $yes = false;
+            foreach ($event->getDays()[0] as $mmonth) {
+                if ($mmonth == $month) {
+                    foreach ($event->getDays()[1] as $dday) {
+                        if ($dday == $day) {
+                            $yes = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if ($yes) {
                 $events[] = $event;
             }
         }

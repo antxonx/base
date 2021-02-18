@@ -52,35 +52,20 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
             $query->addCriteria($categoryCriteria);
         }
         switch ($type) {
+            case 'year':
+                $typeCriteria = new Criteria();
+                $typeCriteria->where(Criteria::expr()->eq('p.type', 1));
+                $query->addCriteria($typeCriteria);
+                break;
             case 'month':
-                // $start = new DateTime("first day of this month {$offset} month midnight", new DateTimeZone("America/Mexico_city"));
-                // $finish = new DateTime("first day of next month {$offset} month midnight -1 second", new DateTimeZone("America/Mexico_city"));
-                // $dateCriteria = new Criteria();
-                // $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                // $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
-                // $query->addCriteria($dateCriteria);
-                // break;
-            case 'week':
-                // $start = new DateTime("last sunday midnight {$offset} week", new DateTimeZone("America/Mexico_city"));
-                // $finish = new DateTime("next sunday midnight {$offset} week -1 second", new DateTimeZone("America/Mexico_city"));
-                // $dateCriteria = new Criteria();
-                // $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                // $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
-                // $query->addCriteria($dateCriteria);
-                // break;
+                $typeCriteria = new Criteria();
+                $typeCriteria->where(Criteria::expr()->eq('p.type', 2));
+                $query->addCriteria($typeCriteria);
+                break;
             case 'day':
                 $typeCriteria = new Criteria();
-            $typeCriteria->where(Criteria::expr()->eq('p.type', 3));
-            $query->addCriteria($typeCriteria);
-                // strftime("%u", (new DateTime("today {$offset} day", new DateTimeZone("America/Mexico_city")))->getTimestamp())
-                // $last = $offset + 1;
-                // $start = new DateTime("today {$offset} day", new DateTimeZone("America/Mexico_city"));
-                // $finish = new DateTime("today {$last} day -1 second", new DateTimeZone("America/Mexico_city"));
-                // $dateCriteria = new Criteria();
-                // $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                // $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
-                // $query->addCriteria($dateCriteria);
-                // $monthCriteria = new Criteria()
+                $typeCriteria->where(Criteria::expr()->eq('p.type', 3));
+                $query->addCriteria($typeCriteria);
                 break;
             default:
                 throw new Exception("Ocurrió un error con el calendario");

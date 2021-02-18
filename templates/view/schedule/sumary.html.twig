@@ -1,14 +1,30 @@
 {% if ((index) >= 0) and ((index) < month|length) %}
+	{% set noEvents = true %}
 	{% if month[index].events|length > 0 %}
+		{% set noEvents = false %}
 		{% for event in month[index].events %}
 			{% include 'view/schedule/event.html.twig' %}
 		{% endfor %}
 	{% endif %}
 	{% if month[index].eventrd|length > 0 %}
+		{% set noEvents = false %}
 		{% for event in month[index].eventrd %}
 			{% include 'view/schedule/eventr.html.twig' %}
 		{% endfor %}
-	{% else %}
+	{% endif %}
+	{% if month[index].eventrm|length > 0 %}
+		{% set noEvents = false %}
+		{% for event in month[index].eventrm %}
+			{% include 'view/schedule/eventr.html.twig' %}
+		{% endfor %}
+	{% endif %}
+	{% if month[index].eventry|length > 0 %}
+		{% set noEvents = false %}
+		{% for event in month[index].eventry %}
+			{% include 'view/schedule/eventr.html.twig' %}
+		{% endfor %}
+	{% endif %}
+	{% if noEvents %}
 		<div class="schedule-sumary nothing">
 			No hay eventos registrados para este día.
 		</div>
