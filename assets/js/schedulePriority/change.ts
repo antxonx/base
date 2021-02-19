@@ -39,20 +39,21 @@ export default class Change {
         }
     }
 
-    public load() {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.schedulePriority.view.changeForm, { 'id': this.options.idSchedule }))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                this.list = document.getElementById('categoryList') as HTMLElement;
-                $('[data-toggle="tooltip"]').tooltip();
-                this.startEvents();
-            })
-            .catch(err => {
-                this.modal.hide();
-                throw new Error(err.response.data);
-            });
-    }
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.schedulePriority.view.changeForm, { 'id': this.options.idSchedule })
+            );
+            this.modal.updateBody(res.data);
+            this.list = document.getElementById('categoryList') as HTMLElement;
+            $('[data-toggle="tooltip"]').tooltip();
+            this.startEvents();
+        } catch (err) {
+            this.modal.hide();
+            throw new Error(err.response ? err.response.data : err);
+        }
+    };
 
     private listchange = async (data: string[]) => {
         if (Array.isArray(data) && data.length) {
@@ -65,25 +66,23 @@ export default class Change {
                 .updateBody("¿Seguro que desea cambiar la prioridad?")
                 .show();
             if (res) {
-                Axios.patch(Router.generate(ROUTES.schedulePriority.api.update), {
-                    scheduleId: this.options.idSchedule,
-                    categoryId: data[ 0 ],
-                })
-                    .then(() => {
-                        this.modal.hide();
-                    })
-                    .catch(err => {
-                        console.error(err.response.data);
-                        Toast.error(err.response.data);
-                    })
-                    .finally(() => {
-                        this.list.innerHTML = LIST_BEF;
-                        this.startEvents();
-                    });
-            } else {
-                this.list.innerHTML = LIST_BEF;
-                this.startEvents();
+                try {
+                    await Axios.patch(
+                        Router.generate(ROUTES.schedulePriority.api.update),
+                        {
+                            scheduleId: this.options.idSchedule,
+                            categoryId: data[ 0 ],
+                        }
+                    );
+                    this.modal.hide();
+                } catch (err) {
+                    const e = err.response ? err.response.data : err;
+                    console.error(e);
+                    Toast.error(e);
+                }
             }
+            this.list.innerHTML = LIST_BEF;
+            this.startEvents();
         }
     };
 

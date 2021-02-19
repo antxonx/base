@@ -82,27 +82,28 @@ export default class Client {
         }));
     };
 
-    private update = (page: number = 1, spinner = true) => {
+    private update = async (page: number = 1, spinner = true) => {
         this.page = page;
-        if(spinner)
-            this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
-        Axios.get(Router.generate(ROUTES.client.view.list, {
-            'search': this.search,
-            'page': this.page,
-            'ordercol': this.orderBy.column,
-            'orderorder': this.orderBy.order,
-            'category': this.category,
-        }))
-            .then(res => {
-                this.mainView.innerHTML = res.data;
-                $('[data-toggle="tooltip"]').tooltip();
-                this.load();
-                new Paginator({ callback: this.update });
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        spinner && (this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5"));
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.client.view.list, {
+                    'search': this.search,
+                    'page': this.page,
+                    'ordercol': this.orderBy.column,
+                    'orderorder': this.orderBy.order,
+                    'category': this.category,
+                })
+            );
+            this.mainView.innerHTML = res.data;
+            $('[data-toggle="tooltip"]').tooltip();
+            this.load();
+            new Paginator({ callback: this.update });
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
     private setSearch = (data: string) => {

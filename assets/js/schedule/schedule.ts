@@ -56,7 +56,7 @@ export default class Schedule {
             document.getElementById("calendarBefore")?.addEventListener('click', () => { this.addOffset(-1); });
             document.getElementById("calendarToday")?.addEventListener('click', () => { this.addOffset(0, true); });
             document.getElementById("calendarAfter")?.addEventListener('click', () => { this.addOffset(1); });
-            document.getElementById("schedule-add")?.addEventListener('click',  async () => {
+            document.getElementById("schedule-add")?.addEventListener('click', async () => {
                 const { default: Add } = await import('@scripts/schedule/add');
                 (new Add(this.update)).load();
             });
@@ -70,7 +70,7 @@ export default class Schedule {
                 unCheckClass: 'btn-outline-info',
                 checkClass: 'btn-info',
                 extraClass: 'round',
-                activeValue: [active],
+                activeValue: [ active ],
                 oneActive: true
             });
             if (document.getElementById('superCheck')) {
@@ -79,7 +79,7 @@ export default class Schedule {
                     unCheckClass: 'btn-outline-info',
                     checkClass: 'btn-info',
                     extraClass: 'round',
-                    activeValue: ['me', 'recurrent'],
+                    activeValue: [ 'me', 'recurrent' ],
                     multiple: true
                 }));
             } else {
@@ -88,7 +88,7 @@ export default class Schedule {
                     unCheckClass: 'btn-outline-info',
                     checkClass: 'btn-info',
                     extraClass: 'round',
-                    activeValue: ['recurrent'],
+                    activeValue: [ 'recurrent' ],
                     multiple: true
                 }));
             }
@@ -113,32 +113,33 @@ export default class Schedule {
             (new Show({
                 element: el as HTMLElement,
                 recurrent: RECURRENT,
-                callback:() => {
+                callback: () => {
                     this.update(false);
                 }
             })).load();
         }));
     };
 
-    private update = (spinner = true) => {
-        if(spinner)
-            this.mainView.innerHTML = BIG_LOADER;
-        Axios.get(Router.generate(this.route, {
-            'search': this.searchInput,
-            'offset': this.offset,
-            'me': this.me,
-            'finished': this.finished,
-            'category': this.category,
-            'showRecurrents': this.showRecurrents,
-        }))
-            .then(res => {
-                this.mainView.innerHTML = res.data;
-                this.load();
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+    private update = async (spinner = true) => {
+        spinner && (this.mainView.innerHTML = BIG_LOADER);
+        try {
+            const res = await Axios.get(
+                Router.generate(this.route, {
+                    'search': this.searchInput,
+                    'offset': this.offset,
+                    'me': this.me,
+                    'finished': this.finished,
+                    'category': this.category,
+                    'showRecurrents': this.showRecurrents,
+                })
+            );
+            this.mainView.innerHTML = res.data;
+            this.load();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
     private setCategory = (value: string) => {

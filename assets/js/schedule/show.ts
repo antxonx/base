@@ -193,45 +193,49 @@ export default class Show {
         });
     };
 
-    public update = () => {
+    public update = async () => {
         this.modal.loadingBody();
-        Axios.get(Router.generate(ROUTES.schedule.view.show, {
-            'id': this.options.id,
-            'recurrent': this.options.recurrent
-        }))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                this.load();
-                (new Obs({
-                    element: document.getElementById("taskObsView")!,
-                    entity: this.options.recurrent ? "ScheduleRecurrent" : "Schedule",
-                    id: this.options.id!,
-                    callback: this.options.callback!
-                })).load();
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.schedule.view.show, {
+                    'id': this.options.id,
+                    'recurrent': this.options.recurrent
+                })
+            );
+            this.modal.updateBody(res.data);
+            this.load();
+            (new Obs({
+                element: document.getElementById("taskObsView")!,
+                entity: this.options.recurrent ? "ScheduleRecurrent" : "Schedule",
+                id: this.options.id!,
+                callback: this.options.callback!
+            })).load();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
-    private updateDate = (container: HTMLElement) => {
+    private updateDate = async (container: HTMLElement) => {
         container.innerHTML = SPINNER_LOADER;
-        Axios.patch(Router.generate(ROUTES.schedule.api.update), {
-            id: this.options.id!,
-            value: this.date,
-            type: TASK_EDIT_TYPE.DATE
-        })
-            .then(res => {
-                Toast.success(res.data);
-                this.update();
-                this.options.callback!();
-            })
-            .catch(err => {
-                container.innerHTML = this.temporalString;
-                console.error(err);
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.patch(
+                Router.generate(ROUTES.schedule.api.update),
+                {
+                    id: this.options.id!,
+                    value: this.date,
+                    type: TASK_EDIT_TYPE.DATE
+                }
+            );
+            Toast.success(res.data);
+            this.update();
+            this.options.callback!();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+            container.innerHTML = this.temporalString;
+        }
     };
 }

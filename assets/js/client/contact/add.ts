@@ -34,20 +34,20 @@ export default class Add {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.client.contact.view.form))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                document.getElementById("clientContactForm")!.addEventListener("submit", this.validate);
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.client.contact.view.form));
+            this.modal.updateBody(res.data);
+            document.getElementById("clientContactForm")!.addEventListener("submit", this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
             Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
@@ -56,24 +56,27 @@ export default class Add {
             const BTN = document.getElementById("submit-btn") as HTMLButtonElement;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.client.contact.api.add, { 'id': this.options.id.toString() }), {
-                name: (document.getElementById("name") as HTMLInputElement).value,
-                role: (document.getElementById("role") as HTMLInputElement).value,
-                phone: {
-                    type: (document.getElementById("phoneType") as HTMLInputElement).value,
-                    phone: (document.getElementById("phone") as HTMLInputElement).value,
-                },
-                email: (document.getElementById("email") as HTMLInputElement).value,
-            })
-                .then(res => {
-                    Toast.success(res.data);
-                    this.modal.hide();
-                })
-                .catch(err => {
-                    insertAlertAfter(BTN, err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
-                });
+            try {
+                const res = await Axios.post(
+                    Router.generate(ROUTES.client.contact.api.add, { 'id': this.options.id.toString() }),
+                    {
+                        name: (document.getElementById("name") as HTMLInputElement).value,
+                        role: (document.getElementById("role") as HTMLInputElement).value,
+                        phone: {
+                            type: (document.getElementById("phoneType") as HTMLInputElement).value,
+                            phone: (document.getElementById("phone") as HTMLInputElement).value,
+                        },
+                        email: (document.getElementById("email") as HTMLInputElement).value,
+                    }
+                );
+                Toast.success(res.data);
+                this.modal.hide();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                insertAlertAfter(BTN, e);
+                console.error(e);
+                BTN.innerHTML = BEF;
+            }
         }
     };
 }

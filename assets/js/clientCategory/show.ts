@@ -30,26 +30,28 @@ export default class Show {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.clientCategory.view.show, { 'id': this.options.idCategory.toString() }))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                $('.editable-field').editable({
-                    success: (res: any) => {
-                        Toast.success(res);
-                        this.options.onClose();
-                    },
-                    error: (err: any) => {
-                        console.error(err.responseText);
-                        Toast.error(err.responseText);
-                    },
-                    disabled: false
-                });
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.clientCategory.view.show, { 'id': this.options.idCategory.toString() })
+            );
+            this.modal.updateBody(res.data);
+            $('.editable-field').editable({
+                success: (res: any) => {
+                    Toast.success(res);
+                    this.options.onClose();
+                },
+                error: (err: any) => {
+                    console.error(err.responseText);
+                    Toast.error(err.responseText);
+                },
+                disabled: false
             });
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 }

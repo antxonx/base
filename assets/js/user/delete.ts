@@ -35,18 +35,20 @@ export default class Delete {
         let res = await ALERT.updateBody(`¿Suspender a <b>${this.options.name}</b>(${this.options.username})?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.delete(Router.generate(ROUTES.user.api.delete, { 'id': this.options.id!.toString() }))
-                .then(res => {
-                    Toast.success(res.data);
-                    deleteElement(this.options.element);
-                    this.options.onSuccess!();
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                    restoreRow(this.options.element, BTNS_BEF);
-                    this.options.onError!();
-                });
+            try {
+                const res = await Axios.delete(
+                    Router.generate(ROUTES.user.api.delete, { 'id': this.options.id!.toString() })
+                );
+                Toast.success(res.data);
+                deleteElement(this.options.element);
+                this.options.onSuccess!();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+                restoreRow(this.options.element, BTNS_BEF);
+                this.options.onError!();
+            }
         }
     };
 
@@ -58,18 +60,20 @@ export default class Delete {
         let res = await ALERT.updateBody(`¿Reactivar a <b>${this.options.name}</b>(${this.options.username})?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.patch(Router.generate(ROUTES.user.api.reactive, { 'id': this.options.id!.toString() }))
-                .then(res => {
-                    Toast.success(res.data);
-                    deleteElement(this.options.element);
-                    this.options.onSuccess!();
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                    restoreRow(this.options.element, BTNS_BEF);
-                    this.options.onError!();
-                });
+            try {
+                const res = await Axios.patch(
+                    Router.generate(ROUTES.user.api.reactive, { 'id': this.options.id!.toString() })
+                );
+                Toast.success(res.data);
+                deleteElement(this.options.element);
+                this.options.onSuccess!();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+                restoreRow(this.options.element, BTNS_BEF);
+                this.options.onError!();
+            }
         }
     };
 }

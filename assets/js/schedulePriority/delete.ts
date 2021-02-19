@@ -34,18 +34,20 @@ export default class SchedulePriorityDelete {
         let res = await ALERT.updateBody(`¿Eliminar la categoría <b>${NAME}</b>?`).show();
         if (res) {
             const BTNS_BEF = disableRow(this.options.element);
-            Axios.delete(Router.generate(ROUTES.schedulePriority.api.delete, { 'id': ID.toString() }))
-                .then(res => {
-                    Toast.success(res.data);
-                    deleteElement(this.options.element);
-                    this.options.onSuccess!();
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                    restoreRow(this.options.element, BTNS_BEF);
-                    this.options.onError!();
-                });
+            try {
+                const res = await Axios.delete(
+                    Router.generate(ROUTES.schedulePriority.api.delete, { 'id': ID.toString() })
+                );
+                Toast.success(res.data);
+                deleteElement(this.options.element);
+                this.options.onSuccess!();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+                restoreRow(this.options.element, BTNS_BEF);
+                this.options.onError!();
+            }
         }
     };
 }
