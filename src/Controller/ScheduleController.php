@@ -147,12 +147,12 @@ class ScheduleController extends AbstractController
                     $today = strftime("%d", strtotime("today"));
                     $diff = $day - $today;
                     $eventrd = $this->getRecurrentDays(
-                        $params, 
+                        $params,
                         strftime("%u", strtotime("{$diff} day {$monthOffset} month")),
                         "{$diff} day {$monthOffset} month"
                     );
                     $eventrm = $this->getRecurrentMonth(
-                        $params, 
+                        $params,
                         strftime("%d", strtotime("{$diff} day {$monthOffset} month")),
                         "{$diff} day {$monthOffset} month"
                     );
@@ -219,12 +219,12 @@ class ScheduleController extends AbstractController
                     }
                 }
                 $eventrd = $this->getRecurrentDays(
-                    $params, 
+                    $params,
                     strftime("%u", strtotime("{$dif} day {$offset} week")),
                     "{$dif} day {$offset} week"
                 );
                 $eventrm = $this->getRecurrentMonth(
-                    $params, 
+                    $params,
                     strftime("%d", strtotime("{$dif} day {$offset} week")),
                     "{$dif} day {$offset} week"
                 );
@@ -322,10 +322,10 @@ class ScheduleController extends AbstractController
                 }
             }
             if ($yes) {
-                if($event->getEndDate()) {
-                    $start = new DateTime($dateString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                    if($start <= $event->getEndDate()) {
-                        $events[] = $event;    
+                if ($event->getEndDate()) {
+                    $today = new DateTime($dateString . "-1 day", new DateTimeZone("America/Mexico_city"));
+                    if ($event->getEndDate() >= $today) {
+                        $events[] = $event;
                     }
                 } else {
                     $events[] = $event;
@@ -351,10 +351,10 @@ class ScheduleController extends AbstractController
                 }
             }
             if ($yes) {
-                if($event->getEndDate()) {
-                    $start = new DateTime($dateString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                    if($start <= $event->getEndDate()) {
-                        $events[] = $event;    
+                if ($event->getEndDate()) {
+                    $today = new DateTime($dateString . "-1 day", new DateTimeZone("America/Mexico_city"));
+                    if ($event->getEndDate() >= $today) {
+                        $events[] = $event;
                     }
                 } else {
                     $events[] = $event;
@@ -384,10 +384,10 @@ class ScheduleController extends AbstractController
                 }
             }
             if ($yes) {
-                if($event->getEndDate()) {
-                    $start = new DateTime($dateString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                    if($start <= $event->getEndDate()) {
-                        $events[] = $event;    
+                if ($event->getEndDate()) {
+                    $today = new DateTime($dateString . "-1 day", new DateTimeZone("America/Mexico_city"));
+                    if ($event->getEndDate() >= $today) {
+                        $events[] = $event;
                     }
                 } else {
                     $events[] = $event;
@@ -456,35 +456,62 @@ class ScheduleController extends AbstractController
              */
             $user = $this->security->getUser();
             $content = json_decode($request->getContent());
-            $task = $this->rep->find($content->id);
-            if ($task == null) {
-                throw new Exception("No se encontró la tarea");
-            }
-            if (
-                !$user->hasRole("ROLE_SUPERVISOR") &&
-                ($user->getId() != $task->getCreatedBy()->getId())
-            ) {
-                if (($task->getAssigned() != null)) {
-                    if ($user->getId() != $task->getAssigned()->getId()) {
+            if ($content->recurrent) {
+                $task = $this->srRep->find($content->id);
+                if ($task == null) {
+                    throw new Exception("No se encontró la tarea");
+                }
+                if (
+                    !$user->hasRole("ROLE_SUPERVISOR") &&
+                    ($user->getId() != $task->getCreatedBy()->getId())
+                ) {
+                    if (($task->getAssigned() != null)) {
+                        if ($user->getId() != $task->getAssigned()->getId()) {
+                            throw new Exception("No tienes permiso para realizar esta acción");
+                        }
+                    } else {
                         throw new Exception("No tienes permiso para realizar esta acción");
                     }
-                } else {
-                    throw new Exception("No tienes permiso para realizar esta acción");
                 }
-            }
-            $task
-                ->setDone($content->done)
-                ->updated($this->security->getUser());
-            $message = "ha ";
-            if ($content->done) {
-                $message .= "finalizado";
+                $task
+                    ->setEndDate(new \DateTime("now", new \DateTimeZone("America/Mexico_City")))
+                    ->setUpdatedAt(new \DateTime("now", new \DateTimeZone("America/Mexico_City")))
+                    ->setUpdatedBy($user);
+                $message = "ha finalizado la tarea";
+                $ob->add($task->getId(), "ScheduleRecurrent", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
+                $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+                return new Response("Se " . $message);
             } else {
-                $message .= "reactivado";
+                $task = $this->rep->find($content->id);
+                if ($task == null) {
+                    throw new Exception("No se encontró la tarea");
+                }
+                if (
+                    !$user->hasRole("ROLE_SUPERVISOR") &&
+                    ($user->getId() != $task->getCreatedBy()->getId())
+                ) {
+                    if (($task->getAssigned() != null)) {
+                        if ($user->getId() != $task->getAssigned()->getId()) {
+                            throw new Exception("No tienes permiso para realizar esta acción");
+                        }
+                    } else {
+                        throw new Exception("No tienes permiso para realizar esta acción");
+                    }
+                }
+                $task
+                    ->setDone($content->done)
+                    ->updated($this->security->getUser());
+                $message = "ha ";
+                if ($content->done) {
+                    $message .= "finalizado";
+                } else {
+                    $message .= "reactivado";
+                }
+                $message .= " la tarea";
+                $ob->add($task->getId(), "Schedule", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
+                $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+                return new Response("Se " . $message);
             }
-            $message .= " la tarea";
-            $ob->add($task->getId(), "Schedule", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
-            $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
-            return new Response("Se " . $message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

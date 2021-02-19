@@ -38,6 +38,7 @@ export default class Finish {
                     Router.generate(ROUTES.schedule.api.done),
                     {
                         id: this.options.id,
+                        recurrent: this.options.recurrent,
                         done: !reactivate
                     }
                 );

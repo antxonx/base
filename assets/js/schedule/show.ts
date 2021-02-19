@@ -57,6 +57,7 @@ export default class Show {
         document.getElementById("taskFinish")?.addEventListener("click", () => {
             (new Finish({
                 id: this.options.id!,
+                recurrent: this.options.recurrent,
                 callback: () => {
                     this.update();
                     this.options.callback!();
@@ -66,6 +67,7 @@ export default class Show {
         document.getElementById("taskReactive")?.addEventListener("click", () => {
             (new Finish({
                 id: this.options.id!,
+                recurrent: this.options.recurrent,
                 callback: () => {
                     this.update();
                     this.options.callback!();
