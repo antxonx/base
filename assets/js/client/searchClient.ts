@@ -2,7 +2,7 @@
 * @packageDocumentation
 * @module Client
 */
-
+import 'bootstrap/js/dist/tooltip';
 import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import HtmlToElement from "@scripts/components/HtmlToElement";
 import Toast from "@scripts/plugins/AlertToast";

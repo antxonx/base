@@ -15,6 +15,9 @@ import { deleteElement, disableRow } from "@plugins/DeleteElement";
 import AddAddress from "@scripts/client/address/add";
 import AddContact from "@scripts/client/contact/add";
 import ShowContact from "@scripts/client/contact/show";
+import 'bootstrap/js/dist/tooltip';
+import 'bootstrap/js/dist/collapse';
+import '@scripts/jquery';
 
 /**
  * Opens client modal with the info and actions

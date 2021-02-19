@@ -10,6 +10,8 @@ import Axios from "axios";
 import Toast from "../AlertToast";
 import { ObsI, ObsOptions } from "./defs";
 
+import '@styles/obs.scss';
+
 export default class Obs {
 
     protected options: ObsOptions

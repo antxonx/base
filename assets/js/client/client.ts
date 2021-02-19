@@ -3,13 +3,15 @@
 * @module Client
 */
 import Search from "@plugins/Search";
-import 'bootstrap';
+import 'bootstrap/js/dist/tooltip';
 import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";
 import Toast from "@plugins/AlertToast";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
+
+import '@styles/table.scss';
 
 /**
  * Controls the main view and table actions of clients

@@ -11,6 +11,9 @@ import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
+import '@styles/logger.scss';
+import '@styles/table.scss';
+
 /**
  * Logger main biew and table
  *

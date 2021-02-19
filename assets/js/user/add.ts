@@ -8,6 +8,8 @@ import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import { clearErrorMsg, evaluateInputs, insertAlertAfter } from "@plugins/Required";
 
+import '@styles/checkbox.scss';
+
 /**
  * Add a new user
  *

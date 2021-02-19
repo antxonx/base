@@ -11,6 +11,8 @@ import Toast from "@plugins/AlertToast";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
+import '@styles/table.scss';
+
 /**
  * User main view and table
  *

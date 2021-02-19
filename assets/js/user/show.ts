@@ -7,6 +7,7 @@ import Modal from "@plugins/Modal";
 import Axios from "axios";
 import { Router, ROUTES } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
+import '@scripts/jquery';
 
 /**
  * Show an user and edit

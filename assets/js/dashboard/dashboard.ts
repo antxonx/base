@@ -3,6 +3,8 @@
 * @module Dashboard
 */
 
+import '@scripts/app';
+
 /**
  * load events for the principal view boards
  *

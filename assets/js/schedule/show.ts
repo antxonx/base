@@ -12,7 +12,7 @@ import Assign from "@scripts/schedule/assign";
 import Delete from "@scripts/schedule/delete";
 import ShowClient from '@scripts/client/show';
 import ChangePriority from "./changePriority";
-import { isThisTypeNode, textChangeRangeIsUnchanged } from "typescript";
+import 'bootstrap/js/dist/tooltip';
 import moment from "moment";
 import Obs from "@scripts/plugins/Obs";
 

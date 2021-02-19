@@ -10,6 +10,9 @@ import Toast from "@plugins/AlertToast";
 import { SchedulePriorityOptions, DEFAULT_PRIORITY_OPTIONS } from "@scripts/schedulePriority/defs";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
+
+import '@styles/table.scss';
+
 /**
  * Client category main view and table
  *

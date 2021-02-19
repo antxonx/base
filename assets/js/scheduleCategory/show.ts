@@ -2,7 +2,7 @@
 * @packageDocumentation
 * @module Schedule/Category
 */
-import 'bootstrap';
+import '@scripts/jquery';
 import Modal from "@plugins/Modal";
 import { ScheduleCategoryShowOptions, DEFAULT_SCHEDULE_CATEGORY_SHOW_OPTIONS } from "./defs";
 import Axios from "axios";

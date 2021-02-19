@@ -2,8 +2,7 @@
 * @packageDocumentation
 * @module Client/Category
 */
-import $ from 'jquery';
-import 'bootstrap';
+import '@scripts/jquery';
 import Modal from "@plugins/Modal";
 import { ClientCategoryShowOptions, DEFAULT_CLIENT_CATEGORY_SHOW_OPTIONS } from "@scripts/clientCategory/defs";
 import Axios from "axios";

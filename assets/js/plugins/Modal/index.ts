@@ -5,7 +5,7 @@
  * @preferred
  */
 import $ from 'jquery';
-import 'bootstrap';
+import 'bootstrap/js/dist/modal';
 import { DEFAULT_MODAL_OPTIONS, MODAL_LOADER, ModalIds, ModalOptions } from "./defs";
 
 /**

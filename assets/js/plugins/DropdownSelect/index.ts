@@ -7,6 +7,8 @@
 import { DropdownSelectOptions, DropdownSelectValue, DEFAULT_DROPDOWN_SELECT_OPTIONS } from "./defs";
 import HtmlToElement from "@scripts/components/HtmlToElement";
 
+import '@styles/dropdownSelect.scss';
+
 /**
 * Manages a select behavior
 *

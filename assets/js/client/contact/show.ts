@@ -11,6 +11,8 @@ import Toast from "@plugins/AlertToast";
 import { evaluateInputs, hideElement, showElement } from "@plugins/Required";
 import Alert from "@plugins/Alert";
 import { deleteElement, disableRow } from "@plugins/DeleteElement";
+import '@scripts/jquery';
+import 'bootstrap/js/dist/collapse';
 
 /**
  * Opens a modal with the contact info

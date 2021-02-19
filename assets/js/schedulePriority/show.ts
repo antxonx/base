@@ -2,8 +2,7 @@
 * @packageDocumentation
 * @module Schedule/Priority
 */
-import $ from 'jquery';
-import 'bootstrap';
+import '@scripts/jquery';
 import Modal from "@plugins/Modal";
 import { SchedulePriorityShowOptions, DEFAULT_PRIORITY_SHOW_OPTIONS } from "@scripts/schedulePriority/defs";
 import Axios from "axios";

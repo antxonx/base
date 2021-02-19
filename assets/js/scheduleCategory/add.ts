@@ -8,6 +8,8 @@ import { ROUTES, Router, SPINNER_LOADER } from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 
+import '@styles/checkbox.scss';
+
 /**
  * Add a new category for events on scheduler
  *

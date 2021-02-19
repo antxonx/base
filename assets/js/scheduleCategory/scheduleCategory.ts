@@ -14,6 +14,7 @@ import Search from "@scripts/plugins/Search";
 import ButtonCheckGroup from "@scripts/plugins/ButtonCheckGroup";
 import Config from "@scripts/configuration";
 
+import '@styles/table.scss';
 export default class ScheduleCategory {
 
     protected options: ScheduleCategoryOptions;

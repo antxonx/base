@@ -11,6 +11,7 @@ import { ScheduleType } from './defs';
 import { isMobile } from "@scripts/plugins/Required";
 import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
+import 'bootstrap/js/dist/tooltip';
 import '@styles/schedule.scss';
 
 export default class Schedule {
@@ -107,9 +108,9 @@ export default class Schedule {
         }
         Array.from(document.getElementsByClassName("schedule-day")).forEach(el => el.addEventListener("click", this.openDay));
         Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", async () => {
-            const { default: Show } = await import('@scripts/schedule/show');
             const RECURRENT = +el.getAttribute("recurrent")!;
-            console.log(RECURRENT);
+            const { default: Show } = await import('@scripts/schedule/show');
+            console.log(Show);
             (new Show({
                 element: el as HTMLElement,
                 recurrent: RECURRENT,

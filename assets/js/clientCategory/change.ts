@@ -2,7 +2,7 @@
 * @packageDocumentation
 * @module Client/Category
 */
-import 'bootstrap';
+import 'bootstrap/js/dist/tooltip';
 import { ClientCategoryChangeOptions, DEFAULT_CLIENT_CATEGORY_CHANGE_OPTIONS } from "@scripts/clientCategory/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";
