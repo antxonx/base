@@ -7,6 +7,7 @@ import Modal from "@plugins/Modal";
 import Axios from "axios";
 import { Router, ROUTES } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
+import '@scripts/jquery';
 
 /**
  * Show an user and edit
@@ -32,28 +33,28 @@ export default class Show {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.user.view.show, { 'id': this.options.id.toString() }))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                $('.editable-field').editable({
-                    success: (res: any) => {
-                        Toast.success(res);
-                        this.options.callback!();
-                    },
-                    error: (err: any) => {
-                        console.error(err.responseText);
-                        Toast.error(err.responseText);
-                    },
-                    disabled: true
-                });
-                document.getElementById("user-edit-active")!.addEventListener("click", this.toggle);
-            })
-            .catch(err => {
-                console.error(err);
-                Toast.error(err.response.data);
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.user.view.show, { 'id': this.options.id.toString() }));
+            this.modal.updateBody(res.data);
+            $('.editable-field').editable({
+                success: (res: any) => {
+                    Toast.success(res);
+                    this.options.callback!();
+                },
+                error: (err: any) => {
+                    console.error(err.responseText);
+                    Toast.error(err.responseText);
+                },
+                disabled: true
             });
+            document.getElementById("user-edit-active")!.addEventListener("click", this.toggle);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
     private toggle = (e: Event) => {

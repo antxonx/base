@@ -27,20 +27,20 @@ export default class Key {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.user.view.passform))
-            .then((res: AxiosResponse) => {
-                this.modal.updateBody(res.data);
-                document.getElementById('passForm')!.addEventListener('submit', this.validate);
-            })
-            .catch((err: AxiosError) => {
-                console.error(err.response?.data);
-                Toast.error(err.response?.data);
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.user.view.passform));
+            this.modal.updateBody(res.data);
+            document.getElementById('passForm')!.addEventListener('submit', this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
-    public validate = (e: Event) => {
+    public validate = async (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
         const INPUTS = Array.from(document.getElementsByClassName("required")) as HTMLInputElement[];
@@ -51,19 +51,21 @@ export default class Key {
                 BTN.innerHTML = SPINNER_LOADER;
                 setValidInput(INPUTS[ PASSWORD_INPUT.NEW ]);
                 setValidInput(INPUTS[ PASSWORD_INPUT.CONF ]);
-                Axios.put(Router.generate(ROUTES.user.api.passchange), {
-                    old: INPUTS[ PASSWORD_INPUT.OLD ].value,
-                    new: INPUTS[ PASSWORD_INPUT.NEW ].value,
-                    conf: INPUTS[ PASSWORD_INPUT.CONF ].value,
-                })
-                    .then((res: AxiosResponse) => {
-                        Toast.success(res.data);
-                        this.modal.hide();
-                    })
-                    .catch((err: AxiosError) => {
-                        insertAlertAfter(BTN, err.response?.data);
-                        BTN.innerHTML = BEF;
-                    });
+                try {
+                    const res = await Axios.put(
+                        Router.generate(ROUTES.user.api.passchange),
+                        {
+                            old: INPUTS[ PASSWORD_INPUT.OLD ].value,
+                            new: INPUTS[ PASSWORD_INPUT.NEW ].value,
+                            conf: INPUTS[ PASSWORD_INPUT.CONF ].value,
+                        }
+                    );
+                    Toast.success(res.data);
+                    this.modal.hide();
+                } catch (err) {
+                    insertAlertAfter(BTN, err.response?.data);
+                    BTN.innerHTML = BEF;
+                }
             } else {
                 clearValidState(INPUTS[ PASSWORD_INPUT.NEW ]);
                 clearValidState(INPUTS[ PASSWORD_INPUT.CONF ]);

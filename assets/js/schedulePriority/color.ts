@@ -37,23 +37,23 @@ export default class Color {
         document.getElementById("colorForm")!.addEventListener("submit", this.validate);
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         const COLOR = (document.getElementById("color") as HTMLInputElement).value;
         this.options.newColor = COLOR;
         const BTN = document.getElementById("submit-btn")!;
         const BEF_BTN = BTN.innerHTML;
         BTN.innerHTML = SPINNER_LOADER;
-        Axios.put(Router.generate(ROUTES.schedulePriority.api.color), this.options)
-            .then(res => {
-                Toast.success(res.data);
-                this.options.callback!();
-                this.modal.hide();
-            })
-            .catch(err => {
-                BTN.innerHTML = BEF_BTN;
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.put(Router.generate(ROUTES.schedulePriority.api.color), this.options);
+            Toast.success(res.data);
+            this.options.callback!();
+            this.modal.hide();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+            BTN.innerHTML = BEF_BTN;
+        }
     };
 }

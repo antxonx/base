@@ -8,6 +8,8 @@ import { Router, ROUTES, SPINNER_LOADER } from "@scripts/app";
 import Toast from "@plugins/AlertToast";
 import { clearErrorMsg, evaluateInputs, insertAlertAfter } from "@plugins/Required";
 
+import '@styles/checkbox.scss';
+
 /**
  * Add a new user
  *
@@ -29,20 +31,20 @@ export default class Add {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.user.view.form))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                document.getElementById("userForm")!.addEventListener("submit", this.validate);
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.user.view.form));
+            this.modal.updateBody(res.data);
+            document.getElementById("userForm")!.addEventListener("submit", this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         clearErrorMsg();
         if (evaluateInputs(
@@ -54,22 +56,25 @@ export default class Add {
             if (ROLE.length > 0) {
                 const BTN_BEF = BTN.innerHTML;
                 BTN.innerHTML = SPINNER_LOADER;
-                Axios.post(Router.generate(ROUTES.user.api.add), {
-                    username: (document.getElementById("username") as HTMLInputElement).value,
-                    password: (document.getElementById("password") as HTMLInputElement).value,
-                    email: (document.getElementById("email") as HTMLInputElement).value,
-                    name: (document.getElementById("name") as HTMLInputElement).value,
-                    roles: ROLE.map((el) => (el as HTMLInputElement).value),
-                })
-                    .then(() => {
-                        this.callback();
-                        this.modal.hide();
-                    })
-                    .catch(err => {
-                        console.error(err.response.data);
-                        insertAlertAfter(BTN, err.response.data);
-                        BTN.innerHTML = BTN_BEF;
-                    });
+                try {
+                    await Axios.post(
+                        Router.generate(ROUTES.user.api.add),
+                        {
+                            username: (document.getElementById("username") as HTMLInputElement).value,
+                            password: (document.getElementById("password") as HTMLInputElement).value,
+                            email: (document.getElementById("email") as HTMLInputElement).value,
+                            name: (document.getElementById("name") as HTMLInputElement).value,
+                            roles: ROLE.map((el) => (el as HTMLInputElement).value),
+                        }
+                    );
+                    this.callback();
+                    this.modal.hide();
+                } catch (err) {
+                    const e = err.response ? err.response.data : err;
+                    console.error(e);
+                    insertAlertAfter(BTN, e);
+                    BTN.innerHTML = BTN_BEF;
+                }
             } else {
                 insertAlertAfter(BTN, "Debe seleccionar un puesto");
             }

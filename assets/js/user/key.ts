@@ -33,20 +33,20 @@ export default class Key {
         });
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.user.view.key))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                document.getElementById("keyForm")!.addEventListener("submit", this.validate);
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.user.view.key));
+            this.modal.updateBody(res.data);
+            document.getElementById("keyForm")!.addEventListener("submit", this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         const BTN = document.getElementById("submit-btn")!;
         const INPUTS = Array.from(document.getElementsByClassName("required")) as HTMLInputElement[];
@@ -56,17 +56,21 @@ export default class Key {
                 INPUTS.forEach(el => setValidInput(el));
                 const BEF = BTN.innerHTML;
                 BTN.innerHTML = SPINNER_LOADER;
-                Axios.patch(Router.generate(ROUTES.user.api.key, { 'id': this.options.id!.toString() }), {
-                    password: INPUTS[ 0 ].value
-                })
-                    .then(res => {
-                        Toast.success(res.data);
-                        this.modal.hide();
-                    })
-                    .catch(err => {
-                        insertAlertAfter(BTN, err.response.data);
-                        BTN.innerHTML = BEF;
-                    });
+                try {
+                    const res = await Axios.patch(
+                        Router.generate(
+                            ROUTES.user.api.key, { 'id': this.options.id!.toString() }
+                        ),
+                        {
+                            password: INPUTS[ 0 ].value
+                        }
+                    );
+                    Toast.success(res.data);
+                    this.modal.hide();
+                } catch (err) {
+                    insertAlertAfter(BTN, err.response ? err.response.data : err);
+                    BTN.innerHTML = BEF;
+                }
             } else {
                 INPUTS.forEach(el => clearValidState(el));
                 insertAlertAfter(BTN, "Las contraseñas no coinciden");

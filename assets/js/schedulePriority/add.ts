@@ -29,21 +29,21 @@ export default class SchedulePriorityAdd {
         }));
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.schedulePriority.view.form))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                document.getElementById("schedulePriorityForm")!.addEventListener("submit", this.validate);
-            })
-            .catch(err => {
-                Toast.error(err.response.data);
-                console.error(err.response.data);
-                this.modal.hide();
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.schedulePriority.view.form));
+            this.modal.updateBody(res.data);
+            document.getElementById("schedulePriorityForm")!.addEventListener("submit", this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+            this.modal.hide();
+        }
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
             Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
@@ -57,17 +57,17 @@ export default class SchedulePriorityAdd {
                 description: (document.getElementById("description") as HTMLInputElement).value,
                 color: (document.getElementById("color") as HTMLInputElement).value,
             };
-            Axios.post(Router.generate(ROUTES.schedulePriority.api.add), DATA)
-                .then(res => {
-                    Toast.success(res.data);
-                    this.modal.hide();
-                    this.callback();
-                })
-                .catch(err => {
-                    insertAlertAfter(BTN, err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
-                });
+            try {
+                const res = await Axios.post(Router.generate(ROUTES.schedulePriority.api.add), DATA);
+                Toast.success(res.data);
+                this.modal.hide();
+                this.callback();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                insertAlertAfter(BTN, e);
+                console.error(e);
+                BTN.innerHTML = BEF;
+            }
         }
     };
 }

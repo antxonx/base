@@ -8,6 +8,8 @@ import { ROUTES, Router, SPINNER_LOADER } from '@scripts/app';
 import Toast from '@scripts/plugins/AlertToast';
 import { evaluateInputs, insertAlertAfter } from '@scripts/plugins/Required';
 
+import '@styles/checkbox.scss';
+
 /**
  * Add a new category for events on scheduler
  *
@@ -29,21 +31,21 @@ export default class ScheduleCategoryAdd {
         }));
     }
 
-    public load = () => {
+    public load = async () => {
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.scheduleCategory.view.form))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                document.getElementById("scheduleCategoryForm")!.addEventListener("submit", this.validate);
-            })
-            .catch(err => {
-                Toast.error(err.response.data);
-                console.error(err.response.data);
-                this.modal.hide();
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.scheduleCategory.view.form));
+            this.modal.updateBody(res.data);
+            document.getElementById("scheduleCategoryForm")!.addEventListener("submit", this.validate);
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+            this.modal.hide();
+        }
     };
 
-    private validate = (e: Event) => {
+    private validate = async (e: Event) => {
         e.preventDefault();
         if (evaluateInputs(
             Array.from(document.getElementsByClassName("required")) as HTMLInputElement[],
@@ -60,17 +62,17 @@ export default class ScheduleCategoryAdd {
                 tColor: (document.getElementById("tColor") as HTMLInputElement).value,
                 roles: ROLE.map((el) => (el as HTMLInputElement).value),
             };
-            Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA)
-                .then(res => {
-                    Toast.success(res.data);
-                    this.modal.hide();
-                    this.callback();
-                })
-                .catch(err => {
-                    insertAlertAfter(BTN, err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
-                });
+            try {
+                const res = await Axios.post(Router.generate(ROUTES.scheduleCategory.api.add), DATA);
+                Toast.success(res.data);
+                this.modal.hide();
+                this.callback();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                insertAlertAfter(BTN, e);
+                console.error(e);
+                BTN.innerHTML = BEF;
+            }
         }
     };
 }

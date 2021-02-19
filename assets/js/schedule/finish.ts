@@ -33,18 +33,21 @@ export default class Finish {
         });
         let res = await ALERT.updateBody(`¿Desea <b>${msgText}</b> la tarea?`).show();
         if (res) {
-            Axios.post(Router.generate(ROUTES.schedule.api.done), {
-                id: this.options.id,
-                done: !reactivate
-            })
-                .then(res => {
-                    Toast.success(res.data);
-                    this.options.callback!();
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                });
+            try {
+                const res = await Axios.post(
+                    Router.generate(ROUTES.schedule.api.done),
+                    {
+                        id: this.options.id,
+                        done: !reactivate
+                    }
+                );
+                Toast.success(res.data);
+                this.options.callback!();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+            }
         }
     };
 }

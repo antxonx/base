@@ -11,6 +11,8 @@ import Toast from "@plugins/AlertToast";
 import { evaluateInputs, hideElement, showElement } from "@plugins/Required";
 import Alert from "@plugins/Alert";
 import { deleteElement, disableRow } from "@plugins/DeleteElement";
+import '@scripts/jquery';
+import 'bootstrap/js/dist/collapse';
 
 /**
  * Opens a modal with the contact info
@@ -53,26 +55,28 @@ export default class Show {
         Array.from(document.getElementsByClassName("trash-email")).forEach(el => el.addEventListener('click', this.deleteEmail));
     };
 
-    private update = () => {
-        Axios.get(Router.generate(ROUTES.client.contact.view.show, { 'id': this.options.id.toString() }))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                $('.editable-field').editable({
-                    success: (_res: string) => {
-                        Toast.success(_res);
-                    },
-                    error: (_err: any) => {
-                        console.error(_err.responseText);
-                        Toast.error(_err.responseText);
-                    },
-                    disabled: true
-                });
-                this.load();
-            })
-            .catch(err => {
-                console.error(err.response.data);
-                Toast.error(err.response.data);
+    private update = async () => {
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.client.contact.view.show, { 'id': this.options.id.toString() })
+            );
+            this.modal.updateBody(res.data);
+            $('.editable-field').editable({
+                success: (_res: string) => {
+                    Toast.success(_res);
+                },
+                error: (_err: any) => {
+                    console.error(_err.responseText);
+                    Toast.error(_err.responseText);
+                },
+                disabled: true
             });
+            this.load();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
     };
 
     private edit = (e: Event) => {
@@ -101,49 +105,56 @@ export default class Show {
         $('.editable-field').editable('toggleDisabled');
     };
 
-    private addExtraPhone = (e: Event) => {
+    private addExtraPhone = async (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([ document.getElementById("phone") as HTMLInputElement ], 1, false)) {
             const BTN = document.getElementById("submit-phone-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }), {
-                type: 2,
-                level: (document.getElementById("phoneType") as HTMLInputElement).value,
-                value: (document.getElementById("phone") as HTMLInputElement).value,
-            })
-                .then(res => {
-                    Toast.success(res.data);
-                    this.update();
-                })
-                .catch(err => {
-                    Toast.error(err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
-                });
+
+            try {
+                const res = await Axios.post(
+                    Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }),
+                    {
+                        type: 2,
+                        level: (document.getElementById("phoneType") as HTMLInputElement).value,
+                        value: (document.getElementById("phone") as HTMLInputElement).value,
+                    }
+                );
+                Toast.success(res.data);
+                this.update();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+                BTN.innerHTML = BEF;
+            }
         }
     };
 
-    private addExtraEmail = (e: Event) => {
+    private addExtraEmail = async (e: Event) => {
         e.preventDefault();
         if (evaluateInputs([ document.getElementById("email") as HTMLInputElement ], 1, false)) {
             const BTN = document.getElementById("submit-email-extra-btn")!;
             const BEF = BTN.innerHTML;
             BTN.innerHTML = SPINNER_LOADER;
-            Axios.post(Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }), {
-                type: 1,
-                level: 1,
-                value: (document.getElementById("email") as HTMLInputElement).value,
-            })
-                .then(res => {
-                    Toast.success(res.data);
-                    this.update();
-                })
-                .catch(err => {
-                    Toast.error(err.response.data);
-                    console.error(err.response.data);
-                    BTN.innerHTML = BEF;
-                });
+            try {
+                const res = await Axios.post(
+                    Router.generate(ROUTES.client.contact.extra.api.add, { 'id': this.options.id.toString() }),
+                    {
+                        type: 1,
+                        level: 1,
+                        value: (document.getElementById("email") as HTMLInputElement).value,
+                    }
+                );
+                Toast.success(res.data);
+                this.update();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+                BTN.innerHTML = BEF;
+            }
         }
     };
 
@@ -158,14 +169,15 @@ export default class Show {
         const res = await ALERT.updateBody(`¿Eliminar el número <b>${PHONE}</b>?`).show();
         if (res) {
             disableRow(ELEMENT);
-            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() }))
-                .then(res => {
-                    deleteElement(ELEMENT);
-                    Toast.success(res.data);
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                });
+            try {
+                const res = await Axios.delete(
+                    Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() })
+                );
+                deleteElement(ELEMENT);
+                Toast.success(res.data);
+            } catch (err) {
+                console.error(err.response.data);
+            }
         }
     };
 
@@ -180,14 +192,15 @@ export default class Show {
         const res = await ALERT.updateBody(`¿Eliminar el correo <b>${NAME}</b>?`).show();
         if (res) {
             disableRow(ELEMENT);
-            Axios.delete(Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() }))
-                .then(res => {
-                    deleteElement(ELEMENT);
-                    Toast.success(res.data);
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                });
+            try {
+                const res = await Axios.delete(
+                    Router.generate(ROUTES.client.contact.extra.api.delete, { 'id': ID.toString() })
+                );
+                deleteElement(ELEMENT);
+                Toast.success(res.data);
+            } catch (err) {
+                console.error(err.response ? err.response.data : err);
+            }
         }
     };
 }

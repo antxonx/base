@@ -11,6 +11,9 @@ import ButtonCheckGroup from '@plugins/ButtonCheckGroup';
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
 
+import '@styles/logger.scss';
+import '@styles/table.scss';
+
 /**
  * Logger main biew and table
  *
@@ -73,27 +76,33 @@ export default class Logger {
         this.update();
     };
 
-    private update = (page: number = 1) => {
+    private update = async (page: number = 1) => {
         if (this.route != null) {
             this.updateView(BIG_LOADER_TABLE.replace("0", "6"));
             const USER = (document.getElementById("registerUser") as HTMLInputElement).value;
-            Axios.get(Router.generate(this.route, {
-                'search': this.searchInput,
-                'page': page,
-                'method': this.method,
-                'ordercol': this.orderBy.column,
-                'orderorder': this.orderBy.order,
-                'user': USER
-            }))
-                .then(res => {
-                    this.updateView(res.data);
-                    this.load();
-                    new Paginator({ callback: this.update });
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                });
+
+            try {
+                const res = await Axios.get(
+                    Router.generate(
+                        this.route,
+                        {
+                            'search': this.searchInput,
+                            'page': page,
+                            'method': this.method,
+                            'ordercol': this.orderBy.column,
+                            'orderorder': this.orderBy.order,
+                            'user': USER
+                        }
+                    )
+                );
+                this.updateView(res.data);
+                this.load();
+                new Paginator({ callback: this.update });
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+            }
         } else {
             this.updateView(this.defaultView);
         }

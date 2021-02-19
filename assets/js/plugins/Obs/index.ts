@@ -10,16 +10,18 @@ import Axios from "axios";
 import Toast from "../AlertToast";
 import { ObsI, ObsOptions } from "./defs";
 
+import '@styles/obs.scss';
+
 export default class Obs {
 
-    protected options: ObsOptions
+    protected options: ObsOptions;
 
-    protected readonly individualTemplate :string;
-    protected readonly textBox :string;
+    protected readonly individualTemplate: string;
+    protected readonly textBox: string;
 
-    public constructor(options: ObsOptions) {
+    public constructor (options: ObsOptions) {
         this.options = options;
-        this.individualTemplate  = `
+        this.individualTemplate = `
         <div class="d-flex justify-content-between">
         #fill-left#
         <div class="card py-1 px-3 m-1 pb-2 round text-justify #customClass#">
@@ -42,26 +44,27 @@ export default class Obs {
         `;
     }
 
-    public load = () => {
+    public load = async () => {
         this.options.element.innerHTML = BIG_LOADER;
-        Axios.get(Router.generate(ROUTES.obs.api.get, {
-            "entity" : this.options.entity,
-            "id" : this.options.id
-        }))
-        .then(res => {
+        try {
+            const res = await Axios.get(
+                Router.generate(ROUTES.obs.api.get, {
+                    "entity": this.options.entity,
+                    "id": this.options.id
+                })
+            );
             const reqObs = res.data as ObsI[];
             let obsCont = document.createElement("div");
             obsCont.classList.add("obs-scroll");
             let allObs = "";
             let tempDate = "";
             reqObs.forEach(ob => {
-                if(ob.createdAt.date != tempDate) {
+                if (ob.createdAt.date != tempDate) {
                     allObs += `<div class="text-center text-muted"><small><em>${ob.createdAt.date}</em></small><hr class="mt-0 mb-0 ml-5 mr-5"></div>`;
                     tempDate = ob.createdAt.date;
                 }
                 let obTemp = this.individualTemplate.replace("#createdBy#", ob.createdBy).replace("#description#", ob.description.trim()).replace("#time#", ob.createdAt.time).replace("#customClass#", ob.customClass);
-                console.log(ob.description);
-                if(ob.customClass == "obs-left") {
+                if (ob.customClass == "obs-left") {
                     obTemp = obTemp.replace("#fill-right#", '<div class="fill-space"></div>').replace("#fill-left#", "");
                 } else {
                     obTemp = obTemp.replace("#fill-left#", '<div class="fill-space"></div>').replace("#fill-right#", "");
@@ -77,51 +80,52 @@ export default class Obs {
                 obsCont.scrollTop = obsCont.scrollHeight;
             });
             this.evs();
-        })
-        .catch(err => {
-            console.error(err);
-            console.error(err.response.data);
-            Toast.error(err.response.data);
-        })
-    }
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+        }
+    };
 
     private evs = () => {
         const OBS_TA = document.getElementById("add-obs-text") as HTMLTextAreaElement;
         OBS_TA.addEventListener("keyup", () => {
-            if(OBS_TA.value.trim() == "") {
+            if (OBS_TA.value.trim() == "") {
                 OBS_TA.rows = 1;
             }
-            if((OBS_TA.clientHeight < OBS_TA.scrollHeight) && (OBS_TA.rows < 4)) {
+            if ((OBS_TA.clientHeight < OBS_TA.scrollHeight) && (OBS_TA.rows < 4)) {
                 OBS_TA.rows++;
             }
         });
         document.getElementById("add-obs-btn")!.addEventListener("click", this.addObs);
-    }
+    };
 
-    private addObs = () => {
+    private addObs = async () => {
         const OBS = (document.getElementById("add-obs-text") as HTMLTextAreaElement);
-        const CONT = document.getElementsByClassName("add-obs-cont")![0];
+        const CONT = document.getElementsByClassName("add-obs-cont")![ 0 ];
         const BEF = CONT.innerHTML;
         CONT.innerHTML = SPINNER_LOADER;
-        if(OBS.value.trim() != ""){
-            Axios.post(Router.generate(ROUTES.obs.api.add), {
-                entity: this.options.entity,
-                id: this.options.id,
-                description: OBS.value,
-            })
-            .then(res => {
-                if(this.options.callback)
+        if (OBS.value.trim() != "") {
+            try {
+                const res = await Axios.post(
+                    Router.generate(ROUTES.obs.api.add),
+                    {
+                        entity: this.options.entity,
+                        id: this.options.id,
+                        description: OBS.value,
+                    }
+                );
+                if (this.options.callback)
                     this.options.callback!();
                 Toast.success(res.data);
                 this.load();
-            })
-            .catch(err => {
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
                 CONT.innerHTML = BEF;
                 this.evs();
-                console.error(err);
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+            }
         }
-    }
+    };
 }

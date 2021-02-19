@@ -35,21 +35,20 @@ export default class Assign {
         });
     }
 
-    public asign = (reasign = false) => {
+    public asign = async (reasign = false) => {
         this.reasign = reasign;
         this.modal.show();
-        Axios.get(Router.generate(ROUTES.schedule.view.asign))
-            .then(res => {
-                this.modal.updateBody(res.data);
-                this.list = document.getElementById('userList') as HTMLElement;
-                this.startEvents();
-            })
-            .catch(err => {
-                this.modal.hide();
-                console.error(err);
-                console.error(err.response.data);
-                Toast.error(err.response.data);
-            });
+        try {
+            const res = await Axios.get(Router.generate(ROUTES.schedule.view.asign));
+            this.modal.updateBody(res.data);
+            this.list = document.getElementById('userList') as HTMLElement;
+            this.startEvents();
+        } catch (err) {
+            const e = err.response ? err.response.data : err;
+            console.error(e);
+            Toast.error(e);
+            this.modal.hide();
+        }
     };
 
     private listAsign = async (data: string[]) => {
@@ -69,23 +68,23 @@ export default class Assign {
                 .updateBody(`¿Seguro que desea <b>${msgText}</b> el usuario a la tarea?`)
                 .show();
             if (res) {
-                Axios.patch(Router.generate(ROUTES.schedule.api.update), {
-                    id: this.options.id,
-                    value: data[ 0 ],
-                    type: TASK_EDIT_TYPE.ASING,
-                })
-                    .then(() => {
-                        this.modal.hide();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        console.error(err.response.data);
-                        Toast.error(err.response.data);
-                    })
-                    .finally(() => {
-                        this.list.innerHTML = LIST_BEF;
-                        this.startEvents();
-                    });
+                try {
+                    await Axios.patch(
+                        Router.generate(ROUTES.schedule.api.update),
+                        {
+                            id: this.options.id,
+                            value: data[ 0 ],
+                            type: TASK_EDIT_TYPE.ASING,
+                        }
+                    );
+                    this.modal.hide();
+                } catch (err) {
+                    const e = err.response ? err.response.data : err;
+                    console.error(e);
+                    Toast.error(e);
+                }
+                this.list.innerHTML = LIST_BEF;
+                this.startEvents();
             } else {
                 this.list.innerHTML = LIST_BEF;
                 this.startEvents();

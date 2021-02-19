@@ -27,15 +27,17 @@ export default class Delete {
         });
         let res = await ALERT.updateBody(`¿Eliminar la tarea?`).show();
         if (res) {
-            Axios.delete(Router.generate(ROUTES.schedule.api.delete, { 'id': this.options.id!.toString() }))
-                .then(res => {
-                    Toast.success(res.data);
-                    this.options.callback!();
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                });
+            try {
+                const res = await Axios.delete(
+                    Router.generate(ROUTES.schedule.api.delete, { 'id': this.options.id!.toString() })
+                );
+                Toast.success(res.data);
+                this.options.callback!();
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+            }
         }
     };
 }

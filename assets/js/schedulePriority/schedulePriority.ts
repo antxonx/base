@@ -10,6 +10,9 @@ import Toast from "@plugins/AlertToast";
 import { SchedulePriorityOptions, DEFAULT_PRIORITY_OPTIONS } from "@scripts/schedulePriority/defs";
 import { SortColumnOrder } from "@plugins/SortColumn/defs";
 import SortColumn from "@plugins/SortColumn";
+
+import '@styles/table.scss';
+
 /**
  * Client category main view and table
  *
@@ -85,24 +88,29 @@ export default class SchedulePriority {
         return this;
     };
 
-    private update = (page: number = 1) => {
+    private update = async (page: number = 1) => {
         if (!this.options.extern) {
             this.mainView.innerHTML = BIG_LOADER_TABLE.replace("0", "5");
-            Axios.get(Router.generate(ROUTES.schedulePriority.view.list, {
-                'search': this.search,
-                'page': page,
-                'ordercol': this.orderBy.column,
-                'orderorder': this.orderBy.order
-            }))
-                .then(res => {
-                    this.mainView.innerHTML = res.data;
-                    this.load();
-                    new Paginator({ callback: this.update });
-                })
-                .catch(err => {
-                    console.error(err.response.data);
-                    Toast.error(err.response.data);
-                });
+            try {
+                const res = await Axios.get(
+                    Router.generate(
+                        ROUTES.schedulePriority.view.list,
+                        {
+                            'search': this.search,
+                            'page': page,
+                            'ordercol': this.orderBy.column,
+                            'orderorder': this.orderBy.order
+                        }
+                    )
+                );
+                this.mainView.innerHTML = res.data;
+                this.load();
+                new Paginator({ callback: this.update });
+            } catch (err) {
+                const e = err.response ? err.response.data : err;
+                console.error(e);
+                Toast.error(e);
+            }
         }
     };
 
