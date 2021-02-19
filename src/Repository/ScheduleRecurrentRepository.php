@@ -28,7 +28,7 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
      * Undocumented function
      * @return ScheduleRecurrent[]
      */
-    public function getBy(string $type, $params): array
+    public function getBy(string $type, $params, $dayString): array
     {
         $offset = ((isset($params->offset)) ? $params->offset : 0);
         $query = $this->createQueryBuilder('p')
@@ -53,18 +53,22 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
         }
         switch ($type) {
             case 'year':
+                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
                 $typeCriteria = new Criteria();
                 $typeCriteria->where(Criteria::expr()->eq('p.type', 1));
                 $query->addCriteria($typeCriteria);
                 break;
             case 'month':
+                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
                 $typeCriteria = new Criteria();
                 $typeCriteria->where(Criteria::expr()->eq('p.type', 2));
                 $query->addCriteria($typeCriteria);
                 break;
-            case 'day':
+            case 'week':
+                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
                 $typeCriteria = new Criteria();
                 $typeCriteria->where(Criteria::expr()->eq('p.type', 3));
+                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
                 $query->addCriteria($typeCriteria);
                 break;
             default:
