@@ -289,24 +289,15 @@ export default class Alert {
      * @memberof Alert
      */
     private build() {
-        let icon: string;
-        switch (this.options.type) {
-            case 'info':
-                icon = this.INFO_ALERT;
-                break;
-            case 'warning':
-                icon = this.WARNING_ALERT;
-                break;
-            case 'danger':
-                icon = this.DANGER_ALERT;
-                break;
-            case 'success':
-                icon = this.SUCCESS_ALERT;
-                break;
-            default:
-                icon = this.NO_ICON_ALERT;
-                break;
-        }
+        const icon = (() => {
+            switch (this.options.type) {
+                case 'info': return this.INFO_ALERT;
+                case 'warning': return this.WARNING_ALERT;
+                case 'danger': return this.DANGER_ALERT;
+                case 'success': return this.SUCCESS_ALERT;
+                default: return this.NO_ICON_ALERT;
+            }
+        })();
         document.getElementById(this.modalHeaderId)!.innerHTML = icon.replace('#text#', this.options.typeText!);
         document.getElementById(this.modalHeaderId)!.classList.add(`text-${this.options.type}`);
 
