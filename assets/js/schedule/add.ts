@@ -141,13 +141,13 @@ export default class Add {
                 buttonClasses: [ "btn btn-sm round" ],
                 cancelButtonClasses: "btn-secondary",
                 applyButtonClasses: "btn-antxony",
-                startDate: moment(),
+                startDate: moment().hours(12).minutes(0),
                 parentEl: TASK_DATE.parentElement as Element
             }, (start) => {
                 this.date = start.format('DD-MM-YYYY kk:mm:ss');
             });
-            this.date = moment().format('DD-MM-YYYY kk:mm:ss');
-            TASK_DATE.value = moment().format('DD/MM/YYYY LT');
+            this.date = moment().hours(12).minutes(0).format('DD-MM-YYYY kk:mm:ss');
+            TASK_DATE.value = moment().hours(12).minutes(0).format('DD/MM/YYYY LT');
         } catch (err) {
             const e = err.response ? err.response.data : err;
             console.error(e);

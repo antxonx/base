@@ -61,16 +61,16 @@ class ScheduleRepository extends ServiceEntityRepository
                 $start = new DateTime("first day of this month {$offset} month midnight", new DateTimeZone("America/Mexico_city"));
                 $finish = new DateTime("first day of next month {$offset} month midnight -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
+                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
+                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
             case 'week':
                 $start = new DateTime("last sunday midnight {$offset} week", new DateTimeZone("America/Mexico_city"));
                 $finish = new DateTime("next sunday midnight {$offset} week -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
+                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
+                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
             case 'day':
@@ -78,8 +78,8 @@ class ScheduleRepository extends ServiceEntityRepository
                 $start = new DateTime("today {$offset} day", new DateTimeZone("America/Mexico_city"));
                 $finish = new DateTime("today {$last} day -1 second", new DateTimeZone("America/Mexico_city"));
                 $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gt("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lt("p.date", $finish));
+                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
+                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
                 $query->addCriteria($dateCriteria);
                 break;
             default:
