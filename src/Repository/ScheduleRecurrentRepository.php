@@ -56,12 +56,14 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
                 $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
                 $typeCriteria = new Criteria();
                 $typeCriteria->where(Criteria::expr()->eq('p.type', 1));
+                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
                 $query->addCriteria($typeCriteria);
                 break;
             case 'month':
                 $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
                 $typeCriteria = new Criteria();
                 $typeCriteria->where(Criteria::expr()->eq('p.type', 2));
+                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
                 $query->addCriteria($typeCriteria);
                 break;
             case 'week':

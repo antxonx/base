@@ -15,6 +15,7 @@ import ClientSearch from '@scripts/client/searchClient';
 import Alert from '@scripts/plugins/Alert';
 import ListSelect from '@scripts/plugins/ListSelect';
 
+import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/tab';
 
 /**
