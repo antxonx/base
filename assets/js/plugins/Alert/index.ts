@@ -5,7 +5,6 @@
  * @preferred
  */
 import $ from 'jquery';
-import 'bootstrap/js/dist/modal';
 import { AlertOptions, DEFAULT_ALERT_OPTIONS } from "./defs";
 
 /**

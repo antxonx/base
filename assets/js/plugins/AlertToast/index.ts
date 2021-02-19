@@ -5,7 +5,6 @@
  * @preferred
  */
 import $ from 'jquery';
-import 'bootstrap/js/dist/toast';
 
 /**
  * Shows an alert toast for success or error actions
