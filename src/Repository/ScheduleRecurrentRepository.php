@@ -28,7 +28,7 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
      * Undocumented function
      * @return ScheduleRecurrent[]
      */
-    public function getBy(string $_type, $params, $dayString): array
+    public function getBy(string $_type, object $params, string $dayString): array
     {
         $query = $this->createQueryBuilder('p')
             ->orderBy("p.id", "ASC");
@@ -50,15 +50,19 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
             $categoryCriteria->where(Criteria::expr()->eq('p.category', $params->category));
             $query->addCriteria($categoryCriteria);
         }
-        $type = (function($_){
-            switch($_) {
-            case 'year': return 1;
-            case 'month': return 2;
-            case 'week': return 3;
-            default: return 0;
+        $type = (function ($_) {
+            switch ($_) {
+                case 'year':
+                    return 1;
+                case 'month':
+                    return 2;
+                case 'week':
+                    return 3;
+                default:
+                    return 0;
             }
         })($_type);
-        if($type == 0) {
+        if ($type == 0) {
             throw new Exception("Ocurrió un error con el calendario");
         }
         $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));

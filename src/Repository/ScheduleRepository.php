@@ -28,7 +28,7 @@ class ScheduleRepository extends ServiceEntityRepository
         parent::__construct($registry, Schedule::class);
     }
 
-    public function getBy(string $type, $params): array
+    public function getBy(string $type, object $params): array
     {
         $offset = ((isset($params->offset)) ? $params->offset : 0);
         $query = $this->createQueryBuilder('p')
@@ -51,41 +51,42 @@ class ScheduleRepository extends ServiceEntityRepository
             $finishedCriteria->where(Criteria::expr()->eq('p.done', $params->finished));
             $query->addCriteria($finishedCriteria);
         }
-        if($params->category != 0) {
+        if ($params->category != 0) {
             $categoryCriteria = new Criteria();
             $categoryCriteria->where(Criteria::expr()->eq('p.category', $params->category));
             $query->addCriteria($categoryCriteria);
         }
-        switch ($type) {
-            case 'month':
-                $start = new DateTime("first day of this month {$offset} month midnight", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("first day of next month {$offset} month midnight -1 second", new DateTimeZone("America/Mexico_city"));
-                $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
-                $query->addCriteria($dateCriteria);
-                break;
-            case 'week':
-                $start = new DateTime("last sunday midnight {$offset} week", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("next sunday midnight {$offset} week -1 second", new DateTimeZone("America/Mexico_city"));
-                $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
-                $query->addCriteria($dateCriteria);
-                break;
-            case 'day':
-                $last = $offset + 1;
-                $start = new DateTime("today {$offset} day", new DateTimeZone("America/Mexico_city"));
-                $finish = new DateTime("today {$last} day -1 second", new DateTimeZone("America/Mexico_city"));
-                $dateCriteria = new Criteria();
-                $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
-                $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
-                $query->addCriteria($dateCriteria);
-                break;
-            default:
-                throw new Exception("Ocurrió un error con el calendario");
-                break;
+        $dates = (function ($_, $_1) {
+            switch ($_) {
+                case 'month':
+                    return [
+                        "start" => "first day of this month {$_1} month midnight",
+                        "finish" => "first day of next month {$_1} month midnight -1 second",
+                    ];
+                case 'week':
+                    return [
+                        "start" => "last sunday midnight {$_1} week",
+                        "finish" => "next sunday midnight {$_1} week -1 second",
+                    ];
+                case 'day':
+                    $last = $_1 + 1;
+                    return [
+                        "start" => "today {$_1} day",
+                        "finish" => "today {$last} day -1 second",
+                    ];
+                default:
+                    return null;
+            }
+        })($type, $offset);
+        if ($dates == null) {
+            throw new Exception("Ocurrió un error con el calendario");
         }
+        $start = new DateTime($dates["start"], new DateTimeZone("America/Mexico_city"));
+        $finish = new DateTime($dates["finish"], new DateTimeZone("America/Mexico_city"));
+        $dateCriteria = new Criteria();
+        $dateCriteria->where(Criteria::expr()->gte("p.date", $start));
+        $dateCriteria->andWhere(Criteria::expr()->lte("p.date", $finish));
+        $query->addCriteria($dateCriteria);
         return $query->getQuery()->getResult();
     }
 
