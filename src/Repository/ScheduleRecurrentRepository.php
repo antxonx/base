@@ -28,9 +28,8 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
      * Undocumented function
      * @return ScheduleRecurrent[]
      */
-    public function getBy(string $type, $params, $dayString): array
+    public function getBy(string $_type, $params, $dayString): array
     {
-        $offset = ((isset($params->offset)) ? $params->offset : 0);
         $query = $this->createQueryBuilder('p')
             ->orderBy("p.id", "ASC");
         if (!$params->actualUser->hasRole("ROLE_SUPERVISOR") || $params->me) {
@@ -46,37 +45,41 @@ class ScheduleRecurrentRepository extends ServiceEntityRepository
             $searchCriteria->orWhere(Criteria::expr()->contains('a.name', $params->search));
             $query->addCriteria($searchCriteria);
         }
-        if($params->category != 0) {
+        if ($params->category != 0) {
             $categoryCriteria = new Criteria();
             $categoryCriteria->where(Criteria::expr()->eq('p.category', $params->category));
             $query->addCriteria($categoryCriteria);
         }
-        switch ($type) {
-            case 'year':
-                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                $typeCriteria = new Criteria();
-                $typeCriteria->where(Criteria::expr()->eq('p.type', 1));
-                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
-                $query->addCriteria($typeCriteria);
-                break;
-            case 'month':
-                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                $typeCriteria = new Criteria();
-                $typeCriteria->where(Criteria::expr()->eq('p.type', 2));
-                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
-                $query->addCriteria($typeCriteria);
-                break;
-            case 'week':
-                $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
-                $typeCriteria = new Criteria();
-                $typeCriteria->where(Criteria::expr()->eq('p.type', 3));
-                $typeCriteria->andWhere(Criteria::expr()->lte('p.createdAt', $start));
-                $query->addCriteria($typeCriteria);
-                break;
-            default:
-                throw new Exception("Ocurrió un error con el calendario");
-                break;
+        $type = (function($_){
+            switch($_) {
+            case 'year': return 1;
+            case 'month': return 2;
+            case 'week': return 3;
+            default: return 0;
+            }
+        })($_type);
+        if($type == 0) {
+            throw new Exception("Ocurrió un error con el calendario");
         }
+        $start = new DateTime($dayString . "+1 day", new DateTimeZone("America/Mexico_city"));
+        $end = new DateTime($dayString . "-1 day", new DateTimeZone("America/Mexico_city"));
+        $typeCriteria = new Criteria();
+        $typeCriteria->where(
+            Criteria::expr()->andX(
+                Criteria::expr()->eq('p.type', $type),
+                Criteria::expr()->lte('p.createdAt', $start)
+            )
+        );
+        $typeCriteria->andWhere(
+            Criteria::expr()->orX(
+                Criteria::expr()->andX(
+                    Criteria::expr()->neq("p.endDate", null),
+                    Criteria::expr()->gte("p.endDate", $end)
+                ),
+                Criteria::expr()->isNull("p.endDate")
+            )
+        );
+        $query->addCriteria($typeCriteria);
         return $query->getQuery()->getResult();
     }
 

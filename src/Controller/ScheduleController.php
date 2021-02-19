@@ -323,10 +323,10 @@ class ScheduleController extends AbstractController
             }
             if ($yes) {
                 if ($event->getEndDate()) {
-                    $today = new DateTime($dateString . "-1 day", new DateTimeZone("America/Mexico_city"));
-                    if ($event->getEndDate() >= $today) {
+                    // $today = new DateTime($dateString . "-1 day", new DateTimeZone("America/Mexico_city"));
+                    // if ($event->getEndDate() >= $today) {
                         $events[] = $event;
-                    }
+                    // }
                 } else {
                     $events[] = $event;
                 }
