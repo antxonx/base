@@ -62,7 +62,6 @@ export default class Obs {
                     tempDate = ob.createdAt.date;
                 }
                 let obTemp = this.individualTemplate.replace("#createdBy#", ob.createdBy).replace("#description#", ob.description.trim()).replace("#time#", ob.createdAt.time).replace("#customClass#", ob.customClass);
-                console.log(ob.description);
                 if(ob.customClass == "obs-left") {
                     obTemp = obTemp.replace("#fill-right#", '<div class="fill-space"></div>').replace("#fill-left#", "");
                 } else {

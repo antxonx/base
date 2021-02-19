@@ -13,6 +13,7 @@ import Delete from "@scripts/schedule/delete";
 import ShowClient from '@scripts/client/show';
 import ChangePriority from "./changePriority";
 import 'bootstrap/js/dist/tooltip';
+import 'bootstrap/js/dist/tab';
 import moment from "moment";
 import Obs from "@scripts/plugins/Obs";
 

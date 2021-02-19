@@ -110,7 +110,6 @@ export default class Schedule {
         Array.from(document.getElementsByClassName("event")).forEach(el => el.addEventListener("click", async () => {
             const RECURRENT = +el.getAttribute("recurrent")!;
             const { default: Show } = await import('@scripts/schedule/show');
-            console.log(Show);
             (new Show({
                 element: el as HTMLElement,
                 recurrent: RECURRENT,
