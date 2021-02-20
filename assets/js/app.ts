@@ -7,7 +7,7 @@
 import '@styles/app.scss';
 import { Router as Routing } from 'symfony-ts-router';
 import { Routes } from "@scripts/routes";
-import 'bootstrap/js/dist/dropdown';
+import 'bootstrap';
 
 const routes = require('@scripts/fos_js_routes.json');
 /* ---------------------------------- Router -------------------------------- */

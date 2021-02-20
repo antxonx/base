@@ -3,7 +3,6 @@
 * @module Client
 */
 import Search from "@plugins/Search";
-import 'bootstrap/js/dist/tooltip';
 import { BIG_LOADER_TABLE, Router, ROUTES } from "@scripts/app";
 import Axios from "axios";
 import Paginator from "@plugins/Paginator";

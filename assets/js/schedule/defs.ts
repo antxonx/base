@@ -25,11 +25,13 @@ export const DEFAULT_SCHEDULE_SHOW_OPTIONS: ScheduleShowOptions = {
 
 export interface ScheduleFinishOptions {
     id: number;
+    recurrent: number;
     callback?: () => void;
 }
 
 export const DEFAULT_SCHEDULE_FINISH_OPTIONS: ScheduleFinishOptions = {
     id: 0,
+    recurrent: 0,
     callback: () => { },
 };
 

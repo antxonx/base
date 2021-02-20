@@ -146,12 +146,21 @@ class ScheduleController extends AbstractController
                     }
                     $today = strftime("%d", strtotime("today"));
                     $diff = $day - $today;
-                    $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$diff} day {$monthOffset} month")));
-                    $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$diff} day {$monthOffset} month")));
+                    $eventrd = $this->getRecurrentDays(
+                        $params,
+                        strftime("%u", strtotime("{$diff} day {$monthOffset} month")),
+                        "{$diff} day {$monthOffset} month"
+                    );
+                    $eventrm = $this->getRecurrentMonth(
+                        $params,
+                        strftime("%d", strtotime("{$diff} day {$monthOffset} month")),
+                        "{$diff} day {$monthOffset} month"
+                    );
                     $eventry = $this->getRecurrentYear(
                         $params,
                         strftime("%m", strtotime("{$diff} day {$monthOffset} month")),
-                        strftime("%d", strtotime("{$diff} day {$monthOffset} month"))
+                        strftime("%d", strtotime("{$diff} day {$monthOffset} month")),
+                        "{$diff} day {$monthOffset} month"
                     );
                     $month[] = [
                         'day' => $day,
@@ -209,12 +218,21 @@ class ScheduleController extends AbstractController
                         $events[] = $event;
                     }
                 }
-                $eventrd = $this->getRecurrentDays($params, strftime("%u", strtotime("{$dif} day {$offset} week")));
-                $eventrm = $this->getRecurrentMonth($params, strftime("%d", strtotime("{$dif} day {$offset} week")));
+                $eventrd = $this->getRecurrentDays(
+                    $params,
+                    strftime("%u", strtotime("{$dif} day {$offset} week")),
+                    "{$dif} day {$offset} week"
+                );
+                $eventrm = $this->getRecurrentMonth(
+                    $params,
+                    strftime("%d", strtotime("{$dif} day {$offset} week")),
+                    "{$dif} day {$offset} week"
+                );
                 $eventry = $this->getRecurrentYear(
                     $params,
                     strftime("%m", strtotime("{$dif} day {$offset} week")),
-                    strftime("%d", strtotime("{$dif} day {$offset} week"))
+                    strftime("%d", strtotime("{$dif} day {$offset} week")),
+                    "{$dif} day {$offset} week"
                 );
                 $lastDayMonth = strftime("%B %Y", strtotime("{$dif} day {$offset} week"));
                 $week[] = [
@@ -261,9 +279,24 @@ class ScheduleController extends AbstractController
                     $events[] = $event;
                 }
             }
+            $eventry = $this->getRecurrentYear(
+                $params,
+                strftime("%m", strtotime("today {$offset} day")),
+                strftime("%d", strtotime("today {$offset} day")),
+                "today {$offset} day"
+            );
             $day += ["events" => $events];
-            $day += ["eventrd" => $this->getRecurrentDays($params, strftime("%u", strtotime("today {$offset} day")))];
-            $day += ["eventrm" => $this->getRecurrentMonth($params, strftime("%d", strtotime("today {$offset} day")))];
+            $day += ["eventrd" => $this->getRecurrentDays(
+                $params,
+                strftime("%u", strtotime("today {$offset} day")),
+                "today {$offset} day"
+            )];
+            $day += ["eventrm" => $this->getRecurrentMonth(
+                $params,
+                strftime("%d", strtotime("today {$offset} day")),
+                "today {$offset} day"
+            )];
+            $day += ["eventry" => $eventry];
             return $this->render("view/schedule/types/day.html.twig", [
                 'monthName' => $monthName,
                 'day' => $day,
@@ -273,13 +306,13 @@ class ScheduleController extends AbstractController
         }
     }
 
-    public function getRecurrentDays($params, $day): array
+    public function getRecurrentDays($params, $day, $dateString): array
     {
         if (!$params->showRecurrents) {
             return [];
         }
         $events = [];
-        $eventsR = $this->srRep->getBy("day", $params);
+        $eventsR = $this->srRep->getBy("week", $params, $dateString);
         foreach ($eventsR as $event) {
             $yes = false;
             foreach ($event->getDays() as $dday) {
@@ -295,13 +328,13 @@ class ScheduleController extends AbstractController
         return $events;
     }
 
-    public function getRecurrentMonth($params, $day): array
+    public function getRecurrentMonth($params, $day, $dateString): array
     {
         if (!$params->showRecurrents) {
             return [];
         }
         $events = [];
-        $eventsR = $this->srRep->getBy("month", $params);
+        $eventsR = $this->srRep->getBy("month", $params, $dateString);
         foreach ($eventsR as $event) {
             $yes = false;
             foreach ($event->getDays() as $dday) {
@@ -317,13 +350,13 @@ class ScheduleController extends AbstractController
         return $events;
     }
 
-    public function getRecurrentYear($params, $month, $day): array
+    public function getRecurrentYear($params, $month, $day, $dateString): array
     {
         if (!$params->showRecurrents) {
             return [];
         }
         $events = [];
-        $eventsR = $this->srRep->getBy("year", $params);
+        $eventsR = $this->srRep->getBy("year", $params, $dateString);
         foreach ($eventsR as $event) {
             $yes = false;
             foreach ($event->getDays()[0] as $mmonth) {
@@ -402,35 +435,62 @@ class ScheduleController extends AbstractController
              */
             $user = $this->security->getUser();
             $content = json_decode($request->getContent());
-            $task = $this->rep->find($content->id);
-            if ($task == null) {
-                throw new Exception("No se encontró la tarea");
-            }
-            if (
-                !$user->hasRole("ROLE_SUPERVISOR") &&
-                ($user->getId() != $task->getCreatedBy()->getId())
-            ) {
-                if (($task->getAssigned() != null)) {
-                    if ($user->getId() != $task->getAssigned()->getId()) {
+            if ($content->recurrent) {
+                $task = $this->srRep->find($content->id);
+                if ($task == null) {
+                    throw new Exception("No se encontró la tarea");
+                }
+                if (
+                    !$user->hasRole("ROLE_SUPERVISOR") &&
+                    ($user->getId() != $task->getCreatedBy()->getId())
+                ) {
+                    if (($task->getAssigned() != null)) {
+                        if ($user->getId() != $task->getAssigned()->getId()) {
+                            throw new Exception("No tienes permiso para realizar esta acción");
+                        }
+                    } else {
                         throw new Exception("No tienes permiso para realizar esta acción");
                     }
-                } else {
-                    throw new Exception("No tienes permiso para realizar esta acción");
                 }
-            }
-            $task
-                ->setDone($content->done)
-                ->updated($this->security->getUser());
-            $message = "ha ";
-            if ($content->done) {
-                $message .= "finalizado";
+                $task
+                    ->setEndDate(new \DateTime("now", new \DateTimeZone("America/Mexico_City")))
+                    ->setUpdatedAt(new \DateTime("now", new \DateTimeZone("America/Mexico_City")))
+                    ->setUpdatedBy($user);
+                $message = "ha finalizado la tarea";
+                $ob->add($task->getId(), "ScheduleRecurrent", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
+                $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+                return new Response("Se " . $message);
             } else {
-                $message .= "reactivado";
+                $task = $this->rep->find($content->id);
+                if ($task == null) {
+                    throw new Exception("No se encontró la tarea");
+                }
+                if (
+                    !$user->hasRole("ROLE_SUPERVISOR") &&
+                    ($user->getId() != $task->getCreatedBy()->getId())
+                ) {
+                    if (($task->getAssigned() != null)) {
+                        if ($user->getId() != $task->getAssigned()->getId()) {
+                            throw new Exception("No tienes permiso para realizar esta acción");
+                        }
+                    } else {
+                        throw new Exception("No tienes permiso para realizar esta acción");
+                    }
+                }
+                $task
+                    ->setDone($content->done)
+                    ->updated($this->security->getUser());
+                $message = "ha ";
+                if ($content->done) {
+                    $message .= "finalizado";
+                } else {
+                    $message .= "reactivado";
+                }
+                $message .= " la tarea";
+                $ob->add($task->getId(), "Schedule", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
+                $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
+                return new Response("Se " . $message);
             }
-            $message .= " la tarea";
-            $ob->add($task->getId(), "Schedule", "<small class=\"text-muted text-center\"><em>{$message}</em></small>");
-            $this->util->info("Se {$message} <b>{$task->getId()}</b> (<em>{$task->getTitle()}</em>)");
-            return new Response("Se " . $message);
         } catch (Exception $e) {
             return $this->util->errorResponse($e);
         }

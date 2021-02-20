@@ -11,7 +11,6 @@ import { ScheduleType } from './defs';
 import { isMobile } from "@scripts/plugins/Required";
 import Search from "@scripts/plugins/Search";
 import DropdownSelect from "@scripts/plugins/DropdownSelect";
-import 'bootstrap/js/dist/tooltip';
 import '@styles/schedule.scss';
 
 export default class Schedule {

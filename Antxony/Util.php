@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Util tools
  */
@@ -14,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
  * @package Antxony
  * @author Antxony <dantonyofcarim@gmail.com>
  */
-class Util {
+class Util
+{
 
     /**
      * Max elements per page
@@ -52,11 +54,11 @@ class Util {
      * @param string $message Mensaje a resgistrar
      * @return void
      */
-    public function error(string $message) : void
+    public function error(string $message): void
     {
-            $this->logger->error($message, [
-                'user_log' => true
-            ]);
+        $this->logger->error($message, [
+            'user_log' => true
+        ]);
     }
 
     /**
@@ -65,7 +67,7 @@ class Util {
      * @param Exception $e Excepción
      * @return void
      */
-    public function errorException(Exception $e) : void
+    public function errorException(Exception $e): void
     {
         $this->logger->error($e->getMessage(), [
             'user_log' => true,
@@ -80,7 +82,7 @@ class Util {
      * @param string $message Mensaje a Registrar
      * @return void
      */
-    public function info(string $message) : void
+    public function info(string $message): void
     {
         $this->logger->info($message, [
             'user_log' => true
@@ -93,7 +95,7 @@ class Util {
      * @param Exception $e Excepción
      * @return Response
      */
-    public function errorResponse(Exception $e) : Response
+    public function errorResponse(Exception $e): Response
     {
         $this->logger->error($e->getMessage(), [
             'user_log' => true,
@@ -117,7 +119,7 @@ class Util {
      * @param string $needle Cadena que estamos buscando
      * @return boolean
      */
-    public function containsString(string $haystack, string $needle) : bool
+    public function containsString(string $haystack, string $needle): bool
     {
         return (strpos($haystack, $needle) !== false);
     }
@@ -133,23 +135,21 @@ class Util {
     {
         $charsetSize = strlen(self::CHARSET);
         $result = "";
-        for($i = 0; $i < $size; $i++){
+        for ($i = 0; $i < $size; $i++) {
             $result .= self::CHARSET[rand(0, $charsetSize - 1)];
         }
         return ($result . $identifier);
     }
 
-    public function getObservationEntityName(string $entity) {
-        switch($entity) {
+    public function getObservationEntityName(string $entity)
+    {
+        switch ($entity) {
             case "Schedule":
                 return "la tarea";
-                break;
             case "Client":
                 return "el cliente";
-                break;
             default:
                 return "indefinido";
-                break;
         }
     }
 }

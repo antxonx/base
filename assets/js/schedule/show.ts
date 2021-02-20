@@ -12,8 +12,6 @@ import Assign from "@scripts/schedule/assign";
 import Delete from "@scripts/schedule/delete";
 import ShowClient from '@scripts/client/show';
 import ChangePriority from "./changePriority";
-import 'bootstrap/js/dist/tooltip';
-import 'bootstrap/js/dist/tab';
 import moment from "moment";
 import Obs from "@scripts/plugins/Obs";
 
@@ -58,6 +56,7 @@ export default class Show {
         document.getElementById("taskFinish")?.addEventListener("click", () => {
             (new Finish({
                 id: this.options.id!,
+                recurrent: this.options.recurrent,
                 callback: () => {
                     this.update();
                     this.options.callback!();
@@ -67,6 +66,7 @@ export default class Show {
         document.getElementById("taskReactive")?.addEventListener("click", () => {
             (new Finish({
                 id: this.options.id!,
+                recurrent: this.options.recurrent,
                 callback: () => {
                     this.update();
                     this.options.callback!();

@@ -2,7 +2,7 @@
 * @packageDocumentation
 * @module Schedule/Priority
 */
-import 'bootstrap/js/dist/tooltip';
+
 import { SchedulePriorityChangeOptions, DEFAULT_PRIORITY_CHANGE_OPTIONS } from "@scripts/schedulePriority/defs";
 import Modal from "@plugins/Modal";
 import Axios from "axios";

@@ -63,20 +63,16 @@
 		</div>
 	</div>
 	<hr>
-	{# <div class="row">
-		<div class="col">
-			{% if task.createdBy.id == app.user.id or is_granted("ROLE_SUPERVISOR") %}
-				<button type="button" id="taskDelete" class="btn btn-danger round">Eliminar</button>
-			{% endif %}
+	<div class="row">
+		<div class="col-md-10 text-muted">
+			<small><em><b>Finalizar</b> marca la fecha de hoy, no la del día seleccionado.</em></small>
 		</div>
-		<div class="col text-right">
-			{% if task.done %}
-				<button type="button" id="taskReactive" class="btn btn-danger round">Reactivar</button>
-			{% else %}
+		<div class="col-md-2 text-right">
+			{% if task.endDate != null %}
 				<button type="button" id="taskFinish" class="btn btn-antxony round">Finalizar</button>
 			{% endif %}
 		</div>
-	</div> #}
+	</div>
 </div>
 {% include "view/footer/datetimes.html.twig" with {
     created : {
